@@ -1,0 +1,327 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "meridian",
+  "homepage": "https://github.com/jhosephebtc/Meridian",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Meridian button"
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Meridian slider"
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Meridian switch"
+    },
+    {
+      "name": "dial",
+      "type": "registry:ui",
+      "title": "Meridian dial"
+    },
+    {
+      "name": "bar-slider",
+      "type": "registry:ui",
+      "title": "Meridian bar-slider"
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Meridian radio-group"
+    },
+    {
+      "name": "tactile-key",
+      "type": "registry:ui",
+      "title": "Meridian tactile-key"
+    },
+    {
+      "name": "tactile-keypad",
+      "type": "registry:ui",
+      "title": "Meridian tactile-keypad"
+    },
+    {
+      "name": "tactile-console",
+      "type": "registry:ui",
+      "title": "Meridian tactile-console"
+    },
+    {
+      "name": "camera-wheel",
+      "type": "registry:ui",
+      "title": "Meridian camera-wheel"
+    },
+    {
+      "name": "camera-dial",
+      "type": "registry:ui",
+      "title": "Meridian camera-dial"
+    },
+    {
+      "name": "spectrum-control",
+      "type": "registry:ui",
+      "title": "Meridian spectrum-control"
+    },
+    {
+      "name": "oklch-palette",
+      "type": "registry:ui",
+      "title": "Meridian oklch-palette"
+    },
+    {
+      "name": "detent-dial",
+      "type": "registry:ui",
+      "title": "Meridian detent-dial"
+    },
+    {
+      "name": "tactile-lever",
+      "type": "registry:ui",
+      "title": "Meridian tactile-lever"
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Meridian calendar"
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Meridian date-picker"
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Meridian input"
+    },
+    {
+      "name": "search-input",
+      "type": "registry:ui",
+      "title": "Meridian search-input"
+    },
+    {
+      "name": "data-form",
+      "type": "registry:ui",
+      "title": "Meridian data-form"
+    },
+    {
+      "name": "date-time-picker",
+      "type": "registry:ui",
+      "title": "Meridian date-time-picker"
+    },
+    {
+      "name": "file-transfer",
+      "type": "registry:ui",
+      "title": "Meridian file-transfer"
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Meridian combobox"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Meridian dialog"
+    },
+    {
+      "name": "smooth-shape",
+      "type": "registry:ui",
+      "title": "Meridian smooth-shape"
+    },
+    {
+      "name": "shader-surface",
+      "type": "registry:ui",
+      "title": "Meridian shader-surface"
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Meridian scroll-area"
+    },
+    {
+      "name": "simple-scroll",
+      "type": "registry:ui",
+      "title": "Meridian simple-scroll"
+    },
+    {
+      "name": "accordion-scroll",
+      "type": "registry:ui",
+      "title": "Meridian accordion-scroll"
+    },
+    {
+      "name": "vertical-gallery",
+      "type": "registry:ui",
+      "title": "Meridian vertical-gallery"
+    },
+    {
+      "name": "filmstrip-gallery",
+      "type": "registry:ui",
+      "title": "Meridian filmstrip-gallery"
+    },
+    {
+      "name": "image-frame",
+      "type": "registry:ui",
+      "title": "Meridian image-frame"
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Meridian data-table"
+    },
+    {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Meridian menu"
+    },
+    {
+      "name": "gallery",
+      "type": "registry:ui",
+      "title": "Meridian gallery"
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Meridian segmented-control"
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Meridian context-menu"
+    },
+    {
+      "name": "step-navigation",
+      "type": "registry:ui",
+      "title": "Meridian step-navigation"
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Meridian accordion"
+    },
+    {
+      "name": "finance-navigation",
+      "type": "registry:ui",
+      "title": "Meridian finance-navigation"
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Meridian tabs"
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "Meridian command-palette"
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Meridian toast"
+    },
+    {
+      "name": "progress-bar",
+      "type": "registry:ui",
+      "title": "Meridian progress-bar"
+    },
+    {
+      "name": "metric-card",
+      "type": "registry:ui",
+      "title": "Meridian metric-card"
+    },
+    {
+      "name": "instrument",
+      "type": "registry:ui",
+      "title": "Meridian instrument"
+    },
+    {
+      "name": "image-inspector",
+      "type": "registry:ui",
+      "title": "Meridian image-inspector"
+    },
+    {
+      "name": "compass",
+      "type": "registry:ui",
+      "title": "Meridian compass"
+    },
+    {
+      "name": "audio-meter",
+      "type": "registry:ui",
+      "title": "Meridian audio-meter"
+    },
+    {
+      "name": "weather-instrument",
+      "type": "registry:ui",
+      "title": "Meridian weather-instrument"
+    },
+    {
+      "name": "attitude-indicator",
+      "type": "registry:ui",
+      "title": "Meridian attitude-indicator"
+    },
+    {
+      "name": "navigation-instrument",
+      "type": "registry:ui",
+      "title": "Meridian navigation-instrument"
+    },
+    {
+      "name": "race-telemetry",
+      "type": "registry:ui",
+      "title": "Meridian race-telemetry"
+    },
+    {
+      "name": "financial-chart",
+      "type": "registry:ui",
+      "title": "Meridian financial-chart"
+    },
+    {
+      "name": "market-picker",
+      "type": "registry:ui",
+      "title": "Meridian market-picker"
+    },
+    {
+      "name": "currency-picker",
+      "type": "registry:ui",
+      "title": "Meridian currency-picker"
+    },
+    {
+      "name": "financial-order-modal",
+      "type": "registry:ui",
+      "title": "Meridian financial-order-modal"
+    },
+    {
+      "name": "astronomy-instrument",
+      "type": "registry:ui",
+      "title": "Meridian astronomy-instrument"
+    },
+    {
+      "name": "ephemeris-picker",
+      "type": "registry:ui",
+      "title": "Meridian ephemeris-picker"
+    },
+    {
+      "name": "astrology-wheel",
+      "type": "registry:ui",
+      "title": "Meridian astrology-wheel"
+    },
+    {
+      "name": "lunar-ephemeris",
+      "type": "registry:ui",
+      "title": "Meridian lunar-ephemeris"
+    },
+    {
+      "name": "weather-conditions",
+      "type": "registry:ui",
+      "title": "Meridian weather-conditions"
+    },
+    {
+      "name": "wind-instrument",
+      "type": "registry:ui",
+      "title": "Meridian wind-instrument"
+    },
+    {
+      "name": "tide-instrument",
+      "type": "registry:ui",
+      "title": "Meridian tide-instrument"
+    }
+  ]
+}

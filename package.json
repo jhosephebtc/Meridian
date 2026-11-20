@@ -7,9 +7,10 @@
   "types": "./src/index.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "npm run registry && tsc --noEmit && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "registry": "node scripts/build-registry.mjs"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -40,10 +41,14 @@
   "files": [
     "src",
     "assets",
+    "registry",
+    "public/r",
     "DESIGN_SYSTEM.md",
     "index.html",
     "preview.html",
     "gann.html",
+    "components.html",
+    "components.json",
     "README.md"
   ],
   "dependencies": {
