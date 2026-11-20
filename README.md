@@ -1,5 +1,14 @@
 # MERIDIAN Design System (`v1.4.1`)
 
+**Components Lab:** open [`components.html`](./components.html) for all 64 tactile line components (jhosephe gestures × Meridian SVG grammar). Install via shadcn:
+
+```sh
+npm run registry
+npx shadcn@latest add http://localhost:5173/r/button.json
+# or after deploy: https://<your-host>/r/registry.json
+```
+
+
 **Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone e Arte Generativa 100% TypeScript** para o ecossistema **Lunar + Earth AI + Gemini Studio** (React Native + Web · CSS Puro · SVG 1:1).
 
 ![Meridian Plotted 81k Globe](./assets/meridian-globe-81k.svg)

@@ -94,6 +94,16 @@ Capas/placas usam `@paper-design/shaders` `halftoneDots`. **`u_size` ≥ ~0.4 de
 
 ---
 
+## 4.5 Components Lab & shadcn Registry
+
+Página interativa: [`components.html`](./components.html) — catálogo dos **64 componentes** do lab [jhosephe](https://jhosephe.vercel.app/) reexpressos em gramática Meridian (traço SVG / single-ink).
+
+- **Gestos:** física tátil do jhosephe (pressão local, dial por ângulo absoluto, captura de ponteiro 1:1, Frequency Gate ⌘K).
+- **Visual:** sem glass glow — hairlines, anéis SVG, dual-radius Meridian.
+- **Install:** `npx shadcn@latest add <origin>/r/button.json` (índice em `public/r/registry.json`). Fontes React em `registry/meridian/`; build via `npm run registry`.
+
+---
+
 ## 5. Tipografia em 3 Vozes & Disciplina Ótica
 
 Hierarquia construída por **contraste extremo de escala e troca de família** (peso `400` nos títulos serifados), com **kerning nativo** (`font-kerning: normal` + `liga`/`calt`) e calibração óptica para a família **Geist**:
