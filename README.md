@@ -28,46 +28,77 @@
 
 ---
 
+## Prévia ao Vivo (GitHub Pages)
+
+- **Prévia Real de App (`Meridian Studio`):** https://jhosephebtc.github.io/Meridian/preview.html
+- **Vitrine & Documentação Interativa do Design System:** https://jhosephebtc.github.io/Meridian/
+
+---
+
 ## Estrutura do Repositório
 
 ```text
 Meridian/
-├── README.md                  # Visão geral e guia rápido
-├── DESIGN_SYSTEM.md           # Especificação completa v1.3.0
-├── index.html                 # Vitrine interativa autônoma (pronta p/ GitHub Pages, 100% offline)
-├── package.json               # Manifesto ESM + exports tipados (zero dependências)
-├── tsconfig.json              # TypeScript strict mode
+├── README.md                    # Visão geral, prévia ao vivo e guia `npm run dev`
+├── DESIGN_SYSTEM.md             # Especificação completa v1.3.0
+├── index.html                   # Vitrine interativa completa do Design System
+├── preview.html                 # Prévia real de produto (Meridian Studio: B2C, Dossiê #11 e Observatório Pro)
+├── vite.config.ts               # Build multi-página Vite (index.html + preview.html)
+├── package.json                 # Scripts `dev`, `build`, `preview`, `typecheck` + exports ESM tipados
+├── tsconfig.json                # TypeScript strict mode
+├── .github/workflows/pages.yml  # Deploy automático no GitHub Pages (Vite + Typecheck)
 ├── src/
-│   ├── index.ts               # Barrel export completo
-│   ├── tokens.css             # 5 atmosferas Single-Ink, PaperGrain, Motion, Mobile-Native e Plotter CSS
-│   ├── components.css         # Biblioteca CSS pura de componentes editoriais e interativos
-│   ├── tokens.ts              # Tokens tipados p/ React Native, Web, Reanimated 4, Haptics e SVG 1:1
-│   ├── paper-grain.ts         # Gerador procedural Canvas 512×512 de papel algodão
-│   ├── plotter-svg.ts         # Gramática Plotter (13 papéis) + Globo Ortográfico 81k editável
-│   └── atelier-engine.ts      # Motor estilo p5.js/p5.brush 100% TS (Aquarela, Lápis, Giz, Pincel)
+│   ├── index.ts                 # Barrel export completo
+│   ├── tokens.css               # 5 atmosferas Single-Ink, PaperGrain, Motion, Mobile-Native e Plotter CSS
+│   ├── components.css           # Biblioteca CSS pura de componentes editoriais e interativos
+│   ├── tokens.ts                # Tokens tipados p/ React Native, Web, Reanimated 4, Haptics e SVG 1:1
+│   ├── paper-grain.ts           # Gerador procedural Canvas 512×512 de papel algodão
+│   ├── plotter-svg.ts           # Gramática Plotter (13 papéis) + Globo Ortográfico 81k editável
+│   ├── atelier-engine.ts        # Motor estilo p5.js/p5.brush 100% TS (Aquarela, Lápis, Giz, Pincel)
+│   ├── preview.css              # Layout responsivo puro CSS da prévia real de produto
+│   └── preview-app.ts           # App 100% TypeScript estrito consumindo os módulos nativos do Meridian
 └── assets/
-    └── meridian-globe-81k.svg # Exportação SVG editável do globo (padrão Plotter)
+    └── meridian-globe-81k.svg   # Exportação SVG editável do globo (padrão Plotter)
 ```
 
 ---
 
-## Uso Rápido
+## Rodando Localmente (`npm run dev`)
 
-### 1. Preview Interativo Local (Zero Build)
-Abra [`index.html`](./index.html) diretamente no navegador — ou ative o **GitHub Pages** na branch `main` (root `/`) para publicar a vitrine ao vivo.
+```bash
+git clone https://github.com/jhosephebtc/Meridian.git
+cd Meridian
+npm install
+npm run dev
+```
 
+Após iniciar o Vite, abra no navegador:
+- **Prévia Real de App (`Meridian Studio`):** `http://localhost:5173/preview.html`
+- **Showcase completo do Design System:** `http://localhost:5173/`
+
+Scripts disponíveis:
+- `npm run dev` — servidor de desenvolvimento Vite com HMR para `preview.html`, `index.html` e todos os módulos `src/*.ts` / `src/*.css`
+- `npm run typecheck` — validação TypeScript estrita (`tsc --noEmit`)
+- `npm run build` — `tsc --noEmit && vite build` (gera bundle estático em `dist/`)
+- `npm run preview` — testa localmente o build de produção gerado em `dist/`
+
+Atalhos de teclado em ambas as páginas:
 - Teclas **`1`–`5`**: alterna entre as 5 atmosferas em tempo real
-- Tecla **`M`**: alterna **B2C Invisível** ↔ **Técnico Pro**
+- Tecla **`M`** *(no Showcase)*: alterna **B2C Invisível** ↔ **Técnico Pro**
 - **`⌘K` / `/`**: abre a paleta de navegação instantânea (`0ms`)
 
-### 2. CSS Puro (Web)
+---
+
+## Uso como Biblioteca
+
+### 1. CSS Puro (Web)
 ```html
 <link rel="stylesheet" href="./src/tokens.css" />
 <link rel="stylesheet" href="./src/components.css" />
 <html data-surface="ivory" data-mode="invisible" data-grain="editorial">
 ```
 
-### 3. TypeScript (React Native / Web / Atelier / Plotter)
+### 2. TypeScript (React Native / Web / Atelier / Plotter)
 ```ts
 import {
   getSurfaceTheme,

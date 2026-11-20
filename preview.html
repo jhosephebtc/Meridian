@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-surface="ivory" data-mode="invisible" data-grain="editorial" data-signals="chromatic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="theme-color" content="#FAF9F5" id="meta-theme-color" />
+  <title>Meridian Studio — Prévia Real de Produto (Lunar + Earth AI)</title>
+  <link rel="stylesheet" href="./src/tokens.css" />
+  <link rel="stylesheet" href="./src/components.css" />
+  <link rel="stylesheet" href="./src/preview.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- ================= TOPBAR TRANSLÚCIDA ================= -->
+    <header class="ds-topbar" id="app-topbar">
+      <a href="./preview.html" class="brand-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.45"/>
+          <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="brand-title">Meridian Studio</span>
+      </a>
+
+      <!-- Clip-Path Seamless Workspace Switcher -->
+      <nav class="desktop-nav" aria-label="Áreas do aplicativo">
+        <div class="ds-cliptabs" data-cliptabs="workspace-nav">
+          <div class="ds-cliptabs-track">
+            <button class="ds-cliptabs-btn" data-view="today" data-active="true">Edição de Hoje (B2C)</button>
+            <button class="ds-cliptabs-btn" data-view="dossier">Dossiê Endereço (#11)</button>
+            <button class="ds-cliptabs-btn" data-view="observatory">Observatório Pro (81k + Gann)</button>
+            <div class="ds-cliptabs-overlay" aria-hidden="true">
+              <span class="ds-cliptabs-label">Edição de Hoje (B2C)</span>
+              <span class="ds-cliptabs-label">Dossiê Endereço (#11)</span>
+              <span class="ds-cliptabs-label">Observatório Pro (81k + Gann)</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="swatch-pill-group" role="group" aria-label="Atmosfera Single-Ink">
+          <button class="swatch-btn" data-surface-pick="ivory" aria-pressed="true" style="background:#FAF9F5" title="Ivory Editorial"></button>
+          <button class="swatch-btn" data-surface-pick="paper" aria-pressed="false" style="background:#FFFFFF" title="Paper White"></button>
+          <button class="swatch-btn" data-surface-pick="aqua" aria-pressed="false" style="background:#A4CED0" title="Signature Aqua"></button>
+          <button class="swatch-btn" data-surface-pick="terracotta" aria-pressed="false" style="background:#EDBB99" title="Warm Terracotta"></button>
+          <button class="swatch-btn" data-surface-pick="obsidian" aria-pressed="false" style="background:#141413" title="Obsidian Dark"></button>
+        </div>
+
+        <div class="popover-wrap">
+          <button class="ds-btn ds-btn-icon ds-btn-tertiary" id="btn-paper-pop" aria-expanded="false" aria-label="Textura de papel">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="5" cy="5" r="1.4" fill="currentColor"/>
+              <circle cx="10" cy="5" r="1.1" fill="currentColor" opacity="0.6"/>
+              <circle cx="15" cy="5" r="1.4" fill="currentColor"/>
+              <circle cx="7.5" cy="10" r="1.3" fill="currentColor"/>
+              <circle cx="12.5" cy="10" r="1.1" fill="currentColor" opacity="0.7"/>
+              <circle cx="5" cy="15" r="1.1" fill="currentColor" opacity="0.7"/>
+              <circle cx="10" cy="15" r="1.4" fill="currentColor"/>
+              <circle cx="15" cy="15" r="1.1" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </button>
+          <div class="ds-popover popover-box" id="paper-pop" data-open="false" role="dialog" aria-label="Configurações de papel">
+            <div class="ds-eyebrow" style="margin-bottom:8px;">Ruído PaperGrain 512×512</div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:10px;">
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="off">Off</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="subtle">Suave</button>
+              <button class="ds-btn ds-btn-primary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="editorial">Edit.</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="tactile">Tátil</button>
+            </div>
+            <div class="ds-mono" style="font-size:10.5px; color:var(--ds-fg-muted);">
+              Motor real importado de <code>src/paper-grain.ts</code> rodando em <code>npm run dev</code>.
+            </div>
+          </div>
+        </div>
+
+        <button class="ds-btn ds-btn-tertiary" id="btn-cmdk" style="padding:7px 10px; min-height:34px;">
+          <span class="kbd-chip">⌘K</span>
+        </button>
+
+        <a href="./index.html" class="ds-btn ds-btn-pill ds-btn-secondary" style="padding:7px 12px; min-height:34px; font-size:12px;">
+          ← Design System
+        </a>
+      </div>
+      <div class="ds-scroll-progress" id="app-scroll-progress"></div>
+    </header>
+
+    <!-- Mobile View Switcher -->
+    <div class="mobile-tabs-bar">
+      <div style="display:inline-flex; gap:6px;">
+        <button class="ds-btn ds-btn-pill ds-btn-primary" data-view-mobile="today" style="padding:7px 12px; font-size:12px;">Edição de Hoje</button>
+        <button class="ds-btn ds-btn-pill ds-btn-tertiary" data-view-mobile="dossier" style="padding:7px 12px; font-size:12px;">Dossiê #11</button>
+        <button class="ds-btn ds-btn-pill ds-btn-tertiary" data-view-mobile="observatory" style="padding:7px 12px; font-size:12px;">Observatório Pro</button>
+      </div>
+    </div>
+
+    <main class="app-main">
+      <!-- ====================================================================
+           VIEW 1: EDIÇÃO DE HOJE (Modo Invisível B2C — Clima, Ar & Bairro)
+           ==================================================================== -->
+      <div class="workspace-view" id="view-today">
+        <section class="app-hero">
+          <div class="app-wrap hero-split">
+            <div>
+              <div class="ds-eyebrow">São Paulo · 20 Nov 2026 · Modo Invisível B2C</div>
+              <h1 class="ds-h1" style="margin:10px 0 14px;">Manhã limpa, vento ameno e pico solar às 13h</h1>
+              <p class="ds-lead" style="margin-bottom:22px;">
+                Resumo editorial diário gerado por <strong>Google Weather, Air Quality &amp; Pollen</strong> — sem ruído visual nem jargão técnico, priorizando decisões práticas para sua rotina.
+              </p>
+              <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                <button class="ds-btn ds-btn-primary" id="btn-replay-hero-art">↻ Repintar Aquarela</button>
+                <button class="ds-btn ds-btn-pill ds-btn-secondary" data-jump-view="dossier">Abrir Raio-X do Endereço →</button>
+                <button class="ds-btn ds-btn-pill ds-btn-tertiary" data-jump-view="observatory">Modo Técnico Pro</button>
+              </div>
+            </div>
+
+            <div class="hero-canvas-card">
+              <canvas id="hero-watercolor-canvas" width="1280" height="720" aria-label="Ilustração generativa em aquarela e lápis grafite"></canvas>
+              <span class="canvas-caption">atelier-engine.ts · Aquarela Wet-on-Wet + Lápis 2H</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="app-wrap">
+          <div class="kpi-strip">
+            <div class="kpi-box">
+              <span class="ds-eyebrow">Qualidade do Ar</span>
+              <span class="kpi-num ds-tabular">26 <small style="font-size:14px; font-family:var(--ds-font-mono); color:var(--ds-signal-support);">BOM</small></span>
+              <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">PM2.5 5.8 µg/m³ · Tier A</span>
+            </div>
+            <div class="kpi-box">
+              <span class="ds-eyebrow">Temperatura</span>
+              <span class="kpi-num ds-tabular">23°C</span>
+              <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">Máx 28°C · Sensação 24°C</span>
+            </div>
+            <div class="kpi-box">
+              <span class="ds-eyebrow">Pólen &amp; Alergia</span>
+              <span class="kpi-num ds-tabular">Baixo</span>
+              <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">Grade 1×1 km · Gramíneas 1/5</span>
+            </div>
+            <div class="kpi-box">
+              <span class="ds-eyebrow">Geração Solar</span>
+              <span class="kpi-num ds-tabular">+4.6 kWh</span>
+              <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">Janela ótima 11:00–14:30</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bússola Ambiental 1:1 + Lifeline 24h -->
+        <section class="section-pad">
+          <div class="app-wrap two-col-app">
+            <div class="panel-surface">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;">
+                <div>
+                  <div class="ds-eyebrow">Instrumento SVG 1:1 Travado</div>
+                  <h2 class="ds-h3" style="margin-top:4px;">Bússola Ambiental 24h</h2>
+                </div>
+                <span class="tier-pill" id="preview-env-badge">Favorável</span>
+              </div>
+              <div class="ds-svg-frame" style="background:var(--ds-bg); margin-bottom:14px;">
+                <svg id="preview-env-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet"></svg>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label for="preview-hour-range" class="ds-eyebrow">Simular Horário</label>
+                <span class="ds-mono ds-tabular" id="preview-hour-readout" style="font-size:12px;">10:00 · AQI 26 · 23°C</span>
+              </div>
+              <input id="preview-hour-range" type="range" min="0" max="23" value="10" style="width:100%; accent-color:var(--ds-fg); cursor:pointer;" />
+              <p id="preview-hour-note" style="margin:8px 0 0; font-size:13.5px; color:var(--ds-fg-secondary);"></p>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:18px;">
+              <div class="panel-surface">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <div>
+                    <div class="ds-eyebrow">Lifeline Arrastável 1:1 (Momentum)</div>
+                    <h2 class="ds-h3" style="margin-top:4px;">Ritmo do Dia no Seu Bairro</h2>
+                  </div>
+                  <div style="display:flex; gap:6px;">
+                    <button class="ds-btn ds-btn-circle" id="ll-left" aria-label="Esquerda">←</button>
+                    <button class="ds-btn ds-btn-circle" id="ll-right" aria-label="Direita">→</button>
+                  </div>
+                </div>
+                <div class="ds-lifeline-viewport" id="preview-ll-viewport">
+                  <div class="ll-track" id="preview-ll-track"></div>
+                </div>
+              </div>
+
+              <!-- Editorial Cards (Anthropic Masonry Rhythm) -->
+              <div class="ds-masonry-group" style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px;">
+                <article class="ds-editorial-card panel-surface" style="margin:0;">
+                  <span class="ds-eyebrow">Pet &amp; Família · #04</span>
+                  <h3 class="ds-h3" style="font-size:20px;">Asfalto seguro até 10h40</h3>
+                  <p style="margin:0; font-size:13.5px; color:var(--ds-fg-muted);">
+                    Temperatura estimada do piso em 29°C agora; sobe acima de 44°C entre 12h e 15h.
+                  </p>
+                </article>
+                <article class="ds-editorial-card panel-surface" style="margin:0;">
+                  <span class="ds-eyebrow">Jornal 3 Min · #21</span>
+                  <h3 class="ds-h3" style="font-size:20px;">Boletim de áudio pronto</h3>
+                  <p style="margin:0; font-size:13.5px; color:var(--ds-fg-muted);">
+                    Clima local, qualidade do ar e trânsito compilados em narração calma de 2m48s.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ====================================================================
+           VIEW 2: DOSSIÊ ENDEREÇO #11 (Leitor 3 Colunas Deimos + Estante 3D)
+           ==================================================================== -->
+      <div class="workspace-view" id="view-dossier" hidden>
+        <section class="section-pad">
+          <div class="app-wrap">
+            <div style="margin-bottom:28px;">
+              <div class="ds-eyebrow">Dossiê Verificado · Ideia #11 · Padrão Deimos Archival</div>
+              <h1 class="ds-h1" style="margin:8px 0 12px;">Raio-X Real do Endereço</h1>
+              <span class="ds-btn ds-btn-pill ds-btn-tertiary" style="cursor:default; pointer-events:none;">Jardins · São Paulo, SP · 23.5614°S 46.6559°W</span>
+            </div>
+
+            <div class="ds-reader-grid">
+              <aside class="ds-reader-toc" style="position:sticky; top:76px;">
+                <div class="ds-eyebrow" style="padding:0 10px 8px;">Sumário</div>
+                <a href="#dos-overview" class="ds-toc-link" aria-current="true">Visão geral</a>
+                <a href="#dos-insolacao" class="ds-toc-link">Insolação &amp; Fachada</a>
+                <a href="#dos-fontes" class="ds-toc-link">Fontes (Tier A–C)</a>
+              </aside>
+
+              <article class="ds-prose">
+                <div id="dos-overview" style="padding-bottom:20px; border-bottom:1px solid var(--ds-rule);">
+                  <h2 class="ds-h2" style="margin-bottom:12px;">Auditoria Física &amp; Ambiental</h2>
+                  <p style="margin:0 0 14px;">
+                    <span class="ds-claim" data-cite-id="1">A inspeção visual da fachada via Street View + Gemini Vision indica calçada arborizada contínua, baixo desgaste de pavimento e distância de 180 metros até o corredor de ônibus mais próximo.<sup class="ds-cite-sup">1</sup></span>
+                    <span class="ds-claim" data-cite-id="2"> Dados orbitais AlphaEarth em grade de 10m mostram cobertura vegetal 2,1× acima da média do distrito, reduzindo o pico de calor vespertino em 2,4 °C.<sup class="ds-cite-sup">2</sup></span>
+                  </p>
+                </div>
+
+                <div id="dos-insolacao" style="padding:20px 0; border-bottom:1px solid var(--ds-rule);">
+                  <h2 class="ds-h2" style="margin-bottom:12px;">Insolação &amp; Potencial Solar 3D</h2>
+                  <p style="margin:0;">
+                    <span class="ds-claim" data-cite-id="3">A orientação Face Norte recebe 1.640 horas úteis de sol direto por ano segundo a Google Solar API, com payback estimado de 3,8 anos para sistema residencial de 5,4 kWp.<sup class="ds-cite-sup">3</sup></span>
+                  </p>
+                </div>
+
+                <div id="dos-fontes" style="padding-top:20px;">
+                  <div class="ds-eyebrow" style="margin-bottom:10px;">Fontes Verificadas (clique nas frases acima para destacar)</div>
+                  <div class="source-item" id="dos-src-1">
+                    <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">01</span>
+                    <div>
+                      <div style="font-size:13.5px; font-weight:500;">Google Street View Static + Gemini Vision Audit</div>
+                      <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mcp-google-earth-env · Notas derivadas sem cache de imagem</div>
+                    </div>
+                    <span class="tier-pill">Tier A</span>
+                  </div>
+                  <div class="source-item" id="dos-src-2">
+                    <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
+                    <div>
+                      <div style="font-size:13.5px; font-weight:500;">Google Earth Engine — AlphaEarth 10m Embeddings</div>
+                      <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">earthengine.google.com · Série histórica 2020–2026</div>
+                    </div>
+                    <span class="tier-pill">Tier A</span>
+                  </div>
+                  <div class="source-item" id="dos-src-3">
+                    <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
+                    <div>
+                      <div style="font-size:13.5px; font-weight:500;">Google Solar API — Modelo 3D de Telhados</div>
+                      <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mapsplatform.google.com · Radiação anual incidente</div>
+                    </div>
+                    <span class="tier-pill">Tier A</span>
+                  </div>
+                </div>
+              </article>
+
+              <aside style="position:sticky; top:76px; border-top:1px solid var(--ds-rule-strong); padding-top:14px;">
+                <div class="ds-eyebrow" style="margin-bottom:8px;">Em resumo · Fatos com Fonte</div>
+                <button class="fact-row" data-cite-id="1">
+                  <span class="ds-eyebrow" style="font-size:9.5px;">Rua &amp; Ruído</span>
+                  <span style="font-size:13px;">Via local arborizada; baixo fluxo noturno.</span>
+                  <span class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">Fonte 01 ↗</span>
+                </button>
+                <button class="fact-row" data-cite-id="2">
+                  <span class="ds-eyebrow" style="font-size:9.5px;">Microclima 10m</span>
+                  <span style="font-size:13px;">−2,4 °C frente ao entorno imediato no verão.</span>
+                  <span class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">Fonte 02 ↗</span>
+                </button>
+                <button class="fact-row" data-cite-id="3">
+                  <span class="ds-eyebrow" style="font-size:9.5px;">Energia Solar</span>
+                  <span style="font-size:13px;">1.640 h/ano · economia média de R$ 580/mês.</span>
+                  <span class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">Fonte 03 ↗</span>
+                </button>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <!-- Estante 3D de Dossiês -->
+        <section class="section-pad">
+          <div class="app-wrap">
+            <div class="ds-eyebrow">Biblioteca de Dossiês PDF · Deimos preserve-3d</div>
+            <h2 class="ds-h2" style="margin:4px 0 8px;">Volumes Relacionados</h2>
+            <div class="ds-shelf" id="preview-shelf">
+              <div class="ds-volume" data-open="true" tabindex="0" role="button">
+                <div class="ds-volume-spine">
+                  <span class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">11</span>
+                  <span style="writing-mode:vertical-rl; transform:rotate(180deg); font-family:var(--ds-font-display); font-size:16px;">Raio-X Endereço</span>
+                  <span class="ds-mono" style="font-size:9px;">PDF</span>
+                </div>
+                <div class="ds-volume-cover">
+                  <div>
+                    <div class="ds-eyebrow" style="font-size:9px;">Vol. 11</div>
+                    <div style="font-family:var(--ds-font-display); font-size:18px; line-height:1.15; margin-top:6px;">Raio-X Real do Endereço</div>
+                  </div>
+                  <div class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">14 págs · Tier A</div>
+                  <div class="ds-volume-edge"></div>
+                </div>
+              </div>
+              <div class="ds-volume" data-open="false" tabindex="0" role="button">
+                <div class="ds-volume-spine">
+                  <span class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">36</span>
+                  <span style="writing-mode:vertical-rl; transform:rotate(180deg); font-family:var(--ds-font-display); font-size:16px;">Simulador Solar</span>
+                  <span class="ds-mono" style="font-size:9px;">3D</span>
+                </div>
+                <div class="ds-volume-cover">
+                  <div>
+                    <div class="ds-eyebrow" style="font-size:9px;">Vol. 36</div>
+                    <div style="font-family:var(--ds-font-display); font-size:18px; line-height:1.15; margin-top:6px;">Simulador Solar 3D</div>
+                  </div>
+                  <div class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">Google Solar API</div>
+                  <div class="ds-volume-edge"></div>
+                </div>
+              </div>
+              <div class="ds-volume" data-open="false" tabindex="0" role="button">
+                <div class="ds-volume-spine">
+                  <span class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">26</span>
+                  <span style="writing-mode:vertical-rl; transform:rotate(180deg); font-family:var(--ds-font-display); font-size:16px;">Atlas Gann–Jenkins</span>
+                  <span class="ds-mono" style="font-size:9px;">PRO</span>
+                </div>
+                <div class="ds-volume-cover">
+                  <div>
+                    <div class="ds-eyebrow" style="font-size:9px;">Vol. 26</div>
+                    <div style="font-family:var(--ds-font-display); font-size:18px; line-height:1.15; margin-top:6px;">Terminal Gann–Jenkins</div>
+                  </div>
+                  <div class="ds-mono" style="font-size:10px; color:var(--ds-fg-muted);">4 Camadas TS</div>
+                  <div class="ds-volume-edge"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ====================================================================
+           VIEW 3: OBSERVATÓRIO PRO (Globo Plotter 81k + Cenários Aquarela + 4 Camadas)
+           ==================================================================== -->
+      <div class="workspace-view" id="view-observatory" hidden>
+        <section class="section-pad">
+          <div class="app-wrap">
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px; margin-bottom:24px;">
+              <div>
+                <div class="ds-eyebrow">Modo Técnico Auditável · plotter-svg.ts + atelier-engine.ts</div>
+                <h1 class="ds-h1" style="margin:6px 0 0;">Observatório Planetário &amp; Cenários</h1>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="ds-btn ds-btn-hold" id="btn-hold-backtest">
+                  <span>Segure p/ Backtest BigQuery</span>
+                  <span class="ds-btn-hold-fill" aria-hidden="true">Executando SQL…</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="two-col-app">
+              <!-- Live Plotted 81k Orthographic Globe -->
+              <div class="panel-surface">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px;">
+                  <div>
+                    <div class="ds-eyebrow">Globo Plotter 81k · Arraste 1:1</div>
+                    <h2 class="ds-h3" style="margin-top:3px;">Estações Globais &amp; Rotas</h2>
+                  </div>
+                  <button class="ds-btn ds-btn-secondary" id="btn-export-globe" style="padding:6px 11px; min-height:30px; font-size:12px;">Exportar .SVG</button>
+                </div>
+                <div class="globe-stage" id="preview-globe-stage"></div>
+                <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:12px;">
+                  <button class="ds-btn ds-btn-pill ds-btn-primary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-iso="all">Todos</button>
+                  <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-iso="primary">Primary</button>
+                  <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-iso="secondary">81k Dots</button>
+                  <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-iso="centerline">Centerline</button>
+                  <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-iso="transfer">Transfer</button>
+                </div>
+              </div>
+
+              <!-- Live Anthropic Econ-Scenarios Watercolor + Freehand Annotation -->
+              <div class="panel-surface">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px;">
+                  <div>
+                    <div class="ds-eyebrow">Atelier 100% TypeScript · Zero p5.js</div>
+                    <h2 class="ds-h3" style="margin-top:3px;">Matriz de Cenários em Aquarela</h2>
+                  </div>
+                  <div style="display:flex; gap:6px;">
+                    <button class="ds-btn ds-btn-tertiary" id="btn-obs-preset" style="padding:6px 10px; min-height:30px; font-size:12px;">Trocar Estilo</button>
+                    <button class="ds-btn ds-btn-secondary" id="btn-obs-replay" style="padding:6px 10px; min-height:30px; font-size:12px;">↻</button>
+                  </div>
+                </div>
+                <div class="atelier-stage-box">
+                  <canvas id="obs-atelier-canvas" width="1280" height="720" aria-label="Matriz de cenários em aquarela e prancheta interativa"></canvas>
+                  <span class="canvas-caption">Arraste na prancheta para pintar · atelier-engine.ts</span>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin-top:12px;">
+                  <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                    <button class="ds-btn ds-btn-pill ds-btn-primary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-obs-brush="watercolor">Aquarela</button>
+                    <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-obs-brush="pencil">Lápis 4B</button>
+                    <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-obs-brush="crayon">Giz</button>
+                    <button class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:5px 10px; min-height:26px; font-size:11px;" data-obs-brush="ink">Sumi-e</button>
+                  </div>
+                  <div style="display:inline-flex; gap:5px;">
+                    <button class="pigment-dot" data-obs-pigment="coral" aria-pressed="true" style="background:var(--ds-organic-coral)" aria-label="Pigmento Coral"></button>
+                    <button class="pigment-dot" data-obs-pigment="sky" aria-pressed="false" style="background:var(--ds-organic-sky)" aria-label="Pigmento Sky"></button>
+                    <button class="pigment-dot" data-obs-pigment="olive" aria-pressed="false" style="background:var(--ds-organic-olive)" aria-label="Pigmento Olive"></button>
+                    <button class="pigment-dot" data-obs-pigment="ochre" aria-pressed="false" style="background:var(--ds-organic-ochre)" aria-label="Pigmento Ochre"></button>
+                    <button class="pigment-dot" data-obs-pigment="ink" aria-pressed="false" style="background:var(--ds-fg)" aria-label="Tinta Principal"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4-Layer Deterministic Audit Trail -->
+            <div class="panel-surface" style="margin-top:20px;">
+              <div class="ds-eyebrow" style="margin-bottom:8px;">Auditoria Determinística em 4 Camadas (mcp-ephemeris-gann)</div>
+              <table class="audit-table">
+                <thead>
+                  <tr>
+                    <th>Camada</th>
+                    <th>Motor TypeScript</th>
+                    <th>Leitura Atual (Tabular)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody class="ds-mono">
+                  <tr>
+                    <td>01 · Astronomia Pura</td>
+                    <td>@swisseph/node</td>
+                    <td>⊙ 238.42° · ☽ 114.18° · ♄ 012.71°</td>
+                    <td><span class="tier-pill">Tier A</span></td>
+                  </tr>
+                  <tr>
+                    <td>02 · Casas &amp; Dignidades</td>
+                    <td>astro-math-engine</td>
+                    <td>C10 Angular · Orbe Aplicativo 0.84°</td>
+                    <td><span class="tier-pill">Tier A</span></td>
+                  </tr>
+                  <tr>
+                    <td>03 · Gann &amp; Jenkins 1:1</td>
+                    <td>geometry-core</td>
+                    <td>SQ9 √2 · Offset 63.75° · H8 (45.0°)</td>
+                    <td><span class="tier-pill">Tier B</span></td>
+                  </tr>
+                  <tr>
+                    <td>04 · Backtest BigQuery</td>
+                    <td>bigquery-validator</td>
+                    <td>Score 84.2% · n=1.420 janelas (2018–2026)</td>
+                    <td><span class="tier-pill">Tier A</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="app-footer">
+      <div class="app-wrap">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; font-size:13px; color:var(--ds-inverted-muted);">
+          <span><strong>Meridian Studio</strong> · Prévia real de produto rodando em <code>Vite + 100% TypeScript + CSS puro</code></span>
+          <a href="./index.html" style="color:var(--ds-inverted-fg);">Abrir Documentação &amp; Showcase Completo →</a>
+        </div>
+        <div class="app-footer-wordmark" aria-hidden="true">Meridian</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= INSTANT ⌘K PALETTE (0ms) ================= -->
+  <div class="ds-cmdk-backdrop" id="app-cmdk-backdrop" data-open="false" role="dialog" aria-modal="true" aria-label="Paleta de comando">
+    <div class="ds-cmdk-dialog">
+      <div style="display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--ds-rule);">
+        <input type="text" id="app-cmdk-input" placeholder="Trocar tela, superfície (1–5) ou ação…" style="flex:1; border:0; background:transparent; color:var(--ds-fg); font-size:15px; outline:none;" />
+        <span class="kbd-chip">ESC</span>
+      </div>
+      <div id="app-cmdk-list" style="max-height:300px; overflow-y:auto; padding:6px;"></div>
+    </div>
+  </div>
+
+  <!-- ================= SONNER TOASTS ================= -->
+  <div class="ds-toast-region" id="app-toasts" aria-live="polite"></div>
+
+  <script type="module" src="./src/preview-app.ts"></script>
+</body>
+</html>

@@ -1966,6 +1966,11 @@
         <span class="kbd-hint">⌘K</span>
       </button>
 
+      <!-- Prévia Real de Produto -->
+      <a href="./preview.html" class="btn btn-sm btn-secondary btn-pill" data-tip="Abrir Prévia Real de Produto (Meridian Studio)">
+        Prévia de App ↗
+      </a>
+
       <!-- Drawer de Tokens -->
       <button class="btn btn-sm btn-primary" id="btn-open-drawer" data-tip="Abrir drawer Vaul com tokens CSS/TS">
         Tokens
@@ -1987,8 +1992,9 @@
               Uma síntese editorial e analítica que une o rigor de pesquisa da Anthropic, o papel arquivístico tátil do Deimos e a engenharia de navegação e movimento de Emil Kowalski — pronta para React Native, Web em CSS puro e gráficos SVG 1:1.
             </p>
             <div class="btn-row" style="margin-top:0;">
-              <button class="btn btn-primary" id="hero-open-drawer">Inspecionar Tokens CSS &amp; TS</button>
-              <button class="btn btn-secondary btn-pill" id="hero-open-cmdk">Navegação Rápida <span class="kbd-hint">⌘K</span></button>
+              <a href="./preview.html" class="btn btn-primary">Abrir Prévia Real de App ↗</a>
+              <button class="btn btn-secondary btn-pill" id="hero-open-drawer">Inspecionar Tokens CSS &amp; TS</button>
+              <button class="btn btn-tertiary btn-pill" id="hero-open-cmdk">Navegação Rápida <span class="kbd-hint">⌘K</span></button>
               <button class="btn btn-tertiary btn-pill" id="hero-cycle-surface">Alternar Atmosfera →</button>
             </div>
           </div>
@@ -3520,6 +3526,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
          9. INSTANT ⌘K COMMAND PALETTE (0ms — Emil Frequency Gate)
          ====================================================================== */
       const CMDK_ACTIONS = [
+        { title: 'Abrir Prévia Real de App (Meridian Studio · preview.html)', hint: '↗', run: () => { window.location.href = './preview.html'; } },
         { title: 'Superfície: Ivory Editorial (#FAF9F5)', hint: '1', run: () => applySurface('ivory') },
         { title: 'Superfície: Paper White (#FFFFFF)', hint: '2', run: () => applySurface('paper') },
         { title: 'Superfície: Signature Aqua (#A4CED0)', hint: '3', run: () => applySurface('aqua') },
