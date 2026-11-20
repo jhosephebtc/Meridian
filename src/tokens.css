@@ -1,22 +1,26 @@
 /* ==========================================================================
-   MERIDIAN DESIGN SYSTEM — tokens.css (v1.1.0)
+   MERIDIAN DESIGN SYSTEM — tokens.css (v1.4.1)
    Ecossistema: Lunar + Earth AI + Gemini Studio
    Linhagem Visual:
      • Anthropic Editorial (Ivory, Dual-Radius, Asymmetric Grid, Muted Organics)
-     • Deimos Archival (Paper White / Aqua / Terracotta / Dark, PaperGrain, 3-Col, Lifeline)
-     • Emil Kowalski Design Engineering (Curves, Frequency Gate, Clip-Path Tabs, Mobile-Native)
+     • Deimos Archival (Paper White / Aqua / Terracotta / Dark, PaperGrain canvas, 3-Col)
+     • Soft Chromatic (Blush / Butter / Mist / Lilac)
+     • Emil Kowalski (Frequency Gate, Clip-Path Tabs, Mobile-Native)
+     • HalfTone Paper Shaders · Scrollbar hairline · Burger→X
    ========================================================================== */
+
+@import "./fonts.css";
 
 /* --------------------------------------------------------------------------
    1. PRIMITIVES, TYPOGRAPHY, MOTION & PAPER GRAIN
    -------------------------------------------------------------------------- */
 :root {
-  /* Tipografia — 3 Vozes Editoriais (zero dependência de CDN externa) */
-  --ds-font-display: "Instrument Serif", "Geist Serif", "Newsreader", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --ds-font-sans: "Geist", "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --ds-font-mono: "Geist Mono", "JetBrains Mono", "SF Mono", "Cascadia Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  /* Tipografia — 3 Vozes Geist (Sans · Serif · Mono), arquivos em /assets/fonts */
+  --ds-font-display: "Geist Serif", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --ds-font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ds-font-mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Monaco, Consolas, monospace;
 
-  /* Escala Tipográfica Fluida (Display Serif — peso 400 editorial + tracking negativo) */
+  /* Escala Tipográfica Fluida (Geist Serif — peso 400 + kerning óptico) */
   --ds-text-mega: clamp(3.25rem, 8vw, 6.25rem);        /* 52px → 100px */
   --ds-text-h1: clamp(2.375rem, 4.8vw, 4.5rem);        /* 38px → 72px  */
   --ds-text-h2: clamp(1.75rem, 2.6vw, 2.375rem);       /* 28px → 38px  */
@@ -25,7 +29,7 @@
   --ds-text-lead: clamp(1.25rem, 2vw, 1.75rem);        /* 20px → 28px  */
   --ds-text-metric: clamp(2.5rem, 4.6vw, 4.25rem);     /* 40px → 68px  */
 
-  /* Escala Funcional (Sans & Mono) */
+  /* Escala Funcional (Geist Sans & Mono) */
   --ds-text-body-lg: 1.0625rem;                        /* 17px — prosa enciclopédica */
   --ds-text-body-md: 0.9375rem;                        /* 15px — UI / cards padrão   */
   --ds-text-body-sm: 0.84375rem;                       /* 13.5px — sidebar / fatos   */
@@ -35,21 +39,31 @@
   --ds-text-mono-xs: 0.6875rem;                        /* 11px — badges / tags       */
   --ds-text-mono-micro: 0.625rem;                      /* 10px — citações / eixos    */
 
-  /* Line Heights & Size-Specific Tracking (Apple / Emil UI Cheatsheet) */
-  --ds-lh-mega: 0.92;
-  --ds-lh-display: 1.04;
-  --ds-lh-heading: 1.15;
-  --ds-lh-lead: 1.28;
-  --ds-lh-body-lg: 1.62;
-  --ds-lh-body: 1.52;
-  --ds-lh-ui: 1.4;
-  --ds-lh-mono: 1.5;
+  /*
+   * Leading & Tracking — calibração Geist
+   * Serif: ópticamente alta (hairlines) → leading um pouco mais aberto que Instrument.
+   * Sans: métricas generosas → tracking levemente negativo no corpo; mono com + leve.
+   */
+  --ds-lh-mega: 0.96;
+  --ds-lh-display: 1.08;
+  --ds-lh-heading: 1.2;
+  --ds-lh-lead: 1.34;
+  --ds-lh-metric: 1;
+  --ds-lh-body-lg: 1.58;
+  --ds-lh-body: 1.5;
+  --ds-lh-ui: 1.35;
+  --ds-lh-mono: 1.45;
 
-  --ds-tracking-mega: -0.035em;
-  --ds-tracking-display: -0.025em;
-  --ds-tracking-heading: -0.015em;
+  --ds-tracking-mega: -0.03em;
+  --ds-tracking-display: -0.022em;
+  --ds-tracking-heading: -0.014em;
+  --ds-tracking-lead: -0.011em;
+  --ds-tracking-metric: -0.028em;
+  --ds-tracking-body: -0.006em;
+  --ds-tracking-ui: -0.01em;
   --ds-tracking-normal: 0em;
-  --ds-tracking-eyebrow: 0.08em;
+  --ds-tracking-mono: 0.01em;
+  --ds-tracking-eyebrow: 0.06em;
 
   /* Espaçamento Base (Múltiplos de 4px) */
   --ds-space-1: 4px;
@@ -65,16 +79,29 @@
   --ds-space-20: 80px;
   --ds-space-24: 96px;
 
+  /* Ritmo vertical de blocos (título→corpo, parágrafos, seções) */
+  --ds-stack-tight: 6px;
+  --ds-stack-snug: 10px;
+  --ds-stack-md: 16px;
+  --ds-stack-loose: 28px;
+  --ds-stack-xl: 40px;
+  --ds-block-gap: 1.05em;                              /* margem entre <p> na prosa */
+  --ds-title-gap: 0.4em;                               /* folga após título serif */
+  --ds-section-y: clamp(3.5rem, 7vw, 6rem);            /* padding vertical de seção */
+
   /* Grid & Layout Containers */
   --ds-max-wide: 1440px;                               /* Galeria / Masonry Anthropic */
   --ds-max-editorial: 1180px;                          /* Leitor 3 colunas Deimos     */
   --ds-max-prose: 65ch;                                /* Emil Cheatsheet (~65 chars) */
   --ds-gutter-mobile: 16px;
   --ds-gutter-tablet: 24px;
-  --ds-gutter-desktop: 32px;
+  --ds-gutter-desktop: 32px;                         /* Deimos reader gap (≥1100px) */
   --ds-topbar-height: 58px;
-  --ds-toc-width: 172px;
-  --ds-aside-width: 276px;
+  /* Leitor 3 colunas — proporções Deimos Ray Eames: 152 · fluid · 264 */
+  --ds-toc-width: 152px;
+  --ds-aside-width: 264px;
+  --ds-reader-gap: 32px;
+  --ds-hairline: 1px;                                /* espessura; sutileza vem da opacidade */
 
   /* Sistema Dual-Radius (Anthropic Pills + Squircles & Deimos Editorial Plates) */
   --ds-radius-none: 0px;
@@ -134,17 +161,24 @@
   --ds-organic-slate: #56606E;                         /* Finanças / Infra / Dados    */
 
   /* ------------------------------------------------------------------------
-     TEXTURA DE RUÍDO / PAPEL ARQUIVÍSTICO (Linhagem Deimos PaperGrain)
-     Fallback puro em CSS (SVG fractalNoise sem rede); substituível por
-     tile Canvas 512×512 (algodão + microfibras) via --ds-paper-texture.
+     PAPER SHADER (v1.4) — canvas overlay `#ds-paper-grain`
+     NÃO usar data-URL em --ds-paper-texture (browsers descartam PNG grande).
+     Speckles com alpha + .ds-paper-grain-layer (source-over).
+     Legado body::after só se data-paper-shader ≠ canvas.
      ------------------------------------------------------------------------ */
-  --ds-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.35' intercept='0.82'/%3E%3CfeFuncG type='linear' slope='0.35' intercept='0.82'/%3E%3CfeFuncB type='linear' slope='0.35' intercept='0.82'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
-  --ds-paper-size: 240px 240px;
+  --ds-paper-texture: none;
+  --ds-paper-size: 100% 100%;
   --ds-paper-offset: 0 0;
+  --ds-paper-repeat: no-repeat;
+  --ds-paper-shader: none;
   --ds-paper-blend: multiply;
   --ds-paper-filter: none;
-  --ds-paper-opacity: 0.72;
+  --ds-paper-opacity: 0.88;
   --ds-grain-multiplier: 1;
+
+  /* Scrollbar hairline */
+  --ds-scrollbar-size: 2px;
+  --ds-scrollbar-thumb: color-mix(in srgb, var(--ds-fg) 22%, transparent);
 
   /* Densidade & Padding */
   --ds-density: 1;
@@ -193,8 +227,11 @@
   --ds-image-blend: multiply;
   --ds-paper-blend: multiply;
   --ds-paper-filter: none;
-  --ds-paper-opacity: calc(0.68 * var(--ds-grain-multiplier));
+  --ds-paper-opacity: calc(0.88 * var(--ds-grain-multiplier));
 }
+
+/* Soft Chromatic — pastéis do espectro (blush / butter / mist / lilac)
+   já definidos abaixo como [data-surface="…"]; ver SURFACE_SPECTRUM em tokens.ts */
 
 /* SUPERFÍCIE 2: PAPER WHITE — Linhagem Deimos White (#FFFFFF) */
 [data-surface="paper"] {
@@ -371,6 +408,120 @@
     10px 10px 24px 0 rgba(0, 0, 0, 0.35);
 }
 
+/* Soft chromatic pastels (espectro suave — Gann / DS) */
+[data-surface="blush"] {
+  color-scheme: light;
+  --ds-surface-name: "Soft Blush";
+  --ds-bg: #E8C4C0;
+  --ds-surface-1: #E0B9B5;
+  --ds-surface-2: #D2AAA6;
+  --ds-surface-3: #C29A96;
+  --ds-highlight: #F7E8E6;
+  --ds-fg: #1A1414;
+  --ds-fg-secondary: #2E2424;
+  --ds-fg-muted: #5A4544;
+  --ds-fg-subtle: #6E5655;
+  --ds-accent: #1A1414;
+  --ds-accent-hover: #2E2424;
+  --ds-accent-fg: #E8C4C0;
+  --ds-inverted-bg: #1A1414;
+  --ds-inverted-surface: #2A2222;
+  --ds-inverted-fg: #F7E8E6;
+  --ds-inverted-muted: #C4A09C;
+  --ds-inverted-border: #3E3333;
+  --ds-spine-1: #EFD1CD;
+  --ds-spine-2: #D9B0AC;
+  --ds-spine-3: #C59E9A;
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.92 * var(--ds-grain-multiplier));
+}
+[data-surface="butter"] {
+  color-scheme: light;
+  --ds-surface-name: "Soft Butter";
+  --ds-bg: #E8D9A8;
+  --ds-surface-1: #E0D09C;
+  --ds-surface-2: #D2C28C;
+  --ds-surface-3: #C2B27C;
+  --ds-highlight: #F6F0DC;
+  --ds-fg: #1A1810;
+  --ds-fg-secondary: #2E2A1C;
+  --ds-fg-muted: #5A5238;
+  --ds-fg-subtle: #6E6548;
+  --ds-accent: #1A1810;
+  --ds-accent-hover: #2E2A1C;
+  --ds-accent-fg: #E8D9A8;
+  --ds-inverted-bg: #1A1810;
+  --ds-inverted-surface: #2A2618;
+  --ds-inverted-fg: #F6F0DC;
+  --ds-inverted-muted: #C4B88A;
+  --ds-inverted-border: #3E3A28;
+  --ds-spine-1: #EFE4BC;
+  --ds-spine-2: #D9C998;
+  --ds-spine-3: #C5B586;
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="mist"] {
+  color-scheme: light;
+  --ds-surface-name: "Soft Mist";
+  --ds-bg: #C5D4CE;
+  --ds-surface-1: #B9C9C2;
+  --ds-surface-2: #A8B9B2;
+  --ds-surface-3: #96A8A0;
+  --ds-highlight: #E8F0EC;
+  --ds-fg: #141816;
+  --ds-fg-secondary: #242E2A;
+  --ds-fg-muted: #3E4E48;
+  --ds-fg-subtle: #506258;
+  --ds-accent: #141816;
+  --ds-accent-hover: #242E2A;
+  --ds-accent-fg: #C5D4CE;
+  --ds-inverted-bg: #141816;
+  --ds-inverted-surface: #222A26;
+  --ds-inverted-fg: #E8F0EC;
+  --ds-inverted-muted: #9BB0A8;
+  --ds-inverted-border: #343E38;
+  --ds-spine-1: #D2DFDA;
+  --ds-spine-2: #B6C6C0;
+  --ds-spine-3: #A0B2AA;
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="lilac"] {
+  color-scheme: light;
+  --ds-surface-name: "Soft Lilac";
+  --ds-bg: #C9C0D8;
+  --ds-surface-1: #BDB4CE;
+  --ds-surface-2: #ADA2C0;
+  --ds-surface-3: #9C90B0;
+  --ds-highlight: #EBE6F2;
+  --ds-fg: #16141A;
+  --ds-fg-secondary: #28242E;
+  --ds-fg-muted: #4A4458;
+  --ds-fg-subtle: #5E566C;
+  --ds-accent: #16141A;
+  --ds-accent-hover: #28242E;
+  --ds-accent-fg: #C9C0D8;
+  --ds-inverted-bg: #16141A;
+  --ds-inverted-surface: #26222E;
+  --ds-inverted-fg: #EBE6F2;
+  --ds-inverted-muted: #A89CB8;
+  --ds-inverted-border: #3A3444;
+  --ds-spine-1: #D6CEE2;
+  --ds-spine-2: #BBB0CC;
+  --ds-spine-3: #A89CB8;
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+
 /* --------------------------------------------------------------------------
    3. REGRAS & ESTADOS DERIVADOS DINAMICAMENTE VIA color-mix() (Single-Ink)
    -------------------------------------------------------------------------- */
@@ -380,10 +531,11 @@
   --ds-bg-tint-muted: color-mix(in srgb, var(--ds-fg) 8.5%, var(--ds-bg));
   --ds-bg-tint-active: color-mix(in srgb, var(--ds-fg) 12%, var(--ds-bg));
 
-  --ds-rule: color-mix(in srgb, var(--ds-fg) 11%, transparent);
-  --ds-rule-strong: color-mix(in srgb, var(--ds-fg) 22%, transparent);
-  --ds-border: color-mix(in srgb, var(--ds-fg) 12%, transparent);
-  --ds-border-strong: color-mix(in srgb, var(--ds-fg) 26%, transparent);
+  /* Hairlines Deimos: 10% rule / 16% strong / 10% border — mais sutis que 11–26% */
+  --ds-rule: color-mix(in srgb, var(--ds-fg) 10%, transparent);
+  --ds-rule-strong: color-mix(in srgb, var(--ds-fg) 16%, transparent);
+  --ds-border: color-mix(in srgb, var(--ds-fg) 10%, transparent);
+  --ds-border-strong: color-mix(in srgb, var(--ds-fg) 18%, transparent);
 
   /* Superfícies translúcidas (Apple Design chrome + Deimos tinted paper) */
   --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 82%, transparent);
@@ -393,8 +545,8 @@
   /* Gradiente de grão diagonal sutil (Deimos Diagonal Noise Pattern) */
   --ds-pattern-diagonal: repeating-linear-gradient(
     -45deg,
-    color-mix(in srgb, var(--ds-fg) 14%, transparent) 0px,
-    color-mix(in srgb, var(--ds-fg) 14%, transparent) 1px,
+    color-mix(in srgb, var(--ds-fg) 8%, transparent) 0px,
+    color-mix(in srgb, var(--ds-fg) 8%, transparent) 1px,
     transparent 1px,
     transparent 7px
   );
@@ -419,6 +571,12 @@
 [data-grain="editorial"] { --ds-grain-multiplier: 1; }
 [data-grain="tactile"]   { --ds-grain-multiplier: 1.45; }
 
+/* Tamanho espacial — dataset; o canvas é repintado em JS (paper-grain.ts) */
+[data-grain-size="fine"]   { --ds-grain-size-label: "Fino"; }
+[data-grain-size="medium"] { --ds-grain-size-label: "Médio"; }
+[data-grain-size="coarse"] { --ds-grain-size-label: "Grosso"; }
+[data-grain-size="chunky"] { --ds-grain-size-label: "Grumoso"; }
+
 [data-signals="monochrome"] {
   --ds-signal-support: var(--ds-fg);
   --ds-signal-caution: var(--ds-fg);
@@ -441,26 +599,131 @@
 }
 
 /* --------------------------------------------------------------------------
-   5. PAPER GRAIN OVERLAY GLOBAL (Idêntico ao charme arquivístico do Deimos)
+   5. PAPER SHADER OVERLAY GLOBAL (canvas · sem data-URL)
    -------------------------------------------------------------------------- */
+/* Legado: só se ainda houver textura CSS (sem modo canvas) */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 2147483640;
   pointer-events: none;
+  background-color: transparent;
   background-image: var(--ds-paper-texture);
   background-position: var(--ds-paper-offset);
   background-size: var(--ds-paper-size);
+  background-repeat: var(--ds-paper-repeat, no-repeat);
   mix-blend-mode: var(--ds-paper-blend);
-  filter: var(--ds-paper-filter);
+  filter: var(--ds-paper-filter, none);
   opacity: var(--ds-paper-opacity);
+  image-rendering: auto;
+}
+html[data-paper-shader="canvas"] body::after {
+  content: none;
+  display: none;
+}
+
+/* Overlay real — speckles com alpha (source-over; multiply sumia em ivory/GPUs) */
+.ds-paper-grain-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  pointer-events: none !important;
+  z-index: 2147483640;
+  display: block;
+  mix-blend-mode: normal;
+  opacity: var(--ds-paper-opacity);
+  image-rendering: auto;
+}
+html[data-grain-size="coarse"] .ds-paper-grain-layer,
+html[data-grain-size="chunky"] .ds-paper-grain-layer {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+html[data-surface="obsidian"] .ds-paper-grain-layer {
+  filter: invert(1);
+  opacity: calc(var(--ds-paper-opacity) * 0.85);
+}
+
+/* --------------------------------------------------------------------------
+   5b. SCROLLBAR HAIRLINE — 2px, track transparente, sem setas
+   IMPORTANTE: em Chromium, `scrollbar-width` / `scrollbar-color` DESATIVA
+   `::-webkit-scrollbar` e volta a barra nativa do Windows (trilha branca).
+   Por isso o padrão CSS só no Firefox; Blink/WebKit usam só os pseudos.
+   -------------------------------------------------------------------------- */
+@supports (-moz-appearance: none) {
+  html,
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--ds-fg) 22%, transparent) transparent;
+  }
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 2px !important;
+  height: 2px !important;
+  background: transparent !important;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track-piece,
+body::-webkit-scrollbar-track-piece,
+*::-webkit-scrollbar-track-piece {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--ds-fg) 28%, transparent) !important;
+  background-clip: padding-box !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 24px;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--ds-fg) 42%, transparent) !important;
+}
+
+html::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button,
+*::-webkit-scrollbar-button,
+html::-webkit-scrollbar-button:start:decrement,
+html::-webkit-scrollbar-button:end:increment,
+*::-webkit-scrollbar-button:start:decrement,
+*::-webkit-scrollbar-button:end:increment {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: transparent !important;
 }
 
 /* --------------------------------------------------------------------------
    6. MOBILE-NATIVE BASELINE & ACESSIBILIDADE (Emil mobile-native + apple-design)
    -------------------------------------------------------------------------- */
 html {
+  background-color: var(--ds-bg); /* pinta a calha da scrollbar (sem faixa branca) */
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior: none;

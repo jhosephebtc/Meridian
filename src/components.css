@@ -1,6 +1,7 @@
 /* ==========================================================================
-   MERIDIAN DESIGN SYSTEM — components.css (v1.1.0)
+   MERIDIAN DESIGN SYSTEM — components.css (v1.4.1)
    CSS Puro · Zero `transition: all` · Zero `ease-in` · Hover Gating para Touch
+   Burger→X · Claim dotted · Scrollbar hairline · Drawer dim (sem blur) · Page veil
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -17,55 +18,78 @@ body {
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-body-md);
   line-height: var(--ds-lh-body);
+  letter-spacing: var(--ds-tracking-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   transition:
     background-color var(--ds-duration-base) var(--ds-ease-out),
     color var(--ds-duration-base) var(--ds-ease-out);
 }
 
-.ds-display-mega {
+.ds-display-mega,
+.ds-h1,
+.ds-h2,
+.ds-h3,
+.ds-h4,
+.ds-lead,
+.ds-metric {
   font-family: var(--ds-font-display);
-  font-size: var(--ds-text-mega);
   font-weight: 400;
+  font-synthesis-weight: none;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+.ds-display-mega {
+  font-size: var(--ds-text-mega);
   line-height: var(--ds-lh-mega);
   letter-spacing: var(--ds-tracking-mega);
-  margin: 0;
+  margin: 0 0 var(--ds-title-gap);
 }
 
 .ds-h1 {
-  font-family: var(--ds-font-display);
   font-size: var(--ds-text-h1);
-  font-weight: 400;
   line-height: var(--ds-lh-display);
   letter-spacing: var(--ds-tracking-display);
-  margin: 0;
+  margin: 0 0 var(--ds-title-gap);
 }
 
 .ds-h2 {
-  font-family: var(--ds-font-display);
   font-size: var(--ds-text-h2);
-  font-weight: 400;
   line-height: var(--ds-lh-heading);
   letter-spacing: var(--ds-tracking-heading);
-  margin: 0;
+  margin: var(--ds-stack-loose) 0 var(--ds-stack-snug);
 }
 
 .ds-h3 {
-  font-family: var(--ds-font-display);
   font-size: var(--ds-text-h3);
-  font-weight: 400;
   line-height: var(--ds-lh-heading);
   letter-spacing: var(--ds-tracking-heading);
-  margin: 0;
+  margin: var(--ds-stack-md) 0 var(--ds-stack-tight);
+}
+
+.ds-h4 {
+  font-size: var(--ds-text-h4);
+  line-height: var(--ds-lh-heading);
+  letter-spacing: var(--ds-tracking-heading);
+  margin: var(--ds-stack-md) 0 var(--ds-stack-tight);
 }
 
 .ds-lead {
-  font-family: var(--ds-font-display);
   font-size: var(--ds-text-lead);
-  font-weight: 400;
   line-height: var(--ds-lh-lead);
+  letter-spacing: var(--ds-tracking-lead);
   color: var(--ds-fg-secondary);
+  margin: 0 0 var(--ds-stack-md);
+}
+
+.ds-metric {
+  font-size: var(--ds-text-metric);
+  line-height: var(--ds-lh-metric);
+  letter-spacing: var(--ds-tracking-metric);
+  font-variant-numeric: tabular-nums;
   margin: 0;
 }
 
@@ -73,7 +97,77 @@ body {
   max-width: var(--ds-max-prose);
   font-size: var(--ds-prose-size, var(--ds-text-body-lg));
   line-height: var(--ds-lh-body-lg);
+  letter-spacing: var(--ds-tracking-body);
   color: var(--ds-fg);
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: manual;
+  text-wrap: pretty;
+}
+
+.ds-prose > * + * {
+  margin-block-start: var(--ds-block-gap);
+}
+
+.ds-prose > :first-child {
+  margin-block-start: 0;
+}
+
+.ds-prose p {
+  margin: 0;
+}
+
+.ds-prose p + p {
+  margin-top: var(--ds-block-gap);
+}
+
+.ds-prose p,
+.ds-lead,
+.ds-claim {
+  text-wrap: pretty;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+
+/* Ritmo de blocos utilitário */
+.ds-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-stack-md);
+}
+.ds-stack-tight { gap: var(--ds-stack-tight); }
+.ds-stack-snug { gap: var(--ds-stack-snug); }
+.ds-stack-loose { gap: var(--ds-stack-loose); }
+.ds-stack-xl { gap: var(--ds-stack-xl); }
+
+.ds-section {
+  padding-block: var(--ds-section-y);
+}
+
+.ds-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--ds-stack-md) var(--ds-stack-loose);
+  margin-bottom: var(--ds-stack-loose);
+}
+
+.ds-h1,
+.ds-h2,
+.ds-h3,
+.ds-display-mega,
+.ds-aside-title {
+  text-wrap: balance;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* Evita partir compostos tipográficos (1×1, Wall Street, Gann–Jenkins) */
+.ds-nowrap {
+  white-space: nowrap;
 }
 
 .ds-eyebrow {
@@ -88,17 +182,29 @@ body {
 .ds-mono {
   font-family: var(--ds-font-mono);
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ds-tracking-mono);
+  line-height: var(--ds-lh-mono);
 }
 
 .ds-rule {
   border: 0;
-  border-top: 1px solid var(--ds-rule);
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
   margin: 0;
 }
 
 .ds-rule-dashed {
   border: 0;
-  border-top: 1px dashed var(--ds-rule-strong);
+  border-top: var(--ds-hairline, 1px) dashed var(--ds-rule-strong);
+  margin: 0;
+}
+
+/* Hairline vertical (colunas do leitor Deimos) */
+.ds-rule-y {
+  width: var(--ds-hairline, 1px);
+  align-self: stretch;
+  background: var(--ds-rule);
+  border: 0;
+  padding: 0;
   margin: 0;
 }
 
@@ -127,6 +233,109 @@ body {
 .ds-topbar[data-scrolled="true"] {
   border-bottom-color: var(--ds-rule);
 }
+
+/* --------------------------------------------------------------------------
+   2b. HAMBURGER → X (3 linhas iguais, morph animado)
+   -------------------------------------------------------------------------- */
+.ds-burger {
+  appearance: none;
+  border: var(--ds-hairline, 1px) solid var(--ds-border);
+  background: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ds-radius-squircle, 12px);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ds-fg);
+  flex-shrink: 0;
+  padding: 0;
+  transition:
+    background-color var(--ds-duration-fast) ease,
+    border-color var(--ds-duration-fast) ease,
+    transform var(--ds-duration-press) var(--ds-ease-out);
+}
+.ds-burger:active {
+  transform: scale(var(--ds-press-scale, 0.97));
+}
+.ds-burger:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.ds-burger-lines {
+  position: relative;
+  width: 18px;
+  height: 12px;
+  display: block;
+}
+
+.ds-burger-lines span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+  transform-origin: center;
+  transition:
+    top 280ms var(--ds-ease-drawer, cubic-bezier(0.32, 0.72, 0, 1)),
+    transform 280ms var(--ds-ease-drawer, cubic-bezier(0.32, 0.72, 0, 1)),
+    opacity 180ms ease;
+}
+
+.ds-burger-lines span:nth-child(1) { top: 0; }
+.ds-burger-lines span:nth-child(2) { top: 50%; margin-top: -0.75px; }
+.ds-burger-lines span:nth-child(3) { top: calc(100% - 1.5px); }
+
+.ds-burger[aria-expanded="true"] .ds-burger-lines span:nth-child(1) {
+  top: 50%;
+  margin-top: -0.75px;
+  transform: rotate(45deg);
+}
+.ds-burger[aria-expanded="true"] .ds-burger-lines span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+.ds-burger[aria-expanded="true"] .ds-burger-lines span:nth-child(3) {
+  top: 50%;
+  margin-top: -0.75px;
+  transform: rotate(-45deg);
+}
+
+/* Rail lateral (menu mobile / layout rail) — dim sem blur */
+.ds-nav-rail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  background: rgba(20, 16, 12, 0.34);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ds-duration-drawer) var(--ds-ease-drawer);
+}
+.ds-nav-rail-backdrop[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ds-nav-rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 141;
+  width: min(300px, 88vw);
+  background-color: var(--ds-bg);
+  border-radius: 0 16px 16px 0;
+  box-shadow:
+    1px 0 0 0 var(--ds-rule),
+    24px 0 56px -16px rgba(28, 20, 12, 0.22);
+  transform: translateX(-105%);
+  transition: transform var(--ds-duration-drawer) var(--ds-ease-drawer);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 28px;
+}
+.ds-nav-rail[data-open="true"] { transform: translateX(0); }
 
 /* Scroll progress hairline na base do header */
 .ds-scroll-progress {
@@ -367,8 +576,8 @@ body {
 }
 
 .ds-blur-morph[data-morphing="true"] {
-  opacity: 0.45;
-  filter: blur(var(--ds-blur-bridge));
+  opacity: 0.35;
+  filter: none;
   transform: translateY(1px);
 }
 
@@ -384,17 +593,24 @@ body {
   box-shadow: var(--ds-shadow-popover);
   transform-origin: var(--ds-origin, top right);
   opacity: 0;
-  transform: scale(var(--ds-enter-scale)) translateY(-4px);
+  visibility: hidden;
+  transform: scale(var(--ds-enter-scale)) translateY(-6px);
   pointer-events: none;
   transition:
     opacity var(--ds-duration-tooltip) var(--ds-ease-out),
-    transform var(--ds-duration-tooltip) var(--ds-ease-out);
+    transform var(--ds-duration-tooltip) var(--ds-ease-out),
+    visibility 0s linear var(--ds-duration-tooltip);
 }
 
 .ds-popover[data-open="true"] {
   opacity: 1;
+  visibility: visible;
   transform: scale(1) translateY(0);
   pointer-events: auto;
+  transition:
+    opacity var(--ds-duration-tooltip) var(--ds-ease-out),
+    transform var(--ds-duration-tooltip) var(--ds-ease-out),
+    visibility 0s linear 0s;
 }
 
 .ds-tooltip {
@@ -410,15 +626,22 @@ body {
   pointer-events: none;
   transform-origin: bottom center;
   opacity: 0;
+  visibility: hidden;
   transform: translate(-50%, calc(-100% - 6px)) scale(0.96);
   transition:
     opacity var(--ds-duration-tooltip) var(--ds-ease-out),
-    transform var(--ds-duration-tooltip) var(--ds-ease-out);
+    transform var(--ds-duration-tooltip) var(--ds-ease-out),
+    visibility 0s linear var(--ds-duration-tooltip);
 }
 
 .ds-tooltip[data-visible="true"] {
   opacity: 1;
+  visibility: visible;
   transform: translate(-50%, calc(-100% - 10px)) scale(1);
+  transition:
+    opacity var(--ds-duration-tooltip) var(--ds-ease-out),
+    transform var(--ds-duration-tooltip) var(--ds-ease-out),
+    visibility 0s linear 0s;
 }
 
 /* Pula animação ao deslizar para tooltips irmãos já abertos (Emil rule!) */
@@ -437,7 +660,7 @@ body {
   display: none;
   align-items: flex-start;
   justify-content: center;
-  padding: min(14vh, 110px) 16px 24px;
+  padding: min(11vh, 88px) max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px));
 }
 
 .ds-cmdk-backdrop[data-open="true"] {
@@ -445,14 +668,72 @@ body {
 }
 
 .ds-cmdk-dialog {
-  width: 100%;
+  width: min(560px, calc(100vw - 32px));
   max-width: 560px;
+  max-height: min(72vh, 560px);
+  margin: 0 auto;
   border-radius: var(--ds-radius-card);
   background-color: var(--ds-bg);
   border: 1px solid var(--ds-border-strong);
   box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.35);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   /* Zero animation intencional — resposta instantânea como Raycast */
+}
+
+.ds-cmdk-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ds-rule);
+  flex-shrink: 0;
+}
+
+.ds-cmdk-list {
+  flex: 1 1 auto;
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 10px 10px 8px;
+  scrollbar-gutter: auto;
+}
+
+.ds-cmdk-list::-webkit-scrollbar {
+  width: 2px !important;
+  height: 2px !important;
+  background: transparent !important;
+}
+
+.ds-cmdk-list::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--ds-fg) 22%, transparent) !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.ds-cmdk-list::-webkit-scrollbar-track,
+.ds-cmdk-list::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+.ds-cmdk-list::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.ds-cmdk-footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--ds-rule);
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  color: var(--ds-fg-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -503,8 +784,8 @@ body {
   overflow: hidden;
   border-radius: var(--ds-radius-plate);
   background-color: var(--ds-surface-1);
-  box-shadow: var(--ds-shadow-plate-inset);
-  border: 1px solid var(--ds-border);
+  box-shadow: none;
+  border: var(--ds-hairline, 1px) solid var(--ds-border);
 }
 
 .ds-plate-media {
@@ -523,66 +804,209 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. LEITOR ENCICLOPÉDICO 3 COLUNAS & CITAÇÕES (Linhagem Deimos)
+   8. LEITOR DEIMOS — TOC | prosa | aside (placa menor + At a glance)
    -------------------------------------------------------------------------- */
 .ds-reader-grid {
   display: grid;
-  grid-template-columns: var(--ds-toc-width) minmax(0, 1fr) var(--ds-aside-width);
-  gap: var(--ds-gutter-desktop);
+  grid-template-columns: 1fr;
+  gap: 0;
   align-items: start;
+  max-width: var(--ds-max-editorial);
+  margin-inline: auto;
+  width: 100%;
 }
 
-@media (max-width: 1024px) {
+.ds-reader-toc {
+  display: none;
+  min-width: 0;
+}
+
+.ds-reader-main,
+.ds-reader-aside,
+.ds-prose {
+  min-width: 0;
+}
+
+.ds-reader-main {
+  box-shadow: none;
+  padding-inline: 0;
+  width: 100%;
+}
+
+/* Aside direita: placa compacta + fatos — nunca comprime a prosa */
+.ds-reader-aside {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  position: static;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ds-aside-plate {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 0 10px;
+  border-radius: var(--ds-radius-plate);
+  overflow: hidden;
+  background: var(--ds-surface-2);
+  aspect-ratio: 1 / 1;
+}
+.ds-aside-plate > canvas,
+.ds-aside-plate > div,
+.ds-aside-plate img,
+.ds-aside-plate svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: cover;
+}
+
+.ds-aside-caption {
+  font-family: var(--ds-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ds-fg-muted);
+  line-height: 1.4;
+  margin: 0 0 18px;
+}
+
+.ds-aside-title {
+  font-family: var(--ds-font-display);
+  font-size: 1.25rem;
+  line-height: var(--ds-lh-heading);
+  letter-spacing: var(--ds-tracking-heading);
+  margin: 0 0 var(--ds-stack-tight);
+  font-weight: 400;
+  font-synthesis-weight: none;
+}
+
+.ds-reader-section {
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  margin-top: var(--ds-stack-loose);
+  padding-top: var(--ds-stack-md);
+}
+.ds-reader-section:first-child {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.ds-plate-caption {
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  margin-top: 10px;
+  padding-top: 8px;
+  display: grid;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--ds-fg-muted);
+  line-height: 1.45;
+}
+
+@media (min-width: 1100px) {
   .ds-reader-grid {
-    grid-template-columns: minmax(0, 1fr) 256px;
+    grid-template-columns: var(--ds-toc-width) minmax(0, 1fr) var(--ds-aside-width);
+    gap: var(--ds-reader-gap, 32px);
   }
-  .ds-reader-toc { display: none; }
+  .ds-reader-toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--ds-topbar-height, 58px) + 16px);
+    align-self: start;
+  }
+  .ds-reader-main {
+    box-shadow:
+      -1px 0 0 0 var(--ds-rule),
+      1px 0 0 0 var(--ds-rule);
+    padding-inline: clamp(18px, 2vw, 28px);
+  }
+  .ds-reader-aside {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+    position: sticky;
+    top: calc(var(--ds-topbar-height, 58px) + 16px);
+    align-self: start;
+  }
+  .ds-aside-plate {
+    max-width: none;
+  }
 }
 
-@media (max-width: 720px) {
+@media (min-width: 960px) and (max-width: 1099px) {
   .ds-reader-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: var(--ds-toc-width) minmax(0, 1fr);
+    gap: var(--ds-reader-gap, 32px);
+  }
+  .ds-reader-toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--ds-topbar-height, 58px) + 16px);
+    align-self: start;
+  }
+  .ds-reader-main {
+    box-shadow: -1px 0 0 0 var(--ds-rule);
+    padding-inline-start: clamp(18px, 2vw, 28px);
   }
 }
 
 .ds-toc-link {
   display: block;
-  padding: 6px 10px;
-  font-size: 13px;
+  padding: 7px 10px;
+  font-size: 12.5px;
   color: var(--ds-fg-muted);
   text-decoration: none;
-  border-left: 1.5px solid transparent;
+  border-radius: 6px;
+  border-left: 0;
   transition:
     color var(--ds-duration-fast) ease,
-    background-color var(--ds-duration-fast) ease,
-    border-color var(--ds-duration-fast) ease;
+    background-color var(--ds-duration-fast) ease;
+}
+
+.ds-toc-link:hover {
+  color: var(--ds-fg);
+  background-color: color-mix(in srgb, var(--ds-fg) 7%, transparent);
 }
 
 .ds-toc-link[aria-current="true"] {
   color: var(--ds-fg);
-  border-left-color: var(--ds-fg);
-  background-color: var(--ds-bg-tint-muted);
+  background-color: color-mix(in srgb, var(--ds-fg) 7%, transparent);
   font-weight: 500;
 }
 
-/* Sentença citável com índice sobrescrito tabular */
+/* Sentença citável — Deimos: dotted underline + tint no hover (sem blur) */
 .ds-claim {
-  border-radius: 3px;
-  padding: 1px 2px;
-  margin: -1px -2px;
+  border-radius: 0;
+  padding: 0.1em 0.12em;
+  margin: 0 -0.12em;
   cursor: pointer;
-  transition: background-color var(--ds-duration-fast) ease;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--ds-fg) 42%, transparent);
+  background-color: transparent;
+  box-shadow: none;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition:
+    background-color var(--ds-duration-fast) ease,
+    text-decoration-color var(--ds-duration-fast) ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ds-claim:hover {
     background-color: var(--ds-bg-tint-muted);
+    text-decoration-color: color-mix(in srgb, var(--ds-fg) 70%, transparent);
   }
 }
 
 .ds-claim[data-highlighted="true"] {
   background-color: var(--ds-bg-tint-active);
-  box-shadow: 0 0 0 2px var(--ds-bg-tint-active);
+  text-decoration-color: var(--ds-fg);
+  box-shadow: none;
 }
 
 .ds-cite-sup {
@@ -797,13 +1221,14 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   12. VAUL-CURVE DRAWER / SHEET (Emil `cubic-bezier(0.32, 0.72, 0, 1)`)
+   12. VAUL-CURVE DRAWER / SHEET — estilo Deimos archival (papel + sombra suave)
    -------------------------------------------------------------------------- */
 .ds-drawer-backdrop {
   position: fixed;
   inset: 0;
   z-index: 160;
-  background-color: rgba(10, 10, 10, 0.42);
+  /* Só escurecimento — sem blur (padrão Deimos / Meridian) */
+  background-color: rgba(20, 16, 12, 0.34);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--ds-duration-drawer) var(--ds-ease-drawer);
@@ -820,20 +1245,302 @@ body {
   right: 0;
   bottom: 0;
   z-index: 161;
-  width: min(440px, 94vw);
+  width: min(460px, 94vw);
   height: 100dvh;
   background-color: var(--ds-bg);
-  border-left: 1px solid var(--ds-border-strong);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.18);
+  background-image: none;
+  border-left: 0;
+  border-radius: 16px 0 0 16px;
+  box-shadow:
+    -1px 0 0 0 var(--ds-rule),
+    -24px 0 56px -16px rgba(28, 20, 12, 0.22),
+    -8px 0 20px -10px rgba(28, 20, 12, 0.1);
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
   transition: transform var(--ds-duration-drawer) var(--ds-ease-drawer);
   overscroll-behavior: contain;
+  color: var(--ds-fg);
 }
 
 .ds-drawer-panel[data-open="true"] {
   transform: translateX(0);
+}
+
+.ds-drawer-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 6px 24px 32px;
+}
+
+.ds-drawer-scroll::-webkit-scrollbar {
+  width: 2px !important;
+  height: 2px !important;
+  background: transparent !important;
+}
+.ds-drawer-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ds-fg) 22%, transparent);
+  border-radius: 0;
+  border: none;
+}
+.ds-drawer-scroll::-webkit-scrollbar-track,
+.ds-drawer-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.ds-drawer-scroll::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.ds-drawer-card {
+  border-radius: 12px;
+  border: var(--ds-hairline, 1px) solid var(--ds-border);
+  background-color: color-mix(in srgb, var(--ds-fg) 3.5%, var(--ds-bg));
+  box-shadow: none;
+  padding: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   PAGE ENTER — véu de carregamento + revelação editorial
+   -------------------------------------------------------------------------- */
+.ds-page-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: var(--ds-bg);
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--ds-duration-reveal) var(--ds-ease-editorial),
+    visibility 0s linear var(--ds-duration-reveal);
+}
+html[data-page-ready="true"] .ds-page-veil {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--ds-duration-reveal) var(--ds-ease-editorial),
+    visibility 0s linear 0s;
+}
+
+.ds-page-enter {
+  opacity: 0;
+  transform: scale(var(--ds-enter-scale)) translateY(12px);
+  transition:
+    opacity var(--ds-duration-reveal) var(--ds-ease-editorial),
+    transform var(--ds-duration-reveal) var(--ds-ease-editorial);
+}
+html[data-page-ready="true"] .ds-page-enter {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   14. FOOTER EDITORIAL (inspirado Anthropic — marca | acordeões | missão)
+   -------------------------------------------------------------------------- */
+.ds-footer {
+  background-color: var(--ds-inverted-bg);
+  color: var(--ds-inverted-fg);
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 4vw, 48px) clamp(36px, 5vw, 56px);
+  margin-top: clamp(40px, 6vw, 72px);
+}
+
+.ds-footer-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(120px, 0.9fr) minmax(0, 1.4fr) minmax(180px, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.ds-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.ds-footer-logo {
+  font-family: var(--ds-font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-inverted-fg);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.ds-footer-ver {
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ds-inverted-muted);
+}
+
+.ds-footer-nav {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-top: 1px solid color-mix(in srgb, var(--ds-inverted-fg) 14%, transparent);
+}
+
+.ds-footer-acc {
+  border-bottom: 1px solid color-mix(in srgb, var(--ds-inverted-fg) 14%, transparent);
+}
+
+.ds-footer-acc > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  cursor: pointer;
+  font-family: var(--ds-font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--ds-inverted-fg) 72%, transparent);
+  transition: color var(--ds-duration-fast) ease;
+  user-select: none;
+}
+
+.ds-footer-acc > summary::-webkit-details-marker { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-footer-acc > summary:hover {
+    color: var(--ds-inverted-fg);
+  }
+}
+
+.ds-footer-acc > summary:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ds-inverted-fg) 35%, transparent);
+}
+
+.ds-footer-chevron {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: transform 220ms var(--ds-ease-out), opacity var(--ds-duration-fast) ease;
+}
+
+.ds-footer-acc[open] > summary {
+  color: var(--ds-inverted-fg);
+}
+
+.ds-footer-acc[open] .ds-footer-chevron {
+  transform: rotate(180deg);
+  opacity: 0.85;
+}
+
+.ds-footer-acc-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 0 14px 12px;
+}
+
+.ds-footer-acc-panel a,
+.ds-footer-acc-panel span {
+  display: block;
+  padding: 9px 0;
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--ds-inverted-fg) 58%, transparent);
+  text-decoration: none;
+  border-top: 1px solid color-mix(in srgb, var(--ds-inverted-fg) 8%, transparent);
+}
+
+.ds-footer-acc-panel a:first-child,
+.ds-footer-acc-panel span:first-child {
+  border-top: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-footer-acc-panel a:hover {
+    color: var(--ds-inverted-fg);
+  }
+}
+
+.ds-footer-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 2px;
+}
+
+.ds-footer-aside-block h3 {
+  margin: 0 0 10px;
+  font-family: var(--ds-font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ds-inverted-fg);
+}
+
+.ds-footer-aside-block p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--ds-inverted-fg) 58%, transparent);
+  max-width: 36ch;
+}
+
+.ds-footer-ext {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ds-footer-ext a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 13.5px;
+  color: color-mix(in srgb, var(--ds-inverted-fg) 72%, transparent);
+  text-decoration: none;
+  border-top: 1px solid color-mix(in srgb, var(--ds-inverted-fg) 10%, transparent);
+}
+
+.ds-footer-ext a:first-child { border-top: 0; }
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-footer-ext a:hover { color: var(--ds-inverted-fg); }
+}
+
+.ds-footer-ext-arrow {
+  font-size: 12px;
+  opacity: 0.55;
+}
+
+.ds-footer-meta {
+  max-width: 1120px;
+  margin: clamp(36px, 5vw, 56px) auto 0;
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--ds-inverted-fg) 12%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--ds-inverted-fg) 42%, transparent);
+}
+
+@media (max-width: 900px) {
+  .ds-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .ds-footer-brand { order: 0; }
+  .ds-footer-nav { order: 2; }
+  .ds-footer-aside { order: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -858,5 +1565,12 @@ body {
   }
   .ds-plate-media {
     transition: none;
+  }
+  .ds-page-veil {
+    transition: opacity 180ms ease, visibility 0s linear 180ms;
+  }
+  .ds-page-enter {
+    transform: none;
+    transition: opacity 180ms ease;
   }
 }

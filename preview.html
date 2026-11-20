@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-surface="ivory" data-mode="invisible" data-grain="editorial" data-signals="chromatic">
+<html lang="pt-BR" data-surface="ivory" data-mode="invisible" data-grain="editorial" data-grain-size="medium" data-signals="chromatic">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="./src/preview.css" />
 </head>
 <body>
-  <div class="app-shell">
+  <div class="ds-page-veil" aria-hidden="false"></div>
+  <div class="app-shell ds-page-enter">
     <!-- ================= TOPBAR TRANSLÚCIDA ================= -->
     <header class="ds-topbar" id="app-topbar">
       <a href="./preview.html" class="brand-mark">
@@ -39,10 +40,13 @@
       </nav>
 
       <div class="topbar-right">
-        <div class="swatch-pill-group" role="group" aria-label="Atmosfera Single-Ink">
+        <div class="swatch-pill-group" role="group" aria-label="Atmosfera cromática suave">
           <button class="swatch-btn" data-surface-pick="ivory" aria-pressed="true" style="background:#FAF9F5" title="Ivory Editorial"></button>
-          <button class="swatch-btn" data-surface-pick="paper" aria-pressed="false" style="background:#FFFFFF" title="Paper White"></button>
+          <button class="swatch-btn" data-surface-pick="blush" aria-pressed="false" style="background:#E8C4C0" title="Soft Blush"></button>
+          <button class="swatch-btn" data-surface-pick="butter" aria-pressed="false" style="background:#E8D9A8" title="Soft Butter"></button>
+          <button class="swatch-btn" data-surface-pick="mist" aria-pressed="false" style="background:#C5D4CE" title="Soft Mist"></button>
           <button class="swatch-btn" data-surface-pick="aqua" aria-pressed="false" style="background:#A4CED0" title="Signature Aqua"></button>
+          <button class="swatch-btn" data-surface-pick="lilac" aria-pressed="false" style="background:#C9C0D8" title="Soft Lilac"></button>
           <button class="swatch-btn" data-surface-pick="terracotta" aria-pressed="false" style="background:#EDBB99" title="Warm Terracotta"></button>
           <button class="swatch-btn" data-surface-pick="obsidian" aria-pressed="false" style="background:#141413" title="Obsidian Dark"></button>
         </div>
@@ -61,15 +65,22 @@
             </svg>
           </button>
           <div class="ds-popover popover-box" id="paper-pop" data-open="false" role="dialog" aria-label="Configurações de papel">
-            <div class="ds-eyebrow" style="margin-bottom:8px;">Ruído PaperGrain 512×512</div>
-            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:10px;">
+            <div class="ds-eyebrow" style="margin-bottom:8px;">Intensidade</div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:12px;">
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="off">Off</button>
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="subtle">Suave</button>
               <button class="ds-btn ds-btn-primary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="editorial">Edit.</button>
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="tactile">Tátil</button>
             </div>
+            <div class="ds-eyebrow" style="margin-bottom:8px;">Tamanho do grão</div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:10px;">
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="fine">Fino</button>
+              <button class="ds-btn ds-btn-primary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="medium">Médio</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="coarse">Grosso</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="chunky">Grumo</button>
+            </div>
             <div class="ds-mono" style="font-size:10.5px; color:var(--ds-fg-muted);">
-              Motor real importado de <code>src/paper-grain.ts</code> rodando em <code>npm run dev</code>.
+              Intensidade = opacidade · Tamanho = repaint (<code>data-grain-size</code>).
             </div>
           </div>
         </div>
@@ -103,9 +114,9 @@
           <div class="app-wrap hero-split">
             <div>
               <div class="ds-eyebrow">São Paulo · 20 Nov 2026 · Modo Invisível B2C</div>
-              <h1 class="ds-h1" style="margin:10px 0 14px;">Manhã limpa, vento ameno e pico solar às 13h</h1>
+              <h1 class="ds-h1" style="margin:10px 0 14px;">Manhã limpa, vento ameno e&nbsp;pico solar às&nbsp;13h</h1>
               <p class="ds-lead" style="margin-bottom:22px;">
-                Resumo editorial diário gerado por <strong>Google Weather, Air Quality &amp; Pollen</strong> — sem ruído visual nem jargão técnico, priorizando decisões práticas para sua rotina.
+                Resumo editorial diário gerado por <strong>Google Weather, Air&nbsp;Quality &amp; Pollen</strong> — sem ruído visual nem jargão técnico, priorizando decisões práticas para sua rotina.
               </p>
               <div style="display:flex; flex-wrap:wrap; gap:10px;">
                 <button class="ds-btn ds-btn-primary" id="btn-replay-hero-art">↻ Repintar Aquarela</button>
@@ -220,60 +231,73 @@
             </div>
 
             <div class="ds-reader-grid">
-              <aside class="ds-reader-toc" style="position:sticky; top:76px;">
+              <aside class="ds-reader-toc">
                 <div class="ds-eyebrow" style="padding:0 10px 8px;">Sumário</div>
                 <a href="#dos-overview" class="ds-toc-link" aria-current="true">Visão geral</a>
                 <a href="#dos-insolacao" class="ds-toc-link">Insolação &amp; Fachada</a>
                 <a href="#dos-fontes" class="ds-toc-link">Fontes (Tier A–C)</a>
               </aside>
 
-              <article class="ds-prose">
-                <div id="dos-overview" style="padding-bottom:20px; border-bottom:1px solid var(--ds-rule);">
-                  <h2 class="ds-h2" style="margin-bottom:12px;">Auditoria Física &amp; Ambiental</h2>
-                  <p style="margin:0 0 14px;">
-                    <span class="ds-claim" data-cite-id="1">A inspeção visual da fachada via Street View + Gemini Vision indica calçada arborizada contínua, baixo desgaste de pavimento e distância de 180 metros até o corredor de ônibus mais próximo.<sup class="ds-cite-sup">1</sup></span>
-                    <span class="ds-claim" data-cite-id="2"> Dados orbitais AlphaEarth em grade de 10m mostram cobertura vegetal 2,1× acima da média do distrito, reduzindo o pico de calor vespertino em 2,4 °C.<sup class="ds-cite-sup">2</sup></span>
-                  </p>
-                </div>
-
-                <div id="dos-insolacao" style="padding:20px 0; border-bottom:1px solid var(--ds-rule);">
-                  <h2 class="ds-h2" style="margin-bottom:12px;">Insolação &amp; Potencial Solar 3D</h2>
-                  <p style="margin:0;">
-                    <span class="ds-claim" data-cite-id="3">A orientação Face Norte recebe 1.640 horas úteis de sol direto por ano segundo a Google Solar API, com payback estimado de 3,8 anos para sistema residencial de 5,4 kWp.<sup class="ds-cite-sup">3</sup></span>
-                  </p>
-                </div>
-
-                <div id="dos-fontes" style="padding-top:20px;">
-                  <div class="ds-eyebrow" style="margin-bottom:10px;">Fontes Verificadas (clique nas frases acima para destacar)</div>
-                  <div class="source-item" id="dos-src-1">
-                    <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">01</span>
-                    <div>
-                      <div style="font-size:13.5px; font-weight:500;">Google Street View Static + Gemini Vision Audit</div>
-                      <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mcp-google-earth-env · Notas derivadas sem cache de imagem</div>
-                    </div>
-                    <span class="tier-pill">Tier A</span>
+              <div class="ds-reader-main">
+                <article class="ds-prose">
+                  <div id="dos-overview" style="padding-bottom:20px; border-bottom:1px solid var(--ds-rule);">
+                    <h2 class="ds-h2" style="margin-bottom:12px;">Auditoria Física &amp; Ambiental</h2>
+                    <p style="margin:0 0 14px;">
+                      <span class="ds-claim" data-cite-id="1">A inspeção visual da fachada via Street View + Gemini Vision indica calçada arborizada contínua, baixo desgaste de pavimento e distância de 180 metros até o corredor de ônibus mais próximo.<sup class="ds-cite-sup">1</sup></span>
+                      <span class="ds-claim" data-cite-id="2"> Dados orbitais AlphaEarth em grade de 10m mostram cobertura vegetal 2,1× acima da média do distrito, reduzindo o pico de calor vespertino em 2,4 °C.<sup class="ds-cite-sup">2</sup></span>
+                    </p>
                   </div>
-                  <div class="source-item" id="dos-src-2">
-                    <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
-                    <div>
-                      <div style="font-size:13.5px; font-weight:500;">Google Earth Engine — AlphaEarth 10m Embeddings</div>
-                      <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">earthengine.google.com · Série histórica 2020–2026</div>
-                    </div>
-                    <span class="tier-pill">Tier A</span>
-                  </div>
-                  <div class="source-item" id="dos-src-3">
-                    <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
-                    <div>
-                      <div style="font-size:13.5px; font-weight:500;">Google Solar API — Modelo 3D de Telhados</div>
-                      <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mapsplatform.google.com · Radiação anual incidente</div>
-                    </div>
-                    <span class="tier-pill">Tier A</span>
-                  </div>
-                </div>
-              </article>
 
-              <aside style="position:sticky; top:76px; border-top:1px solid var(--ds-rule-strong); padding-top:14px;">
-                <div class="ds-eyebrow" style="margin-bottom:8px;">Em resumo · Fatos com Fonte</div>
+                  <div id="dos-insolacao" style="padding:20px 0; border-bottom:1px solid var(--ds-rule);">
+                    <h2 class="ds-h2" style="margin-bottom:12px;">Insolação &amp; Potencial Solar 3D</h2>
+                    <p style="margin:0;">
+                      <span class="ds-claim" data-cite-id="3">A orientação Face Norte recebe 1.640 horas úteis de sol direto por ano segundo a Google Solar API, com payback estimado de 3,8 anos para sistema residencial de 5,4 kWp.<sup class="ds-cite-sup">3</sup></span>
+                    </p>
+                  </div>
+
+                  <div id="dos-fontes" style="padding-top:20px;">
+                    <div class="ds-eyebrow" style="margin-bottom:10px;">Fontes Verificadas (clique nas frases acima para destacar)</div>
+                    <div class="source-item" id="dos-src-1">
+                      <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">01</span>
+                      <div>
+                        <div style="font-size:13.5px; font-weight:500;">Google Street View Static + Gemini Vision Audit</div>
+                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mcp-google-earth-env · Notas derivadas sem cache de imagem</div>
+                      </div>
+                      <span class="tier-pill">Tier A</span>
+                    </div>
+                    <div class="source-item" id="dos-src-2">
+                      <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
+                      <div>
+                        <div style="font-size:13.5px; font-weight:500;">Google Earth Engine — AlphaEarth 10m Embeddings</div>
+                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">earthengine.google.com · Série histórica 2020–2026</div>
+                      </div>
+                      <span class="tier-pill">Tier A</span>
+                    </div>
+                    <div class="source-item" id="dos-src-3">
+                      <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
+                      <div>
+                        <div style="font-size:13.5px; font-weight:500;">Google Solar API — Modelo 3D de Telhados</div>
+                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mapsplatform.google.com · Radiação anual incidente</div>
+                      </div>
+                      <span class="tier-pill">Tier A</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <aside class="ds-reader-aside" aria-label="At a glance">
+                <div class="ds-aside-plate" aria-hidden="true">
+                  <svg viewBox="0 0 280 280" fill="none">
+                    <rect width="280" height="280" fill="var(--ds-surface-2)"/>
+                    <circle cx="140" cy="140" r="68" stroke="var(--ds-fg)" stroke-width="1.1"/>
+                    <circle cx="140" cy="140" r="42" stroke="var(--ds-fg)" stroke-width="0.85" stroke-dasharray="3 3"/>
+                    <line x1="48" y1="140" x2="232" y2="140" stroke="var(--ds-fg)" stroke-width="0.85"/>
+                    <line x1="140" y1="48" x2="140" y2="232" stroke="var(--ds-fg)" stroke-width="0.85"/>
+                    <path d="M92 188 L188 92" stroke="var(--ds-fg)" stroke-width="1.3"/>
+                  </svg>
+                </div>
+                <p class="ds-aside-caption">PLATE I · FACHADA &amp; MICROCLIMA · MULTIPLY</p>
+                <h2 class="ds-aside-title">At a glance</h2>
                 <button class="fact-row" data-cite-id="1">
                   <span class="ds-eyebrow" style="font-size:9.5px;">Rua &amp; Ruído</span>
                   <span style="font-size:13px;">Via local arborizada; baixo fluxo noturno.</span>
@@ -468,14 +492,55 @@
       </div>
     </main>
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="app-footer">
-      <div class="app-wrap">
-        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; font-size:13px; color:var(--ds-inverted-muted);">
-          <span><strong>Meridian Studio</strong> · Prévia real de produto rodando em <code>Vite + 100% TypeScript + CSS puro</code></span>
-          <a href="./index.html" style="color:var(--ds-inverted-fg);">Abrir Documentação &amp; Showcase Completo →</a>
+    <!-- ================= FOOTER (Anthropic: marca | acordeões | missão) ================= -->
+    <footer class="ds-footer" aria-label="Rodapé Meridian Studio">
+      <div class="ds-footer-grid">
+        <div class="ds-footer-brand">
+          <a class="ds-footer-logo" href="./preview.html">Meridian</a>
+          <span class="ds-footer-ver">Studio · prévia real</span>
         </div>
-        <div class="app-footer-wordmark" aria-hidden="true">Meridian</div>
+        <nav class="ds-footer-nav" aria-label="Áreas do Studio">
+          <details class="ds-footer-acc">
+            <summary>Workspaces <svg class="ds-footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="ds-footer-acc-panel">
+              <a href="#" data-view="today">Edição de Hoje (B2C)</a>
+              <a href="#" data-view="dossier">Dossiê Endereço (#11)</a>
+              <a href="#" data-view="observatory">Observatório Pro</a>
+            </div>
+          </details>
+          <details class="ds-footer-acc">
+            <summary>Sistema <svg class="ds-footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="ds-footer-acc-panel">
+              <a href="./index.html">Showcase Design System</a>
+              <a href="./gann.html">Dossiê W.D. Gann</a>
+              <span>PaperGrain · HalfTone · Plotter</span>
+            </div>
+          </details>
+          <details class="ds-footer-acc">
+            <summary>Atalhos <svg class="ds-footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="ds-footer-acc-panel">
+              <span>⌘K — paleta 0ms</span>
+              <span>1–8 — superfícies</span>
+            </div>
+          </details>
+        </nav>
+        <div class="ds-footer-aside">
+          <div class="ds-footer-aside-block">
+            <h3>Nossa missão</h3>
+            <p>Prévia real do Meridian em Vite + TypeScript + CSS puro — o mesmo motor Single-Ink do ecossistema Lunar + Earth AI.</p>
+          </div>
+          <div class="ds-footer-aside-block">
+            <h3>Abrir</h3>
+            <div class="ds-footer-ext">
+              <a href="./index.html">Documentação DS <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
+              <a href="./gann.html">Dossiê Gann <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ds-footer-meta">
+        <span>Vite · 100% TypeScript · CSS puro</span>
+        <span>Single-Ink · Soft Chromatic · PaperGrain canvas</span>
       </div>
     </footer>
   </div>
@@ -483,11 +548,15 @@
   <!-- ================= INSTANT ⌘K PALETTE (0ms) ================= -->
   <div class="ds-cmdk-backdrop" id="app-cmdk-backdrop" data-open="false" role="dialog" aria-modal="true" aria-label="Paleta de comando">
     <div class="ds-cmdk-dialog">
-      <div style="display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--ds-rule);">
+      <div class="ds-cmdk-input-row">
         <input type="text" id="app-cmdk-input" placeholder="Trocar tela, superfície (1–5) ou ação…" style="flex:1; border:0; background:transparent; color:var(--ds-fg); font-size:15px; outline:none;" />
         <span class="kbd-chip">ESC</span>
       </div>
-      <div id="app-cmdk-list" style="max-height:300px; overflow-y:auto; padding:6px;"></div>
+      <div class="ds-cmdk-list" id="app-cmdk-list"></div>
+      <div class="ds-cmdk-footer">
+        <span>Abertura centrada · 0ms</span>
+        <span>↑↓ navegar · ↵ executar</span>
+      </div>
     </div>
   </div>
 

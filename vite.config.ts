@@ -14,6 +14,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         preview: resolve(__dirname, 'preview.html'),
+        gann: resolve(__dirname, 'gann.html'),
       },
     },
   },

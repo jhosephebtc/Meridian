@@ -1,0 +1,859 @@
+/* ==========================================================================
+   MERIDIAN — WD Gann History Page
+   Diagramação Deimos archival + dual layout (rail / masthead)
+   ========================================================================== */
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Scrollbar: não setar scrollbar-color aqui — em Chromium isso mata ::-webkit-scrollbar */
+
+.gann-page {
+  min-height: 100dvh;
+  color: var(--ds-fg);
+  background-color: var(--ds-bg);
+  font-family: var(--ds-font-sans);
+}
+
+.gann-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+.gann-skip:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 300;
+  padding: 10px 14px;
+  background: var(--ds-inverted-bg);
+  color: var(--ds-inverted-fg);
+  border-radius: var(--ds-radius-squircle);
+}
+
+/* ---- Layout chrome ---- */
+.gann-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: color-mix(in srgb, var(--ds-bg) 94%, transparent);
+  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule);
+}
+
+.gann-chrome-inner {
+  max-width: var(--ds-max-editorial);
+  margin: 0 auto;
+  padding: 12px clamp(16px, 3vw, 28px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+}
+
+.gann-brand {
+  font-family: var(--ds-font-display);
+  font-size: 1.25rem;
+  letter-spacing: var(--ds-tracking-display);
+  color: var(--ds-fg);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.gann-burger {
+  display: none;
+}
+.gann-burger.ds-burger {
+  /* herda .ds-burger — 3 linhas iguais → X */
+}
+
+/* Espectro cromático suave (pastéis → Single-Ink) */
+.gann-spectrum {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 4px 6px;
+  border-radius: 9999px;
+  border: var(--ds-hairline, 1px) solid var(--ds-rule);
+  background: color-mix(in srgb, var(--ds-fg) 3%, transparent);
+}
+.gann-spectrum-dot {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: var(--ds-hairline, 1px) solid color-mix(in srgb, var(--ds-fg) 18%, transparent);
+  background: var(--chroma, var(--ds-surface-2));
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.gann-spectrum-dot[aria-pressed="true"] {
+  box-shadow: 0 0 0 1.5px var(--ds-bg), 0 0 0 3px color-mix(in srgb, var(--ds-fg) 45%, transparent);
+}
+.gann-spectrum-dot:active { transform: scale(0.9); }
+.gann-spectrum-dot:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.gann-layout-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+  .gann-spectrum { gap: 4px; padding: 3px 5px; }
+  .gann-spectrum-dot { width: 12px; height: 12px; }
+  .gann-chrome .gann-ds-link { display: none; }
+}
+.gann-layout-toggle button {
+  appearance: none;
+  border: var(--ds-hairline, 1px) solid var(--ds-border);
+  background: transparent;
+  color: var(--ds-fg-muted);
+  font-family: var(--ds-font-sans);
+  font-size: 11.5px;
+  padding: 7px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+.gann-layout-toggle button[data-active="true"] {
+  background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+  color: var(--ds-fg);
+  border-color: transparent;
+}
+.gann-layout-toggle button:active { transform: scale(var(--ds-press-scale)); }
+
+.gann-nav-center {
+  display: none;
+  flex: 1;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.gann-nav-center a {
+  font-family: var(--ds-font-sans);
+  font-size: 12.5px;
+  color: var(--ds-fg-muted);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 9999px;
+}
+.gann-nav-center a:hover,
+.gann-nav-center a[aria-current="true"] {
+  color: var(--ds-fg);
+  background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+}
+
+.gann-ds-link {
+  font-size: 12px;
+  color: var(--ds-fg-muted);
+  text-decoration: none;
+  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule-strong);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+.gann-ds-link:hover { color: var(--ds-fg); }
+
+/* Layout modes */
+[data-layout="masthead"] .gann-nav-center { display: flex; }
+[data-layout="masthead"] .gann-burger { display: none; }
+[data-layout="rail"] .gann-burger { display: grid; }
+[data-layout="rail"] .gann-nav-center { display: none; }
+
+@media (max-width: 720px) {
+  [data-layout="masthead"] .gann-nav-center { display: none; }
+  [data-layout="masthead"] .gann-burger { display: grid; }
+}
+
+/* ---- Side rail (hamburger) ---- */
+.gann-rail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  background: rgba(20, 16, 12, 0.34);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ds-duration-drawer) var(--ds-ease-drawer);
+}
+.gann-rail-backdrop[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gann-rail {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 141;
+  width: min(300px, 88vw);
+  background-color: var(--ds-bg);
+  border-radius: 0 16px 16px 0;
+  box-shadow:
+    1px 0 0 0 var(--ds-rule),
+    24px 0 56px -16px rgba(28, 20, 12, 0.22);
+  transform: translateX(-105%);
+  transition: transform var(--ds-duration-drawer) var(--ds-ease-drawer);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 28px;
+}
+.gann-rail[data-open="true"] { transform: translateX(0); }
+
+.gann-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.gann-rail-close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ds-fg-muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px 2px;
+}
+.gann-rail-close:hover { color: var(--ds-fg); }
+
+.gann-rail-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.gann-rail-nav a {
+  font-family: var(--ds-font-sans);
+  font-size: 14px;
+  color: var(--ds-fg-secondary);
+  text-decoration: none;
+  padding: 11px 12px;
+  border-radius: 10px;
+}
+.gann-rail-nav a:hover,
+.gann-rail-nav a[aria-current="true"] {
+  background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+  color: var(--ds-fg);
+}
+
+.gann-rail-meta {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  font-size: 12px;
+  color: var(--ds-fg-muted);
+  line-height: 1.5;
+}
+
+/* ---- Page shell + leitor Deimos 3 colunas ---- */
+.gann-shell {
+  max-width: var(--ds-max-editorial);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 32px) 80px;
+}
+
+.gann-hero {
+  padding: clamp(32px, 6vw, 56px) 0 clamp(16px, 2.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+.gann-hero .gann-prose {
+  max-width: 42rem;
+}
+
+.gann-reader {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  align-items: start;
+  width: 100%;
+}
+
+.gann-reader-toc {
+  display: none;
+}
+
+.gann-reader-main {
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+  box-shadow: none;
+}
+
+.gann-reader-aside {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  min-width: 0;
+}
+
+.gann-aside-plate {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1 / 1;
+  background: var(--ds-surface-2);
+  overflow: hidden;
+  margin: 0 0 10px;
+}
+.gann-aside-plate--secondary {
+  margin-top: 22px;
+  aspect-ratio: 4 / 3;
+}
+.gann-aside-plate > canvas,
+.gann-aside-plate > div,
+.gann-aside-plate img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: cover;
+}
+
+.gann-aside-caption {
+  margin: 0 0 18px;
+  font-family: var(--ds-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ds-fg-muted);
+  line-height: 1.4;
+}
+
+.gann-aside-title {
+  font-family: var(--ds-font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: var(--ds-tracking-heading);
+  margin: 0 0 8px;
+}
+
+.gann-fact {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule);
+  padding: 12px 2px;
+  color: var(--ds-fg);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background-color var(--ds-duration-fast) ease;
+}
+.gann-fact span:nth-child(2) {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ds-fg-secondary);
+}
+.gann-fact-link {
+  font-family: var(--ds-font-mono);
+  font-size: 10px;
+  color: var(--ds-fg-muted);
+}
+@media (hover: hover) and (pointer: fine) {
+  .gann-fact:hover { background-color: var(--ds-bg-tint-subtle); }
+}
+
+@media (min-width: 1100px) {
+  .gann-reader {
+    grid-template-columns: var(--ds-toc-width) minmax(0, 1fr) var(--ds-aside-width);
+    gap: var(--ds-reader-gap, 32px);
+  }
+  .gann-reader-toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--ds-topbar-height) + 16px);
+    align-self: start;
+  }
+  .gann-reader-toc .gann-eyebrow { margin-bottom: 10px; }
+  .gann-reader-toc nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .gann-reader-main {
+    box-shadow:
+      -1px 0 0 0 var(--ds-rule),
+      1px 0 0 0 var(--ds-rule);
+    padding-inline: clamp(18px, 2vw, 28px);
+  }
+  .gann-reader-aside {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+    position: sticky;
+    top: calc(var(--ds-topbar-height) + 16px);
+    align-self: start;
+  }
+  .gann-aside-plate { max-width: none; }
+}
+
+@media (min-width: 960px) and (max-width: 1099px) {
+  .gann-reader {
+    grid-template-columns: var(--ds-toc-width) minmax(0, 1fr);
+    gap: var(--ds-reader-gap, 32px);
+  }
+  .gann-reader-toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--ds-topbar-height) + 16px);
+    align-self: start;
+  }
+  .gann-reader-toc nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .gann-reader-main {
+    box-shadow: -1px 0 0 0 var(--ds-rule);
+    padding-inline-start: clamp(18px, 2vw, 28px);
+  }
+}
+
+.gann-eyebrow {
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--ds-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ds-fg-muted);
+  margin: 0 0 12px;
+}
+
+.gann-title {
+  font-family: var(--ds-font-display);
+  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: var(--ds-tracking-mega);
+  margin: 0 0 16px;
+  max-width: 18ch;
+  text-wrap: balance;
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.gann-lead {
+  font-family: var(--ds-font-display);
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: var(--ds-tracking-heading);
+  color: var(--ds-fg-secondary);
+  max-width: 46ch;
+  margin: 0;
+  text-wrap: pretty;
+  hyphens: manual;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.gann-prose {
+  max-width: 62ch;
+  font-size: var(--ds-text-body-lg);
+  line-height: var(--ds-lh-body-lg);
+  letter-spacing: var(--ds-tracking-body);
+  text-wrap: pretty;
+  hyphens: manual;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.gann-prose p {
+  margin: 0;
+}
+
+.gann-prose p + p {
+  margin-top: var(--ds-block-gap);
+}
+
+.gann-prose p,
+.gann-card p,
+.gann-intro,
+.gann-life-item p,
+.gann-aside-caption,
+.gann-fact span:nth-child(2) {
+  text-wrap: pretty;
+  hyphens: manual;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.gann-nowrap {
+  white-space: nowrap;
+}
+
+/* Placas e plotters: largura da coluna, nunca comprimidos ao lado do texto */
+.gann-plate,
+.gann-plot-block {
+  width: 100%;
+  max-width: none;
+}
+
+.gann-intro {
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ds-fg-muted);
+}
+
+.gann-pill-row,
+.gann-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.gann-meta-row { margin: 16px 0; }
+.gann-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: var(--ds-hairline, 1px) solid var(--ds-border);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ds-fg-secondary);
+  background: transparent;
+}
+.gann-pill[data-tone="solid"] {
+  background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+  border-color: transparent;
+  color: var(--ds-fg);
+}
+
+/* ---- Halftone plates (sem moldura pesada — hairline Deimos) ---- */
+.gann-plate {
+  border-radius: var(--ds-radius-plate);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.gann-halftone {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--ds-surface-2);
+  overflow: hidden;
+}
+.gann-halftone--wide {
+  aspect-ratio: 16 / 10;
+}
+@media (max-width: 600px) {
+  .gann-halftone--wide { aspect-ratio: 4 / 3; }
+}
+.gann-halftone > canvas,
+.gann-halftone > div {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+.gann-halftone canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.gann-plate-caption {
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  margin-top: 10px;
+  padding: 8px 0 0;
+  display: grid;
+  gap: 4px;
+}
+.gann-plate-caption strong {
+  font-family: var(--ds-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+}
+.gann-plate-caption span {
+  font-size: 12px;
+  color: var(--ds-fg-muted);
+  line-height: 1.45;
+}
+
+/* ---- Sections / Deimos cards ---- */
+.gann-section {
+  padding: 0;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.gann-section:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.gann-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 0;
+}
+.gann-section-head h2 {
+  font-family: var(--ds-font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.05rem);
+  font-weight: 400;
+  letter-spacing: var(--ds-tracking-display);
+  margin: 0;
+  max-width: 28ch;
+  line-height: 1.2;
+  text-wrap: balance;
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.gann-card h3,
+.gann-life-item h3,
+.gann-aside-title {
+  text-wrap: balance;
+  hyphens: none;
+  word-break: normal;
+}
+
+.gann-card {
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gann-section > .gann-plate {
+  margin-top: 8px;
+}
+
+.gann-plot-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gann-plot-note {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ds-fg-muted);
+}
+
+.gann-code {
+  margin: 0;
+  font-family: var(--ds-font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ds-fg);
+}
+
+.gann-label {
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--ds-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ds-fg-muted);
+  margin: 0 0 6px;
+}
+
+.gann-card h3 {
+  font-family: var(--ds-font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+.gann-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ds-fg-muted);
+}
+
+.gann-evidence {
+  border-radius: 0;
+  border: 0;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  background: transparent;
+  box-shadow: none;
+  padding: 12px 0 0;
+}
+.gann-evidence blockquote {
+  margin: 0;
+  font-family: var(--ds-font-display);
+  font-size: 1.05rem;
+  line-height: 1.4;
+  letter-spacing: var(--ds-tracking-lead);
+  color: var(--ds-fg);
+}
+.gann-evidence cite {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--ds-fg-muted);
+}
+
+/* ---- Lifeline ---- */
+.gann-lifeline {
+  display: grid;
+  gap: 0;
+  position: relative;
+  padding-left: 22px;
+}
+.gann-lifeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: var(--ds-hairline, 1px);
+  background: var(--ds-rule-strong);
+}
+.gann-life-item {
+  position: relative;
+  padding: 0 0 22px 18px;
+}
+.gann-life-item::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ds-bg);
+  border: var(--ds-hairline, 1px) solid var(--ds-fg);
+}
+.gann-life-item time {
+  font-family: var(--ds-font-mono);
+  font-size: 11px;
+  color: var(--ds-fg-muted);
+  letter-spacing: 0.04em;
+}
+.gann-life-item h3 {
+  font-family: var(--ds-font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 4px 0 6px;
+  letter-spacing: var(--ds-tracking-heading);
+}
+.gann-life-item p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ds-fg-muted);
+  max-width: 62ch;
+}
+
+/* ---- Plotter stages ---- */
+.gann-plot-stage {
+  position: relative;
+  border-radius: 0;
+  border: var(--ds-hairline, 1px) solid var(--ds-rule);
+  background: transparent;
+  overflow: hidden;
+  min-height: 260px;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .gann-plot-stage { min-height: 220px; }
+}
+.gann-plot-stage svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  color: var(--ds-fg);
+}
+.gann-plot-badge {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  font-family: var(--ds-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ds-fg-muted);
+  background: color-mix(in srgb, var(--ds-bg) 80%, transparent);
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+[data-plotter] [data-plotter-role="primary"] { stroke-width: 1; opacity: 1; stroke-dasharray: none; }
+[data-plotter] [data-plotter-role="secondary"] { stroke-width: 1; opacity: 0.32; }
+[data-plotter] [data-plotter-role="guide"] { stroke-width: 1; opacity: 0.14; }
+[data-plotter] [data-plotter-role="centerline"] { stroke-width: 1; opacity: 0.14; stroke-dasharray: 8 3 1 3; }
+[data-plotter] [data-plotter-role="transfer"] { stroke-width: 1; opacity: 0.32; stroke-dasharray: 4 6; }
+[data-plotter] [data-plotter-role="dimension"],
+[data-plotter] [data-plotter-role="leader"] { stroke-width: 1; opacity: 0.4; }
+[data-plotter] [data-plotter-role="hatch"] { stroke-width: 1; opacity: 0.16; }
+[data-plotter] [data-plotter-role="proposed"] { stroke-width: 1; opacity: 0.28; stroke-dasharray: 3 5; }
+[data-plotter] [fill="currentColor"] { fill: currentColor; }
+
+.gann-plot-draw {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: gann-draw 2.4s var(--ds-ease-out) forwards;
+}
+@keyframes gann-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.gann-rotate-slow {
+  transform-origin: center;
+  animation: gann-spin 48s linear infinite;
+}
+@keyframes gann-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gann-plot-draw { animation: none; stroke-dashoffset: 0; }
+  .gann-rotate-slow { animation: none; }
+  .gann-rail, .gann-rail-backdrop { transition: none; }
+}
+
+/* ---- Sources ---- */
+.gann-sources {
+  font-size: 12.5px;
+  color: var(--ds-fg-muted);
+  line-height: 1.55;
+}
+.gann-sources a { color: var(--ds-fg-secondary); }
+.gann-sources ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.gann-footer {
+  margin-top: 28px;
+  padding: 16px 0 12px;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ds-fg-muted);
+  font-family: var(--ds-font-mono);
+}
+
+/* Soft chroma pastéis vivem em tokens.css ([data-surface=blush|butter|mist|lilac]) */

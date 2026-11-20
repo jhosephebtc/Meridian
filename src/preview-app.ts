@@ -6,10 +6,14 @@
 
 import {
   SURFACES,
+  PAPER_SHADER,
+  GRAIN_SIZES,
   type SurfaceId,
   type GrainPreset,
+  type GrainSizeId,
 } from './tokens.ts';
-import { mountPaperGrain } from './paper-grain.ts';
+import { mountPaperGrain, setPaperGrainSize } from './paper-grain.ts';
+import { markPageReady } from './page-enter.ts';
 import {
   renderPlottedGlobeSvg,
   type PlotterRole,
@@ -30,12 +34,15 @@ type WorkspaceView = 'today' | 'dossier' | 'observatory';
 type ObsPreset = 'econ' | 'celestial' | 'crayon';
 type PigmentKey = 'coral' | 'sky' | 'olive' | 'ochre' | 'ink';
 
-const SURFACE_ORDER: readonly SurfaceId[] = ['ivory', 'paper', 'aqua', 'terracotta', 'obsidian'];
+const SURFACE_ORDER: readonly SurfaceId[] = [
+  'ivory', 'blush', 'butter', 'mist', 'aqua', 'lilac', 'terracotta', 'obsidian',
+];
 
 const appState = {
   view: 'today' as WorkspaceView,
   surface: 'ivory' as SurfaceId,
   grain: 'editorial' as GrainPreset,
+  grainSize: 'medium' as GrainSizeId,
   envHour: 10,
   globeLon: -46,
   globeTilt: 15,
@@ -53,9 +60,14 @@ let obsSketchCtrl: SketchController | null = null;
 let freehandAtelier: MeridianAtelier | null = null;
 
 /* ==========================================================================
-   1. PAPER GRAIN 512×512 & TOASTS SONNER (CSS TRANSITIONS INTERRUPTÍVEIS)
+   1. PAPER SHADER (página inteira) & TOASTS SONNER
    ========================================================================== */
-mountPaperGrain();
+mountPaperGrain({
+  seed: PAPER_SHADER.defaultSeed,
+  speckleStrength: PAPER_SHADER.defaultSpeckle,
+  fiberDensity: PAPER_SHADER.defaultFiber,
+  size: PAPER_SHADER.defaultSize,
+});
 
 const toastRegion = document.getElementById('app-toasts')!;
 
@@ -151,7 +163,19 @@ function setGrain(grain: GrainPreset): void {
     b.classList.toggle('ds-btn-primary', active);
     b.classList.toggle('ds-btn-tertiary', !active);
   });
-  showToast(`Ruído PaperGrain: ${grain}`);
+  showToast(`Intensidade: ${grain}`);
+}
+
+function setGrainSize(size: GrainSizeId): void {
+  if (!(size in GRAIN_SIZES)) return;
+  appState.grainSize = size;
+  setPaperGrainSize(size);
+  document.querySelectorAll<HTMLButtonElement>('[data-grain-size-pick]').forEach((b) => {
+    const active = b.dataset.grainSizePick === size;
+    b.classList.toggle('ds-btn-primary', active);
+    b.classList.toggle('ds-btn-tertiary', !active);
+  });
+  showToast(`Tamanho do grão: ${GRAIN_SIZES[size].label}`);
 }
 
 /* ==========================================================================
@@ -230,7 +254,7 @@ function renderEnvCompass(): void {
     const col = d.h === cur.h ? t.fg : d.aqi >= 42 ? t.organic.coral : d.h >= 12 && d.h <= 15 ? t.organic.sky : t.organic.olive;
     out += `<line x1="${(cx + Math.cos(rad) * r1).toFixed(1)}" y1="${(cy + Math.sin(rad) * r1).toFixed(1)}" x2="${(cx + Math.cos(rad) * r2).toFixed(1)}" y2="${(cy + Math.sin(rad) * r2).toFixed(1)}" stroke="${col}" stroke-width="${d.h === cur.h ? 3.5 : 1.8}" stroke-linecap="round" opacity="${d.h === cur.h ? 1 : 0.65}"/>`;
     if (d.h % 6 === 0) {
-      out += `<text x="${(cx + Math.cos(rad) * (R + 18)).toFixed(1)}" y="${(cy + Math.sin(rad) * (R + 18) + 4).toFixed(1)}" text-anchor="middle" fill="${t.fgMuted}" font-family="monospace" font-size="10">${String(d.h).padStart(2, '0')}h</text>`;
+      out += `<text x="${(cx + Math.cos(rad) * (R + 18)).toFixed(1)}" y="${(cy + Math.sin(rad) * (R + 18) + 4).toFixed(1)}" text-anchor="middle" fill="${t.fgMuted}" font-family="Geist Mono, ui-monospace, monospace" font-size="10">${String(d.h).padStart(2, '0')}h</text>`;
     }
   }
 
@@ -239,9 +263,9 @@ function renderEnvCompass(): void {
   const ny = cy + Math.sin(aRad) * (R - 42);
   out += `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="${t.fg}" stroke-width="1.5" stroke-dasharray="3 3"/>`;
   out += `<circle cx="${nx.toFixed(1)}" cy="${ny.toFixed(1)}" r="4.5" fill="${t.fg}"/>`;
-  out += `<text x="${cx}" y="${cy - 8}" text-anchor="middle" fill="${t.fgMuted}" font-family="monospace" font-size="10">AQI</text>`;
-  out += `<text x="${cx}" y="${cy + 20}" text-anchor="middle" fill="${t.fg}" font-family="Georgia, serif" font-size="34">${cur.aqi}</text>`;
-  out += `<text x="${cx}" y="${cy + 36}" text-anchor="middle" fill="${t.fgMuted}" font-family="monospace" font-size="10">${cur.temp}°C · ${String(cur.h).padStart(2, '0')}:00</text>`;
+  out += `<text x="${cx}" y="${cy - 8}" text-anchor="middle" fill="${t.fgMuted}" font-family="Geist Mono, ui-monospace, monospace" font-size="10">AQI</text>`;
+  out += `<text x="${cx}" y="${cy + 20}" text-anchor="middle" fill="${t.fg}" font-family="Geist Serif, Georgia, serif" font-size="34">${cur.aqi}</text>`;
+  out += `<text x="${cx}" y="${cy + 36}" text-anchor="middle" fill="${t.fgMuted}" font-family="Geist Mono, ui-monospace, monospace" font-size="10">${cur.temp}°C · ${String(cur.h).padStart(2, '0')}:00</text>`;
 
   svg.innerHTML = out;
   document.getElementById('preview-hour-readout')!.textContent = `${String(cur.h).padStart(2, '0')}:00 · AQI ${cur.aqi} · ${cur.temp}°C`;
@@ -434,8 +458,10 @@ function bootstrap(): void {
   const paperPop = document.getElementById('paper-pop')!;
   const setPaperPop = (open: boolean) => {
     paperPop.dataset.open = open ? 'true' : 'false';
+    paperPop.setAttribute('aria-hidden', open ? 'false' : 'true');
     paperBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
+  paperPop.setAttribute('aria-hidden', 'true');
   paperBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     setPaperPop(paperPop.dataset.open !== 'true');
@@ -500,6 +526,16 @@ function bootstrap(): void {
   holdBtn.addEventListener('pointerleave', stopHold);
   holdBtn.addEventListener('pointercancel', stopHold);
 
+  /* Footer accordion: um aberto por vez (padrão Anthropic) */
+  document.querySelectorAll('.ds-footer-acc').forEach((acc) => {
+    acc.addEventListener('toggle', () => {
+      if (!(acc as HTMLDetailsElement).open) return;
+      document.querySelectorAll('.ds-footer-acc').forEach((other) => {
+        if (other !== acc) (other as HTMLDetailsElement).open = false;
+      });
+    });
+  });
+
   // Event delegation
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
@@ -507,8 +543,10 @@ function bootstrap(): void {
 
     const viewBtn = target.closest<HTMLElement>('[data-view], [data-view-mobile], [data-jump-view]');
     if (viewBtn) {
+      e.preventDefault();
       const next = (viewBtn.dataset.view || viewBtn.dataset.viewMobile || viewBtn.dataset.jumpView) as WorkspaceView;
       setView(next);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
@@ -517,6 +555,12 @@ function bootstrap(): void {
 
     const gr = target.closest<HTMLElement>('[data-grain-pick]');
     if (gr?.dataset.grainPick) { setGrain(gr.dataset.grainPick as GrainPreset); return; }
+
+    const grSize = target.closest<HTMLElement>('[data-grain-size-pick]');
+    if (grSize?.dataset.grainSizePick) {
+      setGrainSize(grSize.dataset.grainSizePick as GrainSizeId);
+      return;
+    }
 
     const cite = target.closest<HTMLElement>('[data-cite-id]');
     if (cite?.dataset.citeId) {
@@ -631,12 +675,13 @@ function bootstrap(): void {
     }
     if ((e.target as HTMLElement).matches('input, textarea, select')) return;
     if (e.key === '/') { e.preventDefault(); setCmdk(true); }
-    else if (['1', '2', '3', '4', '5'].includes(e.key)) setSurface(SURFACE_ORDER[Number(e.key) - 1]);
+    else if (/^[1-8]$/.test(e.key)) setSurface(SURFACE_ORDER[Number(e.key) - 1]);
   });
 
   // Initial render
   setSurface('ivory', false);
   setView('today');
+  markPageReady();
   window.addEventListener('resize', () => {
     const nav = document.querySelector<HTMLElement>('[data-cliptabs="workspace-nav"]');
     syncClipTabs(nav, nav?.querySelector<HTMLElement>(`[data-view="${appState.view}"]`) ?? null);

@@ -1,9 +1,10 @@
 /**
- * MERIDIAN DESIGN SYSTEM — Barrel Entry Point (v1.3.0)
- * 100% TypeScript estrito · Zero dependências externas
+ * MERIDIAN DESIGN SYSTEM — Barrel Entry Point (v1.4.1)
+ * 100% TypeScript estrito · PaperGrain canvas · HalfTone · Page enter
  */
 
 export * from './tokens.ts';
 export * from './paper-grain.ts';
+export * from './page-enter.ts';
 export * from './plotter-svg.ts';
 export * from './atelier-engine.ts';

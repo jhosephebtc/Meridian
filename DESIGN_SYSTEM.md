@@ -1,8 +1,8 @@
-# 08 — MERIDIAN Design System (`v1.3.0`)
+# 08 — MERIDIAN Design System (`v1.4.0`)
 
-**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter) e Arte Generativa para o ecossistema _Lunar + Earth AI + Gemini Studio_ (42 projetos em 100% TypeScript · React Native + Web · CSS Puro · SVG 1:1).**
+**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone Paper Shaders e Arte Generativa para o ecossistema _Lunar + Earth AI + Gemini Studio_ (42 projetos em 100% TypeScript · React Native + Web · CSS Puro · SVG 1:1).**
 
-> **Linhagem de Referência:** síntese deliberada dos 4 arquivos de referência (*Anthropic Research*, *Deimos Paper White*, *Deimos Signature Aqua* e *Deimos Warm Terracotta*), das animações de aquarela & pincéis de **Anthropic Economic Scenarios** (`anthropic.com/institute/econ-scenarios`), do globo editorial pontilhado de **What 81,000 People Want from AI** (`anthropic.com/features/81k-interviews`), da gramática vetorial **Plotter** (`pasqualevitiello/plotter`) e dos princípios de navegação e motion de **Emil Kowalski** (`emilkowalski/skills`).
+> **Linhagem de Referência:** síntese deliberada dos arquivos *Anthropic Research*, *Deimos* (White / Aqua / Terracotta / Dark), espectro **Soft Chromatic** (Blush / Butter / Mist / Lilac), aquarelas de **Anthropic Economic Scenarios**, globo **81k**, gramática **Plotter**, **HalfTone Dots** (`shaders.paper.design`), e motion de **Emil Kowalski**.
 
 ---
 
@@ -15,30 +15,38 @@ O ecossistema atende dois públicos opostos sobre o mesmo motor TypeScript:
 
 **Meridian** une os dois mundos sob uma estética **Swiss Archival Editorial + Modern Research Product**:
 - **Editorial e confiável** (como *Anthropic Research* e *Deimos*): sem neon, sem roxo-no-escuro, sem cards hiper-aninhados, sem brilho artificial.
-- **Tátil e impresso**: superfícies com **ruído orgânico de papel algodão (`PaperGrain`)** sobre toda a viewport, fotografia arquivística com `mix-blend-mode: multiply` e linhas finas (*hairlines*) derivadas de uma única tinta.
+- **Tátil e impresso**: superfícies com **PaperGrain em canvas overlay** (`#ds-paper-grain` — nunca data-URL em CSS var), fotografia arquivística com `mix-blend-mode: multiply` e **scrollbars hairline** (2px, track transparente).
 - **Fluido e sem latência** (como *Linear*, *Vercel* e *Apple Fluid Interfaces*): navegação nítida, `clip-path` tabs sem dessincronia, resposta instantânea no pointer-down (`scale(0.97)`), atalhos de teclado sem atraso (`0ms`) e física de gestos 1:1.
 
 ---
 
-## 2. Motor Multi-Superfície "Single-Ink" (5 Atmosferas)
+## 2. Motor Multi-Superfície "Single-Ink" + Soft Chromatic (9 atmosferas)
 
 Inspirado na arquitetura de *Deimos* (`color-mix(in srgb, var(--fg) X%, var(--bg))`) somada à escada tonal quente da *Anthropic*, toda a hierarquia de bordas, divisórias, textos secundários e estados de hover deriva de **uma única cor de tinta (`--ds-fg`)** interagindo com a cor do papel (`--ds-bg`).
 
-| Superfície (`data-surface`) | Linhagem | Fundo `--ds-bg` | Superfícies `1 / 2 / 3` | Tinta `--ds-fg` | Contraste | Uso Recomendado no Ecossistema |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`ivory`** *(Padrão)* | Anthropic Research | `#FAF9F5` | `#F5F4ED` / `#E8E6DC` / `#DEDCD1` | `#141413` | **17.6:1 (AAA)** | Home editorial, apps B2C cotidianos (#1, #2, #3, #4, #9), pesquisa |
-| **`paper`** | Deimos White | `#FFFFFF` | `#F8F8F6` / `#EDEDEA` / `#E0E0DC` | `#0A0A0A` | **19.8:1 (AAA)** | Dossiês PDF, Raio-X do Endereço (#11), B2B Imobiliário/RI (#33, #40) |
-| **`aqua`** | Deimos Blue | `#A4CED0` | `#99C4C6` / `#90B6B7` / `#82A8AA` | `#171614` | **10.4:1 (AAA)** | Earth AI, Clima, Qualidade do Ar, AgroCiclos (#27, #28, #29, #31) |
-| **`terracotta`** | Deimos Orange | `#EDBB99` | `#E4B18F` / `#D5A382` / `#C59373` | `#171614` | **10.4:1 (AAA)** | Cultura Pop, Social/Voz, Jornal 3 Min, Solar 3D (#19–#24, #36) |
-| **`obsidian`** | Anthropic Hero + Deimos Dark | `#0E0E0D` | `#161614` / `#222220` / `#30302E` | `#FAF9F5` | **18.4:1 (AAA)** | Terminal Gann–Jenkins (#26), Pulse & DNA (#30), uso noturno Pro |
+Ordem do espectro (`SURFACE_SPECTRUM` em `tokens.ts`):  
+`ivory → blush → butter → mist → aqua → lilac → terracotta → obsidian` (+ `paper` para dossiês).
+
+| Superfície (`data-surface`) | Linhagem | Fundo `--ds-bg` | Tinta `--ds-fg` | Contraste | Uso |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **`ivory`** *(Padrão)* | Anthropic Research | `#FAF9F5` | `#141413` | **17.6:1** | Home B2C, pesquisa |
+| **`paper`** | Deimos White | `#FFFFFF` | `#0A0A0A` | **19.8:1** | Dossiês PDF, B2B |
+| **`blush`** | Soft Chromatic | `#E8C4C0` | `#1A1414` | **9.8:1** | Capas HalfTone, cultura |
+| **`butter`** | Soft Chromatic | `#E8D9A8` | `#1A1710` | AAA | Editorial quente suave |
+| **`mist`** | Soft Chromatic | `#C5D4CE` | `#141816` | AAA | Clima / natureza suave |
+| **`aqua`** | Deimos Blue | `#A4CED0` | `#171614` | **10.4:1** | Earth AI, AQI, Agro |
+| **`lilac`** | Soft Chromatic | `#C9C0D8` | `#16141A` | AAA | Narrativa / voz |
+| **`terracotta`** | Deimos Orange | `#EDBB99` | `#171614` | **10.4:1** | Cultura, Solar, Gann |
+| **`obsidian`** | Deimos Dark | `#0E0E0D` | `#FAF9F5` | **18.4:1** | Terminal Pro noturno |
 
 ### Derivados Dinâmicos (`color-mix` no CSS / RGBA pré-resolvido em `tokens.ts`)
 - `--ds-bg-tint-subtle`: `4.5%` de `--ds-fg` sobre `--ds-bg` (hover suave, molduras de gráficos)
 - `--ds-bg-tint-muted`: `8.5%` de `--ds-fg` sobre `--ds-bg` (item ativo no TOC, destaque de citação)
-- `--ds-rule`: `11%` de `--ds-fg` transparente (divisórias de seção e listas)
-- `--ds-rule-strong`: `22%` de `--ds-fg` transparente (trilho tracejado da *Lifeline*, botões circulares)
-- `--ds-border`: `12%` de `--ds-fg` transparente (cards, inputs, tabs)
-- `--ds-border-strong`: `26%` de `--ds-fg` transparente (popovers, dossiês 3D, bordas em foco)
+- `--ds-rule`: `10%` de `--ds-fg` transparente (hairline Deimos — seções, captions, listas)
+- `--ds-rule-strong`: `16%` de `--ds-fg` transparente (trilho Lifeline, ênfase leve)
+- `--ds-border`: `10%` de `--ds-fg` transparente (cards, inputs, tabs — mesma sutileza da rule)
+- `--ds-border-strong`: `18%` de `--ds-fg` transparente (popovers, foco; nunca pesado)
+- Leitor 3 colunas Deimos: `--ds-toc-width: 152px` · fluid · `--ds-aside-width: 264px` · `--ds-reader-gap: 32px`
 
 ### Paleta Orgânica Contida & Sinais Semânticos
 Herdada da estratégia *Anthropic* (tons terrosos usados **exclusivamente** em tags de categoria, séries de gráficos SVG e pontos de status — nunca como fundos saturados de página):
@@ -47,30 +55,31 @@ Herdada da estratégia *Anthropic* (tons terrosos usados **exclusivamente** em t
 
 ---
 
-## 3. Ruído de Fundo & Materialidade Arquivística (`PaperGrain`)
+## 3. Ruído de Fundo & Materialidade (`PaperGrain` canvas · v1.4)
 
-O charme tátil dos arquivos *Deimos White*, *Blue* e *Orange* vem da camada global de **papel algodão sobreposta via `mix-blend-mode`**, eliminando o aspecto "plástico digital" de fundos chapados:
+**Problema resolvido:** PNG full-viewport como `data:` em `--ds-paper-texture` era **descartado em silêncio** por Chrome/Edge (style attribute / limite de CSS). O grão “só aparecia” em alguns ambientes.
 
-```css
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 2147483640;
-  pointer-events: none;
-  background-image: var(--ds-paper-texture);
-  background-position: var(--ds-paper-offset);
-  background-size: var(--ds-paper-size);
-  mix-blend-mode: var(--ds-paper-blend); /* multiply (claro/tingido) | screen (obsidian) */
-  filter: var(--ds-paper-filter);        /* none (claro/tingido) | invert(1) (obsidian) */
-  opacity: var(--ds-paper-opacity);
-}
+### Implementação oficial (`paper-grain.ts` + `.ds-paper-grain-layer`)
+1. **`mountPaperGrain()`** cria `<canvas id="ds-paper-grain" class="ds-paper-grain-layer">` fixo sobre a página.
+2. Pinta **speckles escuros com alpha** + microfibras (source-over) — visível em ivory sem depender de `multiply` frágil.
+3. `html[data-paper-shader="canvas"]` desliga o legado `body::after`.
+4. Intensidade: `data-grain="off | subtle | editorial | tactile"` → `--ds-grain-multiplier` × `--ds-paper-opacity` (ivory ≈ `0.88`).
+5. **Tamanho espacial:** `data-grain-size="fine | medium | coarse | chunky"` → repaint do canvas (`GRAIN_SIZES` / `setPaperGrainSize`). Fino = pó; Grumoso = grão grosso.
+6. Constantes: `PAPER_SHADER`, `GRAIN_SIZES`, `GRAIN_SIZE_ORDER` em `tokens.ts`.
+
+```ts
+import { mountPaperGrain } from '@meridian/design-system';
+mountPaperGrain({ seed: 20261120, speckleStrength: 0.58, fiberDensity: 1.05 });
 ```
 
-### Duas Camadas de Implementação (Zero CDN Externa)
-1. **Fallback Puro em CSS (`tokens.css`):** `feTurbulence` SVG inline (`fractalNoise`, `baseFrequency="0.82"`, `numOctaves="4"`, `stitchTiles="stitch"`) já funciona instantaneamente sem JS.
-2. **Gerador Procedural Canvas 512×512 (`paper-grain.ts`):** reproduz fielmente o `PaperGrain` do Deimos — gera um tile seamless `512×512` combinando **grão de distribuição triangular** + **manchas sutis de prensa tipográfica** + **110 microfibras curvas de celulose**, aplicado com offset pseudo-aleatório e 4 intensidades (`data-grain="off | subtle | editorial | tactile"`).
-3. **Fotografia Arquivística:** imagens dentro de `.ds-plate-frame` aplicam `mix-blend-mode: multiply` sobre papéis claros/tingidos (`ivory`, `paper`, `aqua`, `terracotta`), fazendo fotografias P&B e diagramas se fundirem fisicamente ao papel.
+### HalfTone (Paper Shaders) — malha fina
+Capas/placas usam `@paper-design/shaders` `halftoneDots`. **`u_size` ≥ ~0.4 derrete a imagem** (poucas células). Defaults em `HALFTONE` (`tokens.ts`): `size: 0.12`, `radius: 0.92`, `type: classic|soft`, `grid: hex`. Ver dossiê `gann.html`.
+
+### Scrollbar hairline & overlays
+- Scrollbars: **2px**, thumb ~28% da tinta, **track transparente**, **sem setas** (`SCROLLBAR` / `tokens.css`).
+- **Chromium:** nunca combinar `scrollbar-width`/`scrollbar-color` com `::-webkit-scrollbar` — o padrão CSS desativa os pseudos e volta a barra nativa do Windows (trilha branca + thumb arredondado). Firefox usa só `@supports (-moz-appearance)`.
+- Rails/drawers: **só escurecem** (`OVERLAY_DIM`) — **sem `backdrop-filter: blur`**.
+- Burger: **3 linhas iguais 1.5px** → morph para **X** com `aria-expanded` (`.ds-burger`).
 
 ---
 
@@ -87,13 +96,19 @@ body::after {
 
 ## 5. Tipografia em 3 Vozes & Disciplina Ótica
 
-Hierarquia construída por **contraste extremo de escala e troca de família** (mantendo peso `400` nos títulos serifados como no *Deimos*), nunca por excesso de negritos ou cores chamativas:
+Hierarquia construída por **contraste extremo de escala e troca de família** (peso `400` nos títulos serifados), com **kerning nativo** (`font-kerning: normal` + `liga`/`calt`) e calibração óptica para a família **Geist**:
 
-| Voz | Família CSS (`tokens.css`) | Papéis | Regras Óticas (Apple / Emil / Deimos) |
+| Voz | Família CSS (`tokens.css` / `fonts.css`) | Papéis | Leading · Tracking (Geist) |
 | :--- | :--- | :--- | :--- |
-| **Display Serif** | `Instrument Serif` / `Geist Serif` / `Newsreader` / `Georgia` | `mega`, `h1`, `h2`, `h3`, `lead`, `metric` | Peso `400`, escala fluida `clamp()`, leading apertado (`0.92–1.15`), **tracking negativo específico por tamanho** (`-0.035em` a `-0.015em`) |
-| **Functional Sans** | `Geist` / `Inter` / `system-ui` | `body-lg (17px)`, `body-md (15px)`, `body-sm (13.5px)`, `ui-md (13px)` | Leading respirável (`1.52–1.62`), **largura máxima de prosa `65ch`** (Emil UI Cheatsheet), tracking `0` |
-| **Technical Mono** | `Geist Mono` / `JetBrains Mono` / `ui-monospace` | `mono-md (13px)` até `mono-micro (10px)` | **`font-variant-numeric: tabular-nums` obrigatório** para preços, graus planetários, datas, AQI, contadores e citações (zero trepidação ao atualizar) |
+| **Display Serif** | `Geist Serif` / `Georgia` | `mega`, `h1`, `h2`, `h3`, `lead`, `metric` | lh `0.96 → 1.34` · ls `-0.03em → -0.011em`; `font-synthesis-weight: none` |
+| **Functional Sans** | `Geist` / `system-ui` | `body-lg (17px)`, `body-md (15px)`, `body-sm (13.5px)`, `ui-md (13px)` | lh `1.35 → 1.58` · ls `-0.01em → -0.006em`; prosa máx. **`65ch`** |
+| **Technical Mono** | `Geist Mono` / `ui-monospace` | `mono-md` → `mono-micro` | lh `1.45` · ls `+0.01em` (eyebrow `+0.06em`); **`tabular-nums` obrigatório** |
+
+### Ritmo vertical de blocos
+
+Tokens `--ds-stack-*` / `--ds-block-gap` / `--ds-title-gap` / `--ds-section-y` governam folga entre título→corpo, parágrafos e seções (também em `SPACING` no `tokens.ts`). Utilitários: `.ds-stack`, `.ds-section`, `.ds-section-header`.
+
+Arquivos de fonte locais: `assets/fonts/` (`Geist-Variable`, `GeistSerifVF`, `GeistMono-Variable`).
 
 ---
 
@@ -153,9 +168,11 @@ Regra #1 de Emil Kowalski aplicada rigorosamente ao Meridian:
 ## 8. Padrões Estruturais & Componentes Editoriais
 
 1. **Grid Assimétrico Editorial (12 colunas — Anthropic):** alterna ritmos assimétricos (`3+8`, `6+3`, `8+3`) sem repetir o mesmo padrão em duas linhas seguidas. Ao passar o ponteiro fino sobre um card, os cards irmãos recuam suavemente para `opacity: 0.54`, criando foco de galeria de revista.
-2. **Leitor Enciclopédico em 3 Colunas (Deimos):** `172px` TOC fixo à esquerda (indicador de borda esquerda + fundo tint `8.5%`) | coluna central de prosa `65ch` com **sentenças clicáveis e sobrescritos de citação** `¹²³` | `276px` sidebar *At a Glance* à direita com fatos verificados expansíveis e selos `Tier A / B / C`.
+2. **Leitor Enciclopédico em 3 Colunas (Deimos):** TOC `152px` | prosa `65ch` com **claims** (hover: *dotted underline* + tint, sem blur/glow) e sobrescritos `¹²³` | aside `264px` com placa menor + *At a Glance*. Empilha em mobile (`prosa → placa`).
+3b. **Page enter:** `.ds-page-veil` + `markPageReady()` (`page-enter.ts`) — revela com `--ds-enter-scale` (nunca `scale(0)`).
 3. **Cronologia Horizontal `Lifeline` (Deimos):** trilho horizontal arrastável 1:1 com eixo tracejado (`1px dashed var(--ds-rule-strong)`), marcadores de ciclo/ano e cartões interativos — funciona tanto para *Cronologia Climática/Urbana* (B2C) quanto para *Janelas de Confluência & Ciclos* (Técnico).
 4. **Estante Tátil 3D de Dossiês (Deimos):** lombadas verticais em `preserve-3d` com brilho especular e borda de páginas caneladas (`--ds-pattern-page-ribs`), abrindo em `800ms` para revelar relatórios PDF gerados (*Raio-X Endereço #11*, *Atlas Gann-Jenkins #26*, *Simulador Solar #36*, *Observatório Pulse #30*).
+5. **Footer editorial (Anthropic):** grade 3 colunas — marca compacta | acordeões `<details>` com hairlines e chevron | bloco “Nossa missão” + links externos `↗`. Um acordeão aberto por vez. Componente `.ds-footer` em `components.css`.
 
 ---
 
@@ -225,20 +242,27 @@ Inspirado diretamente nas animações de aquarela e pincéis de **[Scenarios for
 | `:hover` sem media query | Envolver em `@media (hover: hover) and (pointer: fine)` |
 | `width` / `height` / `top` / `left` animados | `transform` e `opacity` (ou `clip-path` para revelações/tabs) |
 | `prefers-reduced-motion` ignorado | Remover deslocamentos e manter cross-fade curto (`opacity`) / frame estático no Atelier |
-| Fundo liso sem alma nos temas claros/tingidos | Manter `PaperGrain` ativo (`data-grain="editorial"` padrão) |
+| Fundo liso / PaperGrain via data-URL em CSS var | `mountPaperGrain()` → canvas `#ds-paper-grain` (`data-paper-shader="canvas"`) |
+| HalfTone com `size` ≥ 0.4 | `HALFTONE.size` ≈ `0.11–0.13` (malha fina) |
+| Scrollbar grossa / track opaco | Hairline 2px, track transparente |
+| Overlay de menu com `backdrop-filter: blur` | Só dim (`rgba(20,16,12,0.34)`) |
+| Hamburger com ícones SVG irregulares | `.ds-burger` — 3 linhas iguais → X |
 | Importar `p5.js` (bundle > 800KB JS) para efeitos editoriais | Usar `atelier-engine.ts` (zero dependências, 100% TypeScript estrito, < 1ms/frame) |
 | Gráfico Gann/Mandala esticado (`preserveAspectRatio="none"`) | `viewBox="0 0 400 400"` + `aspect-ratio: 1 / 1` travado |
 
 ### Integração no Monorepo (`packages/design-system`)
 ```text
 packages/design-system/
-├── DESIGN_SYSTEM.md   # Esta especificação oficial (também em 08-design-system.md no Drive)
-├── tokens.css         # Primitivos, 5 atmosferas Single-Ink, PaperGrain, Motion & Mobile-Native
-├── tokens.ts          # 100% TypeScript estrito p/ React Native, Web, Reanimated 4 e SVG 1:1
-├── components.css     # Biblioteca CSS pura de componentes editoriais e interativos
-├── paper-grain.ts     # Gerador procedural Canvas 512×512 de papel algodão arquivístico
-├── plotter-svg.ts     # Gramática SVG Plotter (13 papéis) + Globo Ortográfico 81k editável
-├── atelier-engine.ts  # Motor generativo 100% TS estilo p5.js (Aquarela, Lápis, Giz, Pincel)
-├── meridian-globe-81k.svg # Exportação SVG autônoma do globo (padrão Plotter editável)
-└── showcase.html      # Vitrine interativa autônoma (funciona 100% offline)
+├── DESIGN_SYSTEM.md   # Especificação oficial v1.4.0
+├── tokens.css         # 9 atmosferas, PaperGrain canvas, scrollbar hairline, motion
+├── tokens.ts          # SURFACES + PAPER_SHADER + HALFTONE + SCROLLBAR + BURGER + SPECTRUM
+├── components.css     # Burger→X, claim hover, drawer dim, page veil, reader 3-col
+├── paper-grain.ts     # Canvas overlay (#ds-paper-grain) — sem data-URL
+├── page-enter.ts      # markPageReady() + veil
+├── plotter-svg.ts     # Plotter + Globo 81k
+├── atelier-engine.ts  # Aquarela / Lápis / Giz / Sumi-e
+├── gann.css|gann-app  # Dossiê W.D. Gann (HalfTone + dual chrome)
+├── index.html         # Showcase DS
+├── preview.html       # Meridian Studio
+└── gann.html          # Página archival Gann
 ```

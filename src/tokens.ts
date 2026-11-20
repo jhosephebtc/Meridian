@@ -1,14 +1,26 @@
 /**
- * MERIDIAN DESIGN SYSTEM — tokens.ts (v1.1.0)
+ * MERIDIAN DESIGN SYSTEM — tokens.ts (v1.4.0)
  * Ecossistema: Lunar + Earth AI + Gemini Studio
  * Linhagem: Anthropic Editorial + Deimos Archival + Emil Kowalski Design Engineering
+ * Soft Chromatic · PaperGrain canvas · HalfTone fino · Scrollbar hairline · Burger→X
  * Compatibilidade: 100% TypeScript estrito · React Native / Expo (Reanimated 4) · Web · SVG 1:1
  */
 
-export type SurfaceId = 'ivory' | 'paper' | 'aqua' | 'terracotta' | 'obsidian';
+export type SurfaceId =
+  | 'ivory'
+  | 'paper'
+  | 'aqua'
+  | 'terracotta'
+  | 'obsidian'
+  | 'blush'
+  | 'butter'
+  | 'mist'
+  | 'lilac';
 export type OperationalMode = 'invisible' | 'technical';
 export type SignalStyle = 'chromatic' | 'monochrome';
 export type GrainPreset = 'off' | 'subtle' | 'editorial' | 'tactile';
+/** Escala espacial do PaperGrain (fine = pó fino · chunky = grão grosso) */
+export type GrainSizeId = 'fine' | 'medium' | 'coarse' | 'chunky';
 export type SourceTier = 'A' | 'B' | 'C';
 
 export interface SurfacePalette {
@@ -98,10 +110,10 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     bgTintSubtle: 'rgba(20, 20, 19, 0.045)',
     bgTintMuted: 'rgba(20, 20, 19, 0.085)',
     bgTintActive: 'rgba(20, 20, 19, 0.12)',
-    rule: 'rgba(20, 20, 19, 0.11)',
-    ruleStrong: 'rgba(20, 20, 19, 0.22)',
-    border: 'rgba(20, 20, 19, 0.12)',
-    borderStrong: 'rgba(20, 20, 19, 0.26)',
+    rule: 'rgba(20, 20, 19, 0.10)',
+    ruleStrong: 'rgba(20, 20, 19, 0.16)',
+    border: 'rgba(20, 20, 19, 0.10)',
+    borderStrong: 'rgba(20, 20, 19, 0.18)',
     spine1: '#F3F2EC',
     spine2: '#E8E6DC',
     spine3: '#DBD8CC',
@@ -109,7 +121,7 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     organic: { olive: '#5E6E47', sky: '#477085', coral: '#B55A42', ochre: '#9A7134', slate: '#56606E' },
     imageBlend: 'multiply',
     paperBlend: 'multiply',
-    paperOpacity: 0.68,
+    paperOpacity: 0.88,
     contrastRatioFgOnBg: '17.6:1 (AAA)',
   },
 
@@ -140,9 +152,9 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     bgTintMuted: 'rgba(10, 10, 10, 0.085)',
     bgTintActive: 'rgba(10, 10, 10, 0.12)',
     rule: 'rgba(10, 10, 10, 0.10)',
-    ruleStrong: 'rgba(10, 10, 10, 0.22)',
-    border: 'rgba(10, 10, 10, 0.11)',
-    borderStrong: 'rgba(10, 10, 10, 0.24)',
+    ruleStrong: 'rgba(10, 10, 10, 0.16)',
+    border: 'rgba(10, 10, 10, 0.10)',
+    borderStrong: 'rgba(10, 10, 10, 0.18)',
     spine1: '#F5F5F2',
     spine2: '#EAEAE6',
     spine3: '#DCDCD7',
@@ -150,7 +162,7 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     organic: { olive: '#5E6E47', sky: '#477085', coral: '#B55A42', ochre: '#9A7134', slate: '#56606E' },
     imageBlend: 'multiply',
     paperBlend: 'multiply',
-    paperOpacity: 0.62,
+    paperOpacity: 0.82,
     contrastRatioFgOnBg: '19.8:1 (AAA)',
   },
 
@@ -180,10 +192,10 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     bgTintSubtle: 'rgba(23, 22, 20, 0.05)',
     bgTintMuted: 'rgba(23, 22, 20, 0.09)',
     bgTintActive: 'rgba(23, 22, 20, 0.13)',
-    rule: 'rgba(23, 22, 20, 0.12)',
-    ruleStrong: 'rgba(23, 22, 20, 0.24)',
-    border: 'rgba(23, 22, 20, 0.13)',
-    borderStrong: 'rgba(23, 22, 20, 0.26)',
+    rule: 'rgba(23, 22, 20, 0.10)',
+    ruleStrong: 'rgba(23, 22, 20, 0.16)',
+    border: 'rgba(23, 22, 20, 0.10)',
+    borderStrong: 'rgba(23, 22, 20, 0.18)',
     spine1: '#B4D7D9',
     spine2: '#96BCBD',
     spine3: '#7FA5A7',
@@ -221,10 +233,10 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     bgTintSubtle: 'rgba(23, 22, 20, 0.05)',
     bgTintMuted: 'rgba(23, 22, 20, 0.09)',
     bgTintActive: 'rgba(23, 22, 20, 0.13)',
-    rule: 'rgba(23, 22, 20, 0.12)',
-    ruleStrong: 'rgba(23, 22, 20, 0.24)',
-    border: 'rgba(23, 22, 20, 0.13)',
-    borderStrong: 'rgba(23, 22, 20, 0.26)',
+    rule: 'rgba(23, 22, 20, 0.10)',
+    ruleStrong: 'rgba(23, 22, 20, 0.16)',
+    border: 'rgba(23, 22, 20, 0.10)',
+    borderStrong: 'rgba(23, 22, 20, 0.18)',
     spine1: '#F3CAAE',
     spine2: '#D8AA8C',
     spine3: '#C09579',
@@ -262,10 +274,10 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     bgTintSubtle: 'rgba(250, 249, 245, 0.045)',
     bgTintMuted: 'rgba(250, 249, 245, 0.085)',
     bgTintActive: 'rgba(250, 249, 245, 0.13)',
-    rule: 'rgba(250, 249, 245, 0.11)',
-    ruleStrong: 'rgba(250, 249, 245, 0.22)',
-    border: 'rgba(250, 249, 245, 0.12)',
-    borderStrong: 'rgba(250, 249, 245, 0.26)',
+    rule: 'rgba(250, 249, 245, 0.10)',
+    ruleStrong: 'rgba(250, 249, 245, 0.16)',
+    border: 'rgba(250, 249, 245, 0.10)',
+    borderStrong: 'rgba(250, 249, 245, 0.18)',
     spine1: '#1C1C1A',
     spine2: '#151513',
     spine3: '#262624',
@@ -273,49 +285,247 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     organic: { olive: '#98AE7B', sky: '#85B6CC', coral: '#E08D74', ochre: '#D9B16C', slate: '#97A4B5' },
     imageBlend: 'normal',
     paperBlend: 'screen',
-    paperOpacity: 0.58,
+    paperOpacity: 0.55,
     contrastRatioFgOnBg: '18.4:1 (AAA)',
+  },
+
+  blush: {
+    id: 'blush',
+    label: 'Soft Blush',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, dossiês culturais e capas HalfTone',
+    scheme: 'light',
+    bg: '#E8C4C0',
+    surface1: '#E0B9B5',
+    surface2: '#D2AAA6',
+    surface3: '#C29A96',
+    highlight: '#F7E8E6',
+    fg: '#1A1414',
+    fgSecondary: '#2E2424',
+    fgMuted: '#5A4544',
+    fgSubtle: '#6E5655',
+    accent: '#1A1414',
+    accentHover: '#2E2424',
+    accentFg: '#E8C4C0',
+    invertedBg: '#1A1414',
+    invertedSurface: '#2A2222',
+    invertedFg: '#F7E8E6',
+    invertedMuted: '#C4A09C',
+    invertedBorder: '#3E3333',
+    bgTintSubtle: 'rgba(26, 20, 20, 0.045)',
+    bgTintMuted: 'rgba(26, 20, 20, 0.085)',
+    bgTintActive: 'rgba(26, 20, 20, 0.12)',
+    rule: 'rgba(26, 20, 20, 0.10)',
+    ruleStrong: 'rgba(26, 20, 20, 0.16)',
+    border: 'rgba(26, 20, 20, 0.10)',
+    borderStrong: 'rgba(26, 20, 20, 0.18)',
+    spine1: '#EFD1CD',
+    spine2: '#D9B0AC',
+    spine3: '#C59E9A',
+    signals: { support: '#14532D', caution: '#6B3409', refute: '#7F1D1D', info: '#1E3A6E' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.92,
+    contrastRatioFgOnBg: '9.8:1 (AAA)',
+  },
+
+  butter: {
+    id: 'butter',
+    label: 'Soft Butter',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, solar e notas editoriais quentes',
+    scheme: 'light',
+    bg: '#E8D9A8',
+    surface1: '#E0D09C',
+    surface2: '#D2C28C',
+    surface3: '#C2B27C',
+    highlight: '#F6F0DC',
+    fg: '#1A1810',
+    fgSecondary: '#2E2A1C',
+    fgMuted: '#5A5238',
+    fgSubtle: '#6E6548',
+    accent: '#1A1810',
+    accentHover: '#2E2A1C',
+    accentFg: '#E8D9A8',
+    invertedBg: '#1A1810',
+    invertedSurface: '#2A2618',
+    invertedFg: '#F6F0DC',
+    invertedMuted: '#C4B88A',
+    invertedBorder: '#3E3A28',
+    bgTintSubtle: 'rgba(26, 24, 16, 0.045)',
+    bgTintMuted: 'rgba(26, 24, 16, 0.085)',
+    bgTintActive: 'rgba(26, 24, 16, 0.12)',
+    rule: 'rgba(26, 24, 16, 0.10)',
+    ruleStrong: 'rgba(26, 24, 16, 0.16)',
+    border: 'rgba(26, 24, 16, 0.10)',
+    borderStrong: 'rgba(26, 24, 16, 0.18)',
+    spine1: '#EFE4BC',
+    spine2: '#D9C998',
+    spine3: '#C5B586',
+    signals: { support: '#14532D', caution: '#6B3409', refute: '#7F1D1D', info: '#1E3A6E' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.9,
+    contrastRatioFgOnBg: '10.1:1 (AAA)',
+  },
+
+  mist: {
+    id: 'mist',
+    label: 'Soft Mist',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, clima e leitura ambiental',
+    scheme: 'light',
+    bg: '#C5D4CE',
+    surface1: '#B9C9C2',
+    surface2: '#A8B9B2',
+    surface3: '#96A8A0',
+    highlight: '#E8F0EC',
+    fg: '#141816',
+    fgSecondary: '#242E2A',
+    fgMuted: '#3E4E48',
+    fgSubtle: '#506258',
+    accent: '#141816',
+    accentHover: '#242E2A',
+    accentFg: '#C5D4CE',
+    invertedBg: '#141816',
+    invertedSurface: '#222A26',
+    invertedFg: '#E8F0EC',
+    invertedMuted: '#9BB0A8',
+    invertedBorder: '#343E38',
+    bgTintSubtle: 'rgba(20, 24, 22, 0.045)',
+    bgTintMuted: 'rgba(20, 24, 22, 0.085)',
+    bgTintActive: 'rgba(20, 24, 22, 0.12)',
+    rule: 'rgba(20, 24, 22, 0.10)',
+    ruleStrong: 'rgba(20, 24, 22, 0.16)',
+    border: 'rgba(20, 24, 22, 0.10)',
+    borderStrong: 'rgba(20, 24, 22, 0.18)',
+    spine1: '#D2DFDA',
+    spine2: '#B6C6C0',
+    spine3: '#A0B2AA',
+    signals: { support: '#114B2F', caution: '#6E3E0B', refute: '#7F1D1D', info: '#16336B' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.9,
+    contrastRatioFgOnBg: '9.6:1 (AAA)',
+  },
+
+  lilac: {
+    id: 'lilac',
+    label: 'Soft Lilac',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, cultura e capas editoriais',
+    scheme: 'light',
+    bg: '#C9C0D8',
+    surface1: '#BDB4CE',
+    surface2: '#ADA2C0',
+    surface3: '#9C90B0',
+    highlight: '#EBE6F2',
+    fg: '#16141A',
+    fgSecondary: '#28242E',
+    fgMuted: '#4A4458',
+    fgSubtle: '#5E566C',
+    accent: '#16141A',
+    accentHover: '#28242E',
+    accentFg: '#C9C0D8',
+    invertedBg: '#16141A',
+    invertedSurface: '#26222E',
+    invertedFg: '#EBE6F2',
+    invertedMuted: '#A89CB8',
+    invertedBorder: '#3A3444',
+    bgTintSubtle: 'rgba(22, 20, 26, 0.045)',
+    bgTintMuted: 'rgba(22, 20, 26, 0.085)',
+    bgTintActive: 'rgba(22, 20, 26, 0.12)',
+    rule: 'rgba(22, 20, 26, 0.10)',
+    ruleStrong: 'rgba(22, 20, 26, 0.16)',
+    border: 'rgba(22, 20, 26, 0.10)',
+    borderStrong: 'rgba(22, 20, 26, 0.18)',
+    spine1: '#D6CEE2',
+    spine2: '#BBB0CC',
+    spine3: '#A89CB8',
+    signals: { support: '#14532D', caution: '#6B3409', refute: '#7F1D1D', info: '#1E3A6E' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.9,
+    contrastRatioFgOnBg: '9.7:1 (AAA)',
   },
 } as const;
 
 export const TYPOGRAPHY = {
   families: {
     display: {
-      web: '"Instrument Serif", "Geist Serif", "Newsreader", Georgia, serif',
+      web: '"Geist Serif", Georgia, serif',
       ios: 'Georgia',
       android: 'serif',
     },
     sans: {
-      web: '"Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      web: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       ios: 'System',
       android: 'Roboto',
     },
     mono: {
-      web: '"Geist Mono", "JetBrains Mono", ui-monospace, Menlo, monospace',
+      web: '"Geist Mono", ui-monospace, Menlo, monospace',
       ios: 'Menlo',
       android: 'monospace',
     },
   },
+  /** Leading unitless — espelha `--ds-lh-*` (calibração Geist). */
+  leading: {
+    mega: 0.96,
+    display: 1.08,
+    heading: 1.2,
+    lead: 1.34,
+    metric: 1,
+    bodyLg: 1.58,
+    body: 1.5,
+    ui: 1.35,
+    mono: 1.45,
+  },
+  /** Tracking em em — espelha `--ds-tracking-*`. */
+  tracking: {
+    mega: -0.03,
+    display: -0.022,
+    heading: -0.014,
+    lead: -0.011,
+    metric: -0.028,
+    body: -0.006,
+    ui: -0.01,
+    normal: 0,
+    mono: 0.01,
+    eyebrow: 0.06,
+  },
   scale: {
-    h1: { fontSize: 44, lineHeight: 46, letterSpacing: -1.1, fontWeight: '400' as const, voice: 'display' as const },
-    h2: { fontSize: 32, lineHeight: 35, letterSpacing: -0.6, fontWeight: '400' as const, voice: 'display' as const },
-    h3: { fontSize: 24, lineHeight: 28, letterSpacing: -0.35, fontWeight: '400' as const, voice: 'display' as const },
-    h4: { fontSize: 20, lineHeight: 24, letterSpacing: -0.2, fontWeight: '400' as const, voice: 'display' as const },
-    lead: { fontSize: 22, lineHeight: 28, letterSpacing: -0.25, fontWeight: '400' as const, voice: 'display' as const },
-    metric: { fontSize: 52, lineHeight: 52, letterSpacing: -1.4, fontWeight: '400' as const, voice: 'display' as const, tabularNums: true },
-    bodyLg: { fontSize: 17, lineHeight: 27.5, letterSpacing: 0, fontWeight: '400' as const, voice: 'sans' as const },
-    bodyMd: { fontSize: 15, lineHeight: 23, letterSpacing: 0, fontWeight: '400' as const, voice: 'sans' as const },
-    bodySm: { fontSize: 13.5, lineHeight: 20, letterSpacing: 0, fontWeight: '400' as const, voice: 'sans' as const },
-    uiMd: { fontSize: 13, lineHeight: 18, letterSpacing: 0, fontWeight: '500' as const, voice: 'sans' as const },
-    monoMd: { fontSize: 13, lineHeight: 19.5, letterSpacing: 0, fontWeight: '400' as const, voice: 'mono' as const, tabularNums: true },
-    monoSm: { fontSize: 12, lineHeight: 18, letterSpacing: 0.1, fontWeight: '400' as const, voice: 'mono' as const, tabularNums: true },
-    monoXs: { fontSize: 11, lineHeight: 16.5, letterSpacing: 0.8, fontWeight: '500' as const, voice: 'mono' as const, tabularNums: true },
-    monoMicro: { fontSize: 10, lineHeight: 14, letterSpacing: 0.4, fontWeight: '400' as const, voice: 'mono' as const, tabularNums: true },
+    mega: { fontSize: 72, lineHeight: 69, letterSpacing: -2.16, fontWeight: '400' as const, voice: 'display' as const },
+    h1: { fontSize: 44, lineHeight: 47.5, letterSpacing: -0.97, fontWeight: '400' as const, voice: 'display' as const },
+    h2: { fontSize: 32, lineHeight: 38.4, letterSpacing: -0.45, fontWeight: '400' as const, voice: 'display' as const },
+    h3: { fontSize: 24, lineHeight: 28.8, letterSpacing: -0.34, fontWeight: '400' as const, voice: 'display' as const },
+    h4: { fontSize: 20, lineHeight: 24, letterSpacing: -0.28, fontWeight: '400' as const, voice: 'display' as const },
+    lead: { fontSize: 22, lineHeight: 29.5, letterSpacing: -0.24, fontWeight: '400' as const, voice: 'display' as const },
+    metric: { fontSize: 52, lineHeight: 52, letterSpacing: -1.46, fontWeight: '400' as const, voice: 'display' as const, tabularNums: true },
+    bodyLg: { fontSize: 17, lineHeight: 26.9, letterSpacing: -0.1, fontWeight: '400' as const, voice: 'sans' as const },
+    bodyMd: { fontSize: 15, lineHeight: 22.5, letterSpacing: -0.09, fontWeight: '400' as const, voice: 'sans' as const },
+    bodySm: { fontSize: 13.5, lineHeight: 20.25, letterSpacing: -0.08, fontWeight: '400' as const, voice: 'sans' as const },
+    uiMd: { fontSize: 13, lineHeight: 17.6, letterSpacing: -0.13, fontWeight: '500' as const, voice: 'sans' as const },
+    monoMd: { fontSize: 13, lineHeight: 18.85, letterSpacing: 0.13, fontWeight: '400' as const, voice: 'mono' as const, tabularNums: true },
+    monoSm: { fontSize: 12, lineHeight: 17.4, letterSpacing: 0.12, fontWeight: '400' as const, voice: 'mono' as const, tabularNums: true },
+    monoXs: { fontSize: 11, lineHeight: 16, letterSpacing: 0.66, fontWeight: '500' as const, voice: 'mono' as const, tabularNums: true },
+    monoMicro: { fontSize: 10, lineHeight: 14.5, letterSpacing: 0.1, fontWeight: '400' as const, voice: 'mono' as const, tabularNums: true },
   },
 } as const;
 
 export const SPACING = {
   1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 8: 32, 10: 40, 12: 48, 16: 64, 20: 80, 24: 96,
+  /** Ritmo de blocos — espelha `--ds-stack-*` / `--ds-section-y`. */
+  stackTight: 6,
+  stackSnug: 10,
+  stackMd: 16,
+  stackLoose: 28,
+  stackXl: 40,
+  sectionYMin: 56,
+  sectionYMax: 96,
 } as const;
 
 export const RADII = {
@@ -503,6 +713,154 @@ export function rnElevation(level: 'flat' | 'raised' | 'modal', scheme: 'light' 
   } as const;
 }
 
+/** Ordem do espectro cromático suave (swatches / Gann / preview) */
+export const SURFACE_SPECTRUM: readonly SurfaceId[] = [
+  'ivory',
+  'blush',
+  'butter',
+  'mist',
+  'aqua',
+  'lilac',
+  'terracotta',
+  'obsidian',
+] as const;
+
+/**
+ * Escalas espaciais do PaperGrain.
+ * `canvasScale` menor → menos pixels esticados → grão visualmente maior.
+ */
+export const GRAIN_SIZES: Record<
+  GrainSizeId,
+  {
+    readonly id: GrainSizeId;
+    readonly label: string;
+    readonly canvasScale: number;
+    readonly blotScale: number;
+    readonly blotDensity: number;
+    readonly blotAlpha: number;
+    readonly fiberScale: number;
+    readonly fiberDensity: number;
+    readonly speckleHotspot: number;
+    readonly seedSalt: number;
+  }
+> = {
+  fine: {
+    id: 'fine',
+    label: 'Fino',
+    canvasScale: 0.78,
+    blotScale: 0.55,
+    blotDensity: 1.15,
+    blotAlpha: 0.85,
+    fiberScale: 0.65,
+    fiberDensity: 1.2,
+    speckleHotspot: 0.6,
+    seedSalt: 11,
+  },
+  medium: {
+    id: 'medium',
+    label: 'Médio',
+    canvasScale: 0.55,
+    blotScale: 1,
+    blotDensity: 1,
+    blotAlpha: 1,
+    fiberScale: 1,
+    fiberDensity: 1,
+    speckleHotspot: 1,
+    seedSalt: 0,
+  },
+  coarse: {
+    id: 'coarse',
+    label: 'Grosso',
+    canvasScale: 0.34,
+    blotScale: 1.85,
+    blotDensity: 0.85,
+    blotAlpha: 1.1,
+    fiberScale: 1.45,
+    fiberDensity: 0.9,
+    speckleHotspot: 1.35,
+    seedSalt: 29,
+  },
+  chunky: {
+    id: 'chunky',
+    label: 'Grumoso',
+    canvasScale: 0.22,
+    blotScale: 3.1,
+    blotDensity: 0.7,
+    blotAlpha: 1.2,
+    fiberScale: 2.1,
+    fiberDensity: 0.75,
+    speckleHotspot: 1.7,
+    seedSalt: 47,
+  },
+} as const;
+
+export const GRAIN_SIZE_ORDER: readonly GrainSizeId[] = [
+  'fine',
+  'medium',
+  'coarse',
+  'chunky',
+] as const;
+
+/**
+ * PaperGrain v1.4+ — canvas overlay (`#ds-paper-grain`), NUNCA data-URL em CSS var.
+ * Intensidade: `data-grain` → opacity. Tamanho: `data-grain-size` → repaint.
+ */
+export const PAPER_SHADER = {
+  mode: 'canvas' as const,
+  layerId: 'ds-paper-grain',
+  layerClass: 'ds-paper-grain-layer',
+  defaultSeed: 20261120,
+  defaultSpeckle: 0.58,
+  defaultFiber: 1.05,
+  defaultSize: 'medium' as GrainSizeId,
+  resizeDebounceMs: 280,
+} as const;
+
+/**
+ * Scrollbar hairline — track transparente, canvas visível.
+ * Em Chromium NÃO usar `scrollbar-color`/`scrollbar-width` junto com
+ * `::-webkit-scrollbar` — isso reativa a barra nativa do Windows.
+ */
+export const SCROLLBAR = {
+  widthPx: 2,
+  thumbOpacity: 0.28,
+  thumbHoverOpacity: 0.42,
+  track: 'transparent' as const,
+  chromiumUsesWebkitOnly: true,
+} as const;
+
+/** Hamburger: 3 linhas iguais → X (`aria-expanded`) */
+export const BURGER = {
+  lineCount: 3,
+  lineThicknessPx: 1.5,
+  widthPx: 18,
+  heightPx: 12,
+  buttonSizePx: 40,
+  morphMs: 280,
+} as const;
+
+/**
+ * HalfTone Dots (Paper Shaders) — malha fina; size ≥ 0.4 derrete a imagem.
+ * `u_size` = fração da caixa (0–1).
+ */
+export const HALFTONE = {
+  size: 0.12,
+  radius: 0.92,
+  contrast: 0.68,
+  grainMixer: 0.06,
+  grainOverlay: 0.05,
+  grainSize: 0.28,
+  grid: 'hex' as const,
+  type: 'classic' as const,
+  fit: 'cover' as const,
+} as const;
+
+/** Overlay de rail/drawer — só escurece, sem backdrop-filter blur */
+export const OVERLAY_DIM = {
+  backdrop: 'rgba(20, 16, 12, 0.34)',
+  blur: false,
+} as const;
+
 export function toCssVariables(surface: SurfaceId = 'ivory'): Record<string, string> {
   const t = SURFACES[surface];
   return {
@@ -521,5 +879,8 @@ export function toCssVariables(surface: SurfaceId = 'ivory'): Record<string, str
     '--ds-rule-strong': t.ruleStrong,
     '--ds-border': t.border,
     '--ds-border-strong': t.borderStrong,
+    '--ds-paper-blend': t.paperBlend,
+    '--ds-paper-opacity': String(t.paperOpacity),
+    '--ds-image-blend': t.imageBlend,
   };
 }

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-surface="terracotta" data-mode="technical" data-grain="editorial" data-grain-size="medium" data-layout="masthead">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#EDBB99" />
+  <title>W.D. Gann — História · Meridian Archival</title>
+  <meta name="description" content="História de William Delbert Gann em diagramação Deimos archival: HalfTone Paper Shaders, plotter D2 e navegação dual." />
+  <link rel="stylesheet" href="./src/tokens.css" />
+  <link rel="stylesheet" href="./src/components.css" />
+  <link rel="stylesheet" href="./src/gann.css" />
+</head>
+<body class="gann-page">
+  <div class="ds-page-veil" aria-hidden="false"></div>
+  <a class="gann-skip" href="#origem">Ir ao conteúdo</a>
+
+  <div class="ds-page-enter">
+  <header class="gann-chrome" role="banner">
+    <div class="gann-chrome-inner">
+      <button class="ds-burger gann-burger" id="gann-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gann-rail">
+        <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <a class="gann-brand" href="./gann.html">W.D. Gann</a>
+
+      <nav class="gann-nav-center" aria-label="Seções">
+        <a data-nav href="#origem">Origem</a>
+        <a data-nav href="#wall-street">Wall Street</a>
+        <a data-nav href="#geometria">Geometria</a>
+        <a data-nav href="#obras">Obras</a>
+        <a data-nav href="#legado">Legado</a>
+      </nav>
+
+      <div class="gann-spectrum" role="group" aria-label="Atmosfera cromática suave">
+        <button type="button" class="gann-spectrum-dot" data-chroma="terracotta" aria-pressed="true" title="Terracotta" style="--chroma:#EDBB99"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="blush" aria-pressed="false" title="Blush" style="--chroma:#E8C4C0"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="butter" aria-pressed="false" title="Butter" style="--chroma:#E8D9A8"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="mist" aria-pressed="false" title="Mist" style="--chroma:#C5D4CE"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="aqua" aria-pressed="false" title="Aqua" style="--chroma:#A4CED0"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="lilac" aria-pressed="false" title="Lilac" style="--chroma:#C9C0D8"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="ivory" aria-pressed="false" title="Ivory" style="--chroma:#FAF9F5"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="obsidian" aria-pressed="false" title="Obsidian" style="--chroma:#141413"></button>
+      </div>
+      <div class="gann-layout-toggle" role="group" aria-label="Alternar diagramação">
+        <button type="button" data-layout-pick="masthead" data-active="true">Header</button>
+        <button type="button" data-layout-pick="rail">Menu</button>
+      </div>
+      <a class="gann-ds-link" href="./index.html">Meridian DS ↗</a>
+    </div>
+  </header>
+
+  <div class="gann-rail-backdrop" id="gann-rail-backdrop" data-open="false"></div>
+  <aside class="gann-rail" id="gann-rail" data-open="false" role="dialog" aria-modal="true" aria-label="Navegação lateral">
+    <div class="gann-rail-head">
+      <button class="gann-rail-close" id="gann-rail-close" type="button">Close ×</button>
+      <span class="gann-eyebrow" style="margin:0">Sumário</span>
+    </div>
+    <nav class="gann-rail-nav" aria-label="Seções laterais">
+      <a data-nav href="#origem">01 · Origem</a>
+      <a data-nav href="#wall-street">02 · Wall Street</a>
+      <a data-nav href="#geometria">03 · Geometria</a>
+      <a data-nav href="#obras">04 · Obras</a>
+      <a data-nav href="#legado">05 · Legado</a>
+    </nav>
+    <p class="gann-rail-meta">
+      Alternador: <strong>Header</strong> centraliza a navegação;
+      <strong>Menu</strong> usa hambúrguer + rail lateral.
+    </p>
+  </aside>
+
+  <main class="gann-shell">
+    <!-- Hero: só prosa — placa vive no aside direito (padrão Deimos) -->
+    <section class="gann-hero" aria-labelledby="gann-hero-title">
+      <div class="gann-prose">
+        <p class="gann-eyebrow">Dossiê arquivístico · 1878–1955</p>
+        <h1 class="gann-title" id="gann-hero-title">William&nbsp;Delbert&nbsp;Gann</h1>
+        <p class="gann-lead">
+          Trader, autor e geometrista de mercado — a trajetória que liga o&nbsp;algodão do&nbsp;Texas ao&nbsp;papel quadriculado de&nbsp;<span class="gann-nowrap">Wall&nbsp;Street</span>.
+        </p>
+        <div class="gann-pill-row">
+          <span class="gann-pill" data-tone="solid">Single-Ink</span>
+          <span class="gann-pill">HalfTone</span>
+          <span class="gann-pill">Plotter D2</span>
+          <span class="gann-pill">Deimos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leitor Deimos: TOC | prosa | aside (placa menor + At a glance) -->
+    <div class="gann-reader">
+      <aside class="gann-reader-toc" aria-label="Sumário sticky">
+        <p class="gann-eyebrow">Contents</p>
+        <nav>
+          <a class="ds-toc-link" data-nav href="#origem">Origem</a>
+          <a class="ds-toc-link" data-nav href="#wall-street">Wall Street</a>
+          <a class="ds-toc-link" data-nav href="#geometria">Geometria</a>
+          <a class="ds-toc-link" data-nav href="#obras">Obras</a>
+          <a class="ds-toc-link" data-nav href="#legado">Legado</a>
+        </nav>
+      </aside>
+
+      <div class="gann-reader-main">
+        <section class="gann-section" id="origem">
+          <div class="gann-section-head">
+            <h2>Lufkin, algodão e&nbsp;o&nbsp;primeiro cálculo</h2>
+            <p class="gann-eyebrow" style="margin:0">01 · Origem</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Narrativa</div>
+            <h3>Do&nbsp;Texas rural ao&nbsp;tape</h3>
+            <p>
+              Nascido em 6&nbsp;de&nbsp;junho de&nbsp;1878 em&nbsp;Lufkin, Texas, Gann cresce entre ciclos de&nbsp;safra e&nbsp;preço.
+              A&nbsp;leitura do&nbsp;<em>ticker tape</em> e&nbsp;a&nbsp;obsessão por padrões temporais viriam depois —
+              mas a&nbsp;intuição de&nbsp;que o&nbsp;tempo governa o&nbsp;preço já nasce no&nbsp;campo.
+            </p>
+          </article>
+
+          <div class="gann-meta-row">
+            <span class="gann-pill" data-tone="solid">1878</span>
+            <span class="gann-pill">Lufkin, TX</span>
+            <span class="gann-pill">Algodão</span>
+          </div>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Evidence</div>
+            <blockquote>“Time is the most important factor in determining market movements.”</blockquote>
+            <cite>Atribuído à linhagem Gann · dossiê técnico Meridian</cite>
+          </div>
+
+          <div class="gann-lifeline">
+            <div class="gann-life-item">
+              <time>1878</time>
+              <h3>Nascimento</h3>
+              <p>Lufkin, Texas — ambiente rural e ciclos de commodity.</p>
+            </div>
+            <div class="gann-life-item" style="padding-bottom:0">
+              <time>~1902–09</time>
+              <h3>Chegada a Wall Street</h3>
+              <p>Operação e estudo sistemático de médias e sazonalidade.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="gann-section" id="wall-street">
+          <div class="gann-section-head">
+            <h2><span class="gann-nowrap">Wall&nbsp;Street</span> como laboratório</h2>
+            <p class="gann-eyebrow" style="margin:0">02 · Wall Street</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Método</div>
+            <h3>Preço, tempo e&nbsp;proporção</h3>
+            <p>
+              Em <span class="gann-nowrap">Wall&nbsp;Street</span>, Gann trata o&nbsp;gráfico como planta arquitetônica:
+              ângulos de&nbsp;45° (<span class="gann-nowrap">1×1</span>), divisões de&nbsp;octavos e&nbsp;o&nbsp;cruzamento de&nbsp;tempo com preço.
+              A&nbsp;gramática Meridian Plotter (<span class="gann-nowrap">1&nbsp;tinta</span>, <span class="gann-nowrap">1u</span>) ecoa essa disciplina de&nbsp;blueprint.
+            </p>
+          </article>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Export snippet</div>
+            <p class="gann-code">
+              <span class="gann-nowrap">1×1 = 45°</span> · <span class="gann-nowrap">1×2 ≈ 26.25°</span> · <span class="gann-nowrap">2×1 ≈ 63.75°</span><br />
+              Square of&nbsp;9 → cardinais 1, 9, 25, 49, 81…
+            </p>
+          </div>
+
+          <div class="gann-meta-row">
+            <span class="gann-pill" data-tone="solid">factual</span>
+            <span class="gann-pill">geométrico</span>
+            <span class="gann-pill">arquivístico</span>
+          </div>
+        </section>
+
+        <section class="gann-section" id="geometria">
+          <div class="gann-section-head">
+            <h2>Geometria plotada em&nbsp;D2</h2>
+            <p class="gann-eyebrow" style="margin:0">03 · Geometria</p>
+          </div>
+
+          <p class="gann-prose gann-intro">
+            Fan de&nbsp;ângulos e&nbsp;<span class="gann-nowrap">Square of&nbsp;Nine</span> — gramática plotter animada, um&nbsp;instrumento por vez para não comprimir a&nbsp;leitura.
+          </p>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="gann-fan-stage"></div>
+            <p class="gann-plot-note">Gann Fan · stroke-draw plotter · tempo × preço</p>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="gann-square-stage"></div>
+            <p class="gann-plot-note">Square of Nine · anel em rotação · cardinais em traço primary</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="obras">
+          <div class="gann-section-head">
+            <h2>Livros, charts e&nbsp;o&nbsp;túnel no&nbsp;ar</h2>
+            <p class="gann-eyebrow" style="margin:0">04 · Obras</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Bibliografia</div>
+            <h3>Publicações marcantes</h3>
+            <p>
+              <strong class="gann-nowrap">Truth of&nbsp;the Stock Tape</strong> (1923) sistematiza regras de&nbsp;tape reading.
+              <strong class="gann-nowrap">The Tunnel Thru the&nbsp;Air</strong> (1927) mistura ficção e&nbsp;previsão.
+              Mais tarde, <em class="gann-nowrap">45 Years in&nbsp;Wall Street</em> (1949) revisita pânicos e&nbsp;regras de&nbsp;tempo.
+            </p>
+          </article>
+
+          <div class="gann-lifeline">
+            <div class="gann-life-item">
+              <time>1923</time>
+              <h3>Truth of the Stock Tape</h3>
+              <p>Estudo de ações e commodities com charts e regras.</p>
+            </div>
+            <div class="gann-life-item">
+              <time>1927</time>
+              <h3>The Tunnel Thru the Air</h3>
+              <p>Romance especulativo — capa em HalfTone no aside desta página.</p>
+            </div>
+            <div class="gann-life-item" style="padding-bottom:0">
+              <time>1949</time>
+              <h3>45 Years in Wall Street</h3>
+              <p>Revisão dos pânicos de 1937–46 e regras percentuais.</p>
+            </div>
+          </div>
+
+        </section>
+
+        <section class="gann-section" id="legado">
+          <div class="gann-section-head">
+            <h2>Por que Meridian lê&nbsp;Gann</h2>
+            <p class="gann-eyebrow" style="margin:0">05 · Legado</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Ecossistema</div>
+            <h3>Do&nbsp;blueprint ao&nbsp;terminal</h3>
+            <p>
+              No&nbsp;modo técnico Meridian, <span class="gann-nowrap">Gann–Jenkins</span> aparece como camada geométrica auditável:
+              ângulos, efemérides e&nbsp;backtests sobre o&nbsp;mesmo papel <span class="gann-nowrap">Single-Ink</span>.
+              A&nbsp;página que você lê é&nbsp;o&nbsp;dossiê editorial dessa linhagem.
+            </p>
+          </article>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Diagramação</div>
+            <blockquote>
+              Use o alternador no topo: Header (nav central) ou Menu (hambúrguer + rail Close ×).
+            </blockquote>
+            <cite>Chrome dual · Emil drawer curve + Deimos archival</cite>
+          </div>
+
+          <article class="gann-card gann-sources gann-prose">
+            <div class="gann-label">Fontes públicas</div>
+            <h3>Imagens &amp; referências</h3>
+            <ul>
+              <li><a href="https://commons.wikimedia.org/wiki/File:The_Hexagon_Chart.jpg" target="_blank" rel="noopener">The Hexagon Chart</a> — Wikimedia Commons, CC BY-SA 4.0</li>
+              <li><a href="https://archive.org/details/tunnelthruairorl00gann" target="_blank" rel="noopener">The Tunnel Thru the Air (1927)</a> — Internet Archive, domínio público</li>
+              <li><a href="https://commons.wikimedia.org/wiki/Category:William_Delbert_Gann" target="_blank" rel="noopener">Categoria W.D. Gann</a> — Wikimedia Commons</li>
+              <li><a href="https://shaders.paper.design/halftone-dots" target="_blank" rel="noopener">Halftone Dots</a> — Paper Shaders</li>
+            </ul>
+          </article>
+
+          <footer class="gann-footer">
+            <span>Meridian Design System · dossiê Gann</span>
+            <a class="gann-ds-link" href="./index.html">Voltar ao Design System</a>
+          </footer>
+        </section>
+      </div>
+
+      <aside class="gann-reader-aside" aria-label="At a glance">
+        <div class="gann-aside-plate" id="ht-tunnel" role="img" aria-label="Capa de The Tunnel Thru the Air em HalfTone"></div>
+        <p class="gann-aside-caption">Plate I · The Tunnel Thru the Air (1927) · Internet Archive · HalfTone</p>
+        <h2 class="gann-aside-title">At a glance</h2>
+        <a class="gann-fact" data-nav href="#origem">
+          <span class="gann-eyebrow" style="margin:0">Origem</span>
+          <span>Lufkin, Texas · 1878 — ciclos de&nbsp;algodão e&nbsp;o&nbsp;primeiro cálculo de&nbsp;tempo.</span>
+          <span class="gann-fact-link">Ver seção 01 ↗</span>
+        </a>
+        <a class="gann-fact" data-nav href="#wall-street">
+          <span class="gann-eyebrow" style="margin:0">Método</span>
+          <span>Ângulos <span class="gann-nowrap">1×1</span> / <span class="gann-nowrap">1×2</span> e&nbsp;<span class="gann-nowrap">Square of&nbsp;Nine</span> como planta de&nbsp;preço × tempo.</span>
+          <span class="gann-fact-link">Ver seção 02 ↗</span>
+        </a>
+        <a class="gann-fact" data-nav href="#obras">
+          <span class="gann-eyebrow" style="margin:0">Obras</span>
+          <span><span class="gann-nowrap">Truth of&nbsp;the Stock Tape</span> · <span class="gann-nowrap">Tunnel Thru the&nbsp;Air</span> · <span class="gann-nowrap">45 Years in&nbsp;Wall Street</span>.</span>
+          <span class="gann-fact-link">Ver seção 04 ↗</span>
+        </a>
+        <div class="gann-aside-plate gann-aside-plate--secondary" id="ht-hexagon" role="img" aria-label="Hexagon Chart em HalfTone"></div>
+        <p class="gann-aside-caption">Plate II · The Hexagon Chart · Wikimedia CC BY-SA 4.0</p>
+      </aside>
+    </div>
+  </main>
+
+  </div>
+  <script type="module" src="./src/gann-app.ts"></script>
+</body>
+</html>

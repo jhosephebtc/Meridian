@@ -1,22 +1,34 @@
 /**
- * MERIDIAN DESIGN SYSTEM — paper-grain.ts (v1.1.0)
- * Gerador Procedural de Textura de Papel Arquivístico (Linhagem Deimos PaperGrain)
+ * MERIDIAN DESIGN SYSTEM — paper-grain.ts (v1.4.1)
+ * Textura de papel algodão em overlay <canvas> (sem data-URL em CSS).
  *
- * Produz um tile 512×512 orgânico em Canvas (grão fino + variação suave de celulose
- * + microfibras de papel algodão) sem nenhum asset externo, injetado via
- * `--ds-paper-texture` com `mix-blend-mode: multiply` (temas claros/tingidos)
- * e `screen + invert(1)` (Obsidian Dark).
+ * Intensidade → CSS `--ds-grain-multiplier` / `data-grain`
+ * Tamanho     → `data-grain-size` (repinta o canvas: fine…chunky)
  */
 
+import {
+  GRAIN_SIZES,
+  PAPER_SHADER,
+  type GrainSizeId,
+} from './tokens.ts';
+
 export interface PaperGrainOptions {
-  /** Tamanho do tile quadrado em px (padrão: 512, igual ao Deimos) */
-  size?: number;
-  /** Semente determinística para evitar flash diferente entre recarregamentos */
+  /** Semente determinística */
   seed?: number;
-  /** Intensidade do micro-grão (0..1, padrão: 0.42) */
+  /** Intensidade do micro-grão (0..1, padrão: PAPER_SHADER.defaultSpeckle) */
   speckleStrength?: number;
-  /** Quantidade de microfibras orgânicas de papel algodão (padrão: 110) */
-  fiberCount?: number;
+  /** Densidade relativa de microfibras (padrão: PAPER_SHADER.defaultFiber) */
+  fiberDensity?: number;
+  /** Escala espacial do grão (fine | medium | coarse | chunky) */
+  size?: GrainSizeId;
+}
+
+export interface PaperGrainHandle {
+  dispose: () => void;
+  repaint: () => void;
+  setSize: (size: GrainSizeId) => void;
+  setOptions: (partial: Partial<PaperGrainOptions>) => void;
+  getSize: () => GrainSizeId;
 }
 
 /** PRNG determinístico rápido (Mulberry32) */
@@ -31,54 +43,83 @@ function createRng(seed: number) {
   };
 }
 
-/**
- * Gera um Data URL PNG do tile de papel algodão e aplica no `document.documentElement`.
- * Retorna função de limpeza (caso queira revogar/desmontar).
- */
-export function mountPaperGrain(options: PaperGrainOptions = {}): () => void {
-  if (typeof document === 'undefined') return () => {};
+function ensureLayer(): HTMLCanvasElement {
+  let canvas = document.getElementById('ds-paper-grain') as HTMLCanvasElement | null;
+  if (canvas) return canvas;
 
-  const size = options.size ?? 512;
-  const seed = options.seed ?? 20261120;
-  const speckleStrength = options.speckleStrength ?? 0.42;
-  const fiberCount = options.fiberCount ?? 110;
+  canvas = document.createElement('canvas');
+  canvas.id = 'ds-paper-grain';
+  canvas.className = 'ds-paper-grain-layer';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(canvas);
+  return canvas;
+}
 
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return () => {};
+function resolveSize(id: string | undefined): GrainSizeId {
+  if (id && id in GRAIN_SIZES) return id as GrainSizeId;
+  return PAPER_SHADER.defaultSize;
+}
 
-  const rng = createRng(seed);
-  const imgData = ctx.createImageData(size, size);
-  const data = imgData.data;
+function paintGrain(
+  canvas: HTMLCanvasElement,
+  seed: number,
+  speckleStrength: number,
+  fiberDensity: number,
+  sizeId: GrainSizeId,
+): void {
+  const size = GRAIN_SIZES[sizeId];
+  const cssW = Math.max(1, window.innerWidth || 1280);
+  const cssH = Math.max(1, window.innerHeight || 800);
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // canvasScale menor → menos pixels esticados → grão visualmente maior
+  const scale = size.canvasScale * dpr;
+  const w = Math.max(240, Math.round(cssW * scale));
+  const h = Math.max(240, Math.round(cssH * scale));
 
-  // 1. Base de papel quase branco (248..255) com grão orgânico de alta frequência
-  //    Como o blend mode é `multiply`, branco puro (255) = transparente e tons 212..252 = dente do papel.
+  canvas.width = w;
+  canvas.height = h;
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.dataset.grainSize = sizeId;
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx) return;
+
+  ctx.clearRect(0, 0, w, h);
+  // imageSmoothingEnabled false reforça o “pixel grain” em sizes grossos
+  ctx.imageSmoothingEnabled = sizeId === 'fine' || sizeId === 'medium';
+
+  const rng = createRng(seed + size.seedSalt);
+  const img = ctx.createImageData(w, h);
+  const data = img.data;
+
+  const inkR = 28;
+  const inkG = 24;
+  const inkB = 18;
+  const strength = Math.max(0.15, Math.min(1.2, speckleStrength));
+  const speckChance = 0.984 - size.speckleHotspot * 0.008;
+  const hotChance = 0.996 - size.speckleHotspot * 0.004;
+
   for (let i = 0; i < data.length; i += 4) {
-    // Distribuição triangular (mais natural que uniforme, sem ruído digital agressivo)
     const tri = (rng() + rng()) * 0.5;
-    // Grão principal + micro-pontos esporádicos de fibra mineral
-    let shade = 255 - tri * 26 * speckleStrength;
-    if (rng() > 0.992) {
-      shade -= 24 * speckleStrength;
-    }
-    const v = Math.max(198, Math.min(255, Math.round(shade)));
-    // Levíssimo calor arquivístico (R=v, G=v-1, B=v-2) para parecer papel algodão real
-    data[i] = v;
-    data[i + 1] = Math.max(0, v - 1);
-    data[i + 2] = Math.max(0, v - 2);
-    data[i + 3] = 255;
+    let a = tri * 42 * strength;
+    if (rng() > speckChance) a += 28 * strength;
+    if (rng() > hotChance) a += 18;
+    a = Math.min(72, Math.round(a));
+    data[i] = inkR;
+    data[i + 1] = inkG;
+    data[i + 2] = inkB;
+    data[i + 3] = a;
   }
-  ctx.putImageData(imgData, 0, 0);
+  ctx.putImageData(img, 0, 0);
 
-  // 2. Micro-mottling suave (variação orgânica de prensa tipográfica)
-  for (let i = 0; i < 42; i++) {
-    const x = rng() * size;
-    const y = rng() * size;
-    const r = 24 + rng() * 68;
+  const blotCount = Math.round((70 + (w * h) / 32000) * size.blotDensity);
+  for (let i = 0; i < blotCount; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    const r = (3 + rng() * 12) * size.blotScale;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
-    const alpha = 0.012 + rng() * 0.018;
+    const alpha = (0.02 + rng() * 0.035) * size.blotAlpha;
     grad.addColorStop(0, `rgba(24, 22, 18, ${alpha.toFixed(4)})`);
     grad.addColorStop(1, 'rgba(24, 22, 18, 0)');
     ctx.fillStyle = grad;
@@ -87,39 +128,121 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): () => void {
     ctx.fill();
   }
 
-  // 3. Microfibras de celulose sutis (o charme tátil das edições Aqua, Terracotta e Paper)
   ctx.lineCap = 'round';
+  const fiberCount = Math.round(((w * h) / 2800) * fiberDensity * size.fiberDensity);
   for (let i = 0; i < fiberCount; i++) {
-    const x = rng() * size;
-    const y = rng() * size;
-    const len = 5 + rng() * 14;
+    const x = rng() * w;
+    const y = rng() * h;
+    const len = (3 + rng() * 11) * size.fiberScale;
     const angle = rng() * Math.PI * 2;
-    const bend = (rng() - 0.5) * 4;
+    const bend = (rng() - 0.5) * 2.5 * size.fiberScale;
     const ex = x + Math.cos(angle) * len;
     const ey = y + Math.sin(angle) * len;
     const cx = (x + ex) * 0.5 - Math.sin(angle) * bend;
     const cy = (y + ey) * 0.5 + Math.cos(angle) * bend;
-
-    ctx.strokeStyle = `rgba(23, 22, 20, ${(0.025 + rng() * 0.045).toFixed(4)})`;
-    ctx.lineWidth = 0.45 + rng() * 0.55;
+    ctx.strokeStyle = `rgba(23, 22, 20, ${(0.04 + rng() * 0.07).toFixed(4)})`;
+    ctx.lineWidth = (0.4 + rng() * 0.55) * Math.max(0.7, size.fiberScale * 0.85);
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.quadraticCurveTo(cx, cy, ex, ey);
     ctx.stroke();
   }
+}
 
-  const dataUrl = canvas.toDataURL('image/png');
-  const root = document.documentElement;
-  const offsetX = Math.round(rng() * 180);
-  const offsetY = Math.round(rng() * 180);
+let activeHandle: PaperGrainHandle | null = null;
 
-  root.style.setProperty('--ds-paper-texture', `url("${dataUrl}")`);
-  root.style.setProperty('--ds-paper-size', `${size}px ${size}px`);
-  root.style.setProperty('--ds-paper-offset', `${offsetX}px ${offsetY}px`);
+/**
+ * Monta (ou remonta) a textura de papel. Repaints ao mudar `data-grain-size`.
+ */
+export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHandle {
+  if (typeof document === 'undefined') {
+    return {
+      dispose: () => {},
+      repaint: () => {},
+      setSize: () => {},
+      setOptions: () => {},
+      getSize: () => PAPER_SHADER.defaultSize,
+    };
+  }
 
-  return () => {
-    root.style.removeProperty('--ds-paper-texture');
-    root.style.removeProperty('--ds-paper-size');
-    root.style.removeProperty('--ds-paper-offset');
+  activeHandle?.dispose();
+
+  const state: Required<Pick<PaperGrainOptions, 'seed' | 'speckleStrength' | 'fiberDensity' | 'size'>> = {
+    seed: options.seed ?? PAPER_SHADER.defaultSeed,
+    speckleStrength: options.speckleStrength ?? PAPER_SHADER.defaultSpeckle,
+    fiberDensity: options.fiberDensity ?? PAPER_SHADER.defaultFiber,
+    size: options.size ?? resolveSize(document.documentElement.dataset.grainSize),
   };
+
+  const root = document.documentElement;
+  root.dataset.paperShader = 'canvas';
+  root.dataset.grainSize = state.size;
+  root.style.setProperty('--ds-paper-texture', 'none');
+  document.getElementById('ds-paper-shader-root')?.remove();
+
+  const canvas = ensureLayer();
+
+  const apply = () => {
+    const size = resolveSize(root.dataset.grainSize || state.size);
+    state.size = size;
+    root.dataset.grainSize = size;
+    paintGrain(canvas, state.seed, state.speckleStrength, state.fiberDensity, size);
+  };
+
+  apply();
+
+  let resizeTimer = 0;
+  const onResize = () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(apply, PAPER_SHADER.resizeDebounceMs);
+  };
+  window.addEventListener('resize', onResize, { passive: true });
+
+  const handle: PaperGrainHandle = {
+    dispose: () => {
+      window.removeEventListener('resize', onResize);
+      window.clearTimeout(resizeTimer);
+      canvas.remove();
+      delete root.dataset.paperShader;
+      root.style.removeProperty('--ds-paper-texture');
+      if (activeHandle === handle) activeHandle = null;
+    },
+    repaint: apply,
+    setSize: (size: GrainSizeId) => {
+      state.size = size;
+      root.dataset.grainSize = size;
+      apply();
+    },
+    setOptions: (partial) => {
+      if (partial.seed != null) state.seed = partial.seed;
+      if (partial.speckleStrength != null) state.speckleStrength = partial.speckleStrength;
+      if (partial.fiberDensity != null) state.fiberDensity = partial.fiberDensity;
+      if (partial.size != null) {
+        state.size = partial.size;
+        root.dataset.grainSize = partial.size;
+      }
+      apply();
+    },
+    getSize: () => state.size,
+  };
+
+  activeHandle = handle;
+  return handle;
+}
+
+/** Repinta o overlay ativo (ex.: após mudar data-grain-size na UI). */
+export function repaintPaperGrain(): void {
+  activeHandle?.repaint();
+}
+
+export function setPaperGrainSize(size: GrainSizeId): void {
+  if (activeHandle) activeHandle.setSize(size);
+  else {
+    document.documentElement.dataset.grainSize = size;
+    mountPaperGrain({ size });
+  }
+}
+
+export function getPaperGrainHandle(): PaperGrainHandle | null {
+  return activeHandle;
 }

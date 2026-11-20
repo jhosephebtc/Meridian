@@ -108,7 +108,7 @@ export function plotterLabelSvg(
 ): string {
   const op = kind === 'name' ? PLOTTER_STANDARDS.label.nameOpacity : PLOTTER_STANDARDS.label.valueOpacity;
   const size = kind === 'name' ? 11 : 10.5;
-  return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anchor}" stroke="none" fill="currentColor" fill-opacity="${op}" font-family="var(--ds-font-sans)" font-size="${size}" font-weight="400">${text}</text>`;
+  return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anchor}" stroke="none" fill="currentColor" fill-opacity="${op}" font-family="Geist, var(--ds-font-sans), sans-serif" font-size="${size}" font-weight="400">${text}</text>`;
 }
 
 /** Cota dimensional verdadeira com folga limpa ao redor do valor (nunca atravessa o texto!) */
