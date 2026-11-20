@@ -1,0 +1,556 @@
+/* ==========================================================================
+   MERIDIAN DESIGN SYSTEM — tokens.css (v1.1.0)
+   Ecossistema: Lunar + Earth AI + Gemini Studio
+   Linhagem Visual:
+     • Anthropic Editorial (Ivory, Dual-Radius, Asymmetric Grid, Muted Organics)
+     • Deimos Archival (Paper White / Aqua / Terracotta / Dark, PaperGrain, 3-Col, Lifeline)
+     • Emil Kowalski Design Engineering (Curves, Frequency Gate, Clip-Path Tabs, Mobile-Native)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PRIMITIVES, TYPOGRAPHY, MOTION & PAPER GRAIN
+   -------------------------------------------------------------------------- */
+:root {
+  /* Tipografia — 3 Vozes Editoriais (zero dependência de CDN externa) */
+  --ds-font-display: "Instrument Serif", "Geist Serif", "Newsreader", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --ds-font-sans: "Geist", "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ds-font-mono: "Geist Mono", "JetBrains Mono", "SF Mono", "Cascadia Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  /* Escala Tipográfica Fluida (Display Serif — peso 400 editorial + tracking negativo) */
+  --ds-text-mega: clamp(3.25rem, 8vw, 6.25rem);        /* 52px → 100px */
+  --ds-text-h1: clamp(2.375rem, 4.8vw, 4.5rem);        /* 38px → 72px  */
+  --ds-text-h2: clamp(1.75rem, 2.6vw, 2.375rem);       /* 28px → 38px  */
+  --ds-text-h3: clamp(1.375rem, 1.9vw, 1.75rem);       /* 22px → 28px  */
+  --ds-text-h4: 1.375rem;                              /* 22px         */
+  --ds-text-lead: clamp(1.25rem, 2vw, 1.75rem);        /* 20px → 28px  */
+  --ds-text-metric: clamp(2.5rem, 4.6vw, 4.25rem);     /* 40px → 68px  */
+
+  /* Escala Funcional (Sans & Mono) */
+  --ds-text-body-lg: 1.0625rem;                        /* 17px — prosa enciclopédica */
+  --ds-text-body-md: 0.9375rem;                        /* 15px — UI / cards padrão   */
+  --ds-text-body-sm: 0.84375rem;                       /* 13.5px — sidebar / fatos   */
+  --ds-text-ui-md: 0.8125rem;                          /* 13px — botões / tabs       */
+  --ds-text-mono-md: 0.8125rem;                        /* 13px — dados / códigos     */
+  --ds-text-mono-sm: 0.75rem;                          /* 12px — metadados / fontes  */
+  --ds-text-mono-xs: 0.6875rem;                        /* 11px — badges / tags       */
+  --ds-text-mono-micro: 0.625rem;                      /* 10px — citações / eixos    */
+
+  /* Line Heights & Size-Specific Tracking (Apple / Emil UI Cheatsheet) */
+  --ds-lh-mega: 0.92;
+  --ds-lh-display: 1.04;
+  --ds-lh-heading: 1.15;
+  --ds-lh-lead: 1.28;
+  --ds-lh-body-lg: 1.62;
+  --ds-lh-body: 1.52;
+  --ds-lh-ui: 1.4;
+  --ds-lh-mono: 1.5;
+
+  --ds-tracking-mega: -0.035em;
+  --ds-tracking-display: -0.025em;
+  --ds-tracking-heading: -0.015em;
+  --ds-tracking-normal: 0em;
+  --ds-tracking-eyebrow: 0.08em;
+
+  /* Espaçamento Base (Múltiplos de 4px) */
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 20px;
+  --ds-space-6: 24px;
+  --ds-space-8: 32px;
+  --ds-space-10: 40px;
+  --ds-space-12: 48px;
+  --ds-space-16: 64px;
+  --ds-space-20: 80px;
+  --ds-space-24: 96px;
+
+  /* Grid & Layout Containers */
+  --ds-max-wide: 1440px;                               /* Galeria / Masonry Anthropic */
+  --ds-max-editorial: 1180px;                          /* Leitor 3 colunas Deimos     */
+  --ds-max-prose: 65ch;                                /* Emil Cheatsheet (~65 chars) */
+  --ds-gutter-mobile: 16px;
+  --ds-gutter-tablet: 24px;
+  --ds-gutter-desktop: 32px;
+  --ds-topbar-height: 58px;
+  --ds-toc-width: 172px;
+  --ds-aside-width: 276px;
+
+  /* Sistema Dual-Radius (Anthropic Pills + Squircles & Deimos Editorial Plates) */
+  --ds-radius-none: 0px;
+  --ds-radius-plate: 4px;                              /* Imagens editoriais / plates */
+  --ds-radius-squircle: 8px;                           /* Botões utilitários / inputs */
+  --ds-radius-card: 12px;                              /* Containers / modais / charts */
+  --ds-radius-pill: 9999px;                            /* Nav / tabs / toggles / tags */
+
+  /* ------------------------------------------------------------------------
+     MOTION SYSTEM — Emil Kowalski + Anthropic + Deimos (ZERO ease-in em UI!)
+     ------------------------------------------------------------------------ */
+  --ds-ease-out: cubic-bezier(0.23, 1, 0.32, 1);       /* Emil Strong Ease-Out (Entradas/UI) */
+  --ds-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);   /* Emil On-Screen Movement / Clip-Path */
+  --ds-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);    /* Emil / Vaul iOS Sheet Curve */
+  --ds-ease-snappy: cubic-bezier(0.85, 0, 0, 1);       /* Anthropic Tab Pill Slide */
+  --ds-ease-editorial: cubic-bezier(0.22, 1, 0.36, 1); /* Deimos Plate & Hover Scale */
+  --ds-ease-volume: cubic-bezier(0.22, 0.8, 0.25, 1);  /* Deimos 3D Dossier Open */
+
+  /* Durações estritas (< 300ms para UI; exceções documentadas: drawers/toasts/3D) */
+  --ds-duration-press: 120ms;                          /* Feedback imediato :active scale(0.97) */
+  --ds-duration-tooltip: 140ms;                        /* Tooltips & micro-popovers (125–200ms) */
+  --ds-duration-fast: 160ms;                           /* Hover, cores, rotação de chevron */
+  --ds-duration-base: 220ms;                           /* Dropdowns, tabs, transições UI */
+  --ds-duration-drawer: 380ms;                         /* Drawers / Sheets (exceção Emil) */
+  --ds-duration-toast: 400ms;                          /* Sonner Toast stack (exceção Emil) */
+  --ds-duration-reveal: 560ms;                         /* Editorial plate reveal */
+  --ds-duration-volume: 800ms;                         /* Dossiê 3D na estante */
+
+  /* Press Feedback & Entradas (Nunca scale(0)!) */
+  --ds-press-scale: 0.97;
+  --ds-enter-scale: 0.96;
+  --ds-blur-bridge: 2px;                               /* Emil blur crossfade (< 20px) */
+
+  /* Elevação Tátil (Sombras reservadas apenas para profundidade física) */
+  --ds-shadow-plate-inset: 0 0 0 1px color-mix(in srgb, var(--ds-fg) 6%, transparent) inset;
+  --ds-shadow-focus: 0 0 0 2px var(--ds-bg), 0 0 0 4px var(--ds-fg);
+  --ds-shadow-popover:
+    0 0 0 1px var(--ds-border),
+    0 6px 18px -4px rgba(17, 18, 22, 0.14),
+    0 2px 6px -1px rgba(17, 18, 22, 0.08);
+  --ds-shadow-raised:
+    -1px 0 0 0 rgba(17, 18, 22, 0.12) inset,
+    4px 3px 8px 0 rgba(17, 18, 22, 0.11),
+    10px 8px 18px 0 rgba(17, 18, 22, 0.06);
+  --ds-shadow-spine-inset:
+    1px 0 0 0 rgba(255, 255, 255, 0.08) inset,
+    -3px 0 5px 0 rgba(0, 0, 0, 0.22) inset;
+  --ds-shadow-edge-bevel:
+    1px 0 1px 0 rgba(17, 18, 22, 0.16) inset,
+    -1px 0 1px 0 rgba(17, 18, 22, 0.12) inset;
+
+  /* Paleta Orgânica Contida (Categorias & Séries SVG — Linhagem Anthropic) */
+  --ds-organic-olive: #5E6E47;                         /* Earth / Agro / Natureza     */
+  --ds-organic-sky: #477085;                           /* Clima / Água / Atmosfera    */
+  --ds-organic-coral: #B55A42;                         /* Social / Hype / Térmico     */
+  --ds-organic-ochre: #9A7134;                         /* Solar / Ciclos / Energia    */
+  --ds-organic-slate: #56606E;                         /* Finanças / Infra / Dados    */
+
+  /* ------------------------------------------------------------------------
+     TEXTURA DE RUÍDO / PAPEL ARQUIVÍSTICO (Linhagem Deimos PaperGrain)
+     Fallback puro em CSS (SVG fractalNoise sem rede); substituível por
+     tile Canvas 512×512 (algodão + microfibras) via --ds-paper-texture.
+     ------------------------------------------------------------------------ */
+  --ds-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.35' intercept='0.82'/%3E%3CfeFuncG type='linear' slope='0.35' intercept='0.82'/%3E%3CfeFuncB type='linear' slope='0.35' intercept='0.82'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  --ds-paper-size: 240px 240px;
+  --ds-paper-offset: 0 0;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: 0.72;
+  --ds-grain-multiplier: 1;
+
+  /* Densidade & Padding */
+  --ds-density: 1;
+  --ds-section-pad: clamp(44px, 6vw, 84px);
+}
+
+/* --------------------------------------------------------------------------
+   2. MOTOR MULTI-SUPERFÍCIE "SINGLE-INK" (5 Atmosferas Intercambiáveis)
+   -------------------------------------------------------------------------- */
+
+/* SUPERFÍCIE 1 (Padrão): IVORY EDITORIAL — Linhagem Anthropic (#FAF9F5) */
+:root,
+[data-surface="ivory"] {
+  color-scheme: light;
+  --ds-surface-name: "Ivory Editorial";
+  --ds-bg: #FAF9F5;
+  --ds-surface-1: #F5F4ED;
+  --ds-surface-2: #E8E6DC;
+  --ds-surface-3: #DEDCD1;
+  --ds-highlight: #FFFFFF;
+
+  --ds-fg: #141413;
+  --ds-fg-secondary: #30302E;
+  --ds-fg-muted: #5E5D59;
+  --ds-fg-subtle: #787770;
+
+  --ds-accent: #141413;
+  --ds-accent-hover: #262624;
+  --ds-accent-fg: #FAF9F5;
+
+  --ds-inverted-bg: #141413;
+  --ds-inverted-surface: #262624;
+  --ds-inverted-fg: #FAF9F5;
+  --ds-inverted-muted: #A1A098;
+  --ds-inverted-border: #3D3D3A;
+
+  --ds-spine-1: #F3F2EC;
+  --ds-spine-2: #E8E6DC;
+  --ds-spine-3: #DBD8CC;
+
+  --ds-signal-support: #166534;
+  --ds-signal-caution: #92400E;
+  --ds-signal-refute: #991B1B;
+  --ds-signal-info: #1E40AF;
+
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.68 * var(--ds-grain-multiplier));
+}
+
+/* SUPERFÍCIE 2: PAPER WHITE — Linhagem Deimos White (#FFFFFF) */
+[data-surface="paper"] {
+  color-scheme: light;
+  --ds-surface-name: "Paper White";
+  --ds-bg: #FFFFFF;
+  --ds-surface-1: #F8F8F6;
+  --ds-surface-2: #EDEDEA;
+  --ds-surface-3: #E0E0DC;
+  --ds-highlight: #FFFFFF;
+
+  --ds-fg: #0A0A0A;
+  --ds-fg-secondary: #242424;
+  --ds-fg-muted: #595959;
+  --ds-fg-subtle: #737373;
+
+  --ds-accent: #0A0A0A;
+  --ds-accent-hover: #222222;
+  --ds-accent-fg: #FFFFFF;
+
+  --ds-inverted-bg: #0A0A0A;
+  --ds-inverted-surface: #181818;
+  --ds-inverted-fg: #FFFFFF;
+  --ds-inverted-muted: #9E9E9E;
+  --ds-inverted-border: #2E2E2E;
+
+  --ds-spine-1: #F5F5F2;
+  --ds-spine-2: #EAEAE6;
+  --ds-spine-3: #DCDCD7;
+
+  --ds-signal-support: #15803D;
+  --ds-signal-caution: #A16207;
+  --ds-signal-refute: #B91C1C;
+  --ds-signal-info: #1D4ED8;
+
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.62 * var(--ds-grain-multiplier));
+}
+
+/* SUPERFÍCIE 3: SIGNATURE AQUA — Linhagem Deimos Blue (#A4CED0) */
+[data-surface="aqua"] {
+  color-scheme: light;
+  --ds-surface-name: "Signature Aqua";
+  --ds-bg: #A4CED0;
+  --ds-surface-1: #99C4C6;
+  --ds-surface-2: #90B6B7;
+  --ds-surface-3: #82A8AA;
+  --ds-highlight: #E4F0F1;
+
+  --ds-fg: #171614;
+  --ds-fg-secondary: #262928;
+  --ds-fg-muted: #3A4949;
+  --ds-fg-subtle: #4A5C5C;
+
+  --ds-accent: #171614;
+  --ds-accent-hover: #2B2A27;
+  --ds-accent-fg: #A4CED0;
+
+  --ds-inverted-bg: #171614;
+  --ds-inverted-surface: #242624;
+  --ds-inverted-fg: #E4F0F1;
+  --ds-inverted-muted: #9BB7B8;
+  --ds-inverted-border: #3B4242;
+
+  --ds-spine-1: #B4D7D9;
+  --ds-spine-2: #96BCBD;
+  --ds-spine-3: #7FA5A7;
+
+  --ds-signal-support: #114B2F;
+  --ds-signal-caution: #6E3E0B;
+  --ds-signal-refute: #7F1D1D;
+  --ds-signal-info: #16336B;
+
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.95 * var(--ds-grain-multiplier));
+}
+
+/* SUPERFÍCIE 4: WARM TERRACOTTA — Linhagem Deimos Orange (#EDBB99) */
+[data-surface="terracotta"] {
+  color-scheme: light;
+  --ds-surface-name: "Warm Terracotta";
+  --ds-bg: #EDBB99;
+  --ds-surface-1: #E4B18F;
+  --ds-surface-2: #D5A382;
+  --ds-surface-3: #C59373;
+  --ds-highlight: #FAEBE0;
+
+  --ds-fg: #171614;
+  --ds-fg-secondary: #2B241F;
+  --ds-fg-muted: #513F33;
+  --ds-fg-subtle: #645144;
+
+  --ds-accent: #171614;
+  --ds-accent-hover: #2E2B27;
+  --ds-accent-fg: #EDBB99;
+
+  --ds-inverted-bg: #171614;
+  --ds-inverted-surface: #26221F;
+  --ds-inverted-fg: #FAEBE0;
+  --ds-inverted-muted: #C2A48F;
+  --ds-inverted-border: #423831;
+
+  --ds-spine-1: #F3CAAE;
+  --ds-spine-2: #D8AA8C;
+  --ds-spine-3: #C09579;
+
+  --ds-signal-support: #14532D;
+  --ds-signal-caution: #6B3409;
+  --ds-signal-refute: #7F1D1D;
+  --ds-signal-info: #1E3A6E;
+
+  --ds-image-blend: multiply;
+  --ds-paper-blend: multiply;
+  --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.95 * var(--ds-grain-multiplier));
+}
+
+/* SUPERFÍCIE 5: OBSIDIAN DARK — Linhagem Anthropic Inverted + Deimos Dark */
+[data-surface="obsidian"] {
+  color-scheme: dark;
+  --ds-surface-name: "Obsidian Dark";
+  --ds-bg: #0E0E0D;
+  --ds-surface-1: #161614;
+  --ds-surface-2: #222220;
+  --ds-surface-3: #30302E;
+  --ds-highlight: rgba(250, 249, 245, 0.08);
+
+  --ds-fg: #FAF9F5;
+  --ds-fg-secondary: #DCDAD1;
+  --ds-fg-muted: #A4A39B;
+  --ds-fg-subtle: #7A7972;
+
+  --ds-accent: #FAF9F5;
+  --ds-accent-hover: #E8E6DC;
+  --ds-accent-fg: #141413;
+
+  --ds-inverted-bg: #FAF9F5;
+  --ds-inverted-surface: #E8E6DC;
+  --ds-inverted-fg: #141413;
+  --ds-inverted-muted: #5E5D59;
+  --ds-inverted-border: #DEDCD1;
+
+  --ds-spine-1: #1C1C1A;
+  --ds-spine-2: #151513;
+  --ds-spine-3: #262624;
+
+  --ds-signal-support: #4ADE80;
+  --ds-signal-caution: #FBBF24;
+  --ds-signal-refute: #F87171;
+  --ds-signal-info: #60A5FA;
+
+  --ds-organic-olive: #98AE7B;
+  --ds-organic-sky: #85B6CC;
+  --ds-organic-coral: #E08D74;
+  --ds-organic-ochre: #D9B16C;
+  --ds-organic-slate: #97A4B5;
+
+  --ds-image-blend: normal;
+  /* Deimos Dark PaperGrain: screen + invert(1) para textura tátil sobre escuro */
+  --ds-paper-blend: screen;
+  --ds-paper-filter: invert(1);
+  --ds-paper-opacity: calc(0.58 * var(--ds-grain-multiplier));
+
+  --ds-shadow-popover:
+    0 0 0 1px var(--ds-border-strong),
+    0 10px 28px -6px rgba(0, 0, 0, 0.55);
+  --ds-shadow-raised:
+    -1px 0 0 0 rgba(255, 255, 255, 0.08) inset,
+    4px 3px 12px 0 rgba(0, 0, 0, 0.45),
+    10px 10px 24px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   3. REGRAS & ESTADOS DERIVADOS DINAMICAMENTE VIA color-mix() (Single-Ink)
+   -------------------------------------------------------------------------- */
+:root,
+[data-surface] {
+  --ds-bg-tint-subtle: color-mix(in srgb, var(--ds-fg) 4.5%, var(--ds-bg));
+  --ds-bg-tint-muted: color-mix(in srgb, var(--ds-fg) 8.5%, var(--ds-bg));
+  --ds-bg-tint-active: color-mix(in srgb, var(--ds-fg) 12%, var(--ds-bg));
+
+  --ds-rule: color-mix(in srgb, var(--ds-fg) 11%, transparent);
+  --ds-rule-strong: color-mix(in srgb, var(--ds-fg) 22%, transparent);
+  --ds-border: color-mix(in srgb, var(--ds-fg) 12%, transparent);
+  --ds-border-strong: color-mix(in srgb, var(--ds-fg) 26%, transparent);
+
+  /* Superfícies translúcidas (Apple Design chrome + Deimos tinted paper) */
+  --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 82%, transparent);
+  --ds-glass-control: color-mix(in srgb, var(--ds-highlight) 38%, transparent);
+  --ds-glass-control-hover: color-mix(in srgb, var(--ds-highlight) 58%, transparent);
+
+  /* Gradiente de grão diagonal sutil (Deimos Diagonal Noise Pattern) */
+  --ds-pattern-diagonal: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--ds-fg) 14%, transparent) 0px,
+    color-mix(in srgb, var(--ds-fg) 14%, transparent) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+
+  /* Gradiente de páginas caneladas para Dossiês 3D (Deimos Fore-Edge) */
+  --ds-pattern-page-ribs: repeating-linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ds-highlight) 85%, var(--ds-bg)) 0px,
+    color-mix(in srgb, var(--ds-highlight) 85%, var(--ds-bg)) 1px,
+    color-mix(in srgb, var(--ds-fg) 22%, var(--ds-bg)) 1px,
+    color-mix(in srgb, var(--ds-fg) 22%, var(--ds-bg)) 2px,
+    var(--ds-surface-2) 2px,
+    var(--ds-surface-2) 3px
+  );
+}
+
+/* --------------------------------------------------------------------------
+   4. CONTROLES DE RUÍDO, SINAIS & DUAL-MODE
+   -------------------------------------------------------------------------- */
+[data-grain="off"]       { --ds-grain-multiplier: 0; }
+[data-grain="subtle"]    { --ds-grain-multiplier: 0.55; }
+[data-grain="editorial"] { --ds-grain-multiplier: 1; }
+[data-grain="tactile"]   { --ds-grain-multiplier: 1.45; }
+
+[data-signals="monochrome"] {
+  --ds-signal-support: var(--ds-fg);
+  --ds-signal-caution: var(--ds-fg);
+  --ds-signal-refute: var(--ds-fg);
+  --ds-signal-info: var(--ds-fg);
+}
+
+[data-mode="invisible"] {
+  --ds-density: 1;
+  --ds-card-pad: 24px;
+  --ds-section-pad: clamp(48px, 6.5vw, 88px);
+  --ds-prose-size: var(--ds-text-body-lg);
+}
+
+[data-mode="technical"] {
+  --ds-density: 0.88;
+  --ds-card-pad: 18px;
+  --ds-section-pad: clamp(36px, 4.8vw, 68px);
+  --ds-prose-size: var(--ds-text-body-md);
+}
+
+/* --------------------------------------------------------------------------
+   5. PAPER GRAIN OVERLAY GLOBAL (Idêntico ao charme arquivístico do Deimos)
+   -------------------------------------------------------------------------- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483640;
+  pointer-events: none;
+  background-image: var(--ds-paper-texture);
+  background-position: var(--ds-paper-offset);
+  background-size: var(--ds-paper-size);
+  mix-blend-mode: var(--ds-paper-blend);
+  filter: var(--ds-paper-filter);
+  opacity: var(--ds-paper-opacity);
+}
+
+/* --------------------------------------------------------------------------
+   6. MOBILE-NATIVE BASELINE & ACESSIBILIDADE (Emil mobile-native + apple-design)
+   -------------------------------------------------------------------------- */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+button, a, [role="button"], [role="tab"] {
+  touch-action: manipulation;
+}
+
+button, [role="button"], [role="tab"], .ds-chip, .ds-drag-handle {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+@media (pointer: coarse) {
+  input, textarea, select {
+    font-size: 16px; /* Evita auto-zoom no iOS Safari sem desabilitar acessibilidade */
+  }
+}
+
+.ds-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Reduced Motion: gentil e sem deslocamento vestibular (nunca "zero feedback") */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ds-press-scale: 1;
+    --ds-enter-scale: 1;
+    --ds-blur-bridge: 0px;
+    --ds-duration-drawer: 180ms;
+    --ds-duration-reveal: 200ms;
+    --ds-duration-volume: 200ms;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root,
+  [data-surface] {
+    --ds-chrome-bg: var(--ds-bg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. GRAMÁTICA VISUAL PLOTTER PARA SVG EDITÁVEL (pasqualevitiello/plotter)
+   Uma tinta (--ds-fg), uma espessura (1u), hierarquia por opacidade & dash.
+   -------------------------------------------------------------------------- */
+[data-plotter] {
+  --plotter-ink: var(--ds-fg);
+  --plotter-stroke-primary: 1;
+  --plotter-stroke-secondary: 1;
+  --plotter-stroke-guide: 1;
+  --plotter-stroke-hatch: 1;
+  --plotter-stroke-section: 1;
+  --plotter-opacity-primary: 1;
+  --plotter-opacity-secondary: 0.32;
+  --plotter-opacity-guide: 0.14;
+  --plotter-opacity-grid: 0.06;
+  --plotter-opacity-hatch: 0.18;
+  --plotter-opacity-hidden: 0.32;
+  --plotter-opacity-highlight: 0.055;
+  color: var(--plotter-ink);
+  stroke: var(--plotter-ink);
+}
+
+[data-plotter] [fill="currentColor"] { fill: var(--plotter-ink); }
+[data-plotter] [data-plotter-role="primary"],
+[data-plotter] [data-plotter-role="section"]    { stroke-width: var(--plotter-stroke-primary); opacity: var(--plotter-opacity-primary); stroke-dasharray: none; }
+[data-plotter] [data-plotter-role="secondary"],
+[data-plotter] [data-plotter-role="dimension"],
+[data-plotter] [data-plotter-role="leader"]     { stroke-width: var(--plotter-stroke-secondary); opacity: var(--plotter-opacity-secondary); stroke-dasharray: none; }
+[data-plotter] [data-plotter-role="guide"]      { stroke-width: var(--plotter-stroke-guide); opacity: var(--plotter-opacity-guide); stroke-dasharray: none; }
+[data-plotter] [data-plotter-role="grid"]       { stroke-width: var(--plotter-stroke-guide); opacity: var(--plotter-opacity-grid); stroke-dasharray: none; }
+[data-plotter] [data-plotter-role="hatch"]      { stroke-width: var(--plotter-stroke-hatch); opacity: var(--plotter-opacity-hatch); stroke-dasharray: none; }
+[data-plotter] [data-plotter-role="centerline"] { stroke-width: var(--plotter-stroke-guide); opacity: var(--plotter-opacity-guide); stroke-dasharray: 8 3 1 3; }
+[data-plotter] [data-plotter-role="hidden"],
+[data-plotter] [data-plotter-role="absent"],
+[data-plotter] [data-plotter-role="proposed"]   { stroke-width: var(--plotter-stroke-secondary); opacity: var(--plotter-opacity-hidden); stroke-dasharray: 3 5; }
+[data-plotter] [data-plotter-role="transfer"]   { stroke-width: var(--plotter-stroke-secondary); opacity: var(--plotter-opacity-secondary); stroke-dasharray: 4 6; }
+
+/* Isolamento didático de papel (Plotter Grammar Teaching Isolation) */
+[data-plotter][data-plotter-isolate] [data-plotter-role] {
+  transition: opacity var(--ds-duration-fast) ease;
+}
+[data-plotter][data-plotter-isolate="primary"]    [data-plotter-role]:not([data-plotter-role="primary"])    { opacity: 0.04; }
+[data-plotter][data-plotter-isolate="secondary"]  [data-plotter-role]:not([data-plotter-role="secondary"])  { opacity: 0.04; }
+[data-plotter][data-plotter-isolate="centerline"] [data-plotter-role]:not([data-plotter-role="centerline"]) { opacity: 0.04; }
+[data-plotter][data-plotter-isolate="transfer"]   [data-plotter-role]:not([data-plotter-role="transfer"])   { opacity: 0.04; }
+[data-plotter][data-plotter-isolate="guide"]      [data-plotter-role]:not([data-plotter-role="guide"])      { opacity: 0.04; }
+[data-plotter][data-plotter-isolate="leader"]     [data-plotter-role]:not([data-plotter-role="leader"]):not([data-plotter-role="dimension"]) { opacity: 0.04; }
+

@@ -1,0 +1,862 @@
+/* ==========================================================================
+   MERIDIAN DESIGN SYSTEM — components.css (v1.1.0)
+   CSS Puro · Zero `transition: all` · Zero `ease-in` · Hover Gating para Touch
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BASE & TIPOGRAFIA
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--ds-bg);
+  color: var(--ds-fg);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-body-md);
+  line-height: var(--ds-lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color var(--ds-duration-base) var(--ds-ease-out),
+    color var(--ds-duration-base) var(--ds-ease-out);
+}
+
+.ds-display-mega {
+  font-family: var(--ds-font-display);
+  font-size: var(--ds-text-mega);
+  font-weight: 400;
+  line-height: var(--ds-lh-mega);
+  letter-spacing: var(--ds-tracking-mega);
+  margin: 0;
+}
+
+.ds-h1 {
+  font-family: var(--ds-font-display);
+  font-size: var(--ds-text-h1);
+  font-weight: 400;
+  line-height: var(--ds-lh-display);
+  letter-spacing: var(--ds-tracking-display);
+  margin: 0;
+}
+
+.ds-h2 {
+  font-family: var(--ds-font-display);
+  font-size: var(--ds-text-h2);
+  font-weight: 400;
+  line-height: var(--ds-lh-heading);
+  letter-spacing: var(--ds-tracking-heading);
+  margin: 0;
+}
+
+.ds-h3 {
+  font-family: var(--ds-font-display);
+  font-size: var(--ds-text-h3);
+  font-weight: 400;
+  line-height: var(--ds-lh-heading);
+  letter-spacing: var(--ds-tracking-heading);
+  margin: 0;
+}
+
+.ds-lead {
+  font-family: var(--ds-font-display);
+  font-size: var(--ds-text-lead);
+  font-weight: 400;
+  line-height: var(--ds-lh-lead);
+  color: var(--ds-fg-secondary);
+  margin: 0;
+}
+
+.ds-prose {
+  max-width: var(--ds-max-prose);
+  font-size: var(--ds-prose-size, var(--ds-text-body-lg));
+  line-height: var(--ds-lh-body-lg);
+  color: var(--ds-fg);
+}
+
+.ds-eyebrow {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-mono-xs);
+  line-height: var(--ds-lh-mono);
+  letter-spacing: var(--ds-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ds-fg-muted);
+}
+
+.ds-mono {
+  font-family: var(--ds-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-rule {
+  border: 0;
+  border-top: 1px solid var(--ds-rule);
+  margin: 0;
+}
+
+.ds-rule-dashed {
+  border: 0;
+  border-top: 1px dashed var(--ds-rule-strong);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. NAVEGAÇÃO — TOPBAR TRANSLÚCIDA + SCROLL-EDGE FADE (Apple/Emil + Deimos)
+   -------------------------------------------------------------------------- */
+.ds-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  min-height: var(--ds-topbar-height);
+  padding: env(safe-area-inset-top, 0px) clamp(16px, 3vw, 40px) 0;
+  background-color: var(--ds-chrome-bg);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--ds-duration-base) var(--ds-ease-out),
+    border-color var(--ds-duration-fast) ease;
+}
+
+.ds-topbar[data-scrolled="true"] {
+  border-bottom-color: var(--ds-rule);
+}
+
+/* Scroll progress hairline na base do header */
+.ds-scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1.5px;
+  background-color: var(--ds-fg);
+  transform-origin: 0% 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* --------------------------------------------------------------------------
+   3. CLIP-PATH SEAMLESS SEGMENTED TABS (Técnica Assinatura Emil Kowalski)
+   Duas camadas sobrepostas; a camada ativa desliza via `clip-path: inset(...)`
+   invertendo cor de fundo e texto no mesmo pixel sem dessincronia.
+   -------------------------------------------------------------------------- */
+.ds-cliptabs {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: var(--ds-radius-pill);
+  border: 1px solid var(--ds-border);
+  background-color: var(--ds-bg-tint-subtle);
+}
+
+.ds-cliptabs-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ds-cliptabs-btn {
+  position: relative;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ds-fg-muted);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-ui-md);
+  font-weight: 500;
+  line-height: 1;
+  padding: 7px 14px;
+  border-radius: var(--ds-radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--ds-duration-fast) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-cliptabs-btn:hover {
+    color: var(--ds-fg);
+  }
+}
+
+.ds-cliptabs-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.ds-cliptabs-overlay {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background-color: var(--ds-accent);
+  border-radius: var(--ds-radius-pill);
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0 round 9999px);
+  transition: clip-path var(--ds-duration-base) var(--ds-ease-in-out);
+  will-change: clip-path;
+}
+
+.ds-cliptabs-overlay .ds-cliptabs-label {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-ui-md);
+  font-weight: 500;
+  line-height: 1;
+  padding: 7px 14px;
+  color: var(--ds-accent-fg);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   4. SISTEMA DUAL-RADIUS DE BOTÕES (Anthropic Pills + Squircles + Emil Press)
+   -------------------------------------------------------------------------- */
+.ds-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-ui-md);
+  font-weight: 500;
+  line-height: 1;
+  padding: 10px 16px;
+  min-height: 36px;
+  border-radius: var(--ds-radius-squircle);
+  border: 1px solid var(--ds-border);
+  background-color: var(--ds-surface-1);
+  color: var(--ds-fg-secondary);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform var(--ds-duration-press) var(--ds-ease-out),
+    background-color var(--ds-duration-fast) ease,
+    border-color var(--ds-duration-fast) ease,
+    color var(--ds-duration-fast) ease,
+    opacity var(--ds-duration-fast) ease;
+}
+
+.ds-btn:active:not(:disabled) {
+  transform: scale(var(--ds-press-scale));
+}
+
+.ds-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.ds-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+/* Variantes de Raio */
+.ds-btn-pill {
+  border-radius: var(--ds-radius-pill);
+  padding: 9px 16px;
+}
+
+.ds-btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+
+.ds-btn-circle {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: var(--ds-radius-pill);
+  background-color: transparent;
+  border-color: var(--ds-rule-strong);
+  color: var(--ds-fg);
+}
+
+/* Variantes Tonais (Progressão Anthropic: Tertiary → Secondary → Primary) */
+.ds-btn-primary {
+  background-color: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: var(--ds-accent-fg);
+}
+
+.ds-btn-secondary {
+  background-color: var(--ds-surface-2);
+  border-color: var(--ds-border);
+  color: var(--ds-fg);
+}
+
+.ds-btn-tertiary {
+  background-color: var(--ds-surface-1);
+  border-color: var(--ds-border);
+  color: var(--ds-fg-secondary);
+}
+
+.ds-btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--ds-fg-muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-btn-primary:hover:not(:disabled) {
+    background-color: var(--ds-accent-hover);
+    border-color: var(--ds-accent-hover);
+  }
+  .ds-btn-secondary:hover:not(:disabled) {
+    background-color: var(--ds-surface-3);
+    border-color: var(--ds-border-strong);
+  }
+  .ds-btn-tertiary:hover:not(:disabled) {
+    background-color: var(--ds-surface-2);
+    color: var(--ds-fg);
+  }
+  .ds-btn-ghost:hover:not(:disabled) {
+    background-color: var(--ds-bg-tint-subtle);
+    color: var(--ds-fg);
+  }
+  .ds-btn-circle:hover:not(:disabled) {
+    background-color: var(--ds-accent);
+    border-color: var(--ds-accent);
+    color: var(--ds-accent-fg);
+  }
+}
+
+/* Botão Hold-to-Confirm Assimétrico (Emil Kowalski: linear ao segurar, ease-out ao soltar) */
+.ds-btn-hold {
+  overflow: hidden;
+  background-color: var(--ds-surface-1);
+  border-color: var(--ds-border-strong);
+  color: var(--ds-fg);
+}
+
+.ds-btn-hold-fill {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--ds-signal-refute);
+  color: #FFFFFF;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  transition: clip-path 180ms var(--ds-ease-out);
+}
+
+.ds-btn-hold[data-holding="true"] .ds-btn-hold-fill {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 1.4s linear;
+}
+
+/* Blur crossfade para labels de botão/modo (Emil < 20px blur bridge) */
+.ds-blur-morph {
+  display: inline-block;
+  transition:
+    opacity var(--ds-duration-fast) var(--ds-ease-out),
+    filter var(--ds-duration-fast) var(--ds-ease-out),
+    transform var(--ds-duration-fast) var(--ds-ease-out);
+}
+
+.ds-blur-morph[data-morphing="true"] {
+  opacity: 0.45;
+  filter: blur(var(--ds-blur-bridge));
+  transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
+   5. POPOVERS ORIGIN-AWARE & TOOLTIPS SKIP-DELAY (Emil Kowalski)
+   -------------------------------------------------------------------------- */
+.ds-popover {
+  position: absolute;
+  z-index: 80;
+  border-radius: var(--ds-radius-card);
+  background-color: var(--ds-bg);
+  border: 1px solid var(--ds-border-strong);
+  box-shadow: var(--ds-shadow-popover);
+  transform-origin: var(--ds-origin, top right);
+  opacity: 0;
+  transform: scale(var(--ds-enter-scale)) translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity var(--ds-duration-tooltip) var(--ds-ease-out),
+    transform var(--ds-duration-tooltip) var(--ds-ease-out);
+}
+
+.ds-popover[data-open="true"] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+.ds-tooltip {
+  position: fixed;
+  z-index: 120;
+  padding: 5px 10px;
+  border-radius: var(--ds-radius-squircle);
+  background-color: var(--ds-inverted-bg);
+  color: var(--ds-inverted-fg);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-mono-xs);
+  white-space: nowrap;
+  pointer-events: none;
+  transform-origin: bottom center;
+  opacity: 0;
+  transform: translate(-50%, calc(-100% - 6px)) scale(0.96);
+  transition:
+    opacity var(--ds-duration-tooltip) var(--ds-ease-out),
+    transform var(--ds-duration-tooltip) var(--ds-ease-out);
+}
+
+.ds-tooltip[data-visible="true"] {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 10px)) scale(1);
+}
+
+/* Pula animação ao deslizar para tooltips irmãos já abertos (Emil rule!) */
+.ds-tooltip[data-instant="true"] {
+  transition-duration: 0ms;
+}
+
+/* --------------------------------------------------------------------------
+   6. PALETA DE COMANDO ⌘K — ZERO ANIMAÇÃO (Emil Frequency Gate: 100+/dia)
+   -------------------------------------------------------------------------- */
+.ds-cmdk-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: rgba(10, 10, 10, 0.45);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: min(14vh, 110px) 16px 24px;
+}
+
+.ds-cmdk-backdrop[data-open="true"] {
+  display: flex;
+}
+
+.ds-cmdk-dialog {
+  width: 100%;
+  max-width: 560px;
+  border-radius: var(--ds-radius-card);
+  background-color: var(--ds-bg);
+  border: 1px solid var(--ds-border-strong);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  /* Zero animation intencional — resposta instantânea como Raycast */
+}
+
+/* --------------------------------------------------------------------------
+   7. GRID ASSIMÉTRICO EDITORIAL (Linhagem Anthropic + Sibling Dimming)
+   -------------------------------------------------------------------------- */
+.ds-masonry-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--ds-gutter-desktop);
+  align-items: start;
+}
+
+.ds-span-3 { grid-column: span 3; }
+.ds-span-4 { grid-column: span 4; }
+.ds-span-5 { grid-column: span 5; }
+.ds-span-6 { grid-column: span 6; }
+.ds-span-7 { grid-column: span 7; }
+.ds-span-8 { grid-column: span 8; }
+.ds-span-9 { grid-column: span 9; }
+
+@media (max-width: 900px) {
+  .ds-masonry-row {
+    grid-template-columns: 1fr;
+    gap: var(--ds-gutter-tablet);
+  }
+  .ds-span-3, .ds-span-4, .ds-span-5, .ds-span-6,
+  .ds-span-7, .ds-span-8, .ds-span-9 {
+    grid-column: span 1;
+  }
+}
+
+.ds-editorial-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity var(--ds-duration-base) var(--ds-ease-out);
+}
+
+/* Anthropic signature: suaviza irmãos ao focar um card (somente ponteiro fino!) */
+@media (hover: hover) and (pointer: fine) {
+  .ds-masonry-group:has(.ds-editorial-card:hover) .ds-editorial-card:not(:hover) {
+    opacity: 0.54;
+  }
+}
+
+.ds-plate-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ds-radius-plate);
+  background-color: var(--ds-surface-1);
+  box-shadow: var(--ds-shadow-plate-inset);
+  border: 1px solid var(--ds-border);
+}
+
+.ds-plate-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: var(--ds-image-blend);
+  transition: transform 680ms var(--ds-ease-editorial);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-editorial-card:hover .ds-plate-media {
+    transform: scale(1.018);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. LEITOR ENCICLOPÉDICO 3 COLUNAS & CITAÇÕES (Linhagem Deimos)
+   -------------------------------------------------------------------------- */
+.ds-reader-grid {
+  display: grid;
+  grid-template-columns: var(--ds-toc-width) minmax(0, 1fr) var(--ds-aside-width);
+  gap: var(--ds-gutter-desktop);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .ds-reader-grid {
+    grid-template-columns: minmax(0, 1fr) 256px;
+  }
+  .ds-reader-toc { display: none; }
+}
+
+@media (max-width: 720px) {
+  .ds-reader-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ds-toc-link {
+  display: block;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--ds-fg-muted);
+  text-decoration: none;
+  border-left: 1.5px solid transparent;
+  transition:
+    color var(--ds-duration-fast) ease,
+    background-color var(--ds-duration-fast) ease,
+    border-color var(--ds-duration-fast) ease;
+}
+
+.ds-toc-link[aria-current="true"] {
+  color: var(--ds-fg);
+  border-left-color: var(--ds-fg);
+  background-color: var(--ds-bg-tint-muted);
+  font-weight: 500;
+}
+
+/* Sentença citável com índice sobrescrito tabular */
+.ds-claim {
+  border-radius: 3px;
+  padding: 1px 2px;
+  margin: -1px -2px;
+  cursor: pointer;
+  transition: background-color var(--ds-duration-fast) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-claim:hover {
+    background-color: var(--ds-bg-tint-muted);
+  }
+}
+
+.ds-claim[data-highlighted="true"] {
+  background-color: var(--ds-bg-tint-active);
+  box-shadow: 0 0 0 2px var(--ds-bg-tint-active);
+}
+
+.ds-cite-sup {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-mono-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-fg-muted);
+  padding: 0 2px;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* --------------------------------------------------------------------------
+   9. LIFELINE CRONOLOGIA & ESTANTE 3D DE DOSSIÊS (Linhagem Deimos + Emil Drag)
+   -------------------------------------------------------------------------- */
+.ds-lifeline-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  touch-action: pan-y;
+  cursor: grab;
+  scrollbar-width: none;
+}
+
+.ds-lifeline-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.ds-lifeline-viewport[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+/* Dossiê / Livro 3D com lombada tátil e páginas caneladas */
+.ds-shelf {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  perspective: 1100px;
+  overflow-x: auto;
+  padding: 24px 4px 20px;
+  scrollbar-width: none;
+}
+
+.ds-shelf::-webkit-scrollbar { display: none; }
+
+.ds-volume {
+  position: relative;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 236px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: width var(--ds-duration-volume) var(--ds-ease-volume);
+}
+
+.ds-volume[data-open="true"] {
+  width: 196px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-volume:hover {
+    width: 196px;
+  }
+}
+
+.ds-volume-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--ds-duration-volume) var(--ds-ease-volume);
+}
+
+.ds-volume-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 54px;
+  background-color: var(--ds-spine-2);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px),
+    linear-gradient(115deg, rgba(255,255,255,0.08), transparent 45%, rgba(0,0,0,0.12));
+  border: 1px solid var(--ds-border-strong);
+  border-radius: 3px 0 0 3px;
+  box-shadow: var(--ds-shadow-spine-inset);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 6px;
+  z-index: 2;
+}
+
+.ds-volume-cover {
+  position: absolute;
+  left: 52px;
+  top: 0;
+  bottom: 0;
+  width: 136px;
+  background-color: var(--ds-spine-1);
+  background-image:
+    radial-gradient(at 42% 20%, rgba(17,18,22,0.08), transparent 72%),
+    linear-gradient(90deg, rgba(0,0,0,0.12), transparent 22%);
+  border: 1px solid var(--ds-border-strong);
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+  box-shadow: var(--ds-shadow-raised);
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transform: rotateY(-28deg);
+  transform-origin: left center;
+  pointer-events: none;
+  transition:
+    opacity 380ms var(--ds-ease-out),
+    transform var(--ds-duration-volume) var(--ds-ease-volume);
+}
+
+.ds-volume[data-open="true"] .ds-volume-cover {
+  opacity: 1;
+  transform: rotateY(0deg);
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-volume:hover .ds-volume-cover {
+    opacity: 1;
+    transform: rotateY(0deg);
+    pointer-events: auto;
+  }
+}
+
+.ds-volume-edge {
+  position: absolute;
+  right: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 8px;
+  background-image: var(--ds-pattern-page-ribs);
+  box-shadow: var(--ds-shadow-edge-bevel);
+  border-radius: 0 2px 2px 0;
+}
+
+/* --------------------------------------------------------------------------
+   10. MOLDURA SVG 1:1 TRAVADA (Diretriz Arquitetural Lunar+Earth+Gemini)
+   -------------------------------------------------------------------------- */
+.ds-svg-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--ds-radius-card);
+  border: 1px solid var(--ds-border);
+  background-color: var(--ds-bg-tint-subtle);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.ds-svg-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   11. SONNER TOAST STACK (CSS Transitions Interruptíveis, Mesmo Eixo)
+   -------------------------------------------------------------------------- */
+.ds-toast-region {
+  position: fixed;
+  right: clamp(16px, 2.5vw, 28px);
+  bottom: calc(clamp(16px, 2.5vw, 28px) + env(safe-area-inset-bottom, 0px));
+  z-index: 180;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  pointer-events: none;
+  max-width: min(360px, calc(100vw - 32px));
+}
+
+.ds-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--ds-radius-squircle);
+  background-color: var(--ds-inverted-bg);
+  color: var(--ds-inverted-fg);
+  border: 1px solid var(--ds-inverted-border);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.28);
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(100%) scale(0.96);
+  transition:
+    opacity var(--ds-duration-toast) ease,
+    transform var(--ds-duration-toast) var(--ds-ease-out);
+}
+
+.ds-toast[data-state="open"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ds-toast[data-state="closing"] {
+  opacity: 0;
+  transform: translateY(100%) scale(0.96);
+  transition-duration: 240ms;
+}
+
+/* --------------------------------------------------------------------------
+   12. VAUL-CURVE DRAWER / SHEET (Emil `cubic-bezier(0.32, 0.72, 0, 1)`)
+   -------------------------------------------------------------------------- */
+.ds-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  background-color: rgba(10, 10, 10, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ds-duration-drawer) var(--ds-ease-drawer);
+}
+
+.ds-drawer-backdrop[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ds-drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 161;
+  width: min(440px, 94vw);
+  height: 100dvh;
+  background-color: var(--ds-bg);
+  border-left: 1px solid var(--ds-border-strong);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--ds-duration-drawer) var(--ds-ease-drawer);
+  overscroll-behavior: contain;
+}
+
+.ds-drawer-panel[data-open="true"] {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-drawer-panel {
+    transform: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+  .ds-drawer-panel[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .ds-toast {
+    transform: none;
+  }
+  .ds-toast[data-state="open"] {
+    transform: none;
+  }
+  .ds-toast[data-state="closing"] {
+    transform: none;
+  }
+  .ds-plate-media {
+    transition: none;
+  }
+}

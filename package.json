@@ -1,0 +1,35 @@
+{
+  "name": "@meridian/design-system",
+  "version": "1.3.0",
+  "description": "MERIDIAN Design System — Multi-surface Single-Ink editorial design system with PaperGrain, Emil Kowalski motion, Plotter blueprint SVG & 81k globe, and 100% TypeScript generative watercolor/pencil/crayon engine.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/tokens.ts",
+    "./paper-grain": "./src/paper-grain.ts",
+    "./plotter-svg": "./src/plotter-svg.ts",
+    "./atelier-engine": "./src/atelier-engine.ts",
+    "./tokens.css": "./src/tokens.css",
+    "./components.css": "./src/components.css"
+  },
+  "keywords": [
+    "design-system",
+    "typescript",
+    "react-native",
+    "css",
+    "svg",
+    "plotter",
+    "watercolor",
+    "generative-art",
+    "editorial-design"
+  ],
+  "files": [
+    "src",
+    "assets",
+    "DESIGN_SYSTEM.md",
+    "index.html",
+    "README.md"
+  ]
+}
