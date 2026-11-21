@@ -1,0 +1,47 @@
+/* ---- Language switcher · Meridian ---- */
+.ds-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  padding: 2px;
+  border: var(--ds-hairline, 1px) solid var(--ds-border);
+  border-radius: 9999px;
+  background: transparent;
+}
+.ds-lang button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ds-fg-muted);
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  min-width: 28px;
+}
+.ds-lang button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--ds-fg) 9%, transparent);
+  color: var(--ds-fg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ds-lang button:hover { color: var(--ds-fg); }
+}
+.ds-lang button:active {
+  transform: scale(var(--ds-press-scale, 0.97));
+}
+
+.gann-chrome-inner .ds-lang {
+  margin-inline: 2px;
+}
+
+.topbar-controls .ds-lang {
+  margin-inline-end: 2px;
+}
+
+@media (max-width: 720px) {
+  .ds-lang button { padding: 5px 6px; font-size: 10px; min-width: 24px; }
+}

@@ -14,6 +14,8 @@ import {
 } from './tokens.ts';
 import { mountPaperGrain, setPaperGrainSize } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
+import { initI18n } from './i18n';
+import './i18n.css';
 import {
   renderPlottedGlobeSvg,
   type PlotterRole,
@@ -679,6 +681,7 @@ function bootstrap(): void {
   });
 
   // Initial render
+  initI18n();
   setSurface('ivory', false);
   setView('today');
   markPageReady();

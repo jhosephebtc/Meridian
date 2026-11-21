@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./src/tokens.css" />
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/components-lab.css" />
+  <link rel="stylesheet" href="./src/i18n.css" />
 </head>
 <body>
   <div class="ds-page-veil" aria-hidden="false"></div>
@@ -27,6 +28,7 @@
       <span class="brand-title" style="font-family:var(--ds-font-display);font-size:1.15rem;letter-spacing:var(--ds-tracking-heading)">Meridian Components</span>
     </a>
     <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <div data-lang-slot></div>
       <div class="swatch-pill-group" role="group" aria-label="Surface" style="display:flex;gap:4px">
         <button type="button" class="swatch-btn" data-surface-pick="ivory" title="Ivory" style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ds-border);background:#FAF9F5;padding:0;cursor:pointer"></button>
         <button type="button" class="swatch-btn" data-surface-pick="aqua" title="Aqua" style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ds-border);background:#A4CED0;padding:0;cursor:pointer"></button>
@@ -36,8 +38,8 @@
       <button type="button" class="ds-btn ds-btn-tertiary" id="lab-open-cmdk" style="min-height:34px;padding:7px 10px">
         <span class="kbd-chip" style="font-family:var(--ds-font-mono);font-size:11px">⌘K</span>
       </button>
-      <a href="./index.html" class="ds-btn ds-btn-pill ds-btn-secondary" style="min-height:34px;padding:7px 12px;font-size:12px;text-decoration:none">Design System</a>
-      <a href="./preview.html" class="ds-btn ds-btn-pill ds-btn-ghost" style="min-height:34px;padding:7px 12px;font-size:12px;text-decoration:none">Studio</a>
+      <a href="./index.html" class="ds-btn ds-btn-pill ds-btn-secondary" style="min-height:34px;padding:7px 12px;font-size:12px;text-decoration:none" data-i18n="lab.ds">Design System</a>
+      <a href="./preview.html" class="ds-btn ds-btn-pill ds-btn-ghost" style="min-height:34px;padding:7px 12px;font-size:12px;text-decoration:none" data-i18n="lab.studio">Studio</a>
     </div>
   </header>
 

@@ -3523,12 +3523,14 @@
             </div>
           </div>
 
+          <div class="topbar-ctrl-mid" data-lang-slot aria-label="Idioma"></div>
+
           <button class="topbar-link topbar-ctrl-wide" id="btn-mode-toggle" type="button" data-tip="Alterna densidade, linguagem e camadas auditáveis">
-            <span class="blur-morph" id="mode-label">B2C Invisível</span>
+            <span class="blur-morph" id="mode-label" data-i18n="top.mode">B2C Invisível</span>
           </button>
 
           <div class="popover-anchor topbar-ctrl-mid">
-            <button class="topbar-link" id="btn-grain-popover" type="button" aria-expanded="false" aria-controls="grain-popover" data-tip="Ruído de papel &amp; sinais">
+            <button class="topbar-link" id="btn-grain-popover" type="button" aria-expanded="false" aria-controls="grain-popover" data-tip="Ruído de papel &amp; sinais" data-i18n="top.grain">
               Grain
             </button>
             <div class="popover" id="grain-popover" data-open="false" aria-hidden="true" role="dialog" aria-label="Controles de textura e sinais">
@@ -3563,34 +3565,34 @@
           </button>
 
           <a href="./components.html" class="topbar-link topbar-link-strong topbar-keep-mobile" data-tip="Abrir Components Lab · menus, modais, tabelas, gráficos">
-            <span class="topbar-cta-full">Components ↗</span>
-            <span class="topbar-cta-short">Lab ↗</span>
+            <span class="topbar-cta-full" data-i18n="top.components">Components ↗</span>
+            <span class="topbar-cta-short" data-i18n="top.componentsShort">Lab ↗</span>
           </a>
 
-          <a href="./preview.html" class="topbar-link topbar-ctrl-wide" data-tip="Abrir Prévia Real de Produto (Meridian Studio)">
+          <a href="./preview.html" class="topbar-link topbar-ctrl-wide" data-tip="Abrir Prévia Real de Produto (Meridian Studio)" data-i18n="top.preview">
             Prévia ↗
           </a>
 
-          <button class="topbar-link topbar-ctrl-wide" id="btn-open-drawer" type="button" data-tip="Abrir drawer com tokens CSS/TS">
+          <button class="topbar-link topbar-ctrl-wide" id="btn-open-drawer" type="button" data-tip="Abrir drawer com tokens CSS/TS" data-i18n="top.tokens">
             Tokens
           </button>
         </div>
 
-        <button class="ds-burger" id="btn-nav-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-rail">
+        <button class="ds-burger" id="btn-nav-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-rail" data-i18n-attr="aria-label:nav.openMenu">
           <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
       </div>
 
       <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Seções do Design System">
         <div class="topbar-nav-links">
-          <button class="topbar-link" type="button" data-nav-target="historia" data-active="true">História</button>
-          <button class="topbar-link" type="button" data-nav-target="cores">Superfícies</button>
-          <button class="topbar-link" type="button" data-nav-target="tipografia">Tipografia</button>
-          <button class="topbar-link" type="button" data-nav-target="interacoes">Motion</button>
-          <button class="topbar-link" type="button" data-nav-target="editorial">Editorial</button>
-          <button class="topbar-link" type="button" data-nav-target="cronologia">Lifeline</button>
-          <button class="topbar-link" type="button" data-nav-target="svg-viz">SVG 1:1</button>
-          <button class="topbar-link" type="button" data-nav-target="atelier">Atelier TS</button>
+          <button class="topbar-link" type="button" data-nav-target="historia" data-active="true" data-i18n="nav.historia">História</button>
+          <button class="topbar-link" type="button" data-nav-target="cores" data-i18n="nav.surfaces">Superfícies</button>
+          <button class="topbar-link" type="button" data-nav-target="tipografia" data-i18n="nav.type">Tipografia</button>
+          <button class="topbar-link" type="button" data-nav-target="interacoes" data-i18n="nav.motion">Motion</button>
+          <button class="topbar-link" type="button" data-nav-target="editorial" data-i18n="nav.editorial">Editorial</button>
+          <button class="topbar-link" type="button" data-nav-target="cronologia" data-i18n="nav.lifeline">Lifeline</button>
+          <button class="topbar-link" type="button" data-nav-target="svg-viz" data-i18n="nav.svg">SVG 1:1</button>
+          <button class="topbar-link" type="button" data-nav-target="atelier" data-i18n="nav.atelier">Atelier TS</button>
         </div>
       </nav>
     </div>
@@ -3604,38 +3606,38 @@
       <div class="container-wide">
         <div class="hero-grid">
           <div>
-            <div class="eyebrow">Meridian · Sistema Visual &amp; Motion</div>
-            <h1 class="hero-title">Meridian Design&nbsp;System</h1>
-            <p class="hero-lead" id="hero-lead-copy">
+            <div class="eyebrow" data-i18n="hero.eyebrow">Meridian · Sistema Visual &amp; Motion</div>
+            <h1 class="hero-title" data-i18n-html="hero.title">Meridian Design&nbsp;System</h1>
+            <p class="hero-lead" id="hero-lead-copy" data-i18n="hero.lead">
               Um meridiano visual entre o&nbsp;cotidiano calmo e&nbsp;o&nbsp;rigor técnico: papel tátil, uma só tinta, navegação sem latência — para React&nbsp;Native, Web em&nbsp;CSS puro e&nbsp;SVG&nbsp;1:1.
             </p>
             <div class="btn-row" style="margin-top:0;">
-              <a href="./components.html" class="btn btn-primary">Abrir Components Lab ↗</a>
-              <a href="./preview.html" class="btn btn-secondary btn-pill">Prévia de App ↗</a>
-              <a href="./manifesto.html" class="btn btn-secondary btn-pill">Manifesto ↗</a>
-              <a href="./historia.html" class="btn btn-secondary btn-pill">O Farol e o Meridiano ↗</a>
-              <a href="./gann.html" class="btn btn-secondary btn-pill">Dossiê W.D. Gann ↗</a>
-              <button class="btn btn-secondary btn-pill" id="hero-open-drawer">Inspecionar Tokens CSS &amp; TS</button>
-              <button class="btn btn-tertiary btn-pill" id="hero-open-cmdk">Navegação Rápida <span class="kbd-hint">⌘K</span></button>
-              <button class="btn btn-tertiary btn-pill" id="hero-cycle-surface">Alternar Atmosfera →</button>
+              <a href="./components.html" class="btn btn-primary" data-i18n="hero.lab">Abrir Components Lab ↗</a>
+              <a href="./preview.html" class="btn btn-secondary btn-pill" data-i18n="hero.preview">Prévia de App ↗</a>
+              <a href="./manifesto.html" class="btn btn-secondary btn-pill" data-i18n="hero.manifesto">Manifesto ↗</a>
+              <a href="./historia.html" class="btn btn-secondary btn-pill" data-i18n="hero.farol">O Farol e o Meridiano ↗</a>
+              <a href="./gann.html" class="btn btn-secondary btn-pill" data-i18n="hero.gann">Dossiê W.D. Gann ↗</a>
+              <button class="btn btn-secondary btn-pill" id="hero-open-drawer" data-i18n="hero.tokens">Inspecionar Tokens CSS &amp; TS</button>
+              <button class="btn btn-tertiary btn-pill" id="hero-open-cmdk"><span data-i18n="hero.cmdk">Navegação Rápida</span> <span class="kbd-hint">⌘K</span></button>
+              <button class="btn btn-tertiary btn-pill" id="hero-cycle-surface" data-i18n="hero.cycle">Alternar Atmosfera →</button>
             </div>
           </div>
 
           <div class="hero-telemetry">
             <div class="telemetry-cell">
-              <span class="eyebrow">Superfície Ativa</span>
+              <span class="eyebrow" data-i18n="tel.surface">Superfície Ativa</span>
               <span class="telemetry-val" id="tel-surface">Ivory Editorial</span>
             </div>
             <div class="telemetry-cell">
-              <span class="eyebrow">Ground / Ink</span>
+              <span class="eyebrow" data-i18n="tel.ground">Ground / Ink</span>
               <span class="telemetry-val tabular" id="tel-hex">#FAF9F5 · #141413</span>
             </div>
             <div class="telemetry-cell">
-              <span class="eyebrow">Contraste WCAG</span>
+              <span class="eyebrow" data-i18n="tel.contrast">Contraste WCAG</span>
               <span class="telemetry-val tabular" id="tel-contrast">17.6:1 (AAA)</span>
             </div>
             <div class="telemetry-cell">
-              <span class="eyebrow">PaperGrain &amp; Modo</span>
+              <span class="eyebrow" data-i18n="tel.grain">PaperGrain &amp; Modo</span>
               <span class="telemetry-val tabular" id="tel-grain">Editorial · B2C Invisível</span>
             </div>
           </div>
@@ -3887,14 +3889,14 @@
             <p>Por tempo suficiente para que os outros confiem nela.</p>
 
             <div class="historia-coda">
-              <div class="eyebrow">Por isso Meridian</div>
-              <h3>Uma linha invisível entre o cotidiano e o rigor</h3>
-              <p>
+              <div class="eyebrow" data-i18n="coda.eyebrow">Por isso Meridian</div>
+              <h3 data-i18n="coda.title">Uma linha invisível entre o cotidiano e o rigor</h3>
+              <p data-i18n="coda.body">
                 O design system herda essa pergunta: cada token, cada superfície e cada gesto precisam ajudar quem navega a interface a encontrar o caminho — sem ruído, sem desvio, com uma só tinta e uma referência estável.
               </p>
               <div class="historia-coda-actions">
-                <a href="./manifesto.html" class="btn btn-secondary btn-pill">Manifesto ↗</a>
-                <a href="./historia.html" class="btn btn-secondary btn-pill">Dossiê ilustrado ↗</a>
+                <a href="./manifesto.html" class="btn btn-secondary btn-pill" data-i18n="coda.manifesto">Manifesto ↗</a>
+                <a href="./historia.html" class="btn btn-secondary btn-pill" data-i18n="coda.dossier">Dossiê ilustrado ↗</a>
               </div>
             </div>
           </article>
@@ -4386,7 +4388,7 @@
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
                     <div>
                       <div style="font-size:13.5px; font-weight:500;">Imagens satélite — embeddings 10m</div>
-                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">earthengine.google.com · Série histórica orbital</div>
+                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);" data-i18n="src.orbital">orbital-archive · Série histórica orbital</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
                   </div>
@@ -4818,9 +4820,9 @@
           <div class="footer-ext">
             <a href="./preview.html">Meridian Studio <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
             <a href="./components.html">Components Lab <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-            <a href="./manifesto.html">Manifesto <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-            <a href="./historia.html">O Farol e o Meridiano <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-            <a href="./gann.html">Dossiê W.D. Gann <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
+            <a href="./manifesto.html" data-i18n="footer.manifesto">Manifesto ↗</a>
+            <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
+            <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
             <a href="#btn-open-drawer" id="footer-open-tokens">Tokens CSS &amp; TS <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -4846,9 +4848,9 @@
       <nav class="nav-rail-list" aria-label="Páginas">
         <a href="./components.html" data-primary>Components Lab ↗</a>
         <a href="./preview.html">Prévia de App ↗</a>
-        <a href="./manifesto.html">Manifesto ↗</a>
-        <a href="./historia.html">O Farol e o Meridiano ↗</a>
-        <a href="./gann.html">Dossiê W.D. Gann ↗</a>
+        <a href="./manifesto.html" data-i18n="footer.manifesto">Manifesto ↗</a>
+        <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
+        <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
         <a href="./index.html#topo">Design System · topo</a>
       </nav>
     </div>
@@ -5230,7 +5232,7 @@
 }`;
         } else if (state.drawerLang === 'ts') {
           out.textContent = `// Meridian tokens.ts — React Native / Expo / Web
-import { getSurfaceTheme, MOTION } from '@lunar-earth/design-system';
+import { getSurfaceTheme, MOTION } from '@meridian/design-system';
 
 const theme = getSurfaceTheme('${state.surface}', '${state.signals}');
 // bg: '${m.bg}' · fg: '${m.fg}' · contrast: '${m.contrast}'
@@ -5246,7 +5248,7 @@ import {
   runMeridianSketch,
   createEconWatercolorSketch,
   createCrayonCollageSketch,
-} from '@lunar-earth/design-system/atelier-engine';
+} from '@meridian/design-system/atelier-engine';
 
 // Web Canvas 2D (ou RN Skia via AtelierDrawingBackend)
 const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
@@ -7106,6 +7108,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       setTimeout(initAllClipTabs, 60);
     })();
   </script>
+  <script type="module" src="./src/i18n-boot.ts"></script>
   <script type="module" src="./src/historia-halftone.ts"></script>
 </body>
 </html>

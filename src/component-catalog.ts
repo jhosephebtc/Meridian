@@ -206,7 +206,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   // Astronomy
   { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Arcos solares plotter.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },
   { id: 'astrology-wheel', name: 'Astrology Wheel', category: 'astronomy', blurb: 'Roda de casas em traço.', demo: 'compass', install: 'astrology-wheel', interactive: true },
-  { id: 'lunar-ephemeris', name: 'Lunar Ephemeris', category: 'astronomy', blurb: 'Fases e elongação.', demo: 'svg-instrument', install: 'lunar-ephemeris', interactive: true },
+  { id: 'lunar-ephemeris', name: 'Moon Ephemeris', category: 'astronomy', blurb: 'Fases e elongação.', demo: 'svg-instrument', install: 'lunar-ephemeris', interactive: true },
 
   // Weather
   { id: 'weather-conditions', name: 'Weather Conditions', category: 'weather', blurb: 'Condições + métricas line.', demo: 'metric', install: 'weather-conditions', interactive: true },

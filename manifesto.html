@@ -9,10 +9,11 @@
   <link rel="stylesheet" href="./src/tokens.css" />
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/gann.css" />
+  <link rel="stylesheet" href="./src/i18n.css" />
 </head>
 <body class="gann-page">
   <div class="ds-page-veil" aria-hidden="false"></div>
-  <a class="gann-skip" href="#preambulo">Ir ao conteúdo</a>
+  <a class="gann-skip" href="#preambulo" data-i18n="skip">Ir ao conteúdo</a>
 
   <div class="ds-page-enter">
   <header class="gann-chrome" role="banner">
@@ -23,14 +24,14 @@
       <a class="gann-brand" href="./manifesto.html">Manifesto</a>
 
       <nav class="gann-nav-center" aria-label="Seções">
-        <a data-nav href="#preambulo">Preâmbulo</a>
-        <a data-nav href="#referencia">Referência</a>
-        <a data-nav href="#tinta">Tinta</a>
-        <a data-nav href="#silencio">Silêncio</a>
-        <a data-nav href="#papel">Papel</a>
-        <a data-nav href="#rigor">Rigor</a>
-        <a data-nav href="#util">Utilidade</a>
-        <a data-nav href="#juramento">Juramento</a>
+        <a data-nav href="#preambulo" data-i18n="man.nav.pre">Preâmbulo</a>
+        <a data-nav href="#referencia" data-i18n="man.nav.ref">Referência</a>
+        <a data-nav href="#tinta" data-i18n="man.nav.ink">Tinta</a>
+        <a data-nav href="#silencio" data-i18n="man.nav.sil">Silêncio</a>
+        <a data-nav href="#papel" data-i18n="man.nav.paper">Papel</a>
+        <a data-nav href="#rigor" data-i18n="man.nav.rigor">Rigor</a>
+        <a data-nav href="#util" data-i18n="man.nav.util">Utilidade</a>
+        <a data-nav href="#juramento" data-i18n="man.nav.oath">Juramento</a>
       </nav>
 
       <div class="gann-spectrum" role="group" aria-label="Atmosfera cromática suave">
@@ -44,10 +45,11 @@
         <button type="button" class="gann-spectrum-dot" data-chroma="lilac" aria-pressed="false" title="Lilac" style="--chroma:#C9C0D8"></button>
       </div>
       <div class="gann-layout-toggle" role="group" aria-label="Alternar diagramação">
-        <button type="button" data-layout-pick="masthead" data-active="true">Header</button>
-        <button type="button" data-layout-pick="rail">Menu</button>
+        <button type="button" data-layout-pick="masthead" data-active="true" data-i18n="layout.header">Header</button>
+        <button type="button" data-layout-pick="rail" data-i18n="layout.menu">Menu</button>
       </div>
-      <a class="gann-ds-link" href="./index.html">Meridian DS ↗</a>
+      <div data-lang-slot></div>
+      <a class="gann-ds-link" href="./index.html" data-i18n="ds.link">Meridian DS ↗</a>
     </div>
   </header>
 
@@ -75,9 +77,9 @@
   <main class="gann-shell">
     <section class="gann-hero" aria-labelledby="manifesto-hero-title">
       <div class="gann-prose">
-        <p class="gann-eyebrow">Documento fundador · Meridian Design System</p>
-        <h1 class="gann-title" id="manifesto-hero-title">Manifesto Meridian</h1>
-        <p class="gann-lead">
+        <p class="gann-eyebrow" data-i18n="man.eyebrow">Documento fundador · Meridian Design System</p>
+        <h1 class="gann-title" id="manifesto-hero-title" data-i18n="man.title">Manifesto Meridian</h1>
+        <p class="gann-lead" data-i18n="man.lead">
           Não perseguimos atenção. Mantemos direção —
           uma linha invisível entre o cotidiano calmo e o rigor que se pode auditar.
         </p>

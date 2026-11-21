@@ -10,10 +10,11 @@
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/gann.css" />
   <link rel="stylesheet" href="./src/historia.css" />
+  <link rel="stylesheet" href="./src/i18n.css" />
 </head>
 <body class="gann-page">
   <div class="ds-page-veil" aria-hidden="false"></div>
-  <a class="gann-skip" href="#oceano">Ir ao conteúdo</a>
+  <a class="gann-skip" href="#oceano" data-i18n="skip">Ir ao conteúdo</a>
 
   <div class="ds-page-enter">
   <header class="gann-chrome" role="banner">
@@ -24,13 +25,13 @@
       <a class="gann-brand" href="./historia.html">O Farol</a>
 
       <nav class="gann-nav-center" aria-label="Seções">
-        <a data-nav href="#oceano">Oceano</a>
-        <a data-nav href="#desvio">Desvio</a>
-        <a data-nav href="#meridianos">Meridianos</a>
-        <a data-nav href="#farol">Farol</a>
-        <a data-nav href="#placa">Placa</a>
-        <a data-nav href="#identidade">Identidade</a>
-        <a data-nav href="#marca">Marca</a>
+        <a data-nav href="#oceano" data-i18n="hist.nav.oceano">Oceano</a>
+        <a data-nav href="#desvio" data-i18n="hist.nav.desvio">Desvio</a>
+        <a data-nav href="#meridianos" data-i18n="hist.nav.meridianos">Meridianos</a>
+        <a data-nav href="#farol" data-i18n="hist.nav.farol">Farol</a>
+        <a data-nav href="#placa" data-i18n="hist.nav.placa">Placa</a>
+        <a data-nav href="#identidade" data-i18n="hist.nav.identidade">Identidade</a>
+        <a data-nav href="#marca" data-i18n="hist.nav.marca">Marca</a>
       </nav>
 
       <div class="gann-spectrum" role="group" aria-label="Atmosfera cromática suave">
@@ -44,10 +45,11 @@
         <button type="button" class="gann-spectrum-dot" data-chroma="obsidian" aria-pressed="false" title="Obsidian" style="--chroma:#141413"></button>
       </div>
       <div class="gann-layout-toggle" role="group" aria-label="Alternar diagramação">
-        <button type="button" data-layout-pick="masthead" data-active="true">Header</button>
-        <button type="button" data-layout-pick="rail">Menu</button>
+        <button type="button" data-layout-pick="masthead" data-active="true" data-i18n="layout.header">Header</button>
+        <button type="button" data-layout-pick="rail" data-i18n="layout.menu">Menu</button>
       </div>
-      <a class="gann-ds-link" href="./index.html">Meridian DS ↗</a>
+      <div data-lang-slot></div>
+      <a class="gann-ds-link" href="./index.html" data-i18n="ds.link">Meridian DS ↗</a>
     </div>
   </header>
 
@@ -74,9 +76,9 @@
   <main class="gann-shell">
     <section class="gann-hero" aria-labelledby="historia-hero-title">
       <div class="gann-prose">
-        <p class="gann-eyebrow">Dossiê editorial · ensaio de marca</p>
-        <h1 class="gann-title" id="historia-hero-title">O Farol e o&nbsp;Meridiano</h1>
-        <p class="gann-lead">
+        <p class="gann-eyebrow" data-i18n="hist.eyebrow">Dossiê editorial · ensaio de marca</p>
+        <h1 class="gann-title" id="historia-hero-title" data-i18n-html="hist.title">O Farol e o&nbsp;Meridiano</h1>
+        <p class="gann-lead" data-i18n="hist.lead">
           Antes dos mapas e dos instrumentos, atravessar o oceano era um exercício de&nbsp;convicção —
           e a referência estável que torna uma marca confiável.
         </p>
@@ -106,7 +108,7 @@
       <div class="gann-reader-main">
         <section class="gann-section" id="oceano">
           <div class="gann-section-head">
-            <h2>O oceano sem&nbsp;mapa</h2>
+            <h2 data-i18n-html="hist.s1">O oceano sem&nbsp;mapa</h2>
             <p class="gann-eyebrow" style="margin:0">01 · Oceano</p>
           </div>
 
@@ -137,7 +139,7 @@
 
         <section class="gann-section" id="desvio">
           <div class="gann-section-head">
-            <h2>Ninguém se perde de&nbsp;uma&nbsp;vez</h2>
+            <h2 data-i18n-html="hist.s2">Ninguém se perde de&nbsp;uma&nbsp;vez</h2>
             <p class="gann-eyebrow" style="margin:0">02 · Desvio</p>
           </div>
 
@@ -174,7 +176,7 @@
 
         <section class="gann-section" id="meridianos">
           <div class="gann-section-head">
-            <h2>Linhas que ninguém&nbsp;admira</h2>
+            <h2 data-i18n-html="hist.s3">Linhas que ninguém&nbsp;admira</h2>
             <p class="gann-eyebrow" style="margin:0">03 · Meridianos</p>
           </div>
 
@@ -202,7 +204,7 @@
 
         <section class="gann-section" id="farol">
           <div class="gann-section-head">
-            <h2>O farol na&nbsp;costa</h2>
+            <h2 data-i18n-html="hist.s4">O farol na&nbsp;costa</h2>
             <p class="gann-eyebrow" style="margin:0">04 · Farol</p>
           </div>
 
@@ -244,7 +246,7 @@
 
         <section class="gann-section" id="placa">
           <div class="gann-section-head">
-            <h2>A pergunta na&nbsp;placa</h2>
+            <h2 data-i18n-html="hist.s5">A pergunta na&nbsp;placa</h2>
             <p class="gann-eyebrow" style="margin:0">05 · Placa</p>
           </div>
 
@@ -304,7 +306,7 @@
 
         <section class="gann-section" id="identidade">
           <div class="gann-section-head">
-            <h2>O que não se&nbsp;vê</h2>
+            <h2 data-i18n-html="hist.s6">O que não se&nbsp;vê</h2>
             <p class="gann-eyebrow" style="margin:0">06 · Identidade</p>
           </div>
 
@@ -362,7 +364,7 @@
 
         <section class="gann-section" id="marca">
           <div class="gann-section-head">
-            <h2>Permanecer alinhado</h2>
+            <h2 data-i18n="hist.s7">Permanecer alinhado</h2>
             <p class="gann-eyebrow" style="margin:0">07 · Marca</p>
           </div>
 

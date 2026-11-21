@@ -13,6 +13,8 @@ import {
 import { HALFTONE, PAPER_SHADER } from './tokens';
 import { mountPaperGrain } from './paper-grain';
 import { markPageReady } from './page-enter';
+import { initI18n } from './i18n';
+import './i18n.css';
 
 type LayoutMode = 'masthead' | 'rail';
 
@@ -319,6 +321,7 @@ function setChroma(id: ChromaId): void {
 }
 
 function init(): void {
+  initI18n();
   mountPaperGrain({
     seed: 18780606,
     speckleStrength: PAPER_SHADER.defaultSpeckle * 0.85,

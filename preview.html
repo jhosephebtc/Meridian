@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./src/tokens.css" />
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/preview.css" />
+  <link rel="stylesheet" href="./src/i18n.css" />
 </head>
 <body>
   <div class="ds-page-veil" aria-hidden="false"></div>
@@ -20,7 +21,7 @@
           <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1.2"/>
           <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
         </svg>
-        <span class="brand-title">Meridian Studio</span>
+        <span class="brand-title" data-i18n="prev.studio">Meridian Studio</span>
       </a>
 
       <!-- Clip-Path Seamless Workspace Switcher -->
@@ -40,6 +41,7 @@
       </nav>
 
       <div class="topbar-right">
+        <div data-lang-slot></div>
         <div class="swatch-pill-group" role="group" aria-label="Atmosfera cromática suave">
           <button class="swatch-btn" data-surface-pick="ivory" aria-pressed="true" style="background:#FAF9F5" title="Ivory Editorial"></button>
           <button class="swatch-btn" data-surface-pick="blush" aria-pressed="false" style="background:#E8C4C0" title="Soft Blush"></button>
@@ -272,7 +274,7 @@
                       <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
                       <div>
                         <div style="font-size:13.5px; font-weight:500;">Imagens satélite — embeddings 10m</div>
-                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">earthengine.google.com · Série histórica 2020–2026</div>
+                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);" data-i18n="src.orbitalYears">orbital-archive · Série histórica 2020–2026</div>
                       </div>
                       <span class="tier-pill">Tier A</span>
                     </div>
@@ -280,7 +282,7 @@
                       <span class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
                       <div>
                         <div style="font-size:13.5px; font-weight:500;">modelo solar — Modelo 3D de Telhados</div>
-                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);">mapsplatform.google.com · Radiação anual incidente</div>
+                        <div class="ds-mono" style="font-size:11px; color:var(--ds-fg-muted);" data-i18n="src.solar">solar-model · Radiação anual incidente</div>
                       </div>
                       <span class="tier-pill">Tier A</span>
                     </div>

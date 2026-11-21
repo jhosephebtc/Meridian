@@ -9,10 +9,11 @@
   <link rel="stylesheet" href="./src/tokens.css" />
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/gann.css" />
+  <link rel="stylesheet" href="./src/i18n.css" />
 </head>
 <body class="gann-page">
   <div class="ds-page-veil" aria-hidden="false"></div>
-  <a class="gann-skip" href="#origem">Ir ao conteúdo</a>
+  <a class="gann-skip" href="#origem" data-i18n="gann.skip">Ir ao conteúdo</a>
 
   <div class="ds-page-enter">
   <header class="gann-chrome" role="banner">
@@ -23,11 +24,11 @@
       <a class="gann-brand" href="./gann.html">W.D. Gann</a>
 
       <nav class="gann-nav-center" aria-label="Seções">
-        <a data-nav href="#origem">Origem</a>
-        <a data-nav href="#wall-street">Wall Street</a>
-        <a data-nav href="#geometria">Geometria</a>
-        <a data-nav href="#obras">Obras</a>
-        <a data-nav href="#legado">Legado</a>
+        <a data-nav href="#origem" data-i18n="gann.nav.origem">Origem</a>
+        <a data-nav href="#wall-street" data-i18n="gann.nav.wall">Wall Street</a>
+        <a data-nav href="#geometria" data-i18n="gann.nav.geo">Geometria</a>
+        <a data-nav href="#obras" data-i18n="gann.nav.obras">Obras</a>
+        <a data-nav href="#legado" data-i18n="gann.nav.legado">Legado</a>
       </nav>
 
       <div class="gann-spectrum" role="group" aria-label="Atmosfera cromática suave">
@@ -41,10 +42,11 @@
         <button type="button" class="gann-spectrum-dot" data-chroma="obsidian" aria-pressed="false" title="Obsidian" style="--chroma:#141413"></button>
       </div>
       <div class="gann-layout-toggle" role="group" aria-label="Alternar diagramação">
-        <button type="button" data-layout-pick="masthead" data-active="true">Header</button>
-        <button type="button" data-layout-pick="rail">Menu</button>
+        <button type="button" data-layout-pick="masthead" data-active="true" data-i18n="layout.header">Header</button>
+        <button type="button" data-layout-pick="rail" data-i18n="layout.menu">Menu</button>
       </div>
-      <a class="gann-ds-link" href="./index.html">Meridian DS ↗</a>
+      <div data-lang-slot></div>
+      <a class="gann-ds-link" href="./index.html" data-i18n="ds.link">Meridian DS ↗</a>
     </div>
   </header>
 
@@ -71,9 +73,9 @@
     <!-- Hero: só prosa — placa vive no aside direito (padrão Arquival) -->
     <section class="gann-hero" aria-labelledby="gann-hero-title">
       <div class="gann-prose">
-        <p class="gann-eyebrow">Dossiê arquivístico · 1878–1955</p>
-        <h1 class="gann-title" id="gann-hero-title">William&nbsp;Delbert&nbsp;Gann</h1>
-        <p class="gann-lead">
+        <p class="gann-eyebrow" data-i18n="gann.eyebrow">Dossiê arquivístico · 1878–1955</p>
+        <h1 class="gann-title" id="gann-hero-title" data-i18n="gann.title">William&nbsp;Delbert&nbsp;Gann</h1>
+        <p class="gann-lead" data-i18n="gann.lead">
           Trader, autor e geometrista de mercado — a trajetória que liga o&nbsp;algodão do&nbsp;Texas ao&nbsp;papel quadriculado de&nbsp;<span class="gann-nowrap">Wall&nbsp;Street</span>.
         </p>
         <div class="gann-pill-row">

@@ -8,6 +8,8 @@ import {
   type DemoKind,
   installCommand,
 } from './component-catalog.ts';
+import { initI18n } from './i18n';
+import './i18n.css';
 
 const REGISTRY_BASE = `${location.origin}${location.pathname.replace(/[^/]*$/, '')}r`;
 
@@ -1730,6 +1732,7 @@ function initChrome(): void {
 }
 
 function init(): void {
+  initI18n();
   mountPaperGrain({ seed: 20261120 });
   markPageReady();
   ensureHosts();
