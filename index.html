@@ -4,10 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="theme-color" content="#FAF9F5" id="meta-theme-color" />
+  <meta name="description" content="Meridian é um sistema visual de uma tinta: tipografia, motion, tokens e gramática plotter para interfaces editoriais." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://meridian-olive-phi.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Meridian" />
+  <meta property="og:title" content="Meridian — Sistema visual, motion e gramática plotter" />
+  <meta property="og:description" content="Tipografia, motion, tokens e instrumentos em uma tinta. O sistema visual do Meridian." />
+  <meta property="og:url" content="https://meridian-olive-phi.vercel.app/" />
+  <meta property="og:image" content="https://meridian-olive-phi.vercel.app/plates/compass-rose.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Meridian — Sistema visual, motion e gramática plotter" />
+  <meta name="twitter:description" content="Tipografia, motion, tokens e instrumentos em uma tinta." />
+  <meta name="twitter:image" content="https://meridian-olive-phi.vercel.app/plates/compass-rose.png" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.svg" />
   <link rel="stylesheet" href="./src/site-chrome.css" />
-  <title>MERIDIAN — Design System</title>
+  <title>Meridian — Sistema visual, motion e gramática plotter</title>
   <style>
     /* ========================================================================
        MERIDIAN DESIGN SYSTEM — v1.4.1 (Self-Contained Pure CSS Showcase)
@@ -1537,17 +1551,24 @@
     .popover [style*="grid-template-columns:repeat(2"] {
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
-    @media (max-width: 420px) {
-      .popover {
+    @media (max-width: 720px) {
+      .topbar {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background-color: color-mix(in srgb, var(--ds-bg) 97%, transparent);
+      }
+      .popover,
+      .popover.surface-menu {
         position: fixed;
-        top: auto;
-        right: 12px;
+        top: calc(env(safe-area-inset-top, 0px) + 64px);
+        bottom: auto;
         left: 12px;
-        bottom: max(12px, env(safe-area-inset-bottom, 0px));
+        right: 12px;
         width: auto;
         max-width: none;
-        max-height: min(62vh, 480px);
-        transform-origin: bottom center;
+        max-height: calc(100dvh - 88px - env(safe-area-inset-bottom, 0px));
+        transform-origin: top center;
+        z-index: 80;
       }
       .popover[data-open="true"] {
         transform: scale(1) translateY(0);
@@ -2041,6 +2062,60 @@
 
     @media (max-width: 880px) {
       .lab-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .lab-grid,
+      .sub-grid-2,
+      .primitives-grid,
+      .panel-card,
+      .section-header,
+      .section-header > div {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .panel-card { padding: 16px; }
+      .card-foot {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-row .btn,
+      .card-foot .btn {
+        white-space: normal;
+        text-align: center;
+        max-width: 100%;
+      }
+      .cliptabs { width: 100%; }
+      .spec-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .spec-table thead { display: none; }
+      .spec-table tbody,
+      .spec-table tr,
+      .spec-table td {
+        display: block;
+        width: 100%;
+      }
+      .spec-table tr {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--ds-rule);
+      }
+      .spec-table td {
+        padding: 2px 0;
+        box-shadow: none;
+      }
+      .spec-table td.mono {
+        font-size: 11px;
+        color: var(--ds-fg-muted);
+      }
+      .inverted-strip {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
     }
 
     .btn-row {

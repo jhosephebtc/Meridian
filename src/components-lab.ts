@@ -201,12 +201,12 @@ function demoDial(detent = false): HTMLElement {
   const el = document.createElement('div');
   el.className = 'ml-dial';
   el.innerHTML = `
-    <svg viewBox="0 0 120 120" aria-hidden="true">
-      <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-opacity="0.18" stroke-width="1"/>
-      <path d="M22 88 A48 48 0 1 1 98 88" fill="none" stroke="currentColor" stroke-opacity="0.28" stroke-width="1"/>
+    <svg class="ml-svg" viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="ml-guide" cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-opacity="0.55"/>
+      <path class="ml-secondary" d="M22 88 A48 48 0 1 1 98 88" fill="none" stroke="currentColor" stroke-opacity="0.8"/>
       <g class="ml-dial-knob">
-        <circle cx="60" cy="60" r="28" fill="var(--ds-bg)" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="60" y1="60" x2="60" y2="38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle class="ml-secondary" cx="60" cy="60" r="28" fill="var(--ds-bg)" stroke="currentColor"/>
+        <line class="ml-primary" x1="60" y1="60" x2="60" y2="38" stroke="currentColor"/>
       </g>
     </svg>
     <input type="range" min="0" max="100" step="${detent ? 10 : 1}" aria-label="Dial" />
@@ -632,9 +632,9 @@ function demoCompass(): HTMLElement {
   const el = document.createElement('div');
   el.innerHTML = `
     <svg class="ml-svg" viewBox="0 0 160 160" aria-label="Compass">
-      <circle cx="80" cy="80" r="68" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.25"/>
-      <circle cx="80" cy="80" r="52" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.4"/>
-      <g stroke="currentColor" stroke-width="1" stroke-linecap="round">
+      <circle class="ml-guide" cx="80" cy="80" r="68" fill="none" stroke="currentColor" stroke-opacity="0.7"/>
+      <circle class="ml-secondary" cx="80" cy="80" r="52" fill="none" stroke="currentColor" stroke-opacity="0.85"/>
+      <g class="ml-guide" stroke="currentColor">
         ${Array.from({ length: 36 }, (_, i) => {
           const a = (i / 36) * Math.PI * 2;
           const inner = i % 3 === 0 ? 58 : 62;
@@ -645,8 +645,9 @@ function demoCompass(): HTMLElement {
           return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke-opacity="${i % 3 === 0 ? 0.7 : 0.25}"/>`;
         }).join('')}
       </g>
-      <polygon points="80,28 84,80 80,76 76,80" fill="currentColor"/>
-      <text x="80" y="22" text-anchor="middle">N</text>
+      <path class="ml-primary" d="M80 30 C82 52 83 68 81 80 C79 66 78 50 80 30" fill="none" stroke="currentColor"/>
+      <circle class="ml-mark" cx="80" cy="80" r="2" fill="currentColor"/>
+      <text x="80" y="18" text-anchor="middle">N</text>
     </svg>`;
   return el.firstElementChild as HTMLElement;
 }
@@ -691,39 +692,58 @@ function demoSvgInstrument(_kind: string): HTMLElement {
   const el = document.createElement('div');
   el.innerHTML = `
     <svg class="ml-svg" viewBox="0 0 200 100" aria-hidden="true">
-      <path d="M8 72 C40 72 36 28 70 40 S110 88 140 52 S170 20 192 36" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-      <line x1="8" y1="88" x2="192" y2="88" stroke="currentColor" stroke-opacity="0.2" stroke-width="1"/>
-      <text x="8" y="14">PLOT · 1u</text>
+      <path class="ml-primary ml-draw" pathLength="1" d="M8 72 C40 72 36 28 70 40 S110 88 140 52 S170 20 192 36" fill="none" stroke="currentColor"/>
+      <line class="ml-guide" x1="8" y1="88" x2="192" y2="88" stroke="currentColor" stroke-opacity="0.85"/>
+      <text x="8" y="14">TRAÇO · 1.5</text>
     </svg>`;
   return el.firstElementChild as HTMLElement;
 }
 
-function seriesPath(values: number[], w: number, h: number, pad = 8): string {
+function seriesPoints(values: number[], w: number, h: number, pad = 8): Array<readonly [number, number]> {
   const max = Math.max(...values);
   const min = Math.min(...values);
   const span = max - min || 1;
-  return values
-    .map((v, i) => {
-      const x = pad + (i / (values.length - 1)) * (w - pad * 2);
-      const y = h - pad - ((v - min) / span) * (h - pad * 2);
-      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
-    })
-    .join(' ');
+  return values.map((v, i) => {
+    const x = pad + (i / (values.length - 1)) * (w - pad * 2);
+    const y = h - pad - ((v - min) / span) * (h - pad * 2);
+    return [x, y] as const;
+  });
+}
+
+function smoothPath(values: number[], w: number, h: number, pad = 8): string {
+  const pts = seriesPoints(values, w, h, pad);
+  if (!pts.length) return '';
+  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i += 1) {
+    const p0 = pts[Math.max(0, i - 1)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+  }
+  return d;
 }
 
 function demoChartLine(area = false): HTMLElement {
   const values = [22, 28, 25, 40, 36, 48, 44, 58, 52, 66, 61, 74];
-  const d = seriesPath(values, 220, 110);
+  const d = smoothPath(values, 220, 110);
   const areaD = `${d} L${220 - 8} ${110 - 8} L8 ${110 - 8} Z`;
+  const marks = seriesPoints(values, 220, 110).filter((_, i) => i % 3 === 0);
   const el = document.createElement('div');
   el.className = 'ml-chart';
   el.innerHTML = `
     <svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Line chart">
-      <line x1="8" y1="102" x2="212" y2="102" stroke="currentColor" stroke-opacity="0.18"/>
-      <line x1="8" y1="8" x2="8" y2="102" stroke="currentColor" stroke-opacity="0.18"/>
-      ${area ? `<path d="${areaD}" fill="currentColor" fill-opacity="0.08" stroke="none"/>` : ''}
-      <path d="${d}" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="12" y="16">SERIES · AQI</text>
+      <line class="ml-guide" x1="8" y1="102" x2="212" y2="102" stroke="currentColor" stroke-opacity="0.7"/>
+      <line class="ml-guide" x1="8" y1="28" x2="212" y2="28" stroke="currentColor" stroke-opacity="0.35"/>
+      <line class="ml-guide" x1="8" y1="64" x2="212" y2="64" stroke="currentColor" stroke-opacity="0.35"/>
+      ${area ? `<path d="${areaD}" fill="currentColor" fill-opacity="0.06" stroke="none"/>` : ''}
+      <path class="ml-primary ml-draw" pathLength="1" d="${d}" fill="none" stroke="currentColor"/>
+      ${marks.map(([x, y]) => `<circle class="ml-mark ml-fade-mark" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="currentColor"/>`).join('')}
+      <text x="12" y="16">SÉRIE · AQI</text>
     </svg>
     <div class="ml-chart-legend ds-mono">12 pts · hover scrub</div>`;
   const svg = el.querySelector('svg')!;
@@ -753,10 +773,10 @@ function demoChartBar(horizontal = false): HTMLElement {
         .map((v, i) => {
           const h = (v / 100) * 80;
           const x = 20 + i * 32;
-          return `<rect x="${x}" y="${100 - h}" width="18" height="${h}" fill="currentColor" fill-opacity="${0.35 + i * 0.08}"/>`;
+          return `<rect class="ml-grow" x="${x}" y="${100 - h}" width="14" height="${h}" fill="none" stroke="currentColor" stroke-width="1.15"/>`;
         })
         .join('')}
-      <line x1="12" y1="100" x2="208" y2="100" stroke="currentColor" stroke-opacity="0.2"/>
+      <line class="ml-guide" x1="12" y1="100" x2="208" y2="100" stroke="currentColor" stroke-opacity="0.7"/>
     </svg>`;
   }
   return el;
@@ -782,11 +802,12 @@ function demoChartCandles(): HTMLElement {
         const yC = 100 - c;
         const top = Math.min(yO, yC);
         const body = Math.abs(yO - yC) || 2;
-        return `<line x1="${x}" y1="${100 - h}" x2="${x}" y2="${100 - l}" stroke="currentColor" stroke-width="1"/>
-          <rect x="${x - 6}" y="${top}" width="12" height="${body}" fill="none" stroke="currentColor" stroke-width="1.2"/>`;
+        const up = c >= o;
+        return `<line class="ml-secondary" x1="${x}" y1="${100 - h}" x2="${x}" y2="${100 - l}" stroke="currentColor"/>
+          <rect x="${x - 5}" y="${top}" width="10" height="${body}" fill="${up ? 'currentColor' : 'none'}" fill-opacity="0.12" stroke="currentColor" stroke-width="1.15"/>`;
       })
       .join('')}
-    <text x="12" y="16">OHLC · 1u</text>
+    <text x="12" y="16">OHLC · 1.15</text>
   </svg>`;
   return el;
 }
@@ -803,13 +824,13 @@ function demoChartDonut(): HTMLElement {
     const large = p > 0.5 ? 1 : 0;
     const d = `M ${x0} ${y0} A 42 42 0 ${large} 1 ${x1} ${y1}`;
     a0 = a1;
-    return `<path d="${d}" fill="none" stroke="currentColor" stroke-width="10" stroke-opacity="${0.25 + i * 0.18}"/>`;
+    return `<path class="ml-donut" d="${d}" stroke="currentColor" stroke-opacity="${0.28 + i * 0.18}"/>`;
   });
   const el = document.createElement('div');
   el.className = 'ml-chart';
   el.innerHTML = `<svg class="ml-svg" viewBox="0 0 120 120" aria-label="Donut">
     ${arcs.join('')}
-    <text x="60" y="58" text-anchor="middle" fill="currentColor" fill-opacity="0.9" font-family="var(--ds-font-display)" font-size="18">100</text>
+    <text class="ml-readout" x="60" y="64" text-anchor="middle">100</text>
     <text x="60" y="74" text-anchor="middle">TOTAL</text>
   </svg>`;
   return el;
@@ -817,11 +838,11 @@ function demoChartDonut(): HTMLElement {
 
 function demoChartSpark(): HTMLElement {
   const values = [12, 18, 14, 22, 19, 28, 24, 31, 27, 36];
-  const d = seriesPath(values, 160, 40, 2);
+  const d = smoothPath(values, 160, 40, 4);
   const el = document.createElement('div');
   el.className = 'ml-metric';
   el.innerHTML = `<div class="ml-metric-value" style="font-size:1.6rem">+12.4%</div>
-    <svg width="160" height="40" viewBox="0 0 160 40" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>
+    <svg class="ml-svg" width="160" height="40" viewBox="0 0 160 40" aria-hidden="true"><path class="ml-primary" d="${d}" fill="none" stroke="currentColor"/></svg>
     <div class="ml-metric-label">Sparkline · 7d</div>`;
   return el;
 }
@@ -841,9 +862,9 @@ function demoChartScatter(): HTMLElement {
   ];
   const el = document.createElement('div');
   el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 200 100" aria-label="Scatter">
-    <line x1="12" y1="88" x2="188" y2="88" stroke="currentColor" stroke-opacity="0.2"/>
-    <line x1="12" y1="12" x2="12" y2="88" stroke="currentColor" stroke-opacity="0.2"/>
-    ${pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="currentColor"/>`).join('')}
+    <line class="ml-guide" x1="12" y1="88" x2="188" y2="88" stroke="currentColor" stroke-opacity="0.7"/>
+    <line class="ml-guide" x1="12" y1="12" x2="12" y2="88" stroke="currentColor" stroke-opacity="0.7"/>
+    ${pts.map(([x, y]) => `<circle class="ml-mark" cx="${x}" cy="${y}" r="2" fill="currentColor"/>`).join('')}
   </svg>`;
   return el.firstElementChild as HTMLElement;
 }
@@ -863,12 +884,12 @@ function demoChartRadar(): HTMLElement {
         `<polygon points="${Array.from({ length: n }, (_, i) => {
           const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
           return `${60 + Math.cos(a) * 42 * s},${60 + Math.sin(a) * 42 * s}`;
-        }).join(' ')}" fill="none" stroke="currentColor" stroke-opacity="0.15"/>`,
+        }).join(' ')}" class="ml-guide" fill="none" stroke="currentColor" stroke-opacity="0.55"/>`,
     )
     .join('');
   const el = document.createElement('div');
   el.innerHTML = `<svg class="ml-svg" viewBox="0 0 120 120" aria-label="Radar">${rings}
-    <polygon points="${poly}" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.2"/>
+    <polygon class="ml-primary" points="${poly}" fill="currentColor" fill-opacity="0.06" stroke="currentColor"/>
   </svg>`;
   return el.firstElementChild as HTMLElement;
 }
@@ -881,10 +902,10 @@ function demoChartHisto(): HTMLElement {
     ${bins
       .map((b, i) => {
         const h = (b / max) * 72;
-        return `<rect x="${16 + i * 22}" y="${88 - h}" width="18" height="${h}" fill="currentColor" fill-opacity="0.45"/>`;
+        return `<rect class="ml-grow" x="${18 + i * 22}" y="${88 - h}" width="12" height="${h}" fill="none" stroke="currentColor" stroke-width="1.15"/>`;
       })
       .join('')}
-    <line x1="12" y1="88" x2="208" y2="88" stroke="currentColor" stroke-opacity="0.2"/>
+    <line class="ml-guide" x1="12" y1="88" x2="208" y2="88" stroke="currentColor" stroke-opacity="0.7"/>
   </svg>`;
   return el.firstElementChild as HTMLElement;
 }
@@ -1147,9 +1168,9 @@ function plateArt(seed: number): string {
   const y2 = 50 + ((seed * 3) % 7) * 4;
   return `<svg class="ml-gallery-art" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <rect width="160" height="100" fill="var(--ds-surface-2)"/>
-    <path d="M0 ${y1} Q40 ${y2} 80 ${y1 + 10} T160 ${y2}" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="1"/>
-    <path d="M0 ${y2} Q50 ${y1} 100 ${y2 + 8} T160 ${y1}" fill="none" stroke="currentColor" stroke-opacity="0.55" stroke-width="1.2"/>
-    <circle cx="${40 + seed * 7}" cy="${30 + seed * 3}" r="3" fill="currentColor" fill-opacity="0.4"/>
+    <path d="M0 ${y1} Q40 ${y2} 80 ${y1 + 10} T160 ${y2}" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="0.7" vector-effect="non-scaling-stroke"/>
+    <path d="M0 ${y2} Q50 ${y1} 100 ${y2 + 8} T160 ${y1}" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="${40 + (seed % 8) * 12}" cy="${36 + (seed % 5) * 6}" r="1.6" fill="currentColor" fill-opacity="0.7"/>
   </svg>`;
 }
 

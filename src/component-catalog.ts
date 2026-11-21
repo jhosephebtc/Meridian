@@ -181,7 +181,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'source-table', name: 'Source Table', category: 'tables', blurb: 'Fontes Tier A/B/C com links.', demo: 'info-table', install: 'source-table', interactive: true },
 
   // Charts
-  { id: 'chart-line', name: 'Line Chart', category: 'charts', blurb: 'Série temporal em traço 1u + eixos.', demo: 'chart-line', install: 'chart-line', interactive: true },
+  { id: 'chart-line', name: 'Line Chart', category: 'charts', blurb: 'Série curva em traço 1.5, pontos 2 e guias 0.7.', demo: 'chart-line', install: 'chart-line', interactive: true },
   { id: 'chart-area', name: 'Area Chart', category: 'charts', blurb: 'Área preenchida sutil sob a linha.', demo: 'chart-area', install: 'chart-area', interactive: true },
   { id: 'chart-bar', name: 'Bar Chart', category: 'charts', blurb: 'Barras verticais plotter.', demo: 'chart-bar', install: 'chart-bar', interactive: true },
   { id: 'chart-hbar', name: 'Horizontal Bars', category: 'charts', blurb: 'Barras horizontais para ranking.', demo: 'chart-hbar', install: 'chart-hbar', interactive: true },
@@ -196,7 +196,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   // Instruments
   { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Barras plotter com roles de opacidade.', demo: 'svg-instrument', install: 'instrument', interactive: true },
   { id: 'image-inspector', name: 'Image Inspector', category: 'instruments', blurb: 'Crosshair, coords e zoom de moldura.', demo: 'image-inspector', install: 'image-inspector', interactive: true },
-  { id: 'compass', name: 'Compass', category: 'instruments', blurb: 'Rosa dos ventos em traço 1u.', demo: 'compass', install: 'compass', interactive: true },
+  { id: 'compass', name: 'Compass', category: 'instruments', blurb: 'Rosa com anel 1.15, guias 0.7 e agulha 1.5.', demo: 'compass', install: 'compass', interactive: true },
   { id: 'audio-meter', name: 'Audio Meter', category: 'instruments', blurb: 'VU em colunas SVG.', demo: 'audio-meter', install: 'audio-meter', interactive: true },
   { id: 'weather-instrument', name: 'Weather Instrument', category: 'instruments', blurb: 'AQI / temp em bússola editorial.', demo: 'compass', install: 'weather-instrument', interactive: true },
   { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial em linhas.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
