@@ -25,6 +25,7 @@
     "./components.css": "./src/components.css"
   },
   "devDependencies": {
+    "playwright": "^1.65.1",
     "typescript": "^5.8.2",
     "vite": "^6.2.2"
   },
