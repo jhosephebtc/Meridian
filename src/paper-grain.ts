@@ -444,9 +444,9 @@ export function setPaperGrainDouble(on: boolean): void {
 export function bootPaperGrainExtras(): void {
   setPaperGrainOpacity(getPaperGrainOpacity());
 
-  let dust = PAPER_SHADER.defaultDust;
-  let scratch = PAPER_SHADER.defaultScratch;
-  let double = PAPER_SHADER.defaultDouble;
+  let dust: boolean = PAPER_SHADER.defaultDust;
+  let scratch: boolean = PAPER_SHADER.defaultScratch;
+  let double: boolean = PAPER_SHADER.defaultDouble;
   try {
     const d = localStorage.getItem(PAPER_SHADER.dustStorageKey);
     if (d === 'on' || d === 'off') dust = d === 'on';
