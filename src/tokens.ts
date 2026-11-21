@@ -1,7 +1,7 @@
 /**
  * MERIDIAN DESIGN SYSTEM — tokens.ts (v1.4.0)
- * Ecossistema: Lunar + Earth AI + Gemini Studio
- * Linhagem: Anthropic Editorial + Deimos Archival + Emil Kowalski Design Engineering
+ * Ecossistema: Meridian
+ * Linhagem: Meridian Editorial + Meridian Arquival + Meridian Motion
  * Soft Chromatic · PaperGrain canvas · HalfTone fino · Scrollbar hairline · Burger→X
  * Compatibilidade: 100% TypeScript estrito · React Native / Expo (Reanimated 4) · Web · SVG 1:1
  */
@@ -13,8 +13,12 @@ export type SurfaceId =
   | 'terracotta'
   | 'obsidian'
   | 'blush'
+  | 'apricot'
   | 'butter'
+  | 'sage'
   | 'mist'
+  | 'sky'
+  | 'slate'
   | 'lilac';
 export type OperationalMode = 'invisible' | 'technical';
 export type SignalStyle = 'chromatic' | 'monochrome';
@@ -87,7 +91,7 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
   ivory: {
     id: 'ivory',
     label: 'Ivory Editorial',
-    lineage: 'Anthropic Research',
+    lineage: 'Meridian Editorial',
     recommendedFor: 'Padrão universal B2C, pesquisa, leitura calma e vitrines editoriais',
     scheme: 'light',
     bg: '#FAF9F5',
@@ -128,7 +132,7 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
   paper: {
     id: 'paper',
     label: 'Paper White',
-    lineage: 'Deimos White',
+    lineage: 'Paper Archive',
     recommendedFor: 'Dossiês auditáveis, Raio-X de Endereço, PDFs, relatórios B2B e documentação',
     scheme: 'light',
     bg: '#FFFFFF',
@@ -169,8 +173,8 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
   aqua: {
     id: 'aqua',
     label: 'Signature Aqua',
-    lineage: 'Deimos Blue',
-    recommendedFor: 'Earth AI, Clima, Qualidade do Ar, AgroCiclos, Logística e Cartografia',
+    lineage: 'Aqua Archive',
+    recommendedFor: 'Ambiente, Clima, Qualidade do Ar, AgroCiclos, Logística e Cartografia',
     scheme: 'light',
     bg: '#A4CED0',
     surface1: '#99C4C6',
@@ -210,7 +214,7 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
   terracotta: {
     id: 'terracotta',
     label: 'Warm Terracotta',
-    lineage: 'Deimos Orange',
+    lineage: 'Terracotta Archive',
     recommendedFor: 'Cultura Pop, Social/Voz, Jornal 3 Min, Solar 3D, Biografias & Histórias',
     scheme: 'light',
     bg: '#EDBB99',
@@ -251,7 +255,7 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
   obsidian: {
     id: 'obsidian',
     label: 'Obsidian Dark',
-    lineage: 'Anthropic Inverted + Deimos Dark',
+    lineage: 'Meridian Inverted + Obsidian Archive',
     recommendedFor: 'Terminal Gann-Jenkins, Efemérides, Gráficos SVG Noturnos e Pro Desk',
     scheme: 'dark',
     bg: '#0E0E0D',
@@ -452,6 +456,170 @@ export const SURFACES: Record<SurfaceId, SurfacePalette> = {
     paperOpacity: 0.9,
     contrastRatioFgOnBg: '9.7:1 (AAA)',
   },
+
+  apricot: {
+    id: 'apricot',
+    label: 'Soft Apricot',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, solar e capas quentes',
+    scheme: 'light',
+    bg: '#E8C8A8',
+    surface1: '#E0BFA0',
+    surface2: '#D2AF90',
+    surface3: '#C29F80',
+    highlight: '#F7EBDE',
+    fg: '#1A1612',
+    fgSecondary: '#2E2820',
+    fgMuted: '#5A4A3A',
+    fgSubtle: '#6E5C4A',
+    accent: '#1A1612',
+    accentHover: '#2E2820',
+    accentFg: '#E8C8A8',
+    invertedBg: '#1A1612',
+    invertedSurface: '#2A241C',
+    invertedFg: '#F7EBDE',
+    invertedMuted: '#C4A888',
+    invertedBorder: '#3E3630',
+    bgTintSubtle: 'rgba(26, 22, 18, 0.045)',
+    bgTintMuted: 'rgba(26, 22, 18, 0.085)',
+    bgTintActive: 'rgba(26, 22, 18, 0.12)',
+    rule: 'rgba(26, 22, 18, 0.10)',
+    ruleStrong: 'rgba(26, 22, 18, 0.16)',
+    border: 'rgba(26, 22, 18, 0.10)',
+    borderStrong: 'rgba(26, 22, 18, 0.18)',
+    spine1: '#EFDBC2',
+    spine2: '#D9B898',
+    spine3: '#C5A686',
+    signals: { support: '#14532D', caution: '#6B3409', refute: '#7F1D1D', info: '#1E3A6E' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.9,
+    contrastRatioFgOnBg: '10.0:1 (AAA)',
+  },
+
+  sage: {
+    id: 'sage',
+    label: 'Soft Sage',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, agro e leitura ambiental',
+    scheme: 'light',
+    bg: '#B8C5A8',
+    surface1: '#ACB99C',
+    surface2: '#9AAB8A',
+    surface3: '#889A78',
+    highlight: '#E6EDE0',
+    fg: '#141812',
+    fgSecondary: '#242E22',
+    fgMuted: '#3E4E38',
+    fgSubtle: '#506248',
+    accent: '#141812',
+    accentHover: '#242E22',
+    accentFg: '#B8C5A8',
+    invertedBg: '#141812',
+    invertedSurface: '#222A1E',
+    invertedFg: '#E6EDE0',
+    invertedMuted: '#9BB08A',
+    invertedBorder: '#343E30',
+    bgTintSubtle: 'rgba(20, 24, 18, 0.045)',
+    bgTintMuted: 'rgba(20, 24, 18, 0.085)',
+    bgTintActive: 'rgba(20, 24, 18, 0.12)',
+    rule: 'rgba(20, 24, 18, 0.10)',
+    ruleStrong: 'rgba(20, 24, 18, 0.16)',
+    border: 'rgba(20, 24, 18, 0.10)',
+    borderStrong: 'rgba(20, 24, 18, 0.18)',
+    spine1: '#C8D4BA',
+    spine2: '#A8B898',
+    spine3: '#94A686',
+    signals: { support: '#114B2F', caution: '#6E3E0B', refute: '#7F1D1D', info: '#16336B' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.9,
+    contrastRatioFgOnBg: '9.8:1 (AAA)',
+  },
+
+  sky: {
+    id: 'sky',
+    label: 'Soft Sky',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, clima e cartografia leve',
+    scheme: 'light',
+    bg: '#B0C8D6',
+    surface1: '#A4BCCA',
+    surface2: '#92AAB8',
+    surface3: '#8098A6',
+    highlight: '#E2EEF4',
+    fg: '#12161A',
+    fgSecondary: '#222A30',
+    fgMuted: '#3A4A54',
+    fgSubtle: '#4C5E68',
+    accent: '#12161A',
+    accentHover: '#222A30',
+    accentFg: '#B0C8D6',
+    invertedBg: '#12161A',
+    invertedSurface: '#1E262C',
+    invertedFg: '#E2EEF4',
+    invertedMuted: '#8CA8B8',
+    invertedBorder: '#323C44',
+    bgTintSubtle: 'rgba(18, 22, 26, 0.045)',
+    bgTintMuted: 'rgba(18, 22, 26, 0.085)',
+    bgTintActive: 'rgba(18, 22, 26, 0.12)',
+    rule: 'rgba(18, 22, 26, 0.10)',
+    ruleStrong: 'rgba(18, 22, 26, 0.16)',
+    border: 'rgba(18, 22, 26, 0.10)',
+    borderStrong: 'rgba(18, 22, 26, 0.18)',
+    spine1: '#C2D6E2',
+    spine2: '#A0B8C6',
+    spine3: '#8CA8B6',
+    signals: { support: '#114B2F', caution: '#6E3E0B', refute: '#7F1D1D', info: '#16336B' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.9,
+    contrastRatioFgOnBg: '9.9:1 (AAA)',
+  },
+
+  slate: {
+    id: 'slate',
+    label: 'Soft Slate',
+    lineage: 'Soft Chromatic',
+    recommendedFor: 'Espectro suave, finanças e dossiês B2B',
+    scheme: 'light',
+    bg: '#B5BFC9',
+    surface1: '#A9B3BD',
+    surface2: '#98A2AC',
+    surface3: '#86909A',
+    highlight: '#E6EBEF',
+    fg: '#141618',
+    fgSecondary: '#24282C',
+    fgMuted: '#3E464E',
+    fgSubtle: '#505860',
+    accent: '#141618',
+    accentHover: '#24282C',
+    accentFg: '#B5BFC9',
+    invertedBg: '#141618',
+    invertedSurface: '#22262A',
+    invertedFg: '#E6EBEF',
+    invertedMuted: '#94A0AA',
+    invertedBorder: '#343A40',
+    bgTintSubtle: 'rgba(20, 22, 24, 0.045)',
+    bgTintMuted: 'rgba(20, 22, 24, 0.085)',
+    bgTintActive: 'rgba(20, 22, 24, 0.12)',
+    rule: 'rgba(20, 22, 24, 0.10)',
+    ruleStrong: 'rgba(20, 22, 24, 0.16)',
+    border: 'rgba(20, 22, 24, 0.10)',
+    borderStrong: 'rgba(20, 22, 24, 0.18)',
+    spine1: '#C6CED6',
+    spine2: '#A8B2BC',
+    spine3: '#949EA8',
+    signals: { support: '#14532D', caution: '#6B3409', refute: '#7F1D1D', info: '#1E3A6E' },
+    organic: { olive: '#394A28', sky: '#244A5C', coral: '#7A2E1C', ochre: '#5E4115', slate: '#323A45' },
+    imageBlend: 'multiply',
+    paperBlend: 'multiply',
+    paperOpacity: 0.88,
+    contrastRatioFgOnBg: '9.7:1 (AAA)',
+  },
 } as const;
 
 export const TYPOGRAPHY = {
@@ -545,7 +713,7 @@ export const BREAKPOINTS = {
 } as const;
 
 /**
- * MOTION TOKENS — Emil Kowalski (`animate` + `animate-expo` + `apple-design`)
+ * MOTION TOKENS — Meridian Motion (`animate` + `animate-expo` + `motion-native`)
  * Regras absolutas:
  *  - Nunca usar `ease-in` em UI
  *  - Nunca começar entrada de `scale(0)` (mínimo `0.95`)
@@ -554,17 +722,17 @@ export const BREAKPOINTS = {
  */
 export const MOTION = {
   bezier: {
-    /** Emil Strong Ease-Out — entradas, dropdowns, tooltips, feedback */
+    /** Ease-Out forte — entradas, dropdowns, tooltips, feedback */
     easeOut: [0.23, 1, 0.32, 1] as const,
-    /** Emil Strong Ease-In-Out — movimento/morph em tela, clip-path tabs */
+    /** Ease-In-Out forte — movimento/morph em tela, clip-path tabs */
     easeInOut: [0.77, 0, 0.175, 1] as const,
-    /** Emil / Vaul iOS Sheet Curve — drawers & bottom sheets */
+    /** curva de sheet — drawers & bottom sheets */
     drawer: [0.32, 0.72, 0, 1] as const,
-    /** Anthropic Tab Indicator — deslizamento ágil de indicador */
+    /** Tab Indicator — deslizamento ágil de indicador */
     snappy: [0.85, 0, 0, 1] as const,
-    /** Deimos Editorial — placas de imagem & hover scale */
+    /** editorial Meridian — placas de imagem & hover scale */
     editorial: [0.22, 1, 0.36, 1] as const,
-    /** Deimos 3D Volume — estante de dossiês táteis */
+    /** volume 3D Volume — estante de dossiês táteis */
     volume: [0.22, 0.8, 0.25, 1] as const,
   },
   duration: {
@@ -573,12 +741,12 @@ export const MOTION = {
     tooltip: 140,      // Tooltips & micro-popovers — 125–200ms
     fast: 160,         // Hover / cor / rotação de ícone
     base: 220,         // Dropdowns, selects, segment controls — < 300ms
-    drawer: 380,       // Drawers / sheets (exceção Emil: 200–500ms)
-    toast: 400,        // Sonner Toast stack (exceção Emil)
+    drawer: 380,       // Drawers / sheets (exceção drawer: 200–500ms)
+    toast: 400,        // Toast stack (exceção drawer)
     reveal: 560,       // Revelação editorial de placa
     volume: 800,       // Abertura de volume 3D
   },
-  /** Presets de mola para Reanimated 4 / Motion (parâmetros de designer Apple) */
+  /** Presets de mola para Reanimated 4 / Motion (parâmetros de mola) */
   springs: {
     /** Settle padrão sem overshoot (UI de alta precisão) */
     settle: { duration: 400, dampingRatio: 1.0, overshootClamping: true },
@@ -591,11 +759,11 @@ export const MOTION = {
     pressScale: 0.97,
     enterScale: 0.96,
     minHitTarget: 44,          // 44×44pt iOS / 48dp Android
-    flickVelocityPxPerMs: 0.11, // Emil / Sonner velocity dismiss threshold
-    decelerationRate: 0.998,    // Apple momentum projection constant
-    rubberbandConstant: 0.55,   // Apple edge resistance constant
+    flickVelocityPxPerMs: 0.11, // Toast velocity dismiss threshold
+    decelerationRate: 0.998,    // momentum projection constant
+    rubberbandConstant: 0.55,   // edge resistance constant
   },
-  /** Frequency Gate de Emil Kowalski: decide se algo deve animar */
+  /** Frequency Gate de Meridian Motion: decide se algo deve animar */
   frequencyGate: {
     highFrequency100PerDay: 'none' as const,      // ⌘K, atalhos, troca de abas raiz
     mediumFrequency10PerDay: 'minimal' as const,  // Press scale, hover sutil < 160ms
@@ -661,7 +829,7 @@ export interface SvgChartPalette {
   };
 }
 
-/** Projeção exponencial de momentum (Apple Designing Fluid Interfaces / Emil) */
+/** Projeção exponencial de momentum (interfaces fluidas) */
 export function projectMomentum(initialVelocityPxPerSec: number, decelerationRate = MOTION.gesture.decelerationRate): number {
   return (initialVelocityPxPerSec / 1000) * (decelerationRate / (1 - decelerationRate));
 }
@@ -702,24 +870,30 @@ export function getSvgChartPalette(
 }
 
 export function rnElevation(level: 'flat' | 'raised' | 'modal', scheme: 'light' | 'dark' = 'light') {
-  if (level === 'flat') return { elevation: 0, shadowOpacity: 0 } as const;
-  const opacity = scheme === 'dark' ? (level === 'modal' ? 0.55 : 0.38) : level === 'modal' ? 0.18 : 0.11;
+  // Elevação Meridian: sem sombra de drop — só modal mantém sombra estrutural
+  if (level === 'flat' || level === 'raised') return { elevation: 0, shadowOpacity: 0 } as const;
+  const opacity = scheme === 'dark' ? 0.55 : 0.18;
   return {
     shadowColor: '#111216',
-    shadowOffset: { width: 0, height: level === 'modal' ? 12 : 4 },
+    shadowOffset: { width: 0, height: 12 },
     shadowOpacity: opacity,
-    shadowRadius: level === 'modal' ? 24 : 10,
-    elevation: level === 'modal' ? 10 : 4,
+    shadowRadius: 24,
+    elevation: 10,
   } as const;
 }
 
 /** Ordem do espectro cromático suave (swatches / Gann / preview) */
 export const SURFACE_SPECTRUM: readonly SurfaceId[] = [
   'ivory',
+  'paper',
   'blush',
+  'apricot',
   'butter',
+  'sage',
   'mist',
   'aqua',
+  'sky',
+  'slate',
   'lilac',
   'terracotta',
   'obsidian',

@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="theme-color" content="#FAF9F5" id="meta-theme-color" />
-  <title>MERIDIAN — Design System · Lunar + Earth AI + Gemini Studio</title>
+  <title>MERIDIAN — Design System</title>
   <style>
     /* ========================================================================
        MERIDIAN DESIGN SYSTEM — v1.4.1 (Self-Contained Pure CSS Showcase)
-       Linhagem: Anthropic Editorial · Deimos Archival · Emil Kowalski Skills
+       Linhagem: Meridian Editorial · Meridian Arquival · Meridian Motion Skills
        Tipografia: família Geist (Sans · Serif · Mono)
        ======================================================================== */
     @font-face {
@@ -90,7 +90,7 @@
       --ds-radius-card: 12px;
       --ds-radius-pill: 9999px;
 
-      /* Emil Kowalski + Anthropic + Deimos Curves (Zero ease-in em UI!) */
+      /* Meridian Motion + Meridian Curves (Zero ease-in em UI!) */
       --ds-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
       --ds-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
       --ds-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -111,7 +111,7 @@
       --ds-enter-scale: 0.96;
       --ds-blur-bridge: 2px;
 
-      /* Paleta Orgânica Contida (Anthropic) */
+      /* Paleta Orgânica Contida (Meridian) */
       --ds-organic-olive: #5E6E47;
       --ds-organic-sky: #477085;
       --ds-organic-coral: #B55A42;
@@ -129,13 +129,9 @@
       --ds-shadow-plate-inset: 0 0 0 1px color-mix(in srgb, var(--ds-fg) 6%, transparent) inset;
       --ds-shadow-focus: 0 0 0 2px var(--ds-bg), 0 0 0 4px var(--ds-fg);
       --ds-shadow-popover:
-        0 0 0 1px var(--ds-border-strong),
-        0 10px 28px -6px rgba(17, 18, 22, 0.16),
-        0 2px 6px -1px rgba(17, 18, 22, 0.08);
-      --ds-shadow-raised:
-        -1px 0 0 0 rgba(17, 18, 22, 0.12) inset,
-        4px 3px 8px 0 rgba(17, 18, 22, 0.11),
-        10px 8px 18px 0 rgba(17, 18, 22, 0.06);
+        0 8px 24px -6px rgba(17, 18, 22, 0.12),
+        0 2px 6px -1px rgba(17, 18, 22, 0.06);
+      --ds-shadow-raised: none;
       --ds-shadow-spine-inset:
         1px 0 0 0 rgba(255, 255, 255, 0.08) inset,
         -3px 0 5px 0 rgba(0, 0, 0, 0.22) inset;
@@ -318,8 +314,8 @@
       --ds-paper-blend: screen;
       --ds-paper-filter: invert(1);
       --ds-paper-opacity: calc(0.62 * var(--ds-grain-multiplier));
-      --ds-shadow-popover: 0 0 0 1px var(--ds-border-strong), 0 16px 36px -8px rgba(0, 0, 0, 0.65);
-      --ds-shadow-raised: -1px 0 0 0 rgba(255,255,255,0.08) inset, 4px 3px 12px rgba(0,0,0,0.45), 10px 10px 24px rgba(0,0,0,0.35);
+      --ds-shadow-popover: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
+      --ds-shadow-raised: none;
     }
 
     [data-surface="blush"] {
@@ -361,6 +357,46 @@
       --ds-spine-1: #D6CEE2; --ds-spine-2: #BBB0CC; --ds-spine-3: #A89CB8;
       --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
       --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+    }
+    [data-surface="apricot"] {
+      color-scheme: light;
+      --ds-bg: #E8C8A8; --ds-surface-1: #E0BFA0; --ds-surface-2: #D2AF90; --ds-surface-3: #C29F80;
+      --ds-highlight: #F7EBDE; --ds-fg: #1A1612; --ds-fg-secondary: #2E2820; --ds-fg-muted: #5A4A3A; --ds-fg-subtle: #6E5C4A;
+      --ds-accent: #1A1612; --ds-accent-hover: #2E2820; --ds-accent-fg: #E8C8A8;
+      --ds-inverted-bg: #1A1612; --ds-inverted-surface: #2A241C; --ds-inverted-fg: #F7EBDE; --ds-inverted-muted: #C4A888; --ds-inverted-border: #3E3630;
+      --ds-spine-1: #EFDBC2; --ds-spine-2: #D9B898; --ds-spine-3: #C5A686;
+      --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+      --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+    }
+    [data-surface="sage"] {
+      color-scheme: light;
+      --ds-bg: #B8C5A8; --ds-surface-1: #ACB99C; --ds-surface-2: #9AAB8A; --ds-surface-3: #889A78;
+      --ds-highlight: #E6EDE0; --ds-fg: #141812; --ds-fg-secondary: #242E22; --ds-fg-muted: #3E4E38; --ds-fg-subtle: #506248;
+      --ds-accent: #141812; --ds-accent-hover: #242E22; --ds-accent-fg: #B8C5A8;
+      --ds-inverted-bg: #141812; --ds-inverted-surface: #222A1E; --ds-inverted-fg: #E6EDE0; --ds-inverted-muted: #9BB08A; --ds-inverted-border: #343E30;
+      --ds-spine-1: #C8D4BA; --ds-spine-2: #A8B898; --ds-spine-3: #94A686;
+      --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+      --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+    }
+    [data-surface="sky"] {
+      color-scheme: light;
+      --ds-bg: #B0C8D6; --ds-surface-1: #A4BCCA; --ds-surface-2: #92AAB8; --ds-surface-3: #8098A6;
+      --ds-highlight: #E2EEF4; --ds-fg: #12161A; --ds-fg-secondary: #222A30; --ds-fg-muted: #3A4A54; --ds-fg-subtle: #4C5E68;
+      --ds-accent: #12161A; --ds-accent-hover: #222A30; --ds-accent-fg: #B0C8D6;
+      --ds-inverted-bg: #12161A; --ds-inverted-surface: #1E262C; --ds-inverted-fg: #E2EEF4; --ds-inverted-muted: #8CA8B8; --ds-inverted-border: #323C44;
+      --ds-spine-1: #C2D6E2; --ds-spine-2: #A0B8C6; --ds-spine-3: #8CA8B6;
+      --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+      --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+    }
+    [data-surface="slate"] {
+      color-scheme: light;
+      --ds-bg: #B5BFC9; --ds-surface-1: #A9B3BD; --ds-surface-2: #98A2AC; --ds-surface-3: #86909A;
+      --ds-highlight: #E6EBEF; --ds-fg: #141618; --ds-fg-secondary: #24282C; --ds-fg-muted: #3E464E; --ds-fg-subtle: #505860;
+      --ds-accent: #141618; --ds-accent-hover: #24282C; --ds-accent-fg: #B5BFC9;
+      --ds-inverted-bg: #141618; --ds-inverted-surface: #22262A; --ds-inverted-fg: #E6EBEF; --ds-inverted-muted: #94A0AA; --ds-inverted-border: #343A40;
+      --ds-spine-1: #C6CED6; --ds-spine-2: #A8B2BC; --ds-spine-3: #949EA8;
+      --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+      --ds-paper-opacity: calc(0.88 * var(--ds-grain-multiplier));
     }
 
     /* Page enter / loading veil */
@@ -608,7 +644,7 @@
       width: 100%;
       max-width: 1320px;
       margin: 0 auto;
-      padding: 0 clamp(16px, 3.2vw, 48px);
+      padding: 0 clamp(24px, 4.8vw, 72px);
     }
 
     .container-editorial {
@@ -621,7 +657,7 @@
     .section-block {
       padding: var(--ds-section-pad) 0;
       border-top: 1px solid var(--ds-rule);
-      scroll-margin-top: 72px;
+      scroll-margin-top: 118px;
     }
 
     .section-header {
@@ -652,24 +688,110 @@
       letter-spacing: var(--ds-tracking-body);
     }
 
-    /* ---------------- STICKY TRANSLUCENT TOPBAR (Apple + Deimos + Emil) ---------------- */
+    /* ---------------- STICKY TRANSLUCENT TOPBAR ---------------- */
+    :root {
+      /* Abaixo disso: hambúrguer. Acima: cliptabs inline no header. */
+      --ds-bp-topbar-nav: 1024px;
+    }
+
     .topbar {
       position: sticky;
       top: 0;
       z-index: 60;
-      min-height: 58px;
-      padding: env(safe-area-inset-top, 0px) clamp(14px, 2.8vw, 36px) 0;
+      padding: env(safe-area-inset-top, 0px) 0 0;
       background-color: var(--ds-chrome-bg);
       backdrop-filter: blur(18px) saturate(135%);
       -webkit-backdrop-filter: blur(18px) saturate(135%);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
       border-bottom: 1px solid transparent;
       transition:
         background-color var(--ds-duration-base) var(--ds-ease-out),
         border-color var(--ds-duration-fast) ease;
+    }
+    /* Conteúdo alinhado ao container — duas faixas (atalhos + nav) */
+    .topbar-inner {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 6px clamp(24px, 4.8vw, 72px) 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: clamp(10px, 1.4vw, 18px);
+    }
+
+    .topbar-row-main {
+      min-height: 48px;
+      justify-content: space-between;
+    }
+
+    .topbar-row-tools {
+      min-height: 44px;
+      justify-content: space-between;
+      gap: 10px 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Links de texto no header — sem chips contornados */
+    .topbar-link {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 0;
+      background: transparent;
+      padding: 4px 2px;
+      margin: 0;
+      font-family: var(--ds-font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--ds-fg-muted);
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: 2px;
+      transition: color var(--ds-duration-fast) ease;
+    }
+    .topbar-link:focus-visible {
+      outline: none;
+      box-shadow: var(--ds-shadow-focus);
+    }
+    .topbar-link[data-active="true"],
+    .topbar-link[aria-current="page"] {
+      color: var(--ds-fg);
+    }
+    .topbar-link-strong {
+      color: var(--ds-fg);
+      font-weight: 600;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .topbar-link:hover { color: var(--ds-fg); }
+    }
+
+    .topbar-row-nav {
+      min-height: 40px;
+      padding: 4px 0 10px;
+      border-top: 1px solid var(--ds-rule);
+      justify-content: flex-start;
+      gap: 4px 18px;
+      flex-wrap: wrap;
+    }
+    .topbar-nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px 18px;
+      width: 100%;
+    }
+    .topbar-nav-links .topbar-link[data-active="true"] {
+      color: var(--ds-fg);
+      box-shadow: inset 0 -1.5px 0 0 var(--ds-fg);
     }
 
     .topbar[data-scrolled="true"] {
@@ -714,7 +836,7 @@
       border-radius: var(--ds-radius-pill);
     }
 
-    /* Clip-Path Seamless Nav Tabs (Emil Kowalski signature) */
+    /* Clip-Path Seamless Nav Tabs (Meridian Motion signature) */
     .cliptabs {
       position: relative;
       display: inline-flex;
@@ -724,6 +846,8 @@
       border: 1px solid var(--ds-border);
       background-color: var(--ds-bg-tint-subtle);
       max-width: 100%;
+      overflow: hidden;
+      isolation: isolate;
     }
 
     .cliptabs-track {
@@ -731,6 +855,7 @@
       display: inline-flex;
       align-items: center;
       gap: 1px;
+      max-width: 100%;
     }
 
     .cliptabs-btn {
@@ -781,17 +906,21 @@
     }
 
     .topbar-nav-wrap {
-      display: flex;
+      display: none;
       align-items: center;
+      justify-content: flex-start;
+      flex: 0 0 auto;
+      width: 100%;
+      min-width: 0;
     }
 
     /* Hamburger → X: 3 linhas da mesma espessura */
     .ds-burger {
       appearance: none;
-      border: 1px solid var(--ds-border);
+      border: 0;
       background: transparent;
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: var(--ds-radius-squircle);
       display: grid;
       place-items: center;
@@ -799,9 +928,11 @@
       color: var(--ds-fg);
       flex-shrink: 0;
       padding: 0;
-      transition: transform var(--ds-duration-press) var(--ds-ease-out), border-color 140ms var(--ds-ease-out);
+      margin-left: 0;
+      transition: transform var(--ds-duration-press) var(--ds-ease-out), opacity 140ms var(--ds-ease-out);
     }
-    .ds-burger:hover { border-color: var(--ds-fg); }
+    .topbar-row-main .ds-burger { margin-left: 4px; }
+    .ds-burger:hover { opacity: 0.72; }
     .ds-burger:active { transform: scale(var(--ds-press-scale)); }
     .ds-burger:focus-visible { outline: none; box-shadow: var(--ds-shadow-focus); }
     .ds-burger-lines {
@@ -857,14 +988,16 @@
     .nav-rail {
       position: fixed;
       top: 0;
-      left: 0;
+      right: 0;
+      left: auto;
       bottom: 0;
       z-index: 141;
       width: min(320px, 88vw);
       background-color: var(--ds-bg);
-      border-radius: 0 16px 16px 0;
-      border-right: var(--ds-hairline) solid var(--ds-border-strong);
-      transform: translateX(-105%);
+      border-radius: 16px 0 0 16px;
+      border-left: var(--ds-hairline) solid var(--ds-border-strong);
+      border-right: 0;
+      transform: translateX(105%);
       transition: transform var(--ds-duration-drawer) var(--ds-ease-drawer);
       display: flex;
       flex-direction: column;
@@ -944,30 +1077,129 @@
       line-height: 1.5;
     }
 
-    @media (max-width: 1040px) {
-      .topbar-nav-wrap { display: none; }
-    }
-
     .topbar-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 4px 14px;
+      flex: 1 1 auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .topbar-ctrl-wide,
+    .topbar-ctrl-mid {
+      display: none;
+    }
+    .topbar-ctrl-mid { display: inline-flex; align-items: center; }
+    @media (min-width: 720px) {
+      .topbar-ctrl-wide { display: inline-flex; align-items: center; }
+    }
+
+    /* Desktop: nav inferior inline · hambúrguer some */
+    @media (min-width: 1024px) {
+      .topbar-nav-wrap { display: flex; }
+      .ds-burger { display: none !important; }
+    }
+
+    /* < 1024: hambúrguer para navegação de seções */
+    @media (max-width: 1023px) {
+      .topbar-nav-wrap { display: none !important; }
+      .ds-burger { display: grid; }
+      .topbar-row-nav { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .brand-ver { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .topbar-ctrl-mid:not(.topbar-keep-mobile) { display: none !important; }
+    }
+
+    .topbar-cta-short { display: none; }
+    @media (max-width: 480px) {
+      .brand-wordmark { font-size: 18px; }
+      .topbar-cta-full { display: none; }
+      .topbar-cta-short { display: inline; }
+    }
+
+    /* Surface atmosphere — trigger como link de texto */
+    .surface-menu-trigger.topbar-link {
+      gap: 7px;
+    }
+    .surface-menu-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      border: 1px solid color-mix(in srgb, var(--ds-fg) 28%, transparent);
       flex-shrink: 0;
     }
-
-    .topbar-components-cta {
+    .surface-menu-label {
+      max-width: 10ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .surface-menu-chevron {
+      width: 9px;
+      height: 9px;
+      opacity: 0.5;
       flex-shrink: 0;
+      transition: transform 160ms var(--ds-ease-out);
+    }
+    .surface-menu-trigger[aria-expanded="true"] .surface-menu-chevron {
+      transform: rotate(180deg);
+    }
+    .popover.surface-menu {
+      width: min(268px, 78vw);
+      max-height: min(70vh, 420px);
+      overflow: hidden;
+      /* padding assimétrico: scrollbar afastada da borda/cantos direitos */
+      padding: 8px 14px 8px 6px;
+      box-shadow: none;
+      filter: none;
+      border: 1px solid var(--ds-border);
+    }
+    .surface-menu-scroll {
+      max-height: calc(min(70vh, 420px) - 16px);
+      overflow-y: auto;
+      padding: 2px 4px 2px 2px;
+      overscroll-behavior: contain;
+    }
+    .surface-menu-item {
+      appearance: none;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 0;
+      background: transparent;
+      color: var(--ds-fg-secondary);
+      font-family: var(--ds-font-sans);
+      font-size: 13px;
+      text-align: left;
+      padding: 9px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .surface-menu-item:hover,
+    .surface-menu-item[aria-pressed="true"] {
+      background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+      color: var(--ds-fg);
+    }
+    .surface-menu-item .surface-menu-swatch {
+      width: 16px;
+      height: 16px;
+    }
+    .surface-menu-item-meta {
+      margin-left: auto;
+      font-family: var(--ds-font-mono);
+      font-size: 10px;
+      color: var(--ds-fg-muted);
     }
 
-    @media (max-width: 720px) {
-      .topbar-controls .btn-pill:not(.topbar-components-cta),
-      .topbar-controls #btn-mode-toggle,
-      .topbar-controls #btn-open-drawer {
-        display: none;
-      }
-    }
-
-    /* Surface swatch pill switcher */
+    /* Swatches legados (edition plates / demos) */
     .swatch-bar {
       display: inline-flex;
       align-items: center;
@@ -977,7 +1209,6 @@
       border: 1px solid var(--ds-border);
       background-color: var(--ds-bg-tint-subtle);
     }
-
     .swatch-dot {
       position: relative;
       width: 20px;
@@ -988,16 +1219,13 @@
       padding: 0;
       transition: transform var(--ds-duration-press) var(--ds-ease-out), box-shadow var(--ds-duration-fast) ease;
     }
-
     .swatch-dot:active { transform: scale(0.9); }
-
     .swatch-dot[aria-pressed="true"] {
       box-shadow: 0 0 0 2px var(--ds-bg), 0 0 0 3.5px var(--ds-fg);
     }
-
     .swatch-dot:focus-visible { outline: none; box-shadow: var(--ds-shadow-focus); }
 
-    /* ---------------- BUTTONS (Dual-Radius + Emil Press) ---------------- */
+    /* ---------------- BUTTONS (Dual-Radius + press tátil) ---------------- */
     .btn {
       position: relative;
       display: inline-flex;
@@ -1030,8 +1258,8 @@
     .btn:disabled { opacity: 0.42; cursor: not-allowed; }
 
     .btn-pill { border-radius: var(--ds-radius-pill); padding: 8px 15px; }
-    .btn-sm { font-size: 12px; padding: 7px 11px; min-height: 30px; }
-    .btn-icon { width: 34px; height: 34px; padding: 0; }
+    .btn-sm { font-size: 12px; padding: 7px 12px; min-height: 32px; }
+    .btn-icon { width: 32px; height: 32px; padding: 0; border-radius: var(--ds-radius-pill); }
     .btn-circle {
       width: 36px; height: 36px; padding: 0;
       border-radius: var(--ds-radius-pill);
@@ -1072,7 +1300,7 @@
       .btn-circle:hover:not(:disabled) { background-color: var(--ds-accent); border-color: var(--ds-accent); color: var(--ds-accent-fg); }
     }
 
-    /* Hold-to-Confirm Assimétrico (Emil: linear ao segurar, ease-out ao soltar) */
+    /* Hold-to-Confirm Assimétrico  */
     .btn-hold {
       overflow: hidden;
       background-color: var(--ds-surface-1);
@@ -1099,7 +1327,7 @@
       transition: clip-path 1.4s linear;
     }
 
-    /* Blur Crossfade Bridge (Emil < 20px) */
+    /* Blur Crossfade Bridge  */
     .blur-morph {
       display: inline-block;
       transition:
@@ -1137,7 +1365,7 @@
       padding: 16px;
       border-radius: var(--ds-radius-card);
       background-color: var(--ds-bg);
-      border: 1px solid var(--ds-border-strong);
+      border: 0;
       box-shadow: var(--ds-shadow-popover);
       transform-origin: top right;
       opacity: 0;
@@ -1161,7 +1389,7 @@
         visibility 0s linear 0s;
     }
 
-    /* Skip-Delay Floating Tooltip */
+    /* Skip-Delay Floating Tooltip — acima ou abaixo (header usa below) */
     .floating-tooltip {
       position: fixed;
       z-index: 250;
@@ -1182,6 +1410,10 @@
         transform var(--ds-duration-tooltip) var(--ds-ease-out),
         visibility 0s linear var(--ds-duration-tooltip);
     }
+    .floating-tooltip[data-place="below"] {
+      transform-origin: top center;
+      transform: translate(-50%, 6px) scale(0.96);
+    }
     .floating-tooltip[data-visible="true"] {
       opacity: 1;
       visibility: visible;
@@ -1191,6 +1423,9 @@
         opacity var(--ds-duration-tooltip) var(--ds-ease-out),
         transform var(--ds-duration-tooltip) var(--ds-ease-out),
         visibility 0s linear 0s;
+    }
+    .floating-tooltip[data-place="below"][data-visible="true"] {
+      transform: translate(-50%, 10px) scale(1);
     }
     .floating-tooltip[data-instant="true"] {
       transition-duration: 0ms;
@@ -1448,7 +1683,7 @@
       margin-top: 14px;
     }
 
-    /* Inverted Contrast Strip (Anthropic) */
+    /* Inverted Contrast Strip (Meridian) */
     .inverted-strip {
       margin-top: 24px;
       padding: 24px clamp(18px, 3vw, 32px);
@@ -1497,7 +1732,7 @@
       font-weight: 500;
     }
 
-    /* ---------------- EDITORIAL DUAL ARCHITECTURE (Anthropic + Deimos) ---------------- */
+    /* ---------------- EDITORIAL DUAL ARCHITECTURE (Meridian) ---------------- */
     .view-panel {
       transition:
         opacity var(--ds-duration-base) var(--ds-ease-out),
@@ -1506,7 +1741,7 @@
 
     .view-panel[hidden] { display: none; }
 
-    /* Asymmetric Masonry (Anthropic) */
+    /* Asymmetric Masonry (Meridian) */
     .masonry-stack {
       display: flex;
       flex-direction: column;
@@ -1525,31 +1760,211 @@
     .col-7 { grid-column: span 7; }
     .col-8 { grid-column: span 8; }
 
-    /* História: empilhar prosa + pilares (sem coluna lateral comprimindo) */
-    .historia-stack {
+    /* História — tipografia e leitor alinhados ao dossiê Gann */
+    #historia.section-block {
+      padding-top: clamp(48px, 7vw, 88px);
+      padding-bottom: clamp(56px, 8vw, 104px);
+    }
+    .historia-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    @media (min-width: 1100px) {
+      .historia-layout {
+        grid-template-columns: minmax(0, 1fr) var(--ds-aside-width);
+        gap: var(--ds-reader-gap, 32px);
+      }
+    }
+    .historia-essay {
+      max-width: 62ch;
       display: flex;
       flex-direction: column;
-      gap: clamp(20px, 3vw, 28px);
-      max-width: 48rem;
+      gap: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      letter-spacing: var(--ds-tracking-body);
     }
-    .historia-dual {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .historia-essay-kicker {
+      margin: 0 0 12px;
+      font-family: var(--ds-font-mono);
+      font-size: 10.5px;
+      letter-spacing: var(--ds-tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--ds-fg-muted);
     }
-    .historia-pillars {
+    .historia-essay-title {
+      font-family: var(--ds-font-display);
+      font-size: clamp(2.25rem, 5.5vw, 4rem);
+      font-weight: 400;
+      font-synthesis-weight: none;
+      line-height: 1.08;
+      letter-spacing: var(--ds-tracking-mega);
+      margin: 0 0 16px;
+      max-width: 18ch;
+      text-wrap: balance;
+      color: var(--ds-fg);
+    }
+    .historia-essay p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      letter-spacing: var(--ds-tracking-body);
+      color: var(--ds-fg-muted);
+      max-width: 62ch;
+      text-wrap: pretty;
+    }
+    .historia-essay p + p {
+      margin-top: var(--ds-block-gap);
+    }
+    .historia-essay p.historia-lead {
+      font-family: var(--ds-font-display);
+      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+      line-height: 1.45;
+      letter-spacing: var(--ds-tracking-heading);
+      color: var(--ds-fg-secondary);
+      max-width: 46ch;
+      margin: 0 0 1.25em;
+    }
+    .historia-essay p.historia-beat {
+      color: var(--ds-fg);
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0;
+      max-width: 42ch;
+    }
+    .historia-essay p.historia-beat + p.historia-beat {
+      margin-top: 0.35em;
+    }
+    .historia-essay .historia-spacer {
+      height: calc(var(--ds-block-gap) * 1.6);
+    }
+    .historia-pull {
+      margin: 1.25em 0;
+      padding: 12px 0 0;
+      border: 0;
+      border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+    }
+    .historia-pull p {
+      margin: 0;
+      font-family: var(--ds-font-display);
+      font-size: 1.05rem;
+      line-height: 1.4;
+      letter-spacing: var(--ds-tracking-lead);
+      color: var(--ds-fg);
+      max-width: 36ch;
+    }
+    .historia-plaque {
+      margin: 1.4em 0;
+      padding: 12px 0 0;
+      border: 0;
+      border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+      background: transparent;
+      text-align: left;
+    }
+    .historia-plaque .eyebrow {
+      margin-bottom: 8px;
+      justify-content: flex-start;
+      font-family: var(--ds-font-mono);
+      font-size: 10.5px;
+      letter-spacing: var(--ds-tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--ds-fg-muted);
+    }
+    .historia-plaque blockquote {
+      margin: 0;
+      font-family: var(--ds-font-display);
+      font-size: 1.05rem;
+      line-height: 1.4;
+      letter-spacing: var(--ds-tracking-lead);
+      color: var(--ds-fg);
+      text-wrap: balance;
+    }
+    .historia-coda {
+      margin-top: 1.75em;
+      padding-top: 14px;
+      border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 8px;
-      padding-top: 20px;
-      border-top: 1px solid var(--ds-rule);
+    }
+    .historia-coda h3 {
+      font-family: var(--ds-font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1.35;
+      margin: 0;
+      color: var(--ds-fg);
+    }
+    .historia-coda p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ds-fg-muted);
+      max-width: 52ch;
+    }
+    .historia-coda-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .historia-halftone-panel {
+      position: sticky;
+      top: calc(var(--ds-topbar-height, 72px) + 16px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+      padding-top: 0;
+      align-self: start;
+    }
+    .historia-halftone {
+      position: relative;
+      width: 100%;
+      max-width: none;
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+      border: 0;
+      background-color: var(--ds-surface-2);
+      overflow: hidden;
+      box-shadow: none;
+    }
+    .historia-halftone > canvas,
+    .historia-halftone > div {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+    .historia-halftone canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .historia-halftone-cap {
+      margin: 0;
+      font-family: var(--ds-font-mono);
+      font-size: 10px;
+      line-height: 1.4;
+      color: var(--ds-fg-muted);
+      letter-spacing: 0.04em;
     }
 
+    @media (max-width: 1099px) {
+      .historia-halftone-panel {
+        position: static;
+        max-width: 280px;
+        margin: 0 0 22px;
+        order: -1;
+      }
+      .historia-layout { display: flex; flex-direction: column; }
+      .historia-halftone { aspect-ratio: 1 / 1; }
+      .historia-essay-title { max-width: 18ch; }
+    }
     @media (max-width: 860px) {
       .masonry-row { grid-template-columns: 1fr; }
       .col-4, .col-5, .col-7, .col-8 { grid-column: span 1; }
-      .historia-dual { grid-template-columns: 1fr !important; }
     }
 
     .editorial-card {
@@ -1568,9 +1983,9 @@
     .plate-box {
       position: relative;
       border-radius: var(--ds-radius-plate);
-      border: 1px solid var(--ds-border);
-      background-color: var(--ds-surface-1);
-      box-shadow: var(--ds-shadow-plate-inset);
+      border: 0;
+      background-color: transparent;
+      box-shadow: none;
       overflow: hidden;
     }
 
@@ -1643,7 +2058,7 @@
       border: 1px solid var(--ds-rule);
     }
 
-    /* Leitor Deimos: TOC | prosa | aside (placa menor) */
+    /* Leitor Arquival: TOC | prosa | aside (placa menor) */
     .reader-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -1765,8 +2180,7 @@
     .section-desc,
     .reader-article,
     .reader-article p,
-    .historia-stack p {
-      text-wrap: pretty;
+    .historia-essay p {
       hyphens: manual;
       word-break: normal;
       overflow-wrap: break-word;
@@ -1775,7 +2189,7 @@
       white-space: nowrap;
     }
 
-    /* Deimos claim: dotted underline + tint no hover (sem blur) */
+    /* Arquival claim: dotted underline + tint no hover (sem blur) */
     .claim {
       border-radius: 0;
       padding: 0.1em 0.12em;
@@ -1966,7 +2380,7 @@
       font-weight: 600;
     }
 
-    /* 3D Tactile Dossier Shelf (Deimos) */
+    /* 3D Tactile Dossier Shelf (Arquival) */
     .shelf-viewport {
       display: flex;
       align-items: flex-end;
@@ -2036,7 +2450,7 @@
       border: 1px solid var(--ds-border-strong);
       border-left: 0;
       border-radius: 0 4px 4px 0;
-      box-shadow: var(--ds-shadow-raised);
+      box-shadow: none;
       padding: 14px 14px 12px;
       display: flex;
       flex-direction: column;
@@ -2197,7 +2611,7 @@
       background-color: var(--ds-bg-tint-muted);
     }
 
-    /* ---------------- VAUL-CURVE SIDE DRAWER (estilo Deimos archival) ---------------- */
+    /* ---------------- DRAWER SIDE DRAWER (estilo arquival Meridian) ---------------- */
     .drawer-backdrop {
       position: fixed;
       inset: 0;
@@ -2446,7 +2860,7 @@
     .toast-item[data-state="open"] { opacity: 1; transform: translateY(0) scale(1); }
     .toast-item[data-state="closing"] { opacity: 0; transform: translateY(100%) scale(0.96); transition-duration: 220ms; }
 
-    /* ---------------- FOOTER EDITORIAL (Anthropic: marca | acordeões | missão) ---------------- */
+    /* ---------------- FOOTER EDITORIAL (Meridian: marca | acordeões | missão) ---------------- */
     .site-footer {
       background-color: var(--ds-inverted-bg);
       color: var(--ds-inverted-fg);
@@ -2633,6 +3047,8 @@
     }
 
     .atelier-stage canvas {
+      position: relative;
+      z-index: 1;
       display: block;
       width: 100%;
       height: 100%;
@@ -2640,6 +3056,7 @@
 
     .atelier-badge-overlay {
       position: absolute;
+      z-index: 2;
       left: 12px;
       top: 12px;
       pointer-events: none;
@@ -2678,7 +3095,7 @@
       box-shadow: 0 0 0 2px var(--ds-bg), 0 0 0 3.5px var(--ds-fg);
     }
 
-    /* ---------------- PLOTTER BLUEPRINT SVG GRAMMAR (pasqualevitiello/plotter) ---------------- */
+    /* ---------------- PLOTTER BLUEPRINT SVG GRAMMAR (gramática plotter) ---------------- */
     [data-plotter] {
       --plotter-ink: var(--ds-fg);
       --plotter-stroke-primary: 1;
@@ -2729,9 +3146,312 @@
       place-items: center;
       cursor: grab;
       touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
     .plotter-globe-stage[data-dragging="true"] { cursor: grabbing; }
-    .plotter-globe-stage svg { width: 100%; height: 100%; display: block; }
+    .plotter-globe-stage svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .plotter-globe-stage text {
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: none;
+    }
+
+    /* ---------------- PRIMITIVES EMBUTIDOS (Select / Switch / Accordion / Field) ---------------- */
+    .primitives-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 22px;
+    }
+    .primitive-cell-span { grid-column: 1 / -1; }
+    .primitive-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    @media (max-width: 720px) {
+      .primitives-grid { grid-template-columns: 1fr; }
+      .primitive-cell-span { grid-column: auto; }
+    }
+
+    .ds-select { position: relative; width: 100%; max-width: 280px; }
+    .ds-select-trigger {
+      appearance: none;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: var(--ds-radius-pill);
+      border: 1px solid transparent;
+      background: var(--ds-bg-tint-muted);
+      color: var(--ds-fg);
+      font-family: var(--ds-font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition:
+        background-color var(--ds-duration-fast) var(--ds-ease-out),
+        border-color var(--ds-duration-fast) var(--ds-ease-out),
+        transform var(--ds-duration-press) var(--ds-ease-out);
+    }
+    .ds-select-trigger:active { transform: scale(var(--ds-press-scale)); }
+    .ds-select-trigger:focus-visible { outline: none; box-shadow: var(--ds-shadow-focus); }
+    @media (hover: hover) and (pointer: fine) {
+      .ds-select-trigger:hover { background: var(--ds-bg-tint-strong, var(--ds-surface-2)); }
+    }
+    .ds-select-chevron {
+      width: 10px; height: 10px; flex-shrink: 0; opacity: 0.55;
+      transition: transform 220ms var(--ds-ease-drawer);
+    }
+    .ds-select-trigger[aria-expanded="true"] .ds-select-chevron { transform: rotate(180deg); }
+    .ds-select-list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0; right: 0;
+      z-index: 40;
+      padding: 6px;
+      border-radius: 14px;
+      background: var(--ds-bg);
+      border: 0;
+      box-shadow: var(--ds-shadow-popover);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: scale(0.96) translateY(-6px);
+      transform-origin: top center;
+      transition:
+        opacity var(--ds-duration-base) var(--ds-ease-out),
+        transform var(--ds-duration-base) var(--ds-ease-drawer),
+        visibility 0s linear var(--ds-duration-base);
+    }
+    .ds-select-list[data-open="true"] {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transform: scale(1) translateY(0);
+      transition-delay: 0s;
+    }
+    .ds-select-option {
+      appearance: none; width: 100%; border: 0; background: transparent;
+      display: block; text-align: left;
+      padding: 9px 10px; border-radius: 10px;
+      font-family: var(--ds-font-sans); font-size: 13px;
+      color: var(--ds-fg-secondary); cursor: pointer;
+      opacity: 0;
+      transform: translateY(4px);
+      transition:
+        background-color var(--ds-duration-fast) ease,
+        color var(--ds-duration-fast) ease,
+        opacity 200ms var(--ds-ease-out),
+        transform 200ms var(--ds-ease-out);
+      transition-delay: 0ms;
+    }
+    .ds-select-list[data-open="true"] .ds-select-option {
+      opacity: 1;
+      transform: none;
+    }
+    .ds-select-list[data-open="true"] .ds-select-option:nth-child(1) { transition-delay: 40ms; }
+    .ds-select-list[data-open="true"] .ds-select-option:nth-child(2) { transition-delay: 70ms; }
+    .ds-select-list[data-open="true"] .ds-select-option:nth-child(3) { transition-delay: 100ms; }
+    .ds-select-list[data-open="true"] .ds-select-option:nth-child(4) { transition-delay: 130ms; }
+    .ds-select-option:hover,
+    .ds-select-option[aria-selected="true"] {
+      background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+      color: var(--ds-fg);
+    }
+
+    .ds-switch {
+      appearance: none;
+      position: relative;
+      width: 40px; height: 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--ds-border-strong);
+      background: var(--ds-bg-tint-muted);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition:
+        background-color 220ms var(--ds-ease-drawer),
+        border-color 220ms var(--ds-ease-drawer),
+        transform var(--ds-duration-press) var(--ds-ease-out);
+    }
+    .ds-switch:active { transform: scale(0.94); }
+    .ds-switch[aria-checked="true"] {
+      background: var(--ds-accent);
+      border-color: var(--ds-accent);
+    }
+    .ds-switch-thumb {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 18px; height: 18px;
+      border-radius: 9999px;
+      background: var(--ds-bg);
+      box-shadow: 0 1px 3px rgba(17,18,22,0.18);
+      transition:
+        transform 280ms var(--ds-ease-drawer),
+        background-color 220ms var(--ds-ease-out),
+        width 160ms var(--ds-ease-out);
+    }
+    .ds-switch:active .ds-switch-thumb { width: 22px; }
+    .ds-switch[aria-checked="true"] .ds-switch-thumb {
+      transform: translateX(16px);
+      background: var(--ds-accent-fg);
+    }
+    .ds-switch[aria-checked="true"]:active .ds-switch-thumb {
+      transform: translateX(12px);
+    }
+    .ds-switch:focus-visible { outline: none; box-shadow: var(--ds-shadow-focus); }
+
+    .ds-field {
+      display: flex; flex-direction: column; gap: 6px;
+      font-size: 12px; color: var(--ds-fg-muted);
+    }
+    .ds-field input {
+      appearance: none;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: var(--ds-radius-pill);
+      border: 1px solid var(--ds-border);
+      background: var(--ds-bg);
+      color: var(--ds-fg);
+      font-family: var(--ds-font-sans);
+      font-size: 13px;
+      transition:
+        border-color var(--ds-duration-fast) var(--ds-ease-out),
+        box-shadow var(--ds-duration-fast) var(--ds-ease-out),
+        background-color var(--ds-duration-fast) ease;
+    }
+    .ds-field input:focus-visible {
+      outline: none;
+      box-shadow: var(--ds-shadow-focus);
+      border-color: var(--ds-fg);
+    }
+
+    .ds-accordion { display: flex; flex-direction: column; gap: 6px; }
+    .ds-acc-item {
+      border: 1px solid var(--ds-border);
+      border-radius: 12px;
+      background: var(--ds-bg-tint-subtle);
+      overflow: clip;
+      transition: border-color var(--ds-duration-fast) ease, background-color var(--ds-duration-fast) ease;
+    }
+    .ds-acc-item[open] {
+      border-color: var(--ds-border-strong);
+      background: var(--ds-bg);
+    }
+    .ds-acc-item summary {
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 14px;
+      font-size: 13.5px; font-weight: 500; color: var(--ds-fg);
+      cursor: pointer;
+      user-select: none;
+      transition: padding-bottom 220ms var(--ds-ease-out);
+    }
+    .ds-acc-item summary::-webkit-details-marker { display: none; }
+    .ds-acc-item summary::after {
+      content: '';
+      width: 8px; height: 8px;
+      flex-shrink: 0;
+      border-right: 1.5px solid var(--ds-fg-muted);
+      border-bottom: 1.5px solid var(--ds-fg-muted);
+      transform: rotate(45deg);
+      transition: transform 220ms var(--ds-ease-drawer);
+      margin-left: 8px;
+    }
+    .ds-acc-meta {
+      font-family: var(--ds-font-mono);
+      font-size: 10.5px;
+      font-weight: 400;
+      color: var(--ds-fg-muted);
+      letter-spacing: 0.02em;
+      margin-left: auto;
+    }
+    .ds-acc-collapse {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 280ms var(--ds-ease-drawer);
+    }
+    .ds-acc-item[data-anim="open"] .ds-acc-collapse {
+      grid-template-rows: 1fr;
+    }
+    .ds-acc-collapse > .ds-acc-body {
+      overflow: hidden;
+      min-height: 0;
+    }
+    .ds-acc-body {
+      padding: 0 14px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--ds-fg-secondary);
+      max-width: 68ch;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition:
+        opacity 220ms var(--ds-ease-out),
+        transform 220ms var(--ds-ease-out);
+      transition-delay: 0ms;
+    }
+    .ds-acc-item[data-anim="open"] .ds-acc-body {
+      opacity: 1;
+      transform: none;
+      transition-delay: 50ms;
+    }
+    .ds-acc-item[data-anim="open"] summary { padding-bottom: 8px; }
+    .ds-acc-item[open] summary::after,
+    .ds-acc-item[data-anim="open"] summary::after {
+      transform: rotate(225deg);
+    }
+
+    /* Scroll-reveal — orçamento editorial (raro / 1ª vista) */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
+      filter: blur(0px);
+      transition:
+        opacity var(--ds-duration-reveal) var(--ds-ease-editorial),
+        transform var(--ds-duration-reveal) var(--ds-ease-editorial);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    [data-reveal="soft"] {
+      transform: translateY(10px);
+    }
+    [data-reveal="lift"] {
+      transform: translateY(22px) scale(0.97);
+    }
+    [data-reveal].is-inview,
+    html[data-page-ready="true"] [data-reveal].is-inview {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Micro-lift nos botões do lab */
+    @media (hover: hover) and (pointer: fine) {
+      .lab-grid .btn:hover:not(:disabled),
+      .inverted-strip .btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+      }
+      .lab-grid .btn:active:not(:disabled),
+      .inverted-strip .btn:active:not(:disabled) {
+        transform: scale(var(--ds-press-scale));
+      }
+      .color-card:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    .toast-item {
+      transition:
+        opacity var(--ds-duration-toast) var(--ds-ease-out),
+        transform var(--ds-duration-toast) var(--ds-ease-drawer);
+    }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -2740,6 +3460,23 @@
       .drawer-panel[data-open="true"] { opacity: 1; pointer-events: auto; }
       .toast-item, .toast-item[data-state="open"], .toast-item[data-state="closing"] { transform: none; }
       .plate-art { transition: none; }
+      [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        filter: none !important;
+      }
+      .ds-select-option,
+      .ds-acc-body,
+      .ds-acc-collapse {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .ds-acc-collapse { grid-template-rows: 1fr !important; }
+      .ds-switch:active,
+      .ds-switch:active .ds-switch-thumb,
+      .ds-select-trigger:active { transform: none !important; width: auto; }
     }
   </style>
 </head>
@@ -2748,127 +3485,114 @@
 
   <!-- ================= STICKY TRANSLUCENT TOPBAR ================= -->
   <header class="topbar" id="topbar">
-    <button class="ds-burger" id="btn-nav-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-rail">
-      <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
-    </button>
-    <a href="#topo" class="brand-link">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.45"/>
-        <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1.2"/>
-        <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
-      </svg>
-      <span class="brand-wordmark">Meridian</span>
-      <span class="brand-ver">v1.4</span>
-    </a>
-
-    <!-- Clip-Path Seamless Navigation Tabs (Emil Kowalski) -->
-    <nav class="topbar-nav-wrap" aria-label="Seções do Design System">
-      <div class="cliptabs" data-cliptabs="main-nav">
-        <div class="cliptabs-track">
-          <button class="cliptabs-btn" data-nav-target="historia" data-active="true">História</button>
-          <button class="cliptabs-btn" data-nav-target="cores">Superfícies</button>
-          <button class="cliptabs-btn" data-nav-target="tipografia">Tipografia</button>
-          <button class="cliptabs-btn" data-nav-target="interacoes">Motion</button>
-          <button class="cliptabs-btn" data-nav-target="editorial">Editorial</button>
-          <button class="cliptabs-btn" data-nav-target="cronologia">Lifeline</button>
-          <button class="cliptabs-btn" data-nav-target="svg-viz">SVG 1:1</button>
-          <button class="cliptabs-btn" data-nav-target="atelier">Atelier TS</button>
-          <div class="cliptabs-overlay" aria-hidden="true">
-            <span>História</span>
-            <span>Superfícies</span>
-            <span>Tipografia</span>
-            <span>Motion</span>
-            <span>Editorial</span>
-            <span>Lifeline</span>
-            <span>SVG 1:1</span>
-            <span>Atelier TS</span>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div class="topbar-controls">
-      <!-- 5 Surface Swatches with Skip-Delay Tooltips -->
-      <div class="swatch-bar" role="group" aria-label="Atmosfera cromática suave">
-        <button class="swatch-dot" data-set-surface="ivory" aria-pressed="true" style="background:#FAF9F5" data-tip="Ivory Editorial"></button>
-        <button class="swatch-dot" data-set-surface="blush" aria-pressed="false" style="background:#E8C4C0" data-tip="Soft Blush"></button>
-        <button class="swatch-dot" data-set-surface="butter" aria-pressed="false" style="background:#E8D9A8" data-tip="Soft Butter"></button>
-        <button class="swatch-dot" data-set-surface="mist" aria-pressed="false" style="background:#C5D4CE" data-tip="Soft Mist"></button>
-        <button class="swatch-dot" data-set-surface="aqua" aria-pressed="false" style="background:#A4CED0" data-tip="Signature Aqua"></button>
-        <button class="swatch-dot" data-set-surface="lilac" aria-pressed="false" style="background:#C9C0D8" data-tip="Soft Lilac"></button>
-        <button class="swatch-dot" data-set-surface="terracotta" aria-pressed="false" style="background:#EDBB99" data-tip="Warm Terracotta"></button>
-        <button class="swatch-dot" data-set-surface="obsidian" aria-pressed="false" style="background:#141413" data-tip="Obsidian Dark"></button>
-      </div>
-
-      <!-- Mode Switcher (Invisible B2C vs Technical Auditable) -->
-      <button class="btn btn-pill btn-sm btn-secondary" id="btn-mode-toggle" data-tip="Alterna densidade, linguagem e camadas auditáveis">
-        <span class="blur-morph" id="mode-label">B2C Invisível</span>
-      </button>
-
-      <!-- Origin-Aware Grain & Signals Popover -->
-      <div class="popover-anchor">
-        <button class="btn btn-icon btn-tertiary" id="btn-grain-popover" aria-expanded="false" aria-controls="grain-popover" data-tip="Ruído de papel &amp; sinais">
-          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="5" cy="5" r="1.4" fill="currentColor"/>
-            <circle cx="10" cy="5" r="1.1" fill="currentColor" opacity="0.6"/>
-            <circle cx="15" cy="5" r="1.4" fill="currentColor"/>
-            <circle cx="7.5" cy="10" r="1.3" fill="currentColor"/>
-            <circle cx="12.5" cy="10" r="1.1" fill="currentColor" opacity="0.7"/>
-            <circle cx="5" cy="15" r="1.1" fill="currentColor" opacity="0.7"/>
-            <circle cx="10" cy="15" r="1.4" fill="currentColor"/>
-            <circle cx="15" cy="15" r="1.1" fill="currentColor" opacity="0.6"/>
+    <div class="topbar-inner">
+      <div class="topbar-row topbar-row-main">
+        <a href="#topo" class="brand-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.45"/>
+            <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
           </svg>
-        </button>
-        <div class="popover" id="grain-popover" data-open="false" aria-hidden="true" role="dialog" aria-label="Controles de textura e sinais">
-          <div class="eyebrow" style="margin-bottom:8px;">Intensidade</div>
-          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
-            <button class="btn btn-sm btn-tertiary" data-set-grain="off">Off</button>
-            <button class="btn btn-sm btn-tertiary" data-set-grain="subtle">Suave</button>
-            <button class="btn btn-sm btn-primary" data-set-grain="editorial">Edit.</button>
-            <button class="btn btn-sm btn-tertiary" data-set-grain="tactile">Tátil</button>
+          <span class="brand-wordmark">Meridian</span>
+          <span class="brand-ver">v1.4</span>
+        </a>
+
+        <div class="topbar-controls">
+          <div class="popover-anchor topbar-ctrl-mid" id="surface-menu-anchor">
+            <button class="topbar-link surface-menu-trigger" id="btn-surface-menu" type="button" aria-expanded="false" aria-controls="surface-menu" data-tip="Atmosfera cromática">
+              <span class="surface-menu-swatch" id="surface-menu-swatch" style="background:#FAF9F5"></span>
+              <span class="surface-menu-label" id="surface-menu-label">Ivory</span>
+              <svg class="surface-menu-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="popover surface-menu" id="surface-menu" data-open="false" aria-hidden="true" role="menu" aria-label="Escolher atmosfera">
+              <div class="surface-menu-scroll">
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="ivory" aria-pressed="true"><span class="surface-menu-swatch" style="background:#FAF9F5"></span>Ivory Editorial<span class="surface-menu-item-meta">#FAF9F5</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="paper" aria-pressed="false"><span class="surface-menu-swatch" style="background:#FFFFFF"></span>Paper White<span class="surface-menu-item-meta">#FFFFFF</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="blush" aria-pressed="false"><span class="surface-menu-swatch" style="background:#E8C4C0"></span>Soft Blush<span class="surface-menu-item-meta">#E8C4C0</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="apricot" aria-pressed="false"><span class="surface-menu-swatch" style="background:#E8C8A8"></span>Soft Apricot<span class="surface-menu-item-meta">#E8C8A8</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="butter" aria-pressed="false"><span class="surface-menu-swatch" style="background:#E8D9A8"></span>Soft Butter<span class="surface-menu-item-meta">#E8D9A8</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="sage" aria-pressed="false"><span class="surface-menu-swatch" style="background:#B8C5A8"></span>Soft Sage<span class="surface-menu-item-meta">#B8C5A8</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="mist" aria-pressed="false"><span class="surface-menu-swatch" style="background:#C5D4CE"></span>Soft Mist<span class="surface-menu-item-meta">#C5D4CE</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="aqua" aria-pressed="false"><span class="surface-menu-swatch" style="background:#A4CED0"></span>Signature Aqua<span class="surface-menu-item-meta">#A4CED0</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="sky" aria-pressed="false"><span class="surface-menu-swatch" style="background:#B0C8D6"></span>Soft Sky<span class="surface-menu-item-meta">#B0C8D6</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="slate" aria-pressed="false"><span class="surface-menu-swatch" style="background:#B5BFC9"></span>Soft Slate<span class="surface-menu-item-meta">#B5BFC9</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="lilac" aria-pressed="false"><span class="surface-menu-swatch" style="background:#C9C0D8"></span>Soft Lilac<span class="surface-menu-item-meta">#C9C0D8</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="terracotta" aria-pressed="false"><span class="surface-menu-swatch" style="background:#EDBB99"></span>Warm Terracotta<span class="surface-menu-item-meta">#EDBB99</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="obsidian" aria-pressed="false"><span class="surface-menu-swatch" style="background:#141413"></span>Obsidian Dark<span class="surface-menu-item-meta">#141413</span></button>
+              </div>
+            </div>
           </div>
-          <div class="eyebrow" style="margin-bottom:8px;">Tamanho do grão</div>
-          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
-            <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine">Fino</button>
-            <button class="btn btn-sm btn-primary" data-set-grain-size="medium">Médio</button>
-            <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse">Grosso</button>
-            <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky">Grumo</button>
+
+          <button class="topbar-link topbar-ctrl-wide" id="btn-mode-toggle" type="button" data-tip="Alterna densidade, linguagem e camadas auditáveis">
+            <span class="blur-morph" id="mode-label">B2C Invisível</span>
+          </button>
+
+          <div class="popover-anchor topbar-ctrl-mid">
+            <button class="topbar-link" id="btn-grain-popover" type="button" aria-expanded="false" aria-controls="grain-popover" data-tip="Ruído de papel &amp; sinais">
+              Grain
+            </button>
+            <div class="popover" id="grain-popover" data-open="false" aria-hidden="true" role="dialog" aria-label="Controles de textura e sinais">
+              <div class="eyebrow" style="margin-bottom:8px;">Intensidade</div>
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
+                <button class="btn btn-sm btn-tertiary" data-set-grain="off">Off</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain="subtle">Suave</button>
+                <button class="btn btn-sm btn-primary" data-set-grain="editorial">Edit.</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain="tactile">Tátil</button>
+              </div>
+              <div class="eyebrow" style="margin-bottom:8px;">Tamanho do grão</div>
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
+                <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine">Fino</button>
+                <button class="btn btn-sm btn-primary" data-set-grain-size="medium">Médio</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse">Grosso</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky">Grumo</button>
+              </div>
+              <div class="eyebrow" style="margin-bottom:8px;">Estilo de Sinais</div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin-bottom:10px;">
+                <button class="btn btn-sm btn-primary" data-set-signals="chromatic">Cromático</button>
+                <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome">Monocromo</button>
+              </div>
+              <div class="mono" style="font-size:10.5px; color:var(--ds-fg-muted); line-height:1.45;">
+                Intensidade = opacidade · Tamanho = repaint do canvas.
+                <span id="grain-blend-readout">edit. · médio</span>
+              </div>
+            </div>
           </div>
-          <div class="eyebrow" style="margin-bottom:8px;">Estilo de Sinais</div>
-          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin-bottom:10px;">
-            <button class="btn btn-sm btn-primary" data-set-signals="chromatic">Cromático</button>
-            <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome">Monocromo</button>
-          </div>
-          <div class="mono" style="font-size:10.5px; color:var(--ds-fg-muted); line-height:1.45;">
-            Intensidade = opacidade · Tamanho = repaint do canvas.
-            <span id="grain-blend-readout">edit. · médio</span>
-          </div>
+
+          <button class="topbar-link topbar-ctrl-mid" id="btn-open-cmdk" type="button" data-tip="Paleta ⌘K instantânea (0ms · regra Meridian)">
+            ⌘K
+          </button>
+
+          <a href="./components.html" class="topbar-link topbar-link-strong topbar-keep-mobile" data-tip="Abrir Components Lab · menus, modais, tabelas, gráficos">
+            <span class="topbar-cta-full">Components ↗</span>
+            <span class="topbar-cta-short">Lab ↗</span>
+          </a>
+
+          <a href="./preview.html" class="topbar-link topbar-ctrl-wide" data-tip="Abrir Prévia Real de Produto (Meridian Studio)">
+            Prévia ↗
+          </a>
+
+          <button class="topbar-link topbar-ctrl-wide" id="btn-open-drawer" type="button" data-tip="Abrir drawer com tokens CSS/TS">
+            Tokens
+          </button>
         </div>
+
+        <button class="ds-burger" id="btn-nav-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-rail">
+          <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
       </div>
 
-      <!-- Instant ⌘K Command Palette Trigger -->
-      <button class="btn btn-sm btn-tertiary" id="btn-open-cmdk" data-tip="Paleta ⌘K instantânea (0ms · regra Emil)">
-        <svg width="13" height="13" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
-          <path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-        <span class="kbd-hint">⌘K</span>
-      </button>
-
-      <!-- Components Lab -->
-      <a href="./components.html" class="btn btn-sm btn-primary btn-pill topbar-components-cta" data-tip="Abrir Components Lab · menus, modais, tabelas, gráficos">
-        Components ↗
-      </a>
-
-      <!-- Prévia Real de Produto -->
-      <a href="./preview.html" class="btn btn-sm btn-secondary btn-pill" data-tip="Abrir Prévia Real de Produto (Meridian Studio)">
-        Prévia de App ↗
-      </a>
-
-      <!-- Drawer de Tokens -->
-      <button class="btn btn-sm btn-tertiary" id="btn-open-drawer" data-tip="Abrir drawer Vaul com tokens CSS/TS">
-        Tokens
-      </button>
+      <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Seções do Design System">
+        <div class="topbar-nav-links">
+          <button class="topbar-link" type="button" data-nav-target="historia" data-active="true">História</button>
+          <button class="topbar-link" type="button" data-nav-target="cores">Superfícies</button>
+          <button class="topbar-link" type="button" data-nav-target="tipografia">Tipografia</button>
+          <button class="topbar-link" type="button" data-nav-target="interacoes">Motion</button>
+          <button class="topbar-link" type="button" data-nav-target="editorial">Editorial</button>
+          <button class="topbar-link" type="button" data-nav-target="cronologia">Lifeline</button>
+          <button class="topbar-link" type="button" data-nav-target="svg-viz">SVG 1:1</button>
+          <button class="topbar-link" type="button" data-nav-target="atelier">Atelier TS</button>
+        </div>
+      </nav>
     </div>
 
     <div class="scroll-progress" id="scroll-progress"></div>
@@ -2880,7 +3604,7 @@
       <div class="container-wide">
         <div class="hero-grid">
           <div>
-            <div class="eyebrow">Lunar + Earth AI + Gemini Studio · Sistema Visual &amp; Motion</div>
+            <div class="eyebrow">Meridian · Sistema Visual &amp; Motion</div>
             <h1 class="hero-title">Meridian Design&nbsp;System</h1>
             <p class="hero-lead" id="hero-lead-copy">
               Um meridiano visual entre o&nbsp;cotidiano calmo e&nbsp;o&nbsp;rigor técnico: papel tátil, uma só tinta, navegação sem latência — para React&nbsp;Native, Web em&nbsp;CSS puro e&nbsp;SVG&nbsp;1:1.
@@ -2888,6 +3612,8 @@
             <div class="btn-row" style="margin-top:0;">
               <a href="./components.html" class="btn btn-primary">Abrir Components Lab ↗</a>
               <a href="./preview.html" class="btn btn-secondary btn-pill">Prévia de App ↗</a>
+              <a href="./manifesto.html" class="btn btn-secondary btn-pill">Manifesto ↗</a>
+              <a href="./historia.html" class="btn btn-secondary btn-pill">O Farol e o Meridiano ↗</a>
               <a href="./gann.html" class="btn btn-secondary btn-pill">Dossiê W.D. Gann ↗</a>
               <button class="btn btn-secondary btn-pill" id="hero-open-drawer">Inspecionar Tokens CSS &amp; TS</button>
               <button class="btn btn-tertiary btn-pill" id="hero-open-cmdk">Navegação Rápida <span class="kbd-hint">⌘K</span></button>
@@ -2918,28 +3644,28 @@
         <!-- 5 Edition Plates: Click any to transform the entire living page -->
         <div class="edition-strip" role="group" aria-label="Edições de superfície">
           <button class="edition-plate" data-set-surface="ivory" aria-pressed="true" style="background:#FAF9F5; color:#141413;">
-            <span class="edition-plate-meta">01 · ANTHROPIC</span>
+            <span class="edition-plate-meta">01 · EDITORIAL</span>
             <div>
               <div class="edition-plate-name">Ivory Editorial</div>
               <div class="edition-plate-meta">#FAF9F5 · Padrão B2C</div>
             </div>
           </button>
           <button class="edition-plate" data-set-surface="paper" aria-pressed="false" style="background:#FFFFFF; color:#0A0A0A;">
-            <span class="edition-plate-meta">02 · DEIMOS WHITE</span>
+            <span class="edition-plate-meta">02 · PAPER</span>
             <div>
               <div class="edition-plate-name">Paper White</div>
               <div class="edition-plate-meta">#FFFFFF · Dossiês &amp; B2B</div>
             </div>
           </button>
           <button class="edition-plate" data-set-surface="aqua" aria-pressed="false" style="background:#A4CED0; color:#171614;">
-            <span class="edition-plate-meta">03 · DEIMOS BLUE</span>
+            <span class="edition-plate-meta">03 · AQUA</span>
             <div>
               <div class="edition-plate-name">Signature Aqua</div>
-              <div class="edition-plate-meta">#A4CED0 · Clima &amp; Earth AI</div>
+              <div class="edition-plate-meta">#A4CED0 · Clima &amp; Ambiente</div>
             </div>
           </button>
           <button class="edition-plate" data-set-surface="terracotta" aria-pressed="false" style="background:#EDBB99; color:#171614;">
-            <span class="edition-plate-meta">04 · DEIMOS ORANGE</span>
+            <span class="edition-plate-meta">04 · TERRACOTTA</span>
             <div>
               <div class="edition-plate-name">Warm Terracotta</div>
               <div class="edition-plate-meta">#EDBB99 · Cultura &amp; Solar</div>
@@ -2956,68 +3682,227 @@
       </div>
     </section>
 
-    <!-- ================= 00. HISTÓRIA ================= -->
+    <!-- ================= 00. HISTÓRIA — O FAROL E O MERIDIANO ================= -->
     <section class="section-block" id="historia">
       <div class="container-wide">
-        <div class="historia-stack">
-          <div>
-            <div class="eyebrow">00 · Origem &amp; Propósito</div>
-            <h2 class="serif" style="font-size:clamp(28px, 4vw, 42px); letter-spacing:var(--ds-tracking-display); line-height:var(--ds-lh-heading); margin:var(--ds-stack-tight) 0 var(--ds-stack-md); max-width:22ch;">Por que Meridian existe</h2>
-            <p class="hero-lead" style="margin:0; max-width:42rem;">
-              O&nbsp;ecossistema Lunar + Earth&nbsp;AI + Gemini Studio atende dois públicos opostos no&nbsp;mesmo motor TypeScript. Meridian é&nbsp;a&nbsp;linha que os&nbsp;une sem forçar um&nbsp;a&nbsp;falar a&nbsp;língua do&nbsp;outro.
-            </p>
-          </div>
-          <div class="historia-dual">
-            <article style="padding:18px 18px 16px; border:1px solid var(--ds-border); border-radius:var(--ds-radius-card); background:var(--ds-surface-1);">
-              <div class="eyebrow" style="margin-bottom:8px;">Modo Invisível · B2C</div>
-              <h3 class="serif" style="font-size:22px; margin:0 0 var(--ds-stack-tight); letter-spacing:var(--ds-tracking-heading); line-height:var(--ds-lh-heading);">Calma editorial</h3>
-              <p style="margin:0; font-size:14px; line-height:1.55; color:var(--ds-fg-secondary);">
-                Clima, ar, família, bairro e voz — sem jargão técnico, sem neon, sem cards hiper-aninhados. A interface some; a decisão fica.
+        <div class="historia-layout">
+          <article class="historia-essay">
+            <div class="eyebrow historia-essay-kicker">00 · História</div>
+            <h2 class="historia-essay-title">O Farol e o&nbsp;Meridiano</h2>
+
+            <p class="historia-lead">Muito antes dos mapas ocuparem mesas de capitães e muito antes de instrumentos dizerem às pessoas exatamente onde estavam, atravessar o oceano era um exercício de convicção.</p>
+
+            <p>Navegar significava escolher uma direção e acreditar nela.</p>
+            <p>O mar não oferecia referências.</p>
+            <p>O horizonte parecia igual em todas as direções.</p>
+            <p>Durante o dia, céu e água se confundiam.</p>
+            <p>Durante a noite, a escuridão apagava quase tudo.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Era nesse vazio que os navegadores descobriam uma verdade desconfortável:</p>
+
+            <div class="historia-pull">
+              <p>ninguém se perde de uma vez.</p>
+            </div>
+
+            <p>Ninguém acorda numa manhã e decide abandonar sua rota.</p>
+            <p>O desvio acontece em pequenas medidas.</p>
+
+            <p class="historia-beat">Alguns graus hoje.</p>
+            <p class="historia-beat">Outros amanhã.</p>
+            <p class="historia-beat">Uma correção aparentemente inofensiva.</p>
+            <p class="historia-beat">Uma concessão que parece razoável.</p>
+            <p class="historia-beat">Uma decisão tomada apenas para facilitar a viagem.</p>
+
+            <p>E então outra.</p>
+            <p>E mais outra.</p>
+            <p>Até que, semanas depois, a embarcação já não está indo para onde imaginava.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p class="historia-beat">Acontece no mar.</p>
+            <p class="historia-beat">Acontece com pessoas.</p>
+            <p class="historia-beat">Acontece com empresas.</p>
+            <p class="historia-beat">Acontece com qualquer coisa que precise escolher constantemente entre diferentes caminhos.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Por isso os antigos navegadores valorizavam uma ideia simples.</p>
+            <p>Não bastava ter uma direção.</p>
+            <p>Era preciso possuir uma referência.</p>
+            <p class="historia-beat">Algo estável.</p>
+            <p class="historia-beat">Algo que permanecesse igual quando tudo ao redor mudasse.</p>
+
+            <p>Foi assim que surgiram os meridianos.</p>
+
+            <p class="historia-beat">Linhas invisíveis.</p>
+            <p class="historia-beat">Impossíveis de tocar.</p>
+            <p class="historia-beat">Inexistentes aos olhos.</p>
+            <p>Mas capazes de orientar jornadas inteiras.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Curiosamente, ninguém admirava os meridianos.</p>
+            <p>As pessoas admiravam os navios.</p>
+            <p>Admiravam as grandes travessias.</p>
+            <p>Admiravam os capitães.</p>
+            <p>Quase ninguém falava sobre as linhas silenciosas que tornavam tudo aquilo possível.</p>
+            <p>Até porque referências raramente recebem aplausos.</p>
+            <p>Elas apenas cumprem seu papel.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p class="historia-lead">Em uma costa distante existia um velho farol construído sobre penhascos escuros.</p>
+            <p>Ele também era uma referência.</p>
+            <p>Mas, ao contrário dos meridianos, podia ser visto.</p>
+            <p>Durante tempestades, sua luz atravessava a chuva.</p>
+            <p>Durante neblinas densas, era a única forma reconhecível naquele trecho do oceano.</p>
+            <p>Durante noites absolutamente escuras, quando céu e mar pareciam uma única coisa, ele permanecia aceso.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Curiosamente, o farol não era extraordinário.</p>
+            <p class="historia-beat">Sua torre era simples.</p>
+            <p class="historia-beat">Suas pedras eram comuns.</p>
+            <p>Não possuía a luz mais potente nem a arquitetura mais impressionante.</p>
+            <p>Outros faróis eram maiores.</p>
+            <p>Outros eram mais modernos.</p>
+            <p>Alguns até mais bonitos.</p>
+
+            <div class="historia-pull">
+              <p>Mas nenhum era tão confiável.</p>
+            </div>
+
+            <p>Os navegadores diziam algo estranho sobre ele.</p>
+            <p>Diziam que não confiavam em sua luz.</p>
+            <p>Confiavam em suas decisões.</p>
+            <p>A frase parecia sem sentido.</p>
+            <p>Como um farol poderia tomar decisões?</p>
+            <p>Mas a resposta estava escondida em sua história.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Ao longo das décadas, inúmeros responsáveis passaram por aquela torre.</p>
+            <p>Alguns queriam transformá-la em atração turística.</p>
+            <p>Outros queriam torná-la mais lucrativa.</p>
+            <p>Houve quem desejasse substituir sua função original por atividades mais rentáveis.</p>
+            <p>Todas as propostas pareciam inteligentes.</p>
+            <p>Todas possuíam argumentos convincentes.</p>
+            <p>Todas prometiam alguma espécie de ganho.</p>
+
+            <p>Mas havia uma pergunta gravada numa pequena placa de metal perto da sala das lâmpadas.</p>
+            <p>Uma pergunta simples.</p>
+
+            <aside class="historia-plaque" aria-label="Placa do farol">
+              <div class="eyebrow">Placa de metal · sala das lâmpadas</div>
+              <blockquote>“Isso ajuda os navegadores a encontrar seu caminho?”</blockquote>
+            </aside>
+
+            <p class="historia-beat">Nada além disso.</p>
+            <p class="historia-beat">Toda decisão passava por ali.</p>
+            <p class="historia-beat">Toda mudança.</p>
+            <p class="historia-beat">Toda oportunidade.</p>
+            <p class="historia-beat">Todo investimento.</p>
+            <p class="historia-beat">Toda inovação.</p>
+            <p class="historia-beat">Toda recusa.</p>
+
+            <p>A pergunta nunca mudava.</p>
+            <p>E, justamente por isso, o farol nunca se perdia.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Anos se transformaram em décadas.</p>
+            <p>Décadas se transformaram em gerações.</p>
+            <p>Enquanto outros buscavam atenção, o farol buscava alinhamento.</p>
+            <p>Enquanto outros perguntavam:</p>
+            <p class="historia-beat">“Como podemos crescer?”</p>
+            <p>O farol perguntava:</p>
+            <p class="historia-beat">“Como podemos continuar sendo úteis?”</p>
+            <p>Enquanto outros perseguiam tendências, ele perseguia coerência.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Pouco a pouco, uma reputação começou a surgir.</p>
+            <p>Não porque tivesse sido planejada.</p>
+            <p>Mas porque havia sido merecida.</p>
+            <p>Os navegadores passaram a confiar nele não por causa do que dizia.</p>
+            <p>Mas por causa do padrão que repetia.</p>
+
+            <p>Quando aparecia uma escolha difícil, ele escolhia a direção.</p>
+            <p>Quando surgia uma distração atraente, ele escolhia a direção.</p>
+            <p>Quando um atalho prometia vantagens imediatas, ele escolhia a direção.</p>
+
+            <p class="historia-beat">Sempre a direção.</p>
+            <p class="historia-beat">Sempre o propósito.</p>
+            <p class="historia-beat">Sempre o caminho.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Com o tempo, os marinheiros perceberam algo extraordinário.</p>
+            <p>O verdadeiro valor daquele farol não estava na luz.</p>
+            <p>A luz era apenas a manifestação visível de algo invisível.</p>
+            <p>Assim como um navio seguia um meridiano que ninguém enxergava, o farol também seguia uma linha invisível.</p>
+
+            <p class="historia-beat">Uma linha feita de princípios.</p>
+            <p class="historia-beat">De critérios.</p>
+            <p class="historia-beat">De escolhas repetidas.</p>
+            <p class="historia-beat">De decisões tomadas quando ninguém estava observando.</p>
+
+            <div class="historia-pull">
+              <p>As coisas mais importantes quase nunca são visíveis.</p>
+            </div>
+
+            <p class="historia-beat">A confiança não é visível.</p>
+            <p class="historia-beat">A reputação não é visível.</p>
+            <p class="historia-beat">A convicção não é visível.</p>
+            <p class="historia-beat">A direção não é visível.</p>
+            <p class="historia-beat">O meridiano não é visível.</p>
+            <p>Mas é a existência dessas coisas que determina todo o resto.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>Porque uma identidade não nasce quando alguém cria um símbolo.</p>
+            <p>Nem quando alguém escreve uma missão.</p>
+            <p>Nem quando alguém escolhe uma cor ou um slogan.</p>
+            <p>Uma identidade nasce quando uma decisão encontra outra decisão.</p>
+            <p>E depois outra.</p>
+            <p>E outra.</p>
+            <p>Até formar uma linha tão clara que ninguém mais consegue confundi-la.</p>
+
+            <div class="historia-spacer" aria-hidden="true"></div>
+
+            <p>No fim, o farol nunca foi lembrado por sua torre.</p>
+            <p>Nunca foi lembrado por sua luz.</p>
+            <p>Nunca foi lembrado por sua aparência.</p>
+            <p>Foi lembrado porque permaneceu alinhado ao seu meridiano.</p>
+            <p>Porque, quando tempestades chegavam, ele continuava sendo aquilo que havia decidido ser.</p>
+
+            <div class="historia-pull">
+              <p>E talvez essa seja a definição mais simples de uma grande marca.</p>
+            </div>
+
+            <p>Não algo que chama atenção.</p>
+            <p>Mas algo que mantém a direção.</p>
+            <p>Por tempo suficiente para que os outros confiem nela.</p>
+
+            <div class="historia-coda">
+              <div class="eyebrow">Por isso Meridian</div>
+              <h3>Uma linha invisível entre o cotidiano e o rigor</h3>
+              <p>
+                O design system herda essa pergunta: cada token, cada superfície e cada gesto precisam ajudar quem navega a interface a encontrar o caminho — sem ruído, sem desvio, com uma só tinta e uma referência estável.
               </p>
-            </article>
-            <article style="padding:18px 18px 16px; border:1px solid var(--ds-border); border-radius:var(--ds-radius-card); background:var(--ds-surface-1);">
-              <div class="eyebrow" style="margin-bottom:8px;">Modo Técnico · Pro / B2B</div>
-              <h3 class="serif" style="font-size:22px; margin:0 0 var(--ds-stack-tight); letter-spacing:var(--ds-tracking-heading); line-height:var(--ds-lh-heading);">Rigor auditável</h3>
-              <p style="margin:0; font-size:14px; line-height:1.55; color:var(--ds-fg-secondary);">
-                Terminais Gann–Jenkins, efemérides, dossiês territoriais e backtests — fonte rastreável, geometria 1:1 e contraste AAA.
-              </p>
-            </article>
-          </div>
-          <div class="pull-quote" style="margin:0;">
-            <blockquote>
-              “Quando um sistema mostra exatamente de onde veio cada dado, a confiança nasce da arquitetura — não do marketing.”
-            </blockquote>
-            <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">Princípio Editorial Meridian · Swiss Archival + Modern Research</div>
-          </div>
-          <div class="historia-pillars">
-            <div class="eyebrow">Três pilares da linhagem</div>
-            <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
-              <li style="display:grid; grid-template-columns:36px 1fr; gap:12px; padding:12px 14px; border:1px solid var(--ds-rule); border-radius:var(--ds-radius-squircle);">
-                <span class="mono tabular" style="font-size:12px; color:var(--ds-fg-muted); padding-top:2px;">01</span>
-                <div>
-                  <div style="font-weight:500; font-size:14px; margin-bottom:2px;">Anthropic Research</div>
-                  <div style="font-size:13px; color:var(--ds-fg-muted); line-height:1.45;">Ivory quente, dual-radius, masonry assimétrico e paleta orgânica contida.</div>
-                </div>
-              </li>
-              <li style="display:grid; grid-template-columns:36px 1fr; gap:12px; padding:12px 14px; border:1px solid var(--ds-rule); border-radius:var(--ds-radius-squircle);">
-                <span class="mono tabular" style="font-size:12px; color:var(--ds-fg-muted); padding-top:2px;">02</span>
-                <div>
-                  <div style="font-weight:500; font-size:14px; margin-bottom:2px;">Deimos Archival</div>
-                  <div style="font-size:13px; color:var(--ds-fg-muted); line-height:1.45;">Single-Ink, paper shader de página inteira, leitor empilhado e dossiês 3D.</div>
-                </div>
-              </li>
-              <li style="display:grid; grid-template-columns:36px 1fr; gap:12px; padding:12px 14px; border:1px solid var(--ds-rule); border-radius:var(--ds-radius-squircle);">
-                <span class="mono tabular" style="font-size:12px; color:var(--ds-fg-muted); padding-top:2px;">03</span>
-                <div>
-                  <div style="font-weight:500; font-size:14px; margin-bottom:2px;">Emil Kowalski</div>
-                  <div style="font-size:13px; color:var(--ds-fg-muted); line-height:1.45;">Frequency Gate (⌘K em 0ms), clip-path tabs, Vaul drawer e física 1:1.</div>
-                </div>
-              </li>
-            </ol>
-            <p style="margin:4px 0 0; font-size:13px; line-height:1.5; color:var(--ds-fg-muted);">
-              Materialidade impressa — não plástico digital. Uma tinta deriva bordas, hovers e hierarquia. O papel cobre a viewport como shader contínuo; o ruído do atelier no canvas permanece independente.
-            </p>
-          </div>
+              <div class="historia-coda-actions">
+                <a href="./manifesto.html" class="btn btn-secondary btn-pill">Manifesto ↗</a>
+                <a href="./historia.html" class="btn btn-secondary btn-pill">Dossiê ilustrado ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <aside class="historia-halftone-panel" aria-label="Placa HalfTone Paper Shaders">
+            <div class="historia-halftone" id="historia-halftone" role="img" aria-label="Furacão em HalfTone Dots médios"></div>
+            <p class="historia-halftone-cap">Plate · Hurricane · Paper Halftone Dots · pontos médios</p>
+          </aside>
         </div>
       </div>
     </section>
@@ -3039,7 +3924,7 @@
 
         <div class="sub-grid-2">
           <div class="panel-card">
-            <div class="eyebrow">Paleta Orgânica Contida · Linhagem Anthropic</div>
+            <div class="eyebrow">Paleta Orgânica Contida · Linhagem Editorial</div>
             <p style="margin:6px 0 0; font-size:13.5px; color:var(--ds-fg-muted);">
               Tons terrosos usados estritamente em categorias, tags e séries de gráficos SVG — preservando a serenidade do papel.
             </p>
@@ -3058,7 +3943,7 @@
               <button class="btn btn-sm btn-pill btn-tertiary" id="btn-toggle-signals">Alternar Monocromo</button>
             </div>
             <p style="margin:6px 0 0; font-size:13.5px; color:var(--ds-fg-muted);">
-              Calibrados para alto contraste até sobre Aqua e Terracotta — com modo monocromático arquivístico (Deimos) baseado em forma geométrica.
+              Calibrados para alto contraste até sobre Aqua e Terracotta — com modo monocromático arquivístico (Arquival) baseado em forma geométrica.
             </p>
             <div class="organic-pills">
               <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="var(--ds-signal-support)"/></svg>Support · Confirmado</span>
@@ -3076,7 +3961,7 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">02 · Hierarquia em 3 Vozes (Deimos + Anthropic + Apple)</div>
+            <div class="eyebrow">02 · Hierarquia em 3 Vozes (Meridian + Apple)</div>
             <h2 class="section-title">Escala por Contraste de Forma, Não de Peso</h2>
           </div>
           <p class="section-desc">
@@ -3113,7 +3998,7 @@
             <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">17px · max-width: 65ch</div>
           </div>
           <p style="margin:0; max-width:65ch; font-size:var(--ds-text-body-lg); line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body);">
-            A coluna de leitura enciclopédica limita cada linha a 65 caracteres (regra do UI Cheatsheet de Emil Kowalski), garantindo ritmo confortável em relatórios de endereço, análises climáticas e resumos diários sem fadiga ocular.
+            A coluna de leitura enciclopédica limita cada linha a 65 caracteres (regra do UI Cheatsheet de Meridian Motion), garantindo ritmo confortável em relatórios de endereço, análises climáticas e resumos diários sem fadiga ocular.
           </p>
           <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">weight 400 · lh 1.58 · ls -0.006em</div>
         </div>
@@ -3138,7 +4023,7 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">03 · Navegação &amp; Motion · emilkowalski/skills</div>
+            <div class="eyebrow">03 · Navegação &amp; Motion · Motion Lab</div>
             <h2 class="section-title">Dual-Radius, Clip-Path Tabs &amp; Física Tátil</h2>
           </div>
           <p class="section-desc">
@@ -3178,7 +4063,7 @@
 
           <!-- Card 2: Clip-Path Tabs + Skip-Delay Tooltip Toolbar -->
           <div class="panel-card">
-            <div class="eyebrow">Clip-Path Tabs + Skip-Delay Tooltips (Emil Kowalski)</div>
+            <div class="eyebrow">Clip-Path Tabs + Skip-Delay Tooltips (Meridian Motion)</div>
             <p style="margin:6px 0 14px; font-size:13px; color:var(--ds-fg-muted);">
               A camada ativa desliza por <code>clip-path: inset(...)</code> invertendo cor e texto no mesmo pixel. Passe o mouse na barra abaixo: o 1º tooltip espera 300ms; os irmãos trocam em <strong>0ms</strong>.
             </p>
@@ -3186,17 +4071,17 @@
               <div class="cliptabs" data-cliptabs="demo-cluster">
                 <div class="cliptabs-track">
                   <button class="cliptabs-btn" data-cluster="A" data-active="true">Cluster A · Gann</button>
-                  <button class="cliptabs-btn" data-cluster="B">Cluster B · Earth AI</button>
+                  <button class="cliptabs-btn" data-cluster="B">Cluster B · Ambiente</button>
                   <button class="cliptabs-btn" data-cluster="C">Cluster C · Mídia</button>
                   <div class="cliptabs-overlay" aria-hidden="true">
                     <span>Cluster A · Gann</span>
-                    <span>Cluster B · Earth AI</span>
+                    <span>Cluster B · Ambiente</span>
                     <span>Cluster C · Mídia</span>
                   </div>
                 </div>
               </div>
               <div id="cluster-readout" class="mono blur-morph" style="display:block; margin-top:10px; font-size:12px; color:var(--ds-fg-muted);">
-                mcp-ephemeris-gann + mcp-lunarcrush → #26 Terminal Gann-Jenkins · #30 Pulse &amp; DNA · #27 AgroCiclos
+                ephemeris-connector + pulse-connector → #26 Terminal Gann-Jenkins · #30 Pulse &amp; DNA · #27 AgroCiclos
               </div>
             </div>
 
@@ -3206,8 +4091,8 @@
                 <button class="btn btn-icon btn-tertiary" data-tip="Camada 1 · Astronomia Pura" data-toast="Camada 1 selecionada">1</button>
                 <button class="btn btn-icon btn-tertiary" data-tip="Camada 2 · Casas &amp; Dignidades" data-toast="Camada 2 selecionada">2</button>
                 <button class="btn btn-icon btn-tertiary" data-tip="Camada 3 · Gann &amp; Jenkins" data-toast="Camada 3 selecionada">3</button>
-                <button class="btn btn-icon btn-tertiary" data-tip="Camada 4 · Backtest BigQuery" data-toast="Camada 4 selecionada">4</button>
-                <button class="btn btn-icon btn-tertiary" data-tip="Modo Invisível · Google Physical" data-toast="Prioridade Física Google ativa">G</button>
+                <button class="btn btn-icon btn-tertiary" data-tip="Camada 4 · Backtest ledger analítico" data-toast="Camada 4 selecionada">4</button>
+                <button class="btn btn-icon btn-tertiary" data-tip="Modo Invisível · Prioridade Física" data-toast="Prioridade Física ativa">G</button>
               </div>
             </div>
           </div>
@@ -3240,7 +4125,7 @@
               </tr>
               <tr>
                 <td class="mono">Ocasional</td>
-                <td>Popovers origin-aware, Clip-Path Tabs, Drawer Vaul, Toasts Sonner</td>
+                <td>Popovers origin-aware, Clip-Path Tabs, Drawer, Toasts</td>
                 <td>Transição interruptível (nunca keyframes dinâmicos)</td>
                 <td class="mono">140–220ms (UI) · 380ms (Drawer)</td>
               </tr>
@@ -3254,10 +4139,72 @@
           </table>
         </div>
 
-        <!-- Inverted Stark Contrast Strip (Anthropic) -->
+        <!-- Primitives embutidos (do Components Lab → página principal) -->
+        <div class="panel-card ds-primitives" style="margin-top:20px;">
+          <div class="eyebrow">Primitives · Select · Switch · Accordion · Field</div>
+          <p style="margin:6px 0 18px; font-size:13px; color:var(--ds-fg-muted); max-width:62ch;">
+            Componentes do Lab embutidos no showcase — mesma gramática Single-Ink, sem dependência de framework.
+          </p>
+          <div class="primitives-grid">
+            <div class="primitive-cell">
+              <div class="eyebrow" style="margin-bottom:10px;">Select Meridian</div>
+              <div class="ds-select" data-ds-select>
+                <button type="button" class="ds-select-trigger" aria-expanded="false" aria-haspopup="listbox">
+                  <span data-ds-select-label>Cluster A · Gann</span>
+                  <svg class="ds-select-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="ds-select-list" role="listbox" data-open="false" hidden>
+                  <button type="button" class="ds-select-option" role="option" data-value="A" aria-selected="true">Cluster A · Gann</button>
+                  <button type="button" class="ds-select-option" role="option" data-value="B" aria-selected="false">Cluster B · Ambiente</button>
+                  <button type="button" class="ds-select-option" role="option" data-value="C" aria-selected="false">Cluster C · Mídia</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="primitive-cell">
+              <div class="eyebrow" style="margin-bottom:10px;">Switch &amp; Field</div>
+              <div class="primitive-row">
+                <button type="button" class="ds-switch" role="switch" aria-checked="true" id="demo-switch-jenkins" data-tip="Offset Jenkins 63.75°">
+                  <span class="ds-switch-thumb" aria-hidden="true"></span>
+                </button>
+                <label for="demo-switch-jenkins" style="font-size:13px; color:var(--ds-fg-secondary); cursor:pointer;">Jenkins 63.75° ativo</label>
+              </div>
+              <label class="ds-field" style="margin-top:14px;">
+                <span>Endereço de auditoria</span>
+                <input type="text" placeholder="Av. Paulista, 1578 — São Paulo" value="Av. Paulista, 1578" />
+              </label>
+            </div>
+
+            <div class="primitive-cell primitive-cell-span">
+              <div class="eyebrow" style="margin-bottom:10px;">Accordion</div>
+              <div class="ds-accordion" data-ds-accordion>
+                <details class="ds-acc-item" open data-anim="open">
+                  <summary>PaperGrain canvas <span class="ds-acc-meta">overlay global</span></summary>
+                  <div class="ds-acc-collapse">
+                    <div class="ds-acc-body">Ruído procedural em canvas fullscreen — sem data-URL. Intensidade e tamanho controlados pelo popover do header.</div>
+                  </div>
+                </details>
+                <details class="ds-acc-item">
+                  <summary>HalfTone Dots <span class="ds-acc-meta">Paper shaders</span></summary>
+                  <div class="ds-acc-collapse">
+                    <div class="ds-acc-body">Malha de pontos médios (<code>u_size ≈ 0.18</code>) na História — imagem convertida em gramática tipográfica.</div>
+                  </div>
+                </details>
+                <details class="ds-acc-item">
+                  <summary>Atelier Engine <span class="ds-acc-meta">zero p5.js</span></summary>
+                  <div class="ds-acc-collapse">
+                    <div class="ds-acc-body">Aquarela, grid erodido e fan de curvas em TypeScript puro — presets animados + pintura livre no canvas.</div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inverted Stark Contrast Strip (Meridian) -->
         <div class="inverted-strip">
           <div>
-            <div class="mono" style="font-size:11px; opacity:0.7; letter-spacing:0.08em; text-transform:uppercase;">Banda Estrutural Invertida · Linhagem Anthropic</div>
+            <div class="mono" style="font-size:11px; opacity:0.7; letter-spacing:0.08em; text-transform:uppercase;">Banda Estrutural Invertida · Linhagem Editorial</div>
             <div class="serif" style="font-size:26px; line-height:1.15; margin-top:4px;">Contraste seco sem depender de gradientes neon</div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -3268,7 +4215,7 @@
       </div>
     </section>
 
-    <!-- ================= 04. ARQUITETURA EDITORIAL DUAL (Anthropic + Deimos) ================= -->
+    <!-- ================= 04. ARQUITETURA EDITORIAL DUAL (Meridian) ================= -->
     <section class="section-block" id="editorial">
       <div class="container-wide">
         <div class="section-header">
@@ -3278,17 +4225,17 @@
           </div>
           <div class="cliptabs" data-cliptabs="editorial-switch">
             <div class="cliptabs-track">
-              <button class="cliptabs-btn" data-ed-view="masonry" data-active="true">Masonry Assimétrico (Anthropic)</button>
-              <button class="cliptabs-btn" data-ed-view="reader">Leitor 3 Colunas (Deimos)</button>
+              <button class="cliptabs-btn" data-ed-view="masonry" data-active="true">Masonry Assimétrico</button>
+              <button class="cliptabs-btn" data-ed-view="reader">Leitor 3 Colunas</button>
               <div class="cliptabs-overlay" aria-hidden="true">
-                <span>Masonry Assimétrico (Anthropic)</span>
-                <span>Leitor 3 Colunas (Deimos)</span>
+                <span>Masonry Assimétrico</span>
+                <span>Leitor 3 Colunas</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- VIEW A: ANTHROPIC ASYMMETRIC MASONRY -->
+        <!-- VIEW A: EDITORIAL ASYMMETRIC MASONRY -->
         <div class="view-panel" id="view-masonry">
           <div class="masonry-stack" id="masonry-container">
             <!-- Row 1: 4-col + 8-col -->
@@ -3319,8 +4266,8 @@
                   </div>
                 </div>
                 <h3 class="card-title" data-b2c="Guardião Família: janela segura de passeio e ar limpo" data-tech="Terminal Gann–Jenkins AI: confluência em escala 1:1">Guardião Família: janela segura de passeio e ar limpo</h3>
-                <p class="card-desc" data-b2c="Combina Weather Alerts, Air Quality e Pollen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos." data-tech="Cruzamento determinístico de Square of Nine, ângulos secretos 63,75° e trânsitos rápidos/lentos auditados via BigQuery.">Combina Weather Alerts, Air Quality e Pollen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos.</p>
-                <div class="card-extra" id="extra-1" hidden>MCP: mcp-google-earth-env · Superfície sugerida: Ivory / Aqua · Latência alvo: &lt;180ms</div>
+                <p class="card-desc" data-b2c="Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos." data-tech="Cruzamento determinístico de Square of Nine, ângulos secretos 63,75° e trânsitos rápidos/lentos auditados via ledger analítico.">Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos.</p>
+                <div class="card-extra" id="extra-1" hidden>Conector: env-connector · Superfície sugerida: Ivory / Aqua · Latência alvo: &lt;180ms</div>
               </article>
 
               <article class="editorial-card col-8">
@@ -3338,7 +4285,7 @@
                   </svg>
                 </div>
                 <div class="card-meta-bar">
-                  <span class="eyebrow" data-b2c="Imóveis &amp; Rua · #11" data-tech="Earth AI &amp; Ciclos · #27">Imóveis &amp; Rua · #11</span>
+                  <span class="eyebrow" data-b2c="Imóveis &amp; Rua · #11" data-tech="Ambiente &amp; Ciclos · #27">Imóveis &amp; Rua · #11</span>
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">18 NOV 2026</span>
                     <button class="tiny-more-btn" aria-expanded="false" aria-label="Expandir metadados" data-toggle-extra="extra-2">
@@ -3347,8 +4294,8 @@
                   </div>
                 </div>
                 <h3 class="card-title" data-b2c="Raio-X Real do Endereço antes de assinar o contrato" data-tech="AgroCiclos AI: anomalia térmica e embeddings AlphaEarth 10m">Raio-X Real do Endereço antes de assinar o contrato</h3>
-                <p class="card-desc" data-b2c="Auditoria visual de fachada via Street View + Gemini Vision, insolação real, ruído urbano e histórico ambiental em dossiê editorial." data-tech="Séries de satélite AlphaEarth cruzadas com janelas sazonais de precipitação e volatilidade histórica de commodities.">Auditoria visual de fachada via Street View + Gemini Vision, insolação real, ruído urbano e histórico ambiental em dossiê editorial.</p>
-                <div class="card-extra" id="extra-2" hidden>MCP: mcp-google-earth-env + Vision · Superfície sugerida: Paper White · Exportação PDF</div>
+                <p class="card-desc" data-b2c="Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial." data-tech="Séries de satélite AlphaEarth cruzadas com janelas sazonais de precipitação e volatilidade histórica de commodities.">Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial.</p>
+                <div class="card-extra" id="extra-2" hidden>Conector: env-connector + visão · Superfície sugerida: Paper White · Exportação PDF</div>
               </article>
             </div>
 
@@ -3368,8 +4315,8 @@
                   <span class="eyebrow" data-b2c="Energia &amp; Casa · #36" data-tech="Observatório · #30">Energia &amp; Casa · #36</span>
                   <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">15 NOV 2026</span>
                 </div>
-                <h3 class="card-title" data-b2c="Simulador Solar 3D com incidência real por telhado" data-tech="Pulse &amp; DNA: sentimento LunarCrush vs. ciclos de atenção">Simulador Solar 3D com incidência real por telhado</h3>
-                <p class="card-desc" data-b2c="Estima economia mensal com Google Solar API e apresenta retorno em papel quente sem planilhas intimidadoras." data-tech="Mapeia divergências entre pico de euforia social (AltRank / Galaxy Score) e janelas harmônicas de exaustão.">Estima economia mensal com Google Solar API e apresenta retorno em papel quente sem planilhas intimidadoras.</p>
+                <h3 class="card-title" data-b2c="Simulador Solar 3D com incidência real por telhado" data-tech="Pulse &amp; DNA: sentimento Pulse Social vs. ciclos de atenção">Simulador Solar 3D com incidência real por telhado</h3>
+                <p class="card-desc" data-b2c="Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras." data-tech="Mapeia divergências entre pico de euforia social (AltRank / Galaxy Score) e janelas harmônicas de exaustão.">Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras.</p>
               </article>
 
               <article class="editorial-card col-5">
@@ -3393,7 +4340,7 @@
           </div>
         </div>
 
-        <!-- VIEW B: DEIMOS 3-COLUMN ENCYCLOPEDIA READER -->
+        <!-- VIEW B: ARCHIVAL 3-COLUMN ENCYCLOPEDIA READER -->
         <div class="view-panel" id="view-reader" hidden>
           <div class="reader-grid">
             <aside class="reader-toc" aria-label="Sumário do dossiê">
@@ -3412,7 +4359,7 @@
                     <span class="claim" data-cite="2"> Dados de cobertura vegetal em resolução de 10 metros confirmam correlação direta entre dossel arbóreo e redução de 2,4 °C na ilha de calor vespertina.<sup class="sup-cite">2</sup></span>
                   </p>
                   <p style="font-size:16.5px; line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body); margin:0;">
-                    <span class="claim" data-cite="3">No modo técnico auditável, cada afirmação gerada pelo Gemini exige vínculo determinístico com o payload JSON do servidor MCP correspondente, exibindo grau de confiança e classificação de fonte.<sup class="sup-cite">3</sup></span>
+                    <span class="claim" data-cite="3">No modo técnico auditável, cada afirmação gerada pelo assistente exige vínculo determinístico com o payload JSON do conector de dados correspondente, exibindo grau de confiança e classificação de fonte.<sup class="sup-cite">3</sup></span>
                   </p>
                 </div>
 
@@ -3421,7 +4368,7 @@
                     “Quando um sistema mostra exatamente de onde veio cada dado, a confiança nasce da arquitetura — não do marketing.”
                   </blockquote>
                   <div class="mono" style="font-size:11.5px; color:var(--ds-fg-muted);">
-                    — Princípio Editorial Meridian · Linhagem Deimos &amp; Anthropic Research
+                    — Princípio Editorial Meridian · Linhagem Arquival &amp; Meridian Editorial
                   </div>
                 </div>
 
@@ -3430,15 +4377,15 @@
                   <div class="source-row" id="src-1">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">01</span>
                     <div>
-                      <div style="font-size:13.5px; font-weight:500;">Google Maps Platform — Air Quality &amp; Pollen Telemetry</div>
-                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">mcp-google-earth-env · Sensor físico em tempo real</div>
+                      <div style="font-size:13.5px; font-weight:500;">Telemetria ambiental — ar e pólen</div>
+                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">env-connector · Sensor físico em tempo real</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
                   </div>
                   <div class="source-row" id="src-2">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
                     <div>
-                      <div style="font-size:13.5px; font-weight:500;">Google Earth Engine — AlphaEarth 10m Satellite Embeddings</div>
+                      <div style="font-size:13.5px; font-weight:500;">Imagens satélite — embeddings 10m</div>
                       <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">earthengine.google.com · Série histórica orbital</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
@@ -3446,8 +4393,8 @@
                   <div class="source-row" id="src-3">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
                     <div>
-                      <div style="font-size:13.5px; font-weight:500;">BigQuery Backtest Ledger — Confluência &amp; Validação Estatística</div>
-                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">mcp-ephemeris-gann · Motor determinístico TypeScript</div>
+                      <div style="font-size:13.5px; font-weight:500;">Ledger de Backtest — Confluência &amp; Validação Estatística</div>
+                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">ephemeris-connector · Motor determinístico TypeScript</div>
                     </div>
                     <span class="tier-badge">Tier B</span>
                   </div>
@@ -3480,7 +4427,7 @@
               </button>
               <button class="fact-btn" data-cite="3">
                 <span class="eyebrow" style="font-size:9.5px;">Auditoria</span>
-                <span style="font-size:13px;">3 servidores MCP sincronizados · 0 cálculos alucinados.</span>
+                <span style="font-size:13px;">3 conectores de dados sincronizados · 0 cálculos alucinados.</span>
                 <span class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 03 ↗</span>
               </button>
             </aside>
@@ -3494,7 +4441,7 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">05 · Cronologia Lifeline &amp; Estante Tátil 3D (Deimos + Emil Gestures)</div>
+            <div class="eyebrow">05 · Cronologia Lifeline &amp; Estante Tátil 3D (gestos táteis Meridian)</div>
             <h2 class="section-title">Arrasto 1:1 com Momentum &amp; Volumes Arquivísticos</h2>
           </div>
           <p class="section-desc">
@@ -3547,10 +4494,10 @@
               </div>
               <div class="volume-cover">
                 <div>
-                  <div class="eyebrow" style="font-size:9px;">Vol. 11 · Earth AI</div>
+                  <div class="eyebrow" style="font-size:9px;">Vol. 11 · Ambiente</div>
                   <div class="serif" style="font-size:19px; line-height:1.15; margin-top:6px;">Raio-X Real do Endereço</div>
                 </div>
-                <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Street View · AQI · Solar<br/>PDF 14 págs</div>
+                <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">visão de rua · AQI · Solar<br/>PDF 14 págs</div>
                 <div class="volume-edge"></div>
               </div>
             </div>
@@ -3566,7 +4513,7 @@
                   <div class="eyebrow" style="font-size:9px;">Vol. 26 · Ciclos 4D</div>
                   <div class="serif" style="font-size:19px; line-height:1.15; margin-top:6px;">Terminal Gann–Jenkins</div>
                 </div>
-                <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Square of 9 · SVG 1:1<br/>BigQuery Backtest</div>
+                <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Square of 9 · SVG 1:1<br/>Backtest analítico</div>
                 <div class="volume-edge"></div>
               </div>
             </div>
@@ -3595,7 +4542,7 @@
               </div>
               <div class="volume-cover">
                 <div>
-                  <div class="eyebrow" style="font-size:9px;">Vol. 30 · LunarCrush</div>
+                  <div class="eyebrow" style="font-size:9px;">Vol. 30 · Pulse Social</div>
                   <div class="serif" style="font-size:19px; line-height:1.15; margin-top:6px;">Observatório Pulse</div>
                 </div>
                 <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Mapas Gênesis · Social<br/>Relatório Semanal</div>
@@ -3614,7 +4561,7 @@
                   <div class="eyebrow" style="font-size:9px;">Vol. 36 · Energia</div>
                   <div class="serif" style="font-size:19px; line-height:1.15; margin-top:6px;">Simulador Solar 3D</div>
                 </div>
-                <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Google Solar API<br/>Payback &amp; kWh/ano</div>
+                <div class="mono" style="font-size:10px; color:var(--ds-fg-muted);">modelo solar<br/>Payback &amp; kWh/ano</div>
                 <div class="volume-edge"></div>
               </div>
             </div>
@@ -3628,15 +4575,15 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">06 · Gramática Plotter SVG (pasqualevitiello/plotter) &amp; Globo 81k</div>
+            <div class="eyebrow">06 · Gramática Plotter SVG (gramática plotter) &amp; Globo 81k</div>
             <h2 class="section-title">Blueprints Vetoriais Editáveis &amp; Escala 1:1 Travada</h2>
           </div>
           <p class="section-desc">
-            Uma tinta (<code>currentColor</code>), uma espessura (<code>1u</code>), formas transparentes e hierarquia por opacidade + tracejado semântico (<code>data-plotter-role</code>) inspirados no <strong>Plotter</strong> e no globo de <em>Anthropic 81k Interviews</em>.
+            Uma tinta (<code>currentColor</code>), uma espessura (<code>1u</code>), formas transparentes e hierarquia por opacidade + tracejado semântico (<code>data-plotter-role</code>) inspirados no <strong>Plotter</strong> e no globo de <em>globo pontilhado Meridian</em>.
           </p>
         </div>
 
-        <!-- Full-width Interactive Anthropic 81k + Plotter Blueprint Orthographic Globe -->
+        <!-- Full-width Interactive malha pontilhada + Plotter Blueprint Orthographic Globe -->
         <div class="svg-instrument-card" style="margin-bottom:24px;">
           <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:12px;">
             <div>
@@ -3703,7 +4650,7 @@
           <div class="svg-instrument-card">
             <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Modo Invisível B2C · Google Earth Env</div>
+                <div class="eyebrow">Modo Invisível B2C · Ambiente</div>
                 <h3 class="serif" style="font-size:23px; margin:3px 0 0;">Bússola Ambiental &amp; Conforto 24h</h3>
               </div>
               <span class="tier-badge" id="env-status-badge">Favorável</span>
@@ -3733,11 +4680,11 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">07 · Atelier Generativo · atelier-engine.ts (Zero p5.js)</div>
+            <div class="eyebrow">07 · Atelier Generativo · atelier-engine.ts v1.3 · Zero p5.js</div>
             <h2 class="section-title">Aquarelas, Pincéis, Lápis &amp; Giz de Cera em TypeScript</h2>
           </div>
           <p class="section-desc">
-            Motor criativo 100% TypeScript estrito simulando <code>p5.js</code> + <code>p5.brush</code> e os blocos em aquarela de <em>Anthropic Economic Scenarios</em>. Selecione um preset animado ou <strong>desenhe direto na tela</strong> com o mouse/dedo!
+            Motor leve em TypeScript: aquarela de poucas camadas, grid erodido, fan de curvas e traços chalk — inspirado em <em>cenários aquarela Meridian</em>, sem p5.js. Preset animado ou <strong>pintura livre</strong>.
           </p>
         </div>
 
@@ -3770,7 +4717,7 @@
           <div class="atelier-stage" id="atelier-stage">
             <canvas id="atelier-canvas" width="1440" height="810" aria-label="Canvas generativo de aquarela, lápis grafite, giz de cera e pincel em TypeScript"></canvas>
             <div class="atelier-badge-overlay" id="atelier-status-badge">
-              atelier-engine.ts · Cenários Aquarela (Anthropic) · Arraste para pintar
+              atelier-engine.ts · Cenários Aquarela (Meridian) · Arraste para pintar
             </div>
           </div>
 
@@ -3803,7 +4750,7 @@
     </section>
   </main>
 
-  <!-- ================= FOOTER EDITORIAL (Anthropic: marca | acordeões | missão) ================= -->
+  <!-- ================= FOOTER EDITORIAL (Meridian: marca | acordeões | missão) ================= -->
   <footer class="site-footer" aria-label="Rodapé Meridian">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -3815,7 +4762,7 @@
         <details class="footer-acc">
           <summary>Sistema <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
-            <button type="button" data-nav-target="historia">História &amp; linhagem</button>
+            <button type="button" data-nav-target="historia">O Farol e o Meridiano</button>
             <button type="button" data-nav-target="cores">Superfícies Single-Ink</button>
             <button type="button" data-nav-target="tipografia">Tipografia 3 vozes</button>
             <button type="button" data-nav-target="interacoes">Motion &amp; Frequency Gate</button>
@@ -3863,7 +4810,7 @@
           <h3>Nossa missão</h3>
           <p>
             Meridian une o cotidiano calmo e o rigor auditável num motor Single-Ink —
-            papel tátil, uma tinta, navegação sem latência para Lunar + Earth AI + Gemini Studio.
+            papel tátil, uma tinta, navegação sem latência para Meridian.
           </p>
         </div>
         <div class="footer-aside-block">
@@ -3871,6 +4818,8 @@
           <div class="footer-ext">
             <a href="./preview.html">Meridian Studio <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
             <a href="./components.html">Components Lab <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
+            <a href="./manifesto.html">Manifesto <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
+            <a href="./historia.html">O Farol e o Meridiano <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
             <a href="./gann.html">Dossiê W.D. Gann <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
             <a href="#btn-open-drawer" id="footer-open-tokens">Tokens CSS &amp; TS <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
           </div>
@@ -3897,6 +4846,8 @@
       <nav class="nav-rail-list" aria-label="Páginas">
         <a href="./components.html" data-primary>Components Lab ↗</a>
         <a href="./preview.html">Prévia de App ↗</a>
+        <a href="./manifesto.html">Manifesto ↗</a>
+        <a href="./historia.html">O Farol e o Meridiano ↗</a>
         <a href="./gann.html">Dossiê W.D. Gann ↗</a>
         <a href="./index.html#topo">Design System · topo</a>
       </nav>
@@ -3934,13 +4885,13 @@
       </div>
       <div class="cmdk-list" id="cmdk-list" role="listbox"></div>
       <div class="mono" style="padding:8px 14px; border-top:1px solid var(--ds-rule); font-size:10.5px; color:var(--ds-fg-muted); display:flex; justify-content:space-between;">
-        <span>Abertura em 0ms · Emil Frequency Gate (100+/dia)</span>
+        <span>Abertura em 0ms · Frequency Gate (100+/dia)</span>
         <span>↑↓ navegar · ↵ executar</span>
       </div>
     </div>
   </div>
 
-  <!-- ================= VAUL-CURVE SIDE DRAWER (estilo Deimos archival) ================= -->
+  <!-- ================= DRAWER SIDE DRAWER (estilo arquival Meridian) ================= -->
   <div class="drawer-backdrop" id="drawer-backdrop" data-open="false"></div>
   <aside class="drawer-panel" id="drawer-panel" data-open="false" role="dialog" aria-modal="true" aria-label="Exportação de Tokens">
     <div class="drawer-head">
@@ -4133,17 +5084,21 @@
          ====================================================================== */
       const SURFACE_META = {
         ivory:      { name: 'Ivory Editorial',  bg: '#FAF9F5', s1: '#F5F4ED', s2: '#E8E6DC', s3: '#DEDCD1', fg: '#141413', muted: '#5E5D59', contrast: '17.6:1 (AAA)', blend: 'multiply' },
+        paper:      { name: 'Paper White',      bg: '#FFFFFF', s1: '#F8F8F6', s2: '#EDEDEA', s3: '#E0E0DC', fg: '#0A0A0A', muted: '#595959', contrast: '19.8:1 (AAA)', blend: 'multiply' },
         blush:      { name: 'Soft Blush',       bg: '#E8C4C0', s1: '#E0B9B5', s2: '#D2AAA6', s3: '#C29A96', fg: '#1A1414', muted: '#5A4544', contrast: '9.8:1 (AAA)', blend: 'multiply' },
+        apricot:    { name: 'Soft Apricot',     bg: '#E8C8A8', s1: '#E0BFA0', s2: '#D2AF90', s3: '#C29F80', fg: '#1A1612', muted: '#5A4A3A', contrast: '10.0:1 (AAA)', blend: 'multiply' },
         butter:     { name: 'Soft Butter',      bg: '#E8D9A8', s1: '#E0D09C', s2: '#D2C28C', s3: '#C2B27C', fg: '#1A1810', muted: '#5A5238', contrast: '10.1:1 (AAA)', blend: 'multiply' },
+        sage:       { name: 'Soft Sage',        bg: '#B8C5A8', s1: '#ACB99C', s2: '#9AAB8A', s3: '#889A78', fg: '#141812', muted: '#3E4E38', contrast: '9.8:1 (AAA)', blend: 'multiply' },
         mist:       { name: 'Soft Mist',        bg: '#C5D4CE', s1: '#B9C9C2', s2: '#A8B9B2', s3: '#96A8A0', fg: '#141816', muted: '#3E4E48', contrast: '9.6:1 (AAA)', blend: 'multiply' },
         aqua:       { name: 'Signature Aqua',   bg: '#A4CED0', s1: '#99C4C6', s2: '#90B6B7', s3: '#82A8AA', fg: '#171614', muted: '#3A4949', contrast: '10.4:1 (AAA)', blend: 'multiply' },
+        sky:        { name: 'Soft Sky',         bg: '#B0C8D6', s1: '#A4BCCA', s2: '#92AAB8', s3: '#8098A6', fg: '#12161A', muted: '#3A4A54', contrast: '9.9:1 (AAA)', blend: 'multiply' },
+        slate:      { name: 'Soft Slate',       bg: '#B5BFC9', s1: '#A9B3BD', s2: '#98A2AC', s3: '#86909A', fg: '#141618', muted: '#3E464E', contrast: '9.7:1 (AAA)', blend: 'multiply' },
         lilac:      { name: 'Soft Lilac',       bg: '#C9C0D8', s1: '#BDB4CE', s2: '#ADA2C0', s3: '#9C90B0', fg: '#16141A', muted: '#4A4458', contrast: '9.7:1 (AAA)', blend: 'multiply' },
         terracotta: { name: 'Warm Terracotta',  bg: '#EDBB99', s1: '#E4B18F', s2: '#D5A382', s3: '#C59373', fg: '#171614', muted: '#513F33', contrast: '10.4:1 (AAA)', blend: 'multiply' },
         obsidian:   { name: 'Obsidian Dark',    bg: '#0E0E0D', s1: '#161614', s2: '#222220', s3: '#30302E', fg: '#FAF9F5', muted: '#A4A39B', contrast: '18.4:1 (AAA)', blend: 'screen + invert(1)' },
-        paper:      { name: 'Paper White',      bg: '#FFFFFF', s1: '#F8F8F6', s2: '#EDEDEA', s3: '#E0E0DC', fg: '#0A0A0A', muted: '#595959', contrast: '19.8:1 (AAA)', blend: 'multiply' },
       };
 
-      const SURFACE_ORDER = ['ivory', 'blush', 'butter', 'mist', 'aqua', 'lilac', 'terracotta', 'obsidian'];
+      const SURFACE_ORDER = ['ivory', 'paper', 'blush', 'apricot', 'butter', 'sage', 'mist', 'aqua', 'sky', 'slate', 'lilac', 'terracotta', 'obsidian'];
       const GRAIN_LABELS = { off: 'Off', subtle: 'Suave', editorial: 'Editorial', tactile: 'Tátil' };
 
       const state = {
@@ -4192,14 +5147,20 @@
       }
 
       /* ======================================================================
-         4. CLIP-PATH SEAMLESS TABS ENGINE (Emil Kowalski)
+         4. CLIP-PATH SEAMLESS TABS ENGINE (Meridian Motion)
          ====================================================================== */
       function updateClipTabs(container, activeBtn) {
+        if (!container || !activeBtn) return;
+
+        const peers = activeBtn.parentElement
+          ? activeBtn.parentElement.querySelectorAll('.cliptabs-btn, [data-nav-target]')
+          : container.querySelectorAll('.cliptabs-btn, [data-nav-target]');
+        peers.forEach(b => { b.dataset.active = (b === activeBtn) ? 'true' : 'false'; });
+
         const track = container.querySelector('.cliptabs-track');
         const overlay = container.querySelector('.cliptabs-overlay');
-        if (!track || !overlay || !activeBtn) return;
+        if (!track || !overlay) return;
 
-        container.querySelectorAll('.cliptabs-btn').forEach(b => b.dataset.active = (b === activeBtn) ? 'true' : 'false');
         const tw = track.offsetWidth || 1;
         const leftPct = (activeBtn.offsetLeft / tw) * 100;
         const rightPct = 100 - ((activeBtn.offsetLeft + activeBtn.offsetWidth) / tw) * 100;
@@ -4208,7 +5169,8 @@
 
       function initAllClipTabs() {
         document.querySelectorAll('[data-cliptabs]').forEach(container => {
-          const active = container.querySelector('.cliptabs-btn[data-active="true"]') || container.querySelector('.cliptabs-btn');
+          const active = container.querySelector('[data-active="true"]')
+            || container.querySelector('.cliptabs-btn, [data-nav-target]');
           updateClipTabs(container, active);
         });
       }
@@ -4316,6 +5278,15 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         document.getElementById('meta-theme-color').setAttribute('content', m.bg);
       }
 
+      function syncSurfaceMenuTrigger(surfaceId) {
+        const meta = SURFACE_META[surfaceId];
+        if (!meta) return;
+        const swatch = document.getElementById('surface-menu-swatch');
+        const label = document.getElementById('surface-menu-label');
+        if (swatch) swatch.style.background = meta.bg;
+        if (label) label.textContent = meta.name.replace(/^(Soft |Signature |Warm )/, '').split(' ')[0];
+      }
+
       function applySurface(surfaceId, announce = true) {
         if (!SURFACE_META[surfaceId]) return;
         state.surface = surfaceId;
@@ -4323,12 +5294,14 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         document.querySelectorAll('[data-set-surface]').forEach(el => {
           el.setAttribute('aria-pressed', el.dataset.setSurface === surfaceId ? 'true' : 'false');
         });
+        syncSurfaceMenuTrigger(surfaceId);
         renderDynamicSwatches();
         renderDrawerCode();
         updateTelemetry();
         renderGannSvg();
         renderEnvSvg();
         if (typeof restartAtelier === 'function') restartAtelier(false);
+        window.dispatchEvent(new CustomEvent('meridian:surface', { detail: { surfaceId } }));
         if (announce) showToast(`Atmosfera: ${SURFACE_META[surfaceId].name}`);
       }
 
@@ -4392,7 +5365,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       }
 
       /* ======================================================================
-         6. SKIP-DELAY TOOLTIPS (Emil Kowalski: 300ms first, 0ms siblings!)
+         6. SKIP-DELAY TOOLTIPS (Meridian Motion: 300ms first, 0ms siblings!)
          ====================================================================== */
       const tooltipEl = document.getElementById('floating-tooltip');
       let tipOpenTimer = null;
@@ -4401,14 +5374,19 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       function positionTooltip(target) {
         const rect = target.getBoundingClientRect();
+        const inTopbar = !!target.closest('.topbar, .nav-rail');
+        const placeBelow = inTopbar || rect.top < 64;
+        tooltipEl.dataset.place = placeBelow ? 'below' : 'above';
         tooltipEl.style.left = `${rect.left + rect.width / 2}px`;
-        tooltipEl.style.top = `${rect.top}px`;
+        tooltipEl.style.top = placeBelow ? `${rect.bottom}px` : `${rect.top}px`;
       }
 
       document.addEventListener('pointerenter', (e) => {
         if (e.pointerType === 'touch') return;
         const target = e.target.closest && e.target.closest('[data-tip]');
         if (!target) return;
+        // Não competir com menus abertos do header
+        if (target.closest('.popover[data-open="true"]')) return;
         clearTimeout(tipOpenTimer);
         clearTimeout(tipCooldownTimer);
 
@@ -4439,19 +5417,19 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       const LIFELINE_DATA = {
         invisible: [
           { y: '06:00', title: 'Brisa Limpa · AQI 21', desc: 'Melhor qualidade do ar do dia; ideal para corrida leve e ventilação da casa.', tier: 'Tier A' },
-          { y: '09:30', title: 'Pólen Baixo · UV 4', desc: 'Sem risco alérgico relevante segundo Google Pollen API (grade 1×1 km).', tier: 'Tier A' },
+          { y: '09:30', title: 'Pólen Baixo · UV 4', desc: 'Sem risco alérgico relevante segundo índice de pólen (grade 1×1 km).', tier: 'Tier A' },
           { y: '13:00', title: 'Pico Solar · 28 °C', desc: 'Geração fotovoltaica no máximo (+4.6 kWh); evitar exposição solar direta.', tier: 'Tier A' },
           { y: '16:30', title: 'Frente Úmida Local', desc: 'Probabilidade de chuva isolada sobe para 62% em 90 minutos.', tier: 'Tier A' },
           { y: '19:45', title: 'Noite Estável · 21 °C', desc: 'Queda de temperatura e melhora do conforto térmico para descanso.', tier: 'Tier B' },
           { y: 'AMANHÃ', title: 'Janela Seca (48h)', desc: 'Sem alertas severos previstos — ótimo cenário para deslocamento.', tier: 'Tier A' },
         ],
         technical: [
-          { y: '1986', title: 'Marco Estrutural H4', desc: 'Conjunção de ciclo lento registrada na série histórica BigQuery (volatilidade +2.1σ).', tier: 'Tier A' },
+          { y: '1986', title: 'Marco Estrutural H4', desc: 'Conjunção de ciclo lento registrada na série histórica ledger analítico (volatilidade +2.1σ).', tier: 'Tier A' },
           { y: '2000', title: 'Quadratura 90° · SQ9', desc: 'Razão √2 atingida sobre pivô histórico com divergência de atenção social.', tier: 'Tier A' },
           { y: '2012', title: 'Arco Jenkins 63.75°', desc: 'Tangente de preço/tempo confirmada em escala 1:1 travada sem ruído.', tier: 'Tier B' },
-          { y: '2020', title: 'Regime Macro · C8/C11', desc: 'Início do acervo contínuo LunarCrush + reprecificação global de liquidez.', tier: 'Tier A' },
+          { y: '2020', title: 'Regime Macro · C8/C11', desc: 'Início do acervo contínuo Pulse Social + reprecificação global de liquidez.', tier: 'Tier A' },
           { y: '2026 Q4', title: 'Janela Atual · 84.2°', desc: 'Confluência ativa de trânsitos rápidos (☽/☿) sobre regente da Casa 10.', tier: 'Tier A' },
-          { y: '2027 Q1', title: 'Próxima Sizígia / Eclipse', desc: 'Projeção de regime determinística via @swisseph/node (orbe aplicativo 0.8°).', tier: 'Tier B' },
+          { y: '2027 Q1', title: 'Próxima Sizígia / Eclipse', desc: 'Projeção de regime determinística via efemérides (orbe aplicativo 0.8°).', tier: 'Tier B' },
         ],
       };
 
@@ -4480,7 +5458,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         document.getElementById('ll-detail-badge').textContent = item.tier;
       }
 
-      // 1:1 Pointer Drag + Exponential Momentum Projection (Apple Fluid Interfaces)
+      // 1:1 Pointer Drag + Exponential Momentum Projection (interfaces fluidas)
       const llViewport = document.getElementById('lifeline-viewport');
       let llDrag = { active: false, startX: 0, startScroll: 0, lastX: 0, lastT: 0, vx: 0, moved: false, raf: 0 };
 
@@ -4675,12 +5653,14 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       }
 
       /* ======================================================================
-         9. INSTANT ⌘K COMMAND PALETTE (0ms — Emil Frequency Gate)
+         9. INSTANT ⌘K COMMAND PALETTE (0ms — Frequency Gate)
          ====================================================================== */
       const CMDK_ACTIONS = [
         { title: 'Ir para: História do Meridian', hint: '↵', run: () => document.getElementById('historia').scrollIntoView({ behavior: 'smooth' }) },
         { title: 'Abrir Prévia Real de App (Meridian Studio · preview.html)', hint: '↗', run: () => { window.location.href = './preview.html'; } },
         { title: 'Abrir Components Lab (menus · tabelas · gráficos · shadcn)', hint: '↗', run: () => { window.location.href = './components.html'; } },
+        { title: 'Abrir Manifesto Meridian', hint: '↗', run: () => { window.location.href = './manifesto.html'; } },
+        { title: 'Abrir O Farol e o Meridiano (ensaio ilustrado)', hint: '↗', run: () => { window.location.href = './historia.html'; } },
         { title: 'Abrir Dossiê W.D. Gann (HalfTone + Plotter D2)', hint: '↗', run: () => { window.location.href = './gann.html'; } },
         { title: 'Superfície: Ivory Editorial (#FAF9F5)', hint: '1', run: () => applySurface('ivory') },
         { title: 'Superfície: Paper White (#FFFFFF)', hint: '2', run: () => applySurface('paper') },
@@ -4696,10 +5676,10 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         { title: 'Ruído: tamanho Grumoso', hint: 'G', run: () => applyGrainSize('chunky') },
         { title: 'Abrir Drawer de Tokens (CSS + RN + Atelier TS)', hint: 'T', run: () => setDrawer(true) },
         { title: 'Ir para: Globo Plotter 81k & SVG 1:1', hint: '↵', run: () => document.getElementById('svg-viz').scrollIntoView() },
-        { title: 'Atelier: Cenários em Aquarela (Anthropic Econ)', hint: 'A', run: () => { selectAtelierPreset('econ'); document.getElementById('atelier').scrollIntoView(); } },
+        { title: 'Atelier: Cenários em Aquarela (cenários aquarela)', hint: 'A', run: () => { selectAtelierPreset('econ'); document.getElementById('atelier').scrollIntoView(); } },
         { title: 'Atelier: Caderno Gann 4B + Sumi-e', hint: 'A', run: () => { selectAtelierPreset('celestial'); document.getElementById('atelier').scrollIntoView(); } },
         { title: 'Atelier: Colagem em Giz de Cera', hint: 'A', run: () => { selectAtelierPreset('crayon'); document.getElementById('atelier').scrollIntoView(); } },
-        { title: 'Ir para: Leitor 3 Colunas (Deimos)', hint: '↵', run: () => { switchEditorialView('reader'); document.getElementById('editorial').scrollIntoView(); } },
+        { title: 'Ir para: Leitor 3 Colunas', hint: '↵', run: () => { switchEditorialView('reader'); document.getElementById('editorial').scrollIntoView(); } },
         { title: 'Ir para: Lifeline & Estante 3D', hint: '↵', run: () => document.getElementById('cronologia').scrollIntoView() },
       ];
 
@@ -4742,7 +5722,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       cmdkBackdrop.addEventListener('click', (e) => { if (e.target === cmdkBackdrop) setCmdk(false); });
 
       /* ======================================================================
-         10. VAUL-CURVE SIDE DRAWER & POPOVER CONTROLS
+         10. DRAWER SIDE DRAWER & POPOVER CONTROLS
          ====================================================================== */
       const drawerBackdrop = document.getElementById('drawer-backdrop');
       const drawerPanel = document.getElementById('drawer-panel');
@@ -4767,14 +5747,61 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       document.getElementById('btn-close-nav-rail')?.addEventListener('click', () => setNavRail(false));
       navRailBackdrop?.addEventListener('click', () => setNavRail(false));
 
+      /* Header: seções inline ≥1024px · hambúrguer abaixo — fecha rail ao expandir */
+      const topbarNavMq = window.matchMedia('(min-width: 1024px)');
+      const syncTopbarNavMode = () => {
+        const inline = topbarNavMq.matches;
+        document.documentElement.dataset.topbarNav = inline ? 'inline' : 'drawer';
+        if (inline) {
+          setNavRail(false);
+          requestAnimationFrame(() => {
+            const mainNav = document.querySelector('[data-cliptabs="main-nav"]');
+            const active = mainNav?.querySelector('[data-active="true"]')
+              || mainNav?.querySelector('[data-nav-target]');
+            if (mainNav && active) updateClipTabs(mainNav, active);
+          });
+        }
+      };
+      if (typeof topbarNavMq.addEventListener === 'function') {
+        topbarNavMq.addEventListener('change', syncTopbarNavMode);
+      } else {
+        topbarNavMq.addListener(syncTopbarNavMode);
+      }
+      syncTopbarNavMode();
+
       const grainBtn = document.getElementById('btn-grain-popover');
       const grainPop = document.getElementById('grain-popover');
+      const surfaceMenuBtn = document.getElementById('btn-surface-menu');
+      const surfaceMenu = document.getElementById('surface-menu');
+      function hideFloatingTip() {
+        clearTimeout(tipOpenTimer);
+        if (tooltipEl) tooltipEl.dataset.visible = 'false';
+      }
       function setGrainPopover(open) {
         grainPop.dataset.open = open ? 'true' : 'false';
         grainPop.setAttribute('aria-hidden', open ? 'false' : 'true');
         grainBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+          setSurfaceMenu(false);
+          hideFloatingTip();
+        }
+      }
+      function setSurfaceMenu(open) {
+        if (!surfaceMenu || !surfaceMenuBtn) return;
+        surfaceMenu.dataset.open = open ? 'true' : 'false';
+        surfaceMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        surfaceMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+          setGrainPopover(false);
+          hideFloatingTip();
+        }
       }
       grainPop.setAttribute('aria-hidden', 'true');
+      surfaceMenu?.setAttribute('aria-hidden', 'true');
+      surfaceMenuBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setSurfaceMenu(surfaceMenu?.dataset.open !== 'true');
+      });
 
       function switchEditorialView(viewName) {
         const container = document.querySelector('[data-cliptabs="editorial-switch"]');
@@ -4789,12 +5816,17 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
          ====================================================================== */
       document.addEventListener('click', (e) => {
         // Close popover on outside click
-        if (grainPop.dataset.open === 'true' && !e.target.closest('.popover-anchor')) {
-          setGrainPopover(false);
+        if (!e.target.closest('.popover-anchor')) {
+          if (grainPop.dataset.open === 'true') setGrainPopover(false);
+          if (surfaceMenu?.dataset.open === 'true') setSurfaceMenu(false);
         }
 
         const surfBtn = e.target.closest('[data-set-surface]');
-        if (surfBtn) { applySurface(surfBtn.dataset.setSurface); return; }
+        if (surfBtn) {
+          applySurface(surfBtn.dataset.setSurface);
+          if (surfBtn.closest('#surface-menu')) setSurfaceMenu(false);
+          return;
+        }
 
         const grainOpt = e.target.closest('[data-set-grain]');
         if (grainOpt) { applyGrain(grainOpt.dataset.setGrain); return; }
@@ -4820,6 +5852,10 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           const clipHost = navBtn.closest('[data-cliptabs]');
           if (clipHost) updateClipTabs(clipHost, navBtn);
           if (target) target.scrollIntoView({ behavior: 'smooth' });
+          if (navBtn.dataset.navTarget === 'atelier' && typeof restartAtelier === 'function') {
+            // Espera o scroll pousar para o reveal rodar visível
+            window.setTimeout(() => restartAtelier(false, { forcePlay: true }), 420);
+          }
           setNavRail(false);
           return;
         }
@@ -4831,9 +5867,9 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (clBtn) {
           updateClipTabs(clBtn.closest('[data-cliptabs]'), clBtn);
           const map = {
-            A: 'mcp-ephemeris-gann + mcp-lunarcrush → #26 Terminal Gann-Jenkins · #30 Pulse & DNA · #27 AgroCiclos',
-            B: 'mcp-google-earth-env → #11 Raio-X Endereço · #36 Simulador Solar · #1 Guardião Família',
-            C: 'mcp-lunarcrush + mcp-google-media-ops → #42 Redação YouTube · #40 Copiloto RI · #21 Jornal 3 Min',
+            A: 'ephemeris-connector + pulse-connector → #26 Terminal Gann-Jenkins · #30 Pulse & DNA · #27 AgroCiclos',
+            B: 'env-connector → #11 Raio-X Endereço · #36 Simulador Solar · #1 Guardião Família',
+            C: 'pulse-connector + media-connector → #42 Redação YouTube · #40 Copiloto RI · #21 Jornal 3 Min',
           };
           const ro = document.getElementById('cluster-readout');
           ro.dataset.morphing = 'true';
@@ -4920,7 +5956,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         e.preventDefault();
         setDrawer(true);
       });
-      /* Accordion: só um aberto por vez (padrão Anthropic) */
+      /* Accordion: só um aberto por vez (padrão Meridian) */
       document.querySelectorAll('.footer-acc').forEach((acc) => {
         acc.addEventListener('toggle', () => {
           if (!acc.open) return;
@@ -4952,7 +5988,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         renderEnvSvg();
       });
 
-      // Hold-to-Confirm Asymmetric Interaction (Emil)
+      // Hold-to-Confirm Asymmetric Interaction 
       const holdBtn = document.getElementById('btn-hold-confirm');
       let holdTimer = null;
       const startHold = () => {
@@ -5162,16 +6198,22 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           `LON ${normLon}° · TILT ${Math.round(globeState.tiltLat)}° · Arraste 1:1 no globo para orbitar`;
       }
 
-      // Drag 1:1 no globo (Emil direct manipulation)
+      // Drag 1:1 no globo — bloqueia seleção lilás nativa do browser nos textos SVG
       globeStage.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        window.getSelection()?.removeAllRanges();
         globeState.dragging = true;
         globeState.lastX = e.clientX;
         globeState.lastY = e.clientY;
         globeStage.dataset.dragging = 'true';
         globeStage.setPointerCapture(e.pointerId);
       });
+      globeStage.addEventListener('selectstart', (e) => e.preventDefault());
+      globeStage.addEventListener('dragstart', (e) => e.preventDefault());
       globeStage.addEventListener('pointermove', (e) => {
         if (!globeState.dragging) return;
+        e.preventDefault();
         const dx = e.clientX - globeState.lastX;
         const dy = e.clientY - globeState.lastY;
         globeState.lastX = e.clientX;
@@ -5180,7 +6222,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         globeState.tiltLat = Math.max(-45, Math.min(45, globeState.tiltLat + dy * 0.35));
         renderPlottedGlobe();
       });
-      const endGlobeDrag = () => { globeState.dragging = false; globeStage.dataset.dragging = 'false'; };
+      const endGlobeDrag = () => {
+        globeState.dragging = false;
+        globeStage.dataset.dragging = 'false';
+        window.getSelection()?.removeAllRanges();
+      };
       globeStage.addEventListener('pointerup', endGlobeDrag);
       globeStage.addEventListener('pointercancel', endGlobeDrag);
 
@@ -5226,7 +6272,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       /* ======================================================================
          13. ATELIER GENERATIVO — MOTOR COMPILADO DE atelier-engine.ts (ZERO p5.js)
-         Aquarelas, Blocos Anthropic Econ, Lápis Grafite, Giz de Cera & Pincel Sumi-e
+         Aquarelas, Blocos cenários aquarela, Lápis Grafite, Giz de Cera & Pincel Sumi-e
          ====================================================================== */
       const atelierCanvas = document.getElementById('atelier-canvas');
       const atelierCtx = atelierCanvas.getContext('2d');
@@ -5236,10 +6282,13 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         pigment: 'coral',
         seed: 20261120,
         frame: 0,
+        total: 0,
         raf: 0,
-        inView: true,
+        inView: false,
         drawing: false,
         strokePts: [],
+        /** ms entre frames do reveal (~3–4s no preset econ) */
+        frameMs: 85,
       };
 
       class AtelierNoise {
@@ -5316,17 +6365,20 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         return cur;
       }
 
-      function aWatercolor(poly, color, layers = 14, bleed = 0.28, alpha = null, wetEdge = true) {
+      /** Aquarela leve: 1 deform + poucas coats (sem overdraw) */
+      function aWatercolor(poly, color, layers = 5, bleed = 0.22, alpha = null, wetEdge = true) {
+        if (!poly || poly.length < 3) return;
         const tm = aTheme();
-        const a = alpha ?? (tm.dark ? 0.08 : 0.055);
-        const base = aDeform(poly, 2, bleed * 0.72);
+        const a = alpha ?? (tm.dark ? 0.1 : 0.07);
+        const coats = Math.min(6, Math.max(2, layers));
+        const base = aDeform(poly, 2, bleed * 0.55);
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = tm.comp;
         atelierCtx.fillStyle = color;
-        for (let i = 0; i < layers; i++) {
-          const coat = aDeform(base, 1, bleed * (0.45 + 0.55 * (i / layers)));
-          atelierCtx.globalAlpha = a;
+        for (let i = 0; i < coats; i++) {
+          const coat = i === 0 ? base : aDeform(base, 1, bleed * (0.2 + 0.35 * (i / coats)));
+          atelierCtx.globalAlpha = a * (0.85 - i * 0.08);
           atelierCtx.beginPath();
           atelierCtx.moveTo(coat[0].x, coat[0].y);
           for (let k = 1; k < coat.length; k++) atelierCtx.lineTo(coat[k].x, coat[k].y);
@@ -5334,16 +6386,93 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           atelierCtx.fill();
         }
         if (wetEdge) {
-          const ring = aDeform(base, 1, bleed * 0.22);
           atelierCtx.strokeStyle = color;
-          atelierCtx.lineWidth = 1.2;
-          atelierCtx.globalAlpha = Math.min(0.35, a * 3.1);
+          atelierCtx.lineWidth = 1;
+          atelierCtx.globalAlpha = Math.min(0.22, a * 2.2);
           atelierCtx.beginPath();
-          atelierCtx.moveTo(ring[0].x, ring[0].y);
-          for (let k = 1; k < ring.length; k++) atelierCtx.lineTo(ring[k].x, ring[k].y);
+          atelierCtx.moveTo(base[0].x, base[0].y);
+          for (let k = 1; k < base.length; k++) atelierCtx.lineTo(base[k].x, base[k].y);
           atelierCtx.closePath();
           atelierCtx.stroke();
         }
+        atelierCtx.restore();
+      }
+
+      /** Grid leve: linhas inteiras com alpha por linha (sem micro-segmentos) */
+      function aErodedGrid(cell = 28, erosion = 0.38) {
+        const tm = aTheme();
+        const baseA = tm.dark ? 0.12 : 0.08;
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.strokeStyle = tm.fg;
+        atelierCtx.lineWidth = 0.75;
+        atelierCtx.lineCap = 'butt';
+        for (let x = 0; x <= A_W; x += cell) {
+          const n = aNoise.fbm2D(x * 0.02, 0.4, 2);
+          if (n < erosion) continue;
+          atelierCtx.globalAlpha = baseA * (0.35 + 0.65 * ((n - erosion) / (1 - erosion))) * (1 - (x / A_W) * 0.7);
+          atelierCtx.beginPath();
+          atelierCtx.moveTo(x, 0);
+          atelierCtx.lineTo(x, A_H);
+          atelierCtx.stroke();
+        }
+        for (let y = 0; y <= A_H; y += cell) {
+          const n = aNoise.fbm2D(0.7, y * 0.02, 2);
+          if (n < erosion) continue;
+          atelierCtx.globalAlpha = baseA * (0.35 + 0.65 * ((n - erosion) / (1 - erosion)));
+          atelierCtx.beginPath();
+          atelierCtx.moveTo(0, y);
+          atelierCtx.lineTo(A_W * 0.72, y);
+          atelierCtx.stroke();
+        }
+        atelierCtx.restore();
+      }
+
+      /** Traço chalk/dry leve: 2 fibras, resample largo */
+      function aDryBrush(path, color, thickness = 2, decay = 0.4) {
+        if (!path || path.length < 2) return;
+        const pts = aResample(path, 4);
+        const tm = aTheme();
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = tm.comp;
+        atelierCtx.strokeStyle = color;
+        atelierCtx.lineCap = 'round';
+        atelierCtx.lineJoin = 'round';
+        for (let b = 0; b < 2; b++) {
+          const off = (b - 0.5) * thickness * 0.55;
+          atelierCtx.beginPath();
+          for (let i = 0; i < pts.length; i++) {
+            const t = i / Math.max(1, pts.length - 1);
+            const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
+            const mg = Math.hypot(nxPt.x - pr.x, nxPt.y - pr.y) || 1;
+            const nx = -(nxPt.y - pr.y) / mg, ny = (nxPt.x - pr.x) / mg;
+            const wob = (aNoise.noise2D(p.x * 0.05 + b, p.y * 0.05) - 0.5) * thickness * 0.35;
+            const x = p.x + nx * (off + wob), y = p.y + ny * (off + wob);
+            if (i === 0) atelierCtx.moveTo(x, y); else atelierCtx.lineTo(x, y);
+          }
+          atelierCtx.globalAlpha = (0.28 - b * 0.06) * (1 - decay * 0.5);
+          atelierCtx.lineWidth = thickness * (0.85 - b * 0.2);
+          atelierCtx.stroke();
+        }
+        atelierCtx.restore();
+      }
+
+      /** Curva suave Q/C para o fan Econ */
+      function aSoftStroke(path, color, width = 2.2, alpha = 0.55) {
+        if (!path || path.length < 2) return;
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = aTheme().comp;
+        atelierCtx.strokeStyle = color;
+        atelierCtx.globalAlpha = alpha;
+        atelierCtx.lineWidth = width;
+        atelierCtx.lineCap = 'round';
+        atelierCtx.lineJoin = 'round';
+        atelierCtx.beginPath();
+        atelierCtx.moveTo(path[0].x, path[0].y);
+        for (let i = 1; i < path.length; i++) atelierCtx.lineTo(path[i].x, path[i].y);
+        atelierCtx.stroke();
         atelierCtx.restore();
       }
 
@@ -5371,27 +6500,27 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (path.length < 2) return;
         const tm = aTheme();
         const col = color || tm.fg;
-        const weight = grade === '2H' ? 1.0 : grade === '4B' ? 2.4 : 1.5;
-        const strands = grade === '2H' ? 4 : grade === '4B' ? 7 : 5;
-        const op = (grade === '2H' ? 0.22 : grade === '4B' ? 0.40 : 0.30) * pressure;
-        const pts = aResample(path, 3.4);
+        const weight = grade === '2H' ? 1.0 : grade === '4B' ? 2.2 : 1.4;
+        const strands = grade === '4B' ? 3 : 2;
+        const op = (grade === '2H' ? 0.28 : grade === '4B' ? 0.42 : 0.34) * pressure;
+        const pts = aResample(path, 4.5);
 
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = tm.comp;
         atelierCtx.strokeStyle = col;
-        atelierCtx.fillStyle = col;
         atelierCtx.lineCap = 'round';
+        atelierCtx.lineJoin = 'round';
         for (let s = 0; s < strands; s++) {
-          const lat = ((s / Math.max(1, strands - 1)) - 0.5) * weight * 1.45;
-          atelierCtx.globalAlpha = op * (0.7 + aNoise.rand(0, 0.32));
-          atelierCtx.lineWidth = Math.max(0.45, weight * 0.35);
+          const lat = ((s / Math.max(1, strands - 1)) - 0.5) * weight * 1.1;
+          atelierCtx.globalAlpha = op * (0.8 + aNoise.rand(0, 0.15));
+          atelierCtx.lineWidth = Math.max(0.55, weight * 0.4);
           atelierCtx.beginPath();
           for (let i = 0; i < pts.length; i++) {
             const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
             const mg = Math.hypot(nxPt.x - pr.x, nxPt.y - pr.y) || 1;
             const nx = -(nxPt.y - pr.y) / mg, ny = (nxPt.x - pr.x) / mg;
-            const wob = (aNoise.fbm2D(p.x * 0.045 + s * 3, p.y * 0.045, 2) - 0.5) * 1.8;
+            const wob = (aNoise.noise2D(p.x * 0.04 + s, p.y * 0.04) - 0.5) * 1.2;
             const x = p.x + nx * (lat + wob), y = p.y + ny * (lat + wob);
             if (i === 0) atelierCtx.moveTo(x, y); else atelierCtx.lineTo(x, y);
           }
@@ -5410,47 +6539,45 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       function aCrayon(path, color, thickness = 11, tooth = 0.52) {
         if (path.length < 2) return;
-        const tm = aTheme();
-        const pts = aResample(path, 2.5);
+        const pts = aResample(path, 4);
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
-        atelierCtx.globalCompositeOperation = tm.comp;
+        atelierCtx.globalCompositeOperation = aTheme().comp;
         atelierCtx.fillStyle = color;
         for (let i = 0; i < pts.length; i++) {
           const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
           const ang = Math.atan2(nxPt.y - pr.y, nxPt.x - pr.x);
-          const grains = Math.round(thickness * 1.6);
+          const grains = Math.round(thickness * 0.7);
           for (let g = 0; g < grains; g++) {
-            const across = aNoise.gauss(0, thickness * 0.34);
-            const along = aNoise.gauss(0, 1.4);
-            const gx = p.x + Math.cos(ang) * along - Math.sin(ang) * across;
-            const gy = p.y + Math.sin(ang) * along + Math.cos(ang) * across;
-            const peak = aNoise.noise2D(gx * 0.36, gy * 0.36);
-            const fall = Math.max(0.12, Math.min(1, 1 - Math.abs(across) / (thickness * 0.72)));
-            if (peak < tooth * (1.15 - 0.35 * fall)) continue;
-            atelierCtx.globalAlpha = (0.28 + 0.44 * (peak - tooth * 0.5)) * fall;
+            const across = aNoise.gauss(0, thickness * 0.3);
+            const gx = p.x - Math.sin(ang) * across;
+            const gy = p.y + Math.cos(ang) * across;
+            const peak = aNoise.noise2D(gx * 0.3, gy * 0.3);
+            if (peak < tooth) continue;
+            atelierCtx.globalAlpha = 0.35 * Math.max(0.2, 1 - Math.abs(across) / (thickness * 0.7));
             atelierCtx.beginPath();
-            atelierCtx.ellipse(gx, gy, aNoise.rand(0.65, 1.9), aNoise.rand(0.45, 1.3), ang, 0, Math.PI * 2);
+            atelierCtx.ellipse(gx, gy, 1.2, 0.8, ang, 0, Math.PI * 2);
             atelierCtx.fill();
           }
         }
         atelierCtx.restore();
       }
 
-      function aInkBrush(path, color, width = 7, bristles = 7, dryness = 0.38) {
+      function aInkBrush(path, color, width = 7, bristles = 4, dryness = 0.38) {
         if (path.length < 2) return;
         const tm = aTheme();
-        const pts = aResample(path, 2.8);
+        const pts = aResample(path, 3.5);
+        const nBristles = Math.min(5, bristles);
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = tm.comp;
         atelierCtx.strokeStyle = color || tm.fg;
         atelierCtx.lineCap = 'round';
-        for (let b = 0; b < bristles; b++) {
-          const frac = bristles === 1 ? 0 : (b / (bristles - 1)) * 2 - 1;
+        for (let b = 0; b < nBristles; b++) {
+          const frac = nBristles === 1 ? 0 : (b / (nBristles - 1)) * 2 - 1;
           let penDown = false;
-          atelierCtx.lineWidth = Math.max(0.65, (width / bristles) * 1.55);
-          atelierCtx.globalAlpha = 0.74;
+          atelierCtx.lineWidth = Math.max(0.7, (width / nBristles) * 1.4);
+          atelierCtx.globalAlpha = 0.7;
           atelierCtx.beginPath();
           for (let i = 0; i < pts.length; i++) {
             const t = i / Math.max(1, pts.length - 1);
@@ -5471,12 +6598,16 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       function aClear() {
         atelierCtx.save();
         atelierCtx.setTransform(1, 0, 0, 1, 0, 0);
-        atelierCtx.clearRect(0, 0, atelierCanvas.width, atelierCanvas.height);
+        atelierCtx.globalCompositeOperation = 'source-over';
+        atelierCtx.globalAlpha = 1;
+        // Fundo opaco = multiply da aquarela visível (clear transparente some no stack)
+        atelierCtx.fillStyle = cssVar('--ds-bg') || '#FAF9F5';
+        atelierCtx.fillRect(0, 0, atelierCanvas.width, atelierCanvas.height);
         atelierCtx.restore();
       }
 
       const PRESET_TITLES = {
-        econ: 'Cenários Aquarela (Anthropic Econ)',
+        econ: 'Cenários Aquarela (cenários aquarela)',
         botanical: 'Botânica & Topografia (Aquarela + Lápis 2H)',
         celestial: 'Caderno Gann 4B + Espiral Sumi-e',
         crayon: 'Colagem Giz de Cera / Pastel Seco',
@@ -5488,140 +6619,184 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         const preset = atelierState.preset;
 
         if (preset === 'econ') {
-          const cols = 4, rows = 3, stepsPerCell = 5, cellsEnd = 60, total = 84;
+          // Composição limpa: grid → 12 células (1/frame) → 18 curvas do fan
+          const cols = 4, rows = 3, cellCount = 12, fanCount = 18, total = cellCount + fanCount + 2;
+          const padX = 44, padY = 52, gap = 12;
+          const cw = 68, ch = 72;
           if (frame === 0) {
-            const padX = 48, padY = 56, gridW = 324, gridH = 276, gap = 10;
-            const cw = (gridW - gap * 3) / 4, ch = (gridH - gap * 2) / 3;
+            aErodedGrid(28, 0.4);
             for (let r = 0; r < rows; r++)
               for (let c = 0; c < cols; c++)
-                aHandRect(padX + c * (cw + gap), padY + r * (ch + gap), cw, ch, tm.fg, '2H', 0.55);
-            aPencil([{ x: 422, y: 56 }, { x: 422, y: 332 }], tm.fg, '2H', 0.72);
-            aPencil([{ x: 414, y: 326 }, { x: 672, y: 326 }], tm.fg, '2H', 0.72);
+                aHandRect(padX + c * (cw + gap), padY + r * (ch + gap), cw, ch, tm.fg, '2H', 0.45);
+            aPencil([{ x: 400, y: 52 }, { x: 400, y: 330 }], tm.fg, '2H', 0.55);
+            aPencil([{ x: 392, y: 322 }, { x: 680, y: 322 }], tm.fg, '2H', 0.55);
             return total;
           }
-          if (frame <= cellsEnd) {
-            const idx = Math.floor((frame - 1) / stepsPerCell);
-            const st = (frame - 1) % stepsPerCell;
+          if (frame <= cellCount) {
+            const idx = frame - 1;
             const r = Math.floor(idx / cols), c = idx % cols;
-            const padX = 48, padY = 56, gridW = 324, gridH = 276, gap = 10;
-            const cw = (gridW - gap * 3) / 4, ch = (gridH - gap * 2) / 3;
             const x = padX + c * (cw + gap), y = padY + r * (ch + gap);
-            const x0 = x + (st / stepsPerCell) * cw, x1 = x + ((st + 1) / stepsPerCell) * cw;
             const col = pal[(idx + r) % pal.length];
-            aWatercolor([{ x: x0, y: y + 1 }, { x: x1 + 2, y: y + 1 }, { x: x1 + 2, y: y + ch - 1 }, { x: x0, y: y + ch - 1 }], col, 7, 0.22, tm.dark ? 0.09 : 0.068, st === stepsPerCell - 1);
-            const my = y + ch * (0.28 + ((st * 37) % 10) * 0.05);
-            aInkBrush([{ x: x0, y: my }, { x: x1, y: my + aNoise.gauss(0, 1.8) }], col, ch * 0.3, 4, 0.55);
-          } else if (frame <= cellsEnd + 16) {
-            const f2 = frame - cellsEnd, segs = 16;
-            const u0 = (f2 - 1) / segs, u1 = f2 / segs;
-            const cx0 = 422 + u0 * 246, cx1 = 422 + u1 * 246, by = 326;
-            const ytA0 = by - Math.pow(u0, 1.55) * 230, ytA1 = by - Math.pow(u1, 1.55) * 230;
-            const ybA0 = by - Math.pow(u0, 1.32) * 124, ybA1 = by - Math.pow(u1, 1.32) * 124;
-            aWatercolor([{ x: cx0, y: ytA0 }, { x: cx1 + 2, y: ytA1 }, { x: cx1 + 2, y: ybA1 }, { x: cx0, y: ybA0 }], tm.coral, 5, 0.16, tm.dark ? 0.08 : 0.058, false);
-            const ytB0 = by - Math.pow(u0, 1.25) * 112, ytB1 = by - Math.pow(u1, 1.25) * 112;
-            const ybB0 = by - u0 * 34, ybB1 = by - u1 * 34;
-            aWatercolor([{ x: cx0, y: ytB0 }, { x: cx1 + 2, y: ytB1 }, { x: cx1 + 2, y: ybB1 }, { x: cx0, y: ybB0 }], tm.sky, 5, 0.16, tm.dark ? 0.08 : 0.058, false);
-            aPencil([{ x: cx0, y: ytA0 }, { x: cx1, y: ytA1 }], tm.fg, '4B', 0.9);
-            aPencil([{ x: cx0, y: ytB0 }, { x: cx1, y: ytB1 }], tm.fg, 'HB', 0.75);
-          } else if (frame === cellsEnd + 20) {
-            aCrayon([{ x: 604, y: 120 }, { x: 668, y: 96 }], tm.ochre, 9, 0.5);
+            // fill completo da célula de uma vez (sem fatiar)
+            aWatercolor(
+              [
+                { x: x + 3, y: y + 3 },
+                { x: x + cw - 3, y: y + 4 },
+                { x: x + cw - 4, y: y + ch - 3 },
+                { x: x + 4, y: y + ch - 4 },
+              ],
+              col, 4, 0.16, tm.dark ? 0.14 : 0.1, true
+            );
+            aDryBrush(
+              [{ x: x + 6, y: y + ch * 0.45 }, { x: x + cw - 6, y: y + ch * 0.52 }],
+              col, 2.2, 0.25
+            );
+          } else if (frame <= cellCount + fanCount) {
+            const i = frame - cellCount - 1;
+            const u = i / (fanCount - 1);
+            const origin = { x: 400, y: 322 };
+            const angle = -0.72 + u * 1.15;
+            const len = 210 + u * 40;
+            const band = [tm.sky, tm.olive, tm.coral][Math.min(2, Math.floor(u * 3))];
+            const pts = [];
+            for (let s = 0; s <= 10; s++) {
+              const t = s / 10;
+              const exp = 1 - Math.pow(1 - t, 1.55);
+              const n = (aNoise.noise2D(i * 0.31 + t, 2.1) - 0.5) * 10;
+              pts.push({
+                x: origin.x + Math.cos(angle) * len * exp + n * Math.cos(angle + Math.PI / 2),
+                y: origin.y + Math.sin(angle) * len * exp + n * Math.sin(angle + Math.PI / 2),
+              });
+            }
+            // wash suave sob a curva (1 blob barato)
+            if (i % 3 === 1) {
+              const mid = pts[6];
+              aWatercolor(aBlob(mid.x, mid.y, 22, 14, 7), band, 3, 0.2, 0.06, false);
+            }
+            aSoftStroke(pts, band, 2.4 - Math.abs(u - 0.5), 0.42);
+            aDryBrush(pts, band, 1.8, 0.45);
+          } else if (frame === cellCount + fanCount + 1) {
+            aPencil([{ x: 400, y: 322 }, { x: 610, y: 140 }], tm.fg, 'HB', 0.7);
           }
           return total;
         }
 
         if (preset === 'botanical') {
           if (frame === 0) {
-            aWatercolor(aBlob(225, 175, 165, 125, 11), tm.sky, 16, 0.34);
-            aWatercolor(aBlob(455, 228, 178, 115, 11), tm.olive, 16, 0.32);
-            aWatercolor(aBlob(538, 115, 86, 68, 10), tm.ochre, 14, 0.28);
-            return 26;
+            aWatercolor(aBlob(220, 180, 150, 110, 9), tm.sky, 5, 0.28, null, true);
+            aWatercolor(aBlob(450, 230, 160, 100, 9), tm.olive, 5, 0.26, null, true);
+            aWatercolor(aBlob(530, 120, 70, 55, 8), tm.ochre, 4, 0.24, null, true);
+            return 16;
           }
-          if (frame <= 26 && frame % 2 === 0) {
-            const yBase = 112 + (frame / 26) * 230;
+          if (frame <= 16 && frame % 2 === 0) {
+            const yBase = 120 + (frame / 16) * 200;
             const pts = [];
-            for (let x = 52; x <= 668; x += 16) {
-              pts.push({ x, y: yBase + (aNoise.fbm2D(x * 0.008, frame * 0.14, 2) - 0.5) * 52 });
+            for (let x = 60; x <= 660; x += 22) {
+              pts.push({ x, y: yBase + (aNoise.noise2D(x * 0.01, frame * 0.2) - 0.5) * 36 });
             }
-            aPencil(pts, tm.fg, frame % 6 === 0 ? 'HB' : '2H', 0.65);
+            aPencil(pts, tm.fg, '2H', 0.55);
           }
-          return 26;
+          return 16;
         }
 
         if (preset === 'celestial') {
-          const cx = 420, cy = 202, R = 148;
+          const cx = 420, cy = 202, R = 140;
           if (frame === 0) {
-            // Hachura técnica à esquerda
-            for (let off = -140; off <= 140; off += 11) {
-              const y1 = Math.max(58, Math.min(344, 200 + off - 95));
-              const y2 = Math.max(58, Math.min(344, 200 + off + 95));
-              aPencil([{ x: 62, y: y1 }, { x: 222, y: y2 }], tm.fg, '2H', 0.5);
+            for (let off = -120; off <= 120; off += 16) {
+              aPencil([{ x: 70, y: 200 + off - 70 }, { x: 210, y: 200 + off + 70 }], tm.fg, '2H', 0.4);
             }
-            aHandRect(62, 58, 160, 286, tm.fg, '2H', 0.6);
-            return 30;
+            aHandRect(62, 58, 160, 286, tm.fg, '2H', 0.55);
+            return 22;
           }
-          if (frame <= 18) {
-            const a0 = ((frame - 1) / 18) * Math.PI * 2, a1 = (frame / 18) * Math.PI * 2;
+          if (frame <= 12) {
+            const a0 = ((frame - 1) / 12) * Math.PI * 2, a1 = (frame / 12) * Math.PI * 2;
             const pts = [];
-            for (let s = 0; s <= 5; s++) {
-              const ang = a0 + (a1 - a0) * (s / 5);
+            for (let s = 0; s <= 4; s++) {
+              const ang = a0 + (a1 - a0) * (s / 4);
               pts.push({ x: cx + Math.cos(ang) * R, y: cy + Math.sin(ang) * R });
             }
-            aPencil(pts, tm.fg, '4B', 0.92);
-          } else if (frame <= 26) {
-            const deg = (frame - 19) * 45, rad = deg * Math.PI / 180;
-            aPencil([{ x: cx, y: cy }, { x: cx + Math.cos(rad) * R, y: cy + Math.sin(rad) * R }], tm.fg, 'HB', 0.78);
-          } else if (frame === 28) {
+            aPencil(pts, tm.fg, '4B', 0.85);
+          } else if (frame <= 20) {
+            const deg = (frame - 13) * 45, rad = deg * Math.PI / 180;
+            aPencil([{ x: cx, y: cy }, { x: cx + Math.cos(rad) * R, y: cy + Math.sin(rad) * R }], tm.fg, 'HB', 0.7);
+          } else if (frame === 22) {
             const sp = [];
-            for (let i = 0; i <= 48; i++) {
-              const t = i / 48, ang = t * Math.PI * 4.2, r = t * R * 0.88;
+            for (let i = 0; i <= 32; i++) {
+              const t = i / 32, ang = t * Math.PI * 3.6, r = t * R * 0.85;
               sp.push({ x: cx + Math.cos(ang) * r, y: cy + Math.sin(ang) * r });
             }
-            aInkBrush(sp, tm.coral, 7.5, 8, 0.36);
+            aInkBrush(sp, tm.coral, 6, 5, 0.3);
           }
-          return 30;
+          return 22;
         }
 
-        // preset === 'crayon'
-        if (frame === 0) return 24;
-        if (frame <= 14) {
-          const y = 78 + (frame - 1) * 18.5;
-          const x0 = 84 + aNoise.rand(-8, 12), x1 = 376 + aNoise.rand(-12, 16);
-          aCrayon([{ x: x0, y }, { x: (x0 + x1) * 0.5, y: y + aNoise.rand(-4, 4) }, { x: x1, y }], frame % 2 === 0 ? tm.coral : tm.ochre, 14, 0.54);
-        } else if (frame <= 22) {
-          const i = frame - 15, cx = 524, cy = 208, r = 42 + i * 14;
+        // preset === 'crayon' — traços largos e curtos
+        if (frame === 0) return 14;
+        if (frame <= 8) {
+          const y = 90 + (frame - 1) * 28;
+          const x0 = 90 + aNoise.rand(-6, 8), x1 = 360 + aNoise.rand(-8, 10);
+          aCrayon([{ x: x0, y }, { x: x1, y: y + aNoise.rand(-3, 3) }], frame % 2 === 0 ? tm.coral : tm.ochre, 12, 0.5);
+        } else if (frame <= 12) {
+          const i = frame - 9, cx = 520, cy = 210, r = 50 + i * 18;
           const ring = [];
-          for (let s = 0; s <= 18; s++) {
-            const ang = (s / 18) * Math.PI * 1.45 + i * 0.4;
+          for (let s = 0; s <= 12; s++) {
+            const ang = (s / 12) * Math.PI * 1.4 + i * 0.35;
             ring.push({ x: cx + Math.cos(ang) * r, y: cy + Math.sin(ang) * r });
           }
-          aCrayon(ring, pal[(i + 2) % pal.length], 9.5, 0.52);
-        } else if (frame === 24) {
-          aHandRect(72, 62, 316, 274, tm.fg, '4B', 0.86);
+          aCrayon(ring, pal[(i + 2) % pal.length], 9, 0.5);
+        } else if (frame === 14) {
+          aHandRect(72, 62, 316, 274, tm.fg, 'HB', 0.7);
         }
-        return 24;
+        return 14;
       }
 
-      function restartAtelier(announce = false) {
+      function startAtelierLoop() {
+        if (atelierState.raf) cancelAnimationFrame(atelierState.raf);
+        atelierState.raf = 0;
+        if (!atelierState.inView) return;
+        const total = atelierState.total;
+        if (atelierState.frame >= total) return;
+        let lastTick = 0;
+        const loop = (now) => {
+          if (!atelierState.inView) {
+            atelierState.raf = 0;
+            return;
+          }
+          if (lastTick && now - lastTick < atelierState.frameMs) {
+            atelierState.raf = requestAnimationFrame(loop);
+            return;
+          }
+          lastTick = now;
+          atelierState.frame += 1;
+          stepAtelierPreset(atelierState.frame);
+          if (atelierState.frame < total) atelierState.raf = requestAnimationFrame(loop);
+          else atelierState.raf = 0;
+        };
+        atelierState.raf = requestAnimationFrame(loop);
+      }
+
+      function restartAtelier(announce = false, opts = {}) {
+        const forcePlay = opts.forcePlay === true;
         cancelAnimationFrame(atelierState.raf);
+        atelierState.raf = 0;
         aNoise = new AtelierNoise(atelierState.seed);
         aClear();
         const total = stepAtelierPreset(0);
         atelierState.frame = 0;
+        atelierState.total = total;
+        if (forcePlay) atelierState.inView = true;
         document.getElementById('atelier-status-badge').textContent =
           `atelier-engine.ts · ${PRESET_TITLES[atelierState.preset]} · Arraste para pintar`;
 
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (reduced) {
           for (let f = 1; f <= total; f++) stepAtelierPreset(f);
+          atelierState.frame = total;
           return;
         }
-        const loop = () => {
-          if (!atelierState.inView) { atelierState.raf = requestAnimationFrame(loop); return; }
-          atelierState.frame += 1;
-          stepAtelierPreset(atelierState.frame);
-          if (atelierState.frame < total) atelierState.raf = requestAnimationFrame(loop);
-        };
-        atelierState.raf = requestAnimationFrame(loop);
+        // Fora de vista: só deixa o frame 0 — o IO dispara o reveal ao entrar
+        if (!atelierState.inView) return;
+        startAtelierLoop();
         if (announce) showToast(`Atelier TS: ${PRESET_TITLES[atelierState.preset]}`);
       }
 
@@ -5630,10 +6805,31 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         const container = document.querySelector('[data-cliptabs="atelier-preset"]');
         const btn = container?.querySelector(`[data-atelier-preset="${presetId}"]`);
         if (container && btn) updateClipTabs(container, btn);
-        restartAtelier(true);
+        restartAtelier(true, { forcePlay: true });
       }
 
-      new IntersectionObserver((es) => { atelierState.inView = es[0]?.isIntersecting ?? true; }, { threshold: 0.05 }).observe(atelierCanvas);
+      const atelierStageEl = document.getElementById('atelier-stage');
+      new IntersectionObserver((entries) => {
+        const hit = entries[0]?.isIntersecting ?? false;
+        if (hit) {
+          const wasOut = !atelierState.inView;
+          atelierState.inView = true;
+          if (wasOut) {
+            // Retoma o reveal a meio, ou remonta se ainda não começou / já terminou
+            if (atelierState.frame > 0 && atelierState.frame < atelierState.total) startAtelierLoop();
+            else restartAtelier(false);
+          } else if (atelierState.frame >= atelierState.total && !atelierState.raf) {
+            restartAtelier(false);
+          }
+        } else {
+          atelierState.inView = false;
+          // Pausa sem limpar — ao voltar, retoma do frame atual
+          if (atelierState.raf) {
+            cancelAnimationFrame(atelierState.raf);
+            atelierState.raf = 0;
+          }
+        }
+      }, { threshold: 0.08, rootMargin: '40px 0px 40px 0px' }).observe(atelierStageEl || atelierCanvas);
 
       // Pintura livre 1:1 no canvas (Aquarela / Lápis 4B / Giz de Cera / Pincel Tinta!)
       function getCanvasPoint(e) {
@@ -5654,7 +6850,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         const pt = getCanvasPoint(e);
         atelierState.strokePts = [pt];
         if (atelierState.brush === 'watercolor') {
-          aWatercolor(aBlob(pt.x, pt.y, 18, 15, 9), activePigmentColor(), 8, 0.34, null, true);
+          aWatercolor(aBlob(pt.x, pt.y, 16, 13, 8), activePigmentColor(), 4, 0.24, null, true);
         }
       });
 
@@ -5662,18 +6858,18 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (!atelierState.drawing) return;
         const pt = getCanvasPoint(e);
         const prev = atelierState.strokePts[atelierState.strokePts.length - 1];
-        if (Math.hypot(pt.x - prev.x, pt.y - prev.y) < 3) return;
+        if (Math.hypot(pt.x - prev.x, pt.y - prev.y) < 4) return;
         atelierState.strokePts.push(pt);
         const seg = [prev, pt];
         const col = activePigmentColor();
         if (atelierState.brush === 'watercolor') {
-          aWatercolor(aBlob(pt.x, pt.y, 15, 13, 8), col, 5, 0.32, null, false);
+          aWatercolor(aBlob(pt.x, pt.y, 13, 11, 7), col, 3, 0.22, null, false);
         } else if (atelierState.brush === 'pencil') {
-          aPencil(seg, col, '4B', 1.0);
+          aPencil(seg, col, '4B', 0.95);
         } else if (atelierState.brush === 'crayon') {
-          aCrayon(seg, col, 12, 0.5);
+          aCrayon(seg, col, 11, 0.5);
         } else {
-          aInkBrush(seg, col, 8, 7, 0.34);
+          aInkBrush(seg, col, 7, 5, 0.32);
         }
       });
 
@@ -5704,10 +6900,10 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         }
       });
 
-      document.getElementById('btn-atelier-replay').addEventListener('click', () => restartAtelier(true));
+      document.getElementById('btn-atelier-replay').addEventListener('click', () => restartAtelier(true, { forcePlay: true }));
       document.getElementById('btn-atelier-seed').addEventListener('click', () => {
         atelierState.seed = Math.floor(Math.random() * 999999);
-        restartAtelier(false);
+        restartAtelier(false, { forcePlay: true });
         showToast(`Nova semente determinística: #${atelierState.seed}`);
       });
       document.getElementById('btn-atelier-clear').addEventListener('click', () => {
@@ -5733,10 +6929,174 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         }
         if (e.target.matches('input, textarea, select')) return;
         if (e.key === '/') { e.preventDefault(); setCmdk(true); }
-        else if (e.key === 'Escape') { setDrawer(false); setGrainPopover(false); setNavRail(false); }
-        else if (/^[1-8]$/.test(e.key)) { applySurface(SURFACE_ORDER[Number(e.key) - 1]); }
+        else if (e.key === 'Escape') {
+          setDrawer(false); setGrainPopover(false); setSurfaceMenu(false); setNavRail(false); hideFloatingTip();
+          document.querySelectorAll('[data-ds-select] .ds-select-list[data-open="true"]').forEach((list) => {
+            list.dataset.open = 'false';
+            list.hidden = true;
+            list.closest('[data-ds-select]')?.querySelector('.ds-select-trigger')?.setAttribute('aria-expanded', 'false');
+          });
+        }
+        else if (/^[1-9]$/.test(e.key)) { const s = SURFACE_ORDER[Number(e.key) - 1]; if (s) applySurface(s); }
+        else if (e.key === '0') { const s = SURFACE_ORDER[9]; if (s) applySurface(s); }
         else if (e.key.toLowerCase() === 'm') { applyMode(state.mode === 'invisible' ? 'technical' : 'invisible'); }
       });
+
+      /* ======================================================================
+         PRIMITIVES EMBUTIDOS — Select / Switch / Accordion
+         ====================================================================== */
+      function initEmbeddedSelects() {
+        document.querySelectorAll('[data-ds-select]').forEach((root) => {
+          const trigger = root.querySelector('.ds-select-trigger');
+          const list = root.querySelector('.ds-select-list');
+          const label = root.querySelector('[data-ds-select-label]');
+          if (!trigger || !list || !label) return;
+          let closeTimer = 0;
+
+          const setOpen = (open) => {
+            window.clearTimeout(closeTimer);
+            trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) {
+              list.hidden = false;
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => { list.dataset.open = 'true'; });
+              });
+            } else {
+              list.dataset.open = 'false';
+              closeTimer = window.setTimeout(() => { list.hidden = true; }, 240);
+            }
+          };
+
+          trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setOpen(trigger.getAttribute('aria-expanded') !== 'true');
+          });
+
+          list.querySelectorAll('.ds-select-option').forEach((opt) => {
+            opt.addEventListener('click', () => {
+              list.querySelectorAll('.ds-select-option').forEach((o) => o.setAttribute('aria-selected', o === opt ? 'true' : 'false'));
+              label.textContent = opt.textContent.trim();
+              setOpen(false);
+              showToast(`Select: ${opt.textContent.trim()}`);
+            });
+          });
+
+          document.addEventListener('click', (e) => {
+            if (!root.contains(e.target)) setOpen(false);
+          });
+        });
+      }
+
+      function initAccordionMotion() {
+        document.querySelectorAll('[data-ds-accordion] .ds-acc-item').forEach((item) => {
+          const summary = item.querySelector('summary');
+          const collapse = item.querySelector('.ds-acc-collapse');
+          if (!summary || !collapse) return;
+
+          if (item.open) item.dataset.anim = 'open';
+          else delete item.dataset.anim;
+
+          summary.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isOpen = item.dataset.anim === 'open';
+
+            if (!isOpen) {
+              item.open = true;
+              requestAnimationFrame(() => { item.dataset.anim = 'open'; });
+              return;
+            }
+
+            item.dataset.anim = 'closing';
+            const finish = () => {
+              item.open = false;
+              delete item.dataset.anim;
+            };
+            const onEnd = (ev) => {
+              if (ev.target !== collapse) return;
+              if (ev.propertyName !== 'grid-template-rows') return;
+              collapse.removeEventListener('transitionend', onEnd);
+              finish();
+            };
+            collapse.addEventListener('transitionend', onEnd);
+            window.setTimeout(finish, 340);
+          });
+        });
+      }
+
+      document.querySelectorAll('.ds-switch').forEach((sw) => {
+        sw.addEventListener('click', () => {
+          const next = sw.getAttribute('aria-checked') !== 'true';
+          sw.setAttribute('aria-checked', next ? 'true' : 'false');
+          if (sw.id === 'demo-switch-jenkins') {
+            state.jenkins = next;
+            showToast(next ? 'Jenkins 63.75° ativo' : 'Jenkins desligado');
+            if (typeof renderGannSvg === 'function') renderGannSvg();
+          }
+        });
+      });
+
+      /* Scroll-reveal staggered — panels, headers, strips */
+      function initScrollReveal() {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const candidates = document.querySelectorAll([
+          '.section-header',
+          '.panel-card',
+          '.inverted-strip',
+          '.lab-grid > .panel-card',
+          '.sub-grid-2 > .panel-card',
+          '.color-card',
+          '.type-row',
+          '.claim',
+          '.volume-card',
+          '.atelier-stage',
+          '.plotter-stage',
+          '.masonry-card',
+          '.reader-column',
+        ].join(','));
+
+        const seen = new Set();
+        const items = [];
+        candidates.forEach((el) => {
+          if (seen.has(el) || el.closest('[data-reveal-skip]')) return;
+          seen.add(el);
+          items.push(el);
+        });
+
+        if (reduced) {
+          items.forEach((el) => el.classList.add('is-inview'));
+          return;
+        }
+
+        // Stagger by sibling index within each parent group
+        const groups = new Map();
+        items.forEach((el) => {
+          const key = el.parentElement || document.body;
+          if (!groups.has(key)) groups.set(key, []);
+          groups.get(key).push(el);
+        });
+        groups.forEach((list) => {
+          list.forEach((el, i) => {
+            if (!el.hasAttribute('data-reveal')) {
+              el.setAttribute('data-reveal', el.classList.contains('section-header') ? 'soft' : 'lift');
+            }
+            el.style.setProperty('--reveal-delay', `${Math.min(i * 70, 280)}ms`);
+          });
+        });
+
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-inview');
+            io.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+        items.forEach((el) => io.observe(el));
+      }
+
+      initEmbeddedSelects();
+      initAccordionMotion();
+      initScrollReveal();
 
       /* Initial Render */
       applySurface('ivory', false);
@@ -5746,5 +7106,6 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       setTimeout(initAllClipTabs, 60);
     })();
   </script>
+  <script type="module" src="./src/historia-halftone.ts"></script>
 </body>
 </html>

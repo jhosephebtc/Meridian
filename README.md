@@ -1,6 +1,6 @@
 # MERIDIAN Design System (`v1.4.1`)
 
-**Components Lab:** open [`components.html`](./components.html) for all 64 tactile line components (jhosephe gestures × Meridian SVG grammar). Install via shadcn:
+**Components Lab:** open [`components.html`](./components.html) for all 64 tactile line components (Meridian gestures × Meridian SVG grammar). Install via shadcn:
 
 ```sh
 npm run registry
@@ -9,7 +9,7 @@ npx shadcn@latest add http://localhost:5173/r/button.json
 ```
 
 
-**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone e Arte Generativa 100% TypeScript** para o ecossistema **Lunar + Earth AI + Gemini Studio** (React Native + Web · CSS Puro · SVG 1:1).
+**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone e Arte Generativa 100% TypeScript** para o ecossistema **Meridian** (React Native + Web · CSS Puro · SVG 1:1).
 
 ![Meridian Plotted 81k Globe](./assets/meridian-globe-81k.svg)
 
@@ -17,11 +17,11 @@ npx shadcn@latest add http://localhost:5173/r/button.json
 
 ## Linhagem & Pilares
 
-- **Anthropic Research & Economic Scenarios:** Ivory `#FAF9F5`, dual-radius, masonry assimétrico, paleta orgânica, aquarelas.
-- **Deimos Archival + Soft Chromatic:** Single-Ink + pastéis (`blush` / `butter` / `mist` / `lilac`), leitor 3 colunas, Lifeline, estante 3D.
+- **Meridian Editorial & cenários aquarela:** Ivory `#FAF9F5`, dual-radius, masonry assimétrico, paleta orgânica, aquarelas.
+- **Meridian Arquival + Soft Chromatic:** Single-Ink + pastéis (`blush` / `butter` / `mist` / `lilac`), leitor 3 colunas, Lifeline, estante 3D.
 - **PaperGrain canvas (v1.4):** overlay `#ds-paper-grain` — **nunca** data-URL em CSS var (browsers descartavam o PNG). Speckles com alpha, visível em ivory.
 - **HalfTone Paper Shaders:** malha fina (`HALFTONE.size ≈ 0.12`) — size ≥ 0.4 derrete a imagem.
-- **Emil Kowalski:** Frequency Gate (`⌘K` 0ms), clip-path tabs, Vaul drawer **só dim** (sem blur), burger **3 linhas → X**, page enter veil.
+- **Meridian Motion:** Frequency Gate (`⌘K` 0ms), clip-path tabs, drawer **só dim** (sem blur), burger **3 linhas → X**, page enter veil.
 - **Scrollbar hairline:** 2px, track transparente, canvas visível.
 - **Plotter + Globo 81k + Atelier TS:** gramática SVG 1 tinta + aquarela/lápis/giz/sumi-e.
 
@@ -34,7 +34,7 @@ npx shadcn@latest add http://localhost:5173/r/button.json
 | **`ivory`** *(padrão)* | `#FAF9F5` | `#141413` | Home B2C / pesquisa |
 | **`paper`** | `#FFFFFF` | `#0A0A0A` | Dossiês / PDF |
 | **`blush` · `butter` · `mist` · `lilac`** | pastéis | tinta quente | Soft Chromatic / capas |
-| **`aqua`** | `#A4CED0` | `#171614` | Clima / Earth AI |
+| **`aqua`** | `#A4CED0` | `#171614` | Clima / Ambiente |
 | **`terracotta`** | `#EDBB99` | `#171614` | Cultura / Gann / Solar |
 | **`obsidian`** | `#0E0E0D` | `#FAF9F5` | Terminal Pro |
 

@@ -35,7 +35,7 @@ type ObsPreset = 'econ' | 'celestial' | 'crayon';
 type PigmentKey = 'coral' | 'sky' | 'olive' | 'ochre' | 'ink';
 
 const SURFACE_ORDER: readonly SurfaceId[] = [
-  'ivory', 'blush', 'butter', 'mist', 'aqua', 'lilac', 'terracotta', 'obsidian',
+  'ivory', 'paper', 'blush', 'apricot', 'butter', 'sage', 'mist', 'aqua', 'sky', 'slate', 'lilac', 'terracotta', 'obsidian',
 ];
 
 const appState = {
@@ -92,7 +92,7 @@ function showToast(message: string): void {
 }
 
 /* ==========================================================================
-   2. CLIP-PATH SEAMLESS TABS (Emil Kowalski)
+   2. CLIP-PATH SEAMLESS TABS (Meridian Motion)
    ========================================================================== */
 function syncClipTabs(container: HTMLElement | null, activeBtn: HTMLElement | null): void {
   if (!container || !activeBtn) return;
@@ -277,7 +277,7 @@ const LIFELINE_EVENTS = [
   { t: '06:30', title: 'Brisa Limpa · AQI 21', text: 'Melhor ar do dia para corrida leve e abrir janelas.' },
   { t: '10:00', title: 'Janela Segura · 23°C', text: 'Asfalto fresco e pólen baixo para passeio em família.' },
   { t: '13:00', title: 'Pico Solar · 28°C', text: 'Geração fotovoltaica máxima (+4.6 kWh); evitar sol direto.' },
-  { t: '16:45', title: 'Chuva Isolada (62%)', text: 'Frente úmida local prevista pela Google Weather API.' },
+  { t: '16:45', title: 'Chuva Isolada (62%)', text: 'Frente úmida local prevista pela API de clima.' },
   { t: '20:00', title: 'Noite Estável · 21°C', text: 'Conforto térmico elevado e queda rápida de PM2.5.' },
 ];
 
@@ -467,13 +467,13 @@ function bootstrap(): void {
     setPaperPop(paperPop.dataset.open !== 'true');
   });
 
-  // Instant ⌘K Palette (0ms — Emil Kowalski Frequency Gate)
+  // Instant ⌘K Palette (0ms — Meridian Motion Frequency Gate)
   const cmdkBackdrop = document.getElementById('app-cmdk-backdrop')!;
   const cmdkInput = document.getElementById('app-cmdk-input') as HTMLInputElement;
   const cmdkList = document.getElementById('app-cmdk-list')!;
   const cmdkActions = [
     { label: 'Tela: Edição de Hoje (B2C Invisível)', hint: 'V1', run: () => setView('today') },
-    { label: 'Tela: Dossiê Endereço (#11 Deimos 3-Col)', hint: 'V2', run: () => setView('dossier') },
+    { label: 'Tela: Dossiê Endereço (#11 Arquival 3-Col)', hint: 'V2', run: () => setView('dossier') },
     { label: 'Tela: Observatório Pro (Globo 81k + Aquarela)', hint: 'V3', run: () => setView('observatory') },
     ...SURFACE_ORDER.map((s, idx) => ({
       label: `Atmosfera: ${SURFACES[s].label} (${SURFACES[s].bg})`,
@@ -517,7 +517,7 @@ function bootstrap(): void {
     clearTimeout(holdTimer);
     holdTimer = window.setTimeout(() => {
       holdBtn.dataset.holding = 'false';
-      showToast('Backtest BigQuery concluído: Score 84.2% (Tier A)');
+      showToast('Backtest ledger analítico concluído: Score 84.2% (Tier A)');
     }, 1400);
   };
   const stopHold = () => { clearTimeout(holdTimer); holdBtn.dataset.holding = 'false'; };
@@ -526,7 +526,7 @@ function bootstrap(): void {
   holdBtn.addEventListener('pointerleave', stopHold);
   holdBtn.addEventListener('pointercancel', stopHold);
 
-  /* Footer accordion: um aberto por vez (padrão Anthropic) */
+  /* Footer accordion: um aberto por vez (padrão Meridian) */
   document.querySelectorAll('.ds-footer-acc').forEach((acc) => {
     acc.addEventListener('toggle', () => {
       if (!(acc as HTMLDetailsElement).open) return;

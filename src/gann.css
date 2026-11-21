@@ -1,6 +1,6 @@
 /* ==========================================================================
    MERIDIAN — WD Gann History Page
-   Diagramação Deimos archival + dual layout (rail / masthead)
+   Diagramação Arquival archival + dual layout (rail / masthead)
    ========================================================================== */
 
 html, body {
@@ -249,7 +249,7 @@ html, body {
   line-height: 1.5;
 }
 
-/* ---- Page shell + leitor Deimos 3 colunas ---- */
+/* ---- Page shell + leitor Arquival 3 colunas ---- */
 .gann-shell {
   max-width: var(--ds-max-editorial);
   margin: 0 auto;
@@ -530,7 +530,7 @@ html, body {
   color: var(--ds-fg);
 }
 
-/* ---- Halftone plates (sem moldura pesada — hairline Deimos) ---- */
+/* ---- Halftone plates (sem moldura pesada — hairline Arquival) ---- */
 .gann-plate {
   border-radius: var(--ds-radius-plate);
   border: 0;
@@ -583,7 +583,7 @@ html, body {
   line-height: 1.45;
 }
 
-/* ---- Sections / Deimos cards ---- */
+/* ---- Sections / Arquival cards ---- */
 .gann-section {
   padding: 0;
   margin-top: 36px;

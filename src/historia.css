@@ -1,0 +1,181 @@
+/* ---- História · animações plotter (stroke-draw + ambient) ---- */
+
+.gann-plot-stage[data-ht-live="true"] svg,
+.gann-aside-plate[data-ht-live="true"] svg {
+  overflow: visible;
+}
+
+/* Stroke-draw: especificidade acima dos roles plotter */
+[data-plotter] .ht-draw {
+  stroke-dasharray: var(--ht-len, 1200) !important;
+  stroke-dashoffset: var(--ht-len, 1200);
+  animation: ht-draw var(--ht-dur, 1.85s) var(--ds-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--ht-delay, 0ms) forwards;
+}
+@keyframes ht-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Fade-in para fills / labels */
+[data-plotter] .ht-fade {
+  opacity: 0;
+  animation: ht-fade-in 0.9s var(--ds-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--ht-delay, 0ms) forwards;
+}
+@keyframes ht-fade-in {
+  to { opacity: var(--ht-opacity, 1); }
+}
+
+/* Só anima quando a placa entrou no viewport */
+.gann-plot-stage:not([data-ht-inview="true"]) .ht-draw,
+.gann-aside-plate:not([data-ht-inview="true"]) .ht-draw {
+  animation: none;
+  stroke-dashoffset: var(--ht-len, 1200);
+}
+.gann-plot-stage:not([data-ht-inview="true"]) .ht-fade,
+.gann-aside-plate:not([data-ht-inview="true"]) .ht-fade,
+.gann-plot-stage:not([data-ht-inview="true"]) .ht-ambient,
+.gann-aside-plate:not([data-ht-inview="true"]) .ht-ambient {
+  animation: none !important;
+}
+.gann-plot-stage:not([data-ht-inview="true"]) .ht-fade {
+  opacity: 0;
+}
+
+/* ---- Ambient loops ---- */
+
+.ht-beam {
+  transform-origin: var(--ht-ox, 50%) var(--ht-oy, 50%);
+  transform-box: fill-box;
+  animation: ht-beam-sweep 5.5s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 1.6s);
+}
+@keyframes ht-beam-sweep {
+  0%, 100% { transform: rotate(-14deg); opacity: 0.55; }
+  50% { transform: rotate(18deg); opacity: 1; }
+}
+
+.ht-beam-soft {
+  transform-origin: var(--ht-ox, 50%) var(--ht-oy, 50%);
+  transform-box: fill-box;
+  animation: ht-beam-sweep-soft 7s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 1.8s);
+}
+@keyframes ht-beam-sweep-soft {
+  0%, 100% { transform: rotate(10deg); opacity: 0.22; }
+  50% { transform: rotate(-16deg); opacity: 0.4; }
+}
+
+.ht-pulse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ht-lamp-pulse 2.4s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 1.4s);
+}
+@keyframes ht-lamp-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+.ht-wave {
+  animation: ht-wave-drift 6s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 0.8s);
+}
+@keyframes ht-wave-drift {
+  0%, 100% { transform: translateX(0); opacity: 0.14; }
+  50% { transform: translateX(10px); opacity: 0.28; }
+}
+
+.ht-sun {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ht-sun-bob 8s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 1s);
+}
+@keyframes ht-sun-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.28; }
+  50% { transform: translateY(6px); opacity: 0.4; }
+}
+
+.ht-rain {
+  animation: ht-rain-fall 1.15s linear infinite;
+  animation-delay: var(--ht-delay, 0s);
+}
+@keyframes ht-rain-fall {
+  0% { transform: translate(0, -8px); opacity: 0; }
+  15% { opacity: 0.35; }
+  85% { opacity: 0.2; }
+  100% { transform: translate(-10px, 28px); opacity: 0; }
+}
+
+.ht-spin {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ht-spin-slow 42s linear infinite;
+  animation-delay: var(--ht-delay, 1.2s);
+}
+@keyframes ht-spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.ht-dash-flow {
+  animation: ht-dash-move 3.2s linear infinite;
+  animation-delay: var(--ht-delay, 1.5s);
+}
+@keyframes ht-dash-move {
+  to { stroke-dashoffset: -48; }
+}
+
+.ht-twinkle {
+  animation: ht-twinkle 2.8s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 0s);
+}
+@keyframes ht-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+.ht-route-drift {
+  animation: ht-route-wobble 4.5s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 1.8s);
+  transform-origin: left bottom;
+  transform-box: fill-box;
+}
+@keyframes ht-route-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2.4deg); }
+}
+
+.ht-compass {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ht-compass-tick 9s ease-in-out infinite;
+  animation-delay: var(--ht-delay, 1.2s);
+}
+@keyframes ht-compass-tick {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-6deg); }
+  70% { transform: rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-plotter] .ht-draw {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  [data-plotter] .ht-fade {
+    animation: none !important;
+    opacity: var(--ht-opacity, 1) !important;
+  }
+  .ht-beam,
+  .ht-beam-soft,
+  .ht-pulse,
+  .ht-wave,
+  .ht-sun,
+  .ht-rain,
+  .ht-spin,
+  .ht-dash-flow,
+  .ht-twinkle,
+  .ht-route-drift,
+  .ht-compass {
+    animation: none !important;
+  }
+}

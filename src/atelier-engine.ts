@@ -1,14 +1,14 @@
 /**
- * MERIDIAN DESIGN SYSTEM — atelier-engine.ts (v1.2.0)
+ * MERIDIAN DESIGN SYSTEM — atelier-engine.ts (v1.3.0)
  * Motor Generativo de Animação & Mídias Analógicas 100% TypeScript (Zero p5.js / Zero JS solto)
  *
  * Simula a ergonomia criativa do p5.js (`setup`, `draw`, `noise2D`, `fbm2D`, `random`, `lerp`, `map`)
  * combinada à estética de aquarela & pincéis de `anthropic.com/institute/econ-scenarios` e `p5.brush`:
- *  1. Aquarela (`watercolorWash`, `watercolorBand`) — polígonos orgânicos recursivos com borda úmida
- *  2. Preenchimento de Blocos a Pincel (`brushFillRect`) — cubos/células preenchendo lado a lado com cerdas úmidas
- *  3. Lápis Grafite (`graphitePencil`, `handDrawnRect`, `hatchArea`) — multifibras moduladas pelo dente do papel
- *  4. Giz de Cera (`waxCrayon`) — stippling ceroso anisotrópico com textura de papel algodão
- *  5. Pincel Tinta (`inkBrush`) — fita caligráfica de cerdas divididas com dry-brush (kasure)
+ *  1. Aquarela Hobbs (`watercolorWash`) — subdivisão gaussiana + dezenas de camadas alpha 2–8 + multiply
+ *  2. Dry-brush chalk (`dryBrushChalk`) — dashes com cerdas duplas e decay de opacidade
+ *  3. Grid paper erodido (`erodedGraphPaper`) — máscara Perlin multi-oitava (patches somem)
+ *  4. Fan trajectories Econ (`paintFanTrajectories`) — faixas cerulean / olive / coral
+ *  5. Lápis / giz / sumi-e — grafite, wax crayon, ink brush kasure
  *
  * Arquitetura Portável:
  *  - Web: `createCanvasBackend(canvas, dpr)` (Canvas 2D nativo)
@@ -77,6 +77,22 @@ export interface InkBrushOptions {
   width?: number;
   bristles?: number;
   dryness?: number;
+}
+
+export interface DryBrushOptions {
+  length?: number;
+  thickness?: number;
+  grain?: number;
+  bristles?: number;
+  decay?: number;
+}
+
+export interface GraphPaperOptions {
+  cell?: number;
+  erosion?: number;
+  noiseScale?: number;
+  fadeRight?: boolean;
+  alpha?: number;
 }
 
 export interface SketchDefinition {
@@ -326,7 +342,7 @@ export class MeridianAtelier {
   }
 
   /**
-   * 1. AQUARELA (Watercolor Wet-on-Wet Wash)
+   * 1. AQUARELA (Tyler Hobbs) — subdivisão gaussiana + camadas alpha baixíssimo + multiply
    */
   public watercolorWash(
     basePolygon: readonly Vec2[],
@@ -334,35 +350,245 @@ export class MeridianAtelier {
     opts: WatercolorOptions = {}
   ): void {
     if (basePolygon.length < 3) return;
-    const layers = opts.layers ?? 22;
-    const subdivisions = opts.subdivisions ?? 4;
-    const bleed = opts.bleed ?? 0.34;
-    const layerAlpha = opts.layerAlpha ?? (this.theme.scheme === 'dark' ? 0.062 : 0.044);
+    // Hobbs: dezenas de camadas com alpha ~2–8/255
+    const layers = opts.layers ?? 32;
+    const subdivisions = opts.subdivisions ?? 5;
+    const bleed = opts.bleed ?? 0.38;
+    const layerAlpha =
+      opts.layerAlpha ?? (this.theme.scheme === 'dark' ? 0.028 : 0.018);
     const wetEdgeRing = opts.wetEdgeRing ?? true;
 
     const rgb = hexToRgb(hexColor);
     const fillHex = rgbaString(rgb, 1);
-    const baseDeformed = this.deformPolygon(basePolygon, Math.max(2, subdivisions - 1), bleed * 0.72);
+    const baseDeformed = this.deformPolygon(basePolygon, Math.max(3, subdivisions - 1), bleed * 0.78);
 
     this.backend.setCompositeMode(this.pigmentComposite);
 
     for (let i = 0; i < layers; i++) {
-      const variance = bleed * (0.45 + 0.55 * (i / layers));
-      const coat = this.deformPolygon(baseDeformed, 2, variance);
-      this.backend.fillPolygon(coat, fillHex, layerAlpha);
+      const t = i / Math.max(1, layers - 1);
+      const variance = bleed * (0.28 + 0.72 * t);
+      // re-subdivide a cada coat com gaussiano fresco (aresta úmida)
+      const coat = this.deformPolygon(baseDeformed, 2 + (i % 2), variance);
+      const alpha = layerAlpha * (0.75 + 0.55 * this.noise.random());
+      this.backend.fillPolygon(coat, fillHex, alpha);
     }
 
     if (wetEdgeRing) {
-      const edgeRing = this.deformPolygon(baseDeformed, 2, bleed * 0.24);
-      const closed = [...edgeRing, edgeRing[0]];
-      this.backend.strokePolyline(closed, fillHex, 1.35, layerAlpha * 3.4);
+      const edgeRing = this.deformPolygon(baseDeformed, 3, bleed * 0.2);
+      const closed = [...edgeRing, edgeRing[0]!];
+      this.backend.strokePolyline(closed, fillHex, 1.15, Math.min(0.22, layerAlpha * 6));
+      const pigmentEdge = this.deformPolygon(baseDeformed, 2, bleed * 0.12);
+      this.backend.strokePolyline(
+        [...pigmentEdge, pigmentEdge[0]!],
+        fillHex,
+        0.7,
+        Math.min(0.16, layerAlpha * 4.5),
+      );
     }
 
     this.backend.setCompositeMode('source-over');
   }
 
   /**
-   * Faixa de Aquarela entre duas curvas (para cenários tipo Anthropic Econ Scenarios)
+   * Grão de papel algodão (overlay tátil, pré-bake no setup)
+   */
+  public paperGrainOverlay(density = 0.35, alpha = 0.045): void {
+    const { width: w, height: h } = this.backend;
+    const rgb = hexToRgb(this.theme.fg);
+    const dots = Math.floor(w * h * density * 0.012);
+    this.backend.setCompositeMode(this.pigmentComposite);
+    for (let i = 0; i < dots; i++) {
+      const x = this.noise.random(0, w);
+      const y = this.noise.random(0, h);
+      const n = this.noise.noise2D(x * 0.08, y * 0.08);
+      if (n < 0.42) continue;
+      this.backend.fillDot(x, y, this.noise.random(0.25, 0.85), rgbaString(rgb, 1), alpha * n);
+    }
+    this.backend.setCompositeMode('source-over');
+  }
+
+  /**
+   * Grid engineering paper com erosão Perlin multi-oitava (patches somem juntos)
+   */
+  public erodedGraphPaper(opts: GraphPaperOptions = {}): void {
+    const cell = opts.cell ?? 26;
+    const erosion = opts.erosion ?? 0.42;
+    const noiseScale = opts.noiseScale ?? 0.018;
+    const fadeRight = opts.fadeRight ?? true;
+    const baseAlpha = opts.alpha ?? (this.theme.scheme === 'dark' ? 0.14 : 0.1);
+    const { width: w, height: h } = this.backend;
+    const rgb = hexToRgb(this.theme.fg);
+    const stroke = rgbaString(rgb, 1);
+
+    const mask = (x: number, y: number): number => {
+      const n = this.noise.fbm2D(x * noiseScale, y * noiseScale, 2);
+      let a = clamp((n - erosion) / (1 - erosion + 1e-6), 0, 1);
+      a = a * a * (3 - 2 * a); // smoothstep
+      if (fadeRight) a *= 1 - Math.pow(x / w, 1.35) * 0.85;
+      return a * baseAlpha;
+    };
+
+    this.backend.setCompositeMode(this.pigmentComposite);
+
+    // Verticais
+    for (let x = 0; x <= w; x += cell) {
+      for (let y = 0; y < h; y += 4) {
+        const a = mask(x, y + 2);
+        if (a < 0.012) continue;
+        this.backend.strokePolyline(
+          [
+            { x, y },
+            { x, y: Math.min(h, y + 5) },
+          ],
+          stroke,
+          0.7,
+          a,
+        );
+      }
+    }
+    // Horizontais
+    for (let y = 0; y <= h; y += cell) {
+      for (let x = 0; x < w; x += 4) {
+        const a = mask(x + 2, y);
+        if (a < 0.012) continue;
+        this.backend.strokePolyline(
+          [
+            { x, y },
+            { x: Math.min(w, x + 5), y },
+          ],
+          stroke,
+          0.7,
+          a,
+        );
+      }
+    }
+
+    this.backend.setCompositeMode('source-over');
+  }
+
+  /**
+   * Dry-brush / chalk dash — cerdas dual + grain + decay (cenários aquarela)
+   */
+  public dryBrushChalk(
+    path: readonly Vec2[],
+    hexColor: string,
+    opts: DryBrushOptions = {}
+  ): void {
+    if (path.length < 2) return;
+    const thickness = opts.thickness ?? 2.4;
+    const grain = opts.grain ?? 0.55;
+    const bristles = opts.bristles ?? 5;
+    const decay = opts.decay ?? 0.0;
+    const rgb = hexToRgb(hexColor);
+    const stroke = rgbaString(rgb, 1);
+    const sampled = this.resamplePath(path, 2.2);
+
+    this.backend.setCompositeMode(this.pigmentComposite);
+
+    for (let b = 0; b < bristles; b++) {
+      const frac = bristles === 1 ? 0 : (b / (bristles - 1)) * 2 - 1;
+      const dash: Vec2[] = [];
+      for (let i = 0; i < sampled.length; i++) {
+        const t = i / Math.max(1, sampled.length - 1);
+        const p = sampled[i]!;
+        const prev = sampled[Math.max(0, i - 1)]!;
+        const next = sampled[Math.min(sampled.length - 1, i + 1)]!;
+        const mag = Math.hypot(next.x - prev.x, next.y - prev.y) || 1;
+        const nx = -(next.y - prev.y) / mag;
+        const ny = (next.x - prev.x) / mag;
+        const g = this.noise.noise2D(p.x * 0.22 + b * 4.1, p.y * 0.22);
+        if (g < grain * (0.35 + 0.5 * Math.abs(frac))) {
+          if (dash.length >= 2) {
+            const alpha = (0.22 + 0.28 * (1 - Math.abs(frac))) * (1 - decay * t);
+            this.backend.strokePolyline(dash, stroke, thickness * (0.45 + 0.4 * (1 - Math.abs(frac))), alpha);
+          }
+          dash.length = 0;
+          continue;
+        }
+        const jitter = (g - 0.5) * thickness * 0.8;
+        dash.push({
+          x: p.x + nx * (frac * thickness * 0.55 + jitter),
+          y: p.y + ny * (frac * thickness * 0.55 + jitter),
+        });
+      }
+      if (dash.length >= 2) {
+        this.backend.strokePolyline(dash, stroke, thickness * 0.55, 0.28);
+      }
+    }
+
+    // micro-bristle texture layer
+    for (let i = 0; i < sampled.length; i += 2) {
+      const t = i / Math.max(1, sampled.length - 1);
+      const p = sampled[i]!;
+      if (this.noise.noise2D(p.x * 0.4, p.y * 0.4) < 0.55) continue;
+      this.backend.fillDot(
+        p.x + this.noise.randomGaussian(0, thickness * 0.4),
+        p.y + this.noise.randomGaussian(0, thickness * 0.4),
+        this.noise.random(0.35, 0.9),
+        stroke,
+        (0.12 + 0.18 * this.noise.random()) * (1 - decay * t),
+      );
+    }
+
+    this.backend.setCompositeMode('source-over');
+  }
+
+  /**
+   * Fan de trajetórias estilo cenários aquarela Meridian (faixas + chalk)
+   */
+  public paintFanTrajectories(
+    origin: Vec2,
+    count: number,
+    spread: number,
+    length: number,
+    colors: readonly string[],
+    progress = 1,
+    wind = 0,
+  ): void {
+    const p = clamp(progress, 0, 1);
+    for (let i = 0; i < count; i++) {
+      const u = i / Math.max(1, count - 1);
+      const angle = -spread / 2 + u * spread + wind * 0.08 * Math.sin(u * Math.PI);
+      const band = colors[Math.min(colors.length - 1, Math.floor(u * colors.length))]!;
+      const pts: Vec2[] = [];
+      const segs = 14;
+      for (let s = 0; s <= segs; s++) {
+        const t = (s / segs) * p;
+        if (t <= 0) {
+          pts.push({ ...origin });
+          continue;
+        }
+        const exp = 1 - Math.pow(1 - t, 1.65);
+        const n =
+          (this.noise.fbm2D(i * 0.17 + t * 2.4, origin.y * 0.01, 2) - 0.5) * length * 0.08;
+        pts.push({
+          x: origin.x + Math.cos(angle) * length * exp + n * Math.cos(angle + Math.PI / 2),
+          y: origin.y + Math.sin(angle) * length * exp + n * Math.sin(angle + Math.PI / 2) + wind * t * 6,
+        });
+      }
+      if (pts.length < 2) continue;
+      // wash suave sob o chalk
+      if (i % 3 === 0 && p > 0.2) {
+        const mid = pts[Math.floor(pts.length * 0.55)]!;
+        this.watercolorWash(this.organicBlob(mid.x, mid.y, 10 + u * 8, 7 + u * 5, 8), band, {
+          layers: 10,
+          bleed: 0.28,
+          layerAlpha: 0.014,
+          wetEdgeRing: false,
+          subdivisions: 3,
+        });
+      }
+      this.dryBrushChalk(pts, band, {
+        thickness: 1.6 + (1 - Math.abs(u - 0.5) * 2) * 1.2,
+        grain: 0.48,
+        bristles: 4,
+        decay: 0.55,
+      });
+    }
+  }
+
+  /**
+   * Faixa de Aquarela entre duas curvas (para cenários tipo cenários aquarela)
    */
   public watercolorBand(
     upper: readonly Vec2[],
@@ -382,7 +608,7 @@ export class MeridianAtelier {
   }
 
   /**
-   * Preenchimento de Bloco/Cubo lado a lado a pincel/aquarela (assinatura Anthropic Econ Scenarios!)
+   * Preenchimento de Bloco/Cubo lado a lado a pincel/aquarela (assinatura cenários aquarela!)
    */
   public brushFillRect(
     x: number,
@@ -729,133 +955,167 @@ export class MeridianAtelier {
 }
 
 /* ==========================================================================
-   5. SKETCHES PRONTOS (Estilo Anthropic Econ Scenarios + Editorial Studio)
+   5. SKETCHES PRONTOS (Estilo cenários aquarela + Editorial Studio)
    ========================================================================== */
 
 /**
- * Preset 1 — Blocos de Cenário em Aquarela & Trajetórias (Anthropic Econ Scenarios)
- * Pintura incremental sobre papel persistente (como p5.brush real — < 2ms por frame!):
- * cubos preenchem suavemente da esquerda para a direita com cerdas úmidas de aquarela,
- * seguidos pelas faixas de cenário e curvas esboçadas a lápis grafite.
+ * Preset 1 — cenários aquarela Meridian (fan + chalk + grid erodido + blocos aquarela)
+ * Referência: share.gemini / econ-scenarios — dry-brush, Perlin grid erosion, exponential fan.
  */
 export function createEconWatercolorSketch(): SketchDefinition {
   const cols = 4;
   const rows = 3;
   const totalCells = cols * rows;
-  const stepsPerCell = 5;
-  const cellsEndFrame = totalCells * stepsPerCell; // 60 frames
-  const totalFrames = cellsEndFrame + 32;          // 92 frames (~1.5s @ 60fps)
+  const stepsPerCell = 4;
+  const cellsEndFrame = totalCells * stepsPerCell; // 48
+  const fanFrames = 36;
+  const totalFrames = cellsEndFrame + fanFrames + 8;
 
   return {
     setup(a) {
-      a.backend.clear();
+      a.backend.clear(a.theme.bg);
+      a.paperGrainOverlay(0.4, a.theme.scheme === 'dark' ? 0.06 : 0.04);
+      a.erodedGraphPaper({
+        cell: 26,
+        erosion: 0.4,
+        noiseScale: 0.016,
+        fadeRight: true,
+        alpha: a.theme.scheme === 'dark' ? 0.16 : 0.11,
+      });
+
       const { fg } = a.theme;
-      const w = a.width, h = a.height;
-      const padX = w * 0.07, padY = h * 0.14;
-      const gridW = w * 0.45, gridH = h * 0.68;
+      const w = a.width;
+      const h = a.height;
+      const padX = w * 0.07;
+      const padY = h * 0.14;
+      const gridW = w * 0.42;
+      const gridH = h * 0.64;
       const gap = 10;
       const cellW = (gridW - gap * (cols - 1)) / cols;
       const cellH = (gridH - gap * (rows - 1)) / rows;
 
-      // Quadro 0: desenha a grade leve a lápis 2H e os eixos à direita
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const x = padX + c * (cellW + gap);
           const y = padY + r * (cellH + gap);
-          a.handDrawnRect(x, y, cellW, cellH, fg, { grade: '2H', pressure: 0.55, wobble: 0.8 });
+          a.handDrawnRect(x, y, cellW, cellH, fg, { grade: '2H', pressure: 0.5, wobble: 0.75 });
         }
       }
-      const chartX = w * 0.59, chartW = w * 0.34, baseY = h * 0.80;
-      a.graphitePencil([{ x: chartX, y: padY }, { x: chartX, y: baseY + 8 }], fg, { grade: '2H', pressure: 0.72 });
-      a.graphitePencil([{ x: chartX - 8, y: baseY }, { x: chartX + chartW, y: baseY }], fg, { grade: '2H', pressure: 0.72 });
     },
     draw(a, frame) {
       if (frame > totalFrames) return;
       const { organic, fg } = a.theme;
-      const w = a.width, h = a.height;
+      const w = a.width;
+      const h = a.height;
       const palette = [organic.olive, organic.sky, organic.coral, organic.ochre];
 
-      // Fase 1: cubos preenchendo progressivamente lado a lado com aquarela + cerdas úmidas
       if (frame <= cellsEndFrame) {
         const cellIdx = Math.floor((frame - 1) / stepsPerCell);
         const step = (frame - 1) % stepsPerCell;
         const r = Math.floor(cellIdx / cols);
         const c = cellIdx % cols;
-        const padX = w * 0.07, padY = h * 0.14;
-        const gridW = w * 0.45, gridH = h * 0.68;
+        const padX = w * 0.07;
+        const padY = h * 0.14;
+        const gridW = w * 0.42;
+        const gridH = h * 0.64;
         const gap = 10;
         const cellW = (gridW - gap * (cols - 1)) / cols;
         const cellH = (gridH - gap * (rows - 1)) / rows;
-
         const x = padX + c * (cellW + gap);
         const y = padY + r * (cellH + gap);
         const x0 = x + (step / stepsPerCell) * cellW;
         const x1 = x + ((step + 1) / stepsPerCell) * cellW;
-        const color = palette[(cellIdx + r) % palette.length];
+        const color = palette[(cellIdx + r) % palette.length]!;
 
-        const strip: Vec2[] = [
-          { x: x0, y: y + 1 },
-          { x: x1 + 2, y: y + 1 },
-          { x: x1 + 2, y: y + cellH - 1 },
-          { x: x0, y: y + cellH - 1 },
-        ];
-        a.watercolorWash(strip, color, {
-          layers: 8,
-          subdivisions: 2,
-          bleed: 0.22,
-          layerAlpha: a.theme.scheme === 'dark' ? 0.095 : 0.072,
-          wetEdgeRing: step === stepsPerCell - 1,
-        });
-
-        // Pincelada seca sutil acompanhando a frente do preenchimento
-        const midY = y + cellH * (0.28 + ((step * 37) % 10) * 0.05);
-        a.inkBrush(
-          [{ x: x0, y: midY }, { x: x1, y: midY + a.noise.randomGaussian(0, 2) }],
+        a.watercolorWash(
+          [
+            { x: x0, y: y + 1 },
+            { x: x1 + 2, y: y + 1 },
+            { x: x1 + 2, y: y + cellH - 1 },
+            { x: x0, y: y + cellH - 1 },
+          ],
           color,
-          { width: cellH * 0.34, bristles: 4, dryness: 0.55 }
+          {
+            layers: 18,
+            subdivisions: 3,
+            bleed: 0.24,
+            layerAlpha: a.theme.scheme === 'dark' ? 0.03 : 0.02,
+            wetEdgeRing: step === stepsPerCell - 1,
+          },
+        );
+
+        const midY = y + cellH * (0.3 + ((step * 37) % 10) * 0.04);
+        a.dryBrushChalk(
+          [
+            { x: x0, y: midY },
+            { x: x1, y: midY + a.noise.randomGaussian(0, 1.6) },
+          ],
+          color,
+          { thickness: cellH * 0.22, grain: 0.5, bristles: 4, decay: 0.2 },
         );
         return;
       }
 
-      // Fase 2: faixas de cenário em aquarela + curvas de projeção esboçadas a lápis 4B
-      const f2 = frame - cellsEndFrame; // 1..32
-      const chartX = w * 0.59, chartW = w * 0.34, baseY = h * 0.80;
-      const segs = 16;
-      if (f2 <= segs) {
-        const u0 = (f2 - 1) / segs;
-        const u1 = f2 / segs;
-        const x0 = chartX + u0 * chartW;
-        const x1 = chartX + u1 * chartW;
+      const f2 = frame - cellsEndFrame;
+      if (f2 <= fanFrames) {
+        const progress = f2 / fanFrames;
+        const origin = { x: w * 0.52, y: h * 0.78 };
+        const wind = Math.sin(progress * Math.PI) * 0.35;
+        // desenha fatias incrementais do fan (evita repaint total)
+        const batch = 4;
+        const start = Math.floor(((f2 - 1) / fanFrames) * 48);
+        const end = Math.min(48, start + batch);
+        for (let i = start; i < end; i++) {
+          const u = i / 47;
+          const angle = -0.55 + u * 1.05 + wind * 0.08 * Math.sin(u * Math.PI);
+          const band = [organic.sky, organic.olive, organic.coral][Math.min(2, Math.floor(u * 3))]!;
+          const len = Math.min(w, h) * (0.42 + u * 0.12) * progress;
+          const pts: Vec2[] = [];
+          for (let s = 0; s <= 12; s++) {
+            const t = s / 12;
+            const exp = 1 - Math.pow(1 - t, 1.7);
+            const n = (a.noise.fbm2D(i * 0.2 + t * 2, 1.4, 2) - 0.5) * len * 0.07;
+            pts.push({
+              x: origin.x + Math.cos(angle) * len * exp + n * Math.cos(angle + Math.PI / 2),
+              y: origin.y + Math.sin(angle) * len * exp + n * Math.sin(angle + Math.PI / 2) + wind * t * 8,
+            });
+          }
+          if (i % 4 === 0) {
+            const mid = pts[Math.floor(pts.length * 0.6)]!;
+            a.watercolorWash(a.organicBlob(mid.x, mid.y, 9 + u * 7, 6 + u * 4, 8), band, {
+              layers: 12,
+              bleed: 0.26,
+              layerAlpha: 0.012,
+              wetEdgeRing: false,
+              subdivisions: 3,
+            });
+          }
+          a.dryBrushChalk(pts, band, {
+            thickness: 1.5 + (1 - Math.abs(u - 0.5) * 2) * 1.4,
+            grain: 0.46,
+            bristles: 5,
+            decay: 0.62,
+          });
+        }
 
-        const yTopA0 = baseY - Math.pow(u0, 1.55) * h * 0.56;
-        const yTopA1 = baseY - Math.pow(u1, 1.55) * h * 0.56;
-        const yBotA0 = baseY - Math.pow(u0, 1.32) * h * 0.30;
-        const yBotA1 = baseY - Math.pow(u1, 1.32) * h * 0.30;
-        a.watercolorWash(
-          [{ x: x0, y: yTopA0 }, { x: x1 + 2, y: yTopA1 }, { x: x1 + 2, y: yBotA1 }, { x: x0, y: yBotA0 }],
-          organic.coral,
-          { layers: 6, subdivisions: 2, bleed: 0.16, layerAlpha: a.theme.scheme === 'dark' ? 0.08 : 0.058, wetEdgeRing: false }
-        );
-
-        const yTopB0 = baseY - Math.pow(u0, 1.25) * h * 0.27;
-        const yTopB1 = baseY - Math.pow(u1, 1.25) * h * 0.27;
-        const yBotB0 = baseY - u0 * h * 0.08;
-        const yBotB1 = baseY - u1 * h * 0.08;
-        a.watercolorWash(
-          [{ x: x0, y: yTopB0 }, { x: x1 + 2, y: yTopB1 }, { x: x1 + 2, y: yBotB1 }, { x: x0, y: yBotB0 }],
-          organic.sky,
-          { layers: 6, subdivisions: 2, bleed: 0.16, layerAlpha: a.theme.scheme === 'dark' ? 0.08 : 0.058, wetEdgeRing: false }
-        );
-
-        a.graphitePencil([{ x: x0, y: yTopA0 }, { x: x1, y: yTopA1 }], fg, { grade: '4B', pressure: 0.9, wobble: 0.7 });
-        a.graphitePencil([{ x: x0, y: yTopB0 }, { x: x1, y: yTopB1 }], fg, { grade: 'HB', pressure: 0.75, wobble: 0.6 });
-      } else if (f2 === segs + 4) {
-        // Anotação final a giz de cera destacando o cenário de confluência
-        a.waxCrayon(
-          [{ x: chartX + chartW * 0.74, y: baseY - h * 0.50 }, { x: chartX + chartW, y: baseY - h * 0.56 }],
-          organic.ochre,
-          { thickness: 8, tooth: 0.5, density: 0.85 }
-        );
+        if (f2 === fanFrames) {
+          a.graphitePencil(
+            [
+              { x: origin.x, y: origin.y },
+              { x: origin.x + w * 0.28, y: origin.y - h * 0.42 },
+            ],
+            fg,
+            { grade: '4B', pressure: 0.85, wobble: 0.55 },
+          );
+          a.waxCrayon(
+            [
+              { x: origin.x + w * 0.22, y: origin.y - h * 0.36 },
+              { x: origin.x + w * 0.34, y: origin.y - h * 0.44 },
+            ],
+            organic.ochre,
+            { thickness: 7, tooth: 0.48, density: 0.9 },
+          );
+        }
       }
     },
   };
@@ -941,7 +1201,7 @@ export function createCelestialPencilSketch(): SketchDefinition {
 }
 
 /**
- * Preset 4 — Colagem em Giz de Cera & Pastel Seco (Estilo Editorial Terracotta/Anthropic)
+ * Preset 4 — Colagem em Giz de Cera & Pastel Seco (Estilo Editorial Terracotta/Meridian)
  */
 export function createCrayonCollageSketch(): SketchDefinition {
   return {

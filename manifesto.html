@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-surface="obsidian" data-mode="technical" data-grain="editorial" data-grain-size="medium" data-layout="masthead">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#141413" />
+  <title>Manifesto · Meridian Archival</title>
+  <meta name="description" content="Manifesto Meridian: uma só tinta, uma referência estável, diagramação Arquival e a pergunta do farol." />
+  <link rel="stylesheet" href="./src/tokens.css" />
+  <link rel="stylesheet" href="./src/components.css" />
+  <link rel="stylesheet" href="./src/gann.css" />
+</head>
+<body class="gann-page">
+  <div class="ds-page-veil" aria-hidden="false"></div>
+  <a class="gann-skip" href="#preambulo">Ir ao conteúdo</a>
+
+  <div class="ds-page-enter">
+  <header class="gann-chrome" role="banner">
+    <div class="gann-chrome-inner">
+      <button class="ds-burger gann-burger" id="gann-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gann-rail">
+        <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <a class="gann-brand" href="./manifesto.html">Manifesto</a>
+
+      <nav class="gann-nav-center" aria-label="Seções">
+        <a data-nav href="#preambulo">Preâmbulo</a>
+        <a data-nav href="#referencia">Referência</a>
+        <a data-nav href="#tinta">Tinta</a>
+        <a data-nav href="#silencio">Silêncio</a>
+        <a data-nav href="#papel">Papel</a>
+        <a data-nav href="#rigor">Rigor</a>
+        <a data-nav href="#util">Utilidade</a>
+        <a data-nav href="#juramento">Juramento</a>
+      </nav>
+
+      <div class="gann-spectrum" role="group" aria-label="Atmosfera cromática suave">
+        <button type="button" class="gann-spectrum-dot" data-chroma="obsidian" aria-pressed="true" title="Obsidian" style="--chroma:#141413"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="ivory" aria-pressed="false" title="Ivory" style="--chroma:#FAF9F5"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="mist" aria-pressed="false" title="Mist" style="--chroma:#C5D4CE"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="aqua" aria-pressed="false" title="Aqua" style="--chroma:#A4CED0"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="butter" aria-pressed="false" title="Butter" style="--chroma:#E8D9A8"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="blush" aria-pressed="false" title="Blush" style="--chroma:#E8C4C0"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="terracotta" aria-pressed="false" title="Terracotta" style="--chroma:#EDBB99"></button>
+        <button type="button" class="gann-spectrum-dot" data-chroma="lilac" aria-pressed="false" title="Lilac" style="--chroma:#C9C0D8"></button>
+      </div>
+      <div class="gann-layout-toggle" role="group" aria-label="Alternar diagramação">
+        <button type="button" data-layout-pick="masthead" data-active="true">Header</button>
+        <button type="button" data-layout-pick="rail">Menu</button>
+      </div>
+      <a class="gann-ds-link" href="./index.html">Meridian DS ↗</a>
+    </div>
+  </header>
+
+  <div class="gann-rail-backdrop" id="gann-rail-backdrop" data-open="false"></div>
+  <aside class="gann-rail" id="gann-rail" data-open="false" role="dialog" aria-modal="true" aria-label="Navegação lateral">
+    <div class="gann-rail-head">
+      <button class="gann-rail-close" id="gann-rail-close" type="button">Close ×</button>
+      <span class="gann-eyebrow" style="margin:0">Sumário</span>
+    </div>
+    <nav class="gann-rail-nav" aria-label="Seções laterais">
+      <a data-nav href="#preambulo">00 · Preâmbulo</a>
+      <a data-nav href="#referencia">01 · Referência</a>
+      <a data-nav href="#tinta">02 · Tinta</a>
+      <a data-nav href="#silencio">03 · Silêncio</a>
+      <a data-nav href="#papel">04 · Papel</a>
+      <a data-nav href="#rigor">05 · Rigor</a>
+      <a data-nav href="#util">06 · Utilidade</a>
+      <a data-nav href="#juramento">07 · Juramento</a>
+    </nav>
+    <p class="gann-rail-meta">
+      Tipografia e coluna iguais ao dossiê Gann. Princípios numerados — não slogans.
+    </p>
+  </aside>
+
+  <main class="gann-shell">
+    <section class="gann-hero" aria-labelledby="manifesto-hero-title">
+      <div class="gann-prose">
+        <p class="gann-eyebrow">Documento fundador · Meridian Design System</p>
+        <h1 class="gann-title" id="manifesto-hero-title">Manifesto Meridian</h1>
+        <p class="gann-lead">
+          Não perseguimos atenção. Mantemos direção —
+          uma linha invisível entre o cotidiano calmo e o rigor que se pode auditar.
+        </p>
+        <div class="gann-pill-row">
+          <span class="gann-pill" data-tone="solid">Single-Ink</span>
+          <span class="gann-pill">Arquival</span>
+          <span class="gann-pill">Plotter D2</span>
+          <span class="gann-pill">Referência</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="gann-reader">
+      <aside class="gann-reader-toc" aria-label="Sumário sticky">
+        <p class="gann-eyebrow">Contents</p>
+        <nav>
+          <a class="ds-toc-link" data-nav href="#preambulo">Preâmbulo</a>
+          <a class="ds-toc-link" data-nav href="#referencia">Referência</a>
+          <a class="ds-toc-link" data-nav href="#tinta">Tinta</a>
+          <a class="ds-toc-link" data-nav href="#silencio">Silêncio</a>
+          <a class="ds-toc-link" data-nav href="#papel">Papel</a>
+          <a class="ds-toc-link" data-nav href="#rigor">Rigor</a>
+          <a class="ds-toc-link" data-nav href="#util">Utilidade</a>
+          <a class="ds-toc-link" data-nav href="#juramento">Juramento</a>
+        </nav>
+      </aside>
+
+      <div class="gann-reader-main">
+        <section class="gann-section" id="preambulo">
+          <div class="gann-section-head">
+            <h2>Por que este&nbsp;texto existe</h2>
+            <p class="gann-eyebrow" style="margin:0">00 · Preâmbulo</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Intenção</div>
+            <h3>Uma referência, não uma&nbsp;moda</h3>
+            <p>
+              Interfaces se perdem do mesmo modo que navios: não de uma vez, mas em graus —
+              uma concessão visual, um atalho de interação, uma tendência acolhida só para facilitar a&nbsp;viagem.
+            </p>
+            <p>
+              Meridian existe para impedir esse desvio. Não com regras decorativas,
+              mas com uma pergunta estável e uma gramática que a&nbsp;torna inevitável.
+            </p>
+          </article>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Tese</div>
+            <blockquote>Design sem meridiano é navegação sem mapa.</blockquote>
+            <cite>Manifesto Meridian · preâmbulo</cite>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-eixo"></div>
+            <p class="gann-plot-note">Plate I · Eixo · uma linha atravessa o campo</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="referencia">
+          <div class="gann-section-head">
+            <h2>I · Escolhemos uma&nbsp;referência</h2>
+            <p class="gann-eyebrow" style="margin:0">01 · Referência</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Princípio</div>
+            <h3>Direção antes de&nbsp;ornamento</h3>
+            <p>
+              Não basta ter um moodboard. É preciso um meridiano —
+              algo que permanece igual quando a superfície, a plataforma ou a equipe mudam.
+            </p>
+            <p>
+              Tokens, tipografia e diagramação existem para tornar essa referência legível,
+              não para improvisar atmosferas a cada sprint.
+            </p>
+          </article>
+
+          <div class="gann-meta-row">
+            <span class="gann-pill" data-tone="solid">estável</span>
+            <span class="gann-pill">repetível</span>
+            <span class="gann-pill">reconhecível</span>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-referencia"></div>
+            <p class="gann-plot-note">Plate II · Meridiano · referência invisível, auditável</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="tinta">
+          <div class="gann-section-head">
+            <h2>II · Uma só&nbsp;tinta</h2>
+            <p class="gann-eyebrow" style="margin:0">02 · Tinta</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Single-Ink</div>
+            <h3>Cor como disciplina, não como&nbsp;estoque</h3>
+            <p>
+              Trabalhamos com uma tinta dominante e suas derivações.
+              Soft Chromatic amplia a atmosfera sem multiplicar sistemas concorrentes.
+            </p>
+            <p>
+              Se um contraste não nasce da tinta, ele não entra.
+              Se um estado não pode ser misturado a partir dela, ele não é estado — é exceção.
+            </p>
+          </article>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Regra</div>
+            <blockquote>Menos pigmentos. Mais relações.</blockquote>
+            <cite>Motor Single-Ink · color-mix</cite>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-tinta"></div>
+            <p class="gann-plot-note">Plate III · Tinta · origem → derivadas</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="silencio">
+          <div class="gann-section-head">
+            <h2>III · Preferimos o&nbsp;silêncio</h2>
+            <p class="gann-eyebrow" style="margin:0">03 · Silêncio</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Ruído</div>
+            <h3>Sem sombra de teatro, sem&nbsp;pilha de&nbsp;badges</h3>
+            <p>
+              Elevação falsa, glow, cards empilhados e micro-rótulos competindo pelo olhar
+              são graus de desvio. Removemos o que não orienta.
+            </p>
+            <p>
+              O cotidiano Meridian é calmo de propósito: a interface deve parecer papel sob a mão,
+              não um painel de alarmes.
+            </p>
+          </article>
+
+          <div class="gann-lifeline">
+            <div class="gann-life-item">
+              <time>Recusar</time>
+              <h3>Ornamento que não navega</h3>
+              <p>Se remover um efeito não reduz clareza, o efeito não deveria existir.</p>
+            </div>
+            <div class="gann-life-item" style="padding-bottom:0">
+              <time>Manter</time>
+              <h3>Hierarquia por tipografia e&nbsp;espaço</h3>
+              <p>Peso, corpo e respiro — antes de cor de alerta e sombra.</p>
+            </div>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-silencio"></div>
+            <p class="gann-plot-note">Plate IV · Campo limpo · uma marca, nenhum ruído</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="papel">
+          <div class="gann-section-head">
+            <h2>IV · O material é&nbsp;honesto</h2>
+            <p class="gann-eyebrow" style="margin:0">04 · Papel</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Tátil</div>
+            <h3>Grain, HalfTone, plotter — sem&nbsp;plástico</h3>
+            <p>
+              PaperGrain, HalfTone e traço de plotter não são texturas de fundo genéricas.
+              São a memória tipográfica do sistema: impressão, arquivo, instrumento.
+            </p>
+            <p>
+              Preferimos SVG 1:1 e CSS puro a abstrações que escondem a geometria.
+              O que se desenha deve poder ser medido.
+            </p>
+          </article>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-papel"></div>
+            <p class="gann-plot-note">Plate V · Folha · margem, grade, traço 1u</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="rigor">
+          <div class="gann-section-head">
+            <h2>V · Rigor que se&nbsp;audita</h2>
+            <p class="gann-eyebrow" style="margin:0">05 · Rigor</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Técnica</div>
+            <h3>Mesma gramática em Web e&nbsp;nativo</h3>
+            <p>
+              React Native, Web e SVG compartilham a mesma lógica de tokens e superfícies.
+              O modo técnico não é um tema à parte — é a leitura auditável do mesmo papel.
+            </p>
+            <p>
+              Navegação sem latência, estados previsíveis, componentes sem dependência teatral.
+              Se não pode ser inspecionado, não está pronto.
+            </p>
+          </article>
+
+          <div class="gann-meta-row">
+            <span class="gann-pill" data-tone="solid">tokens</span>
+            <span class="gann-pill">CSS puro</span>
+            <span class="gann-pill">SVG 1:1</span>
+            <span class="gann-pill">RN</span>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-rigor"></div>
+            <p class="gann-plot-note">Plate VI · Blueprint · três plataformas, um traço</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="util">
+          <div class="gann-section-head">
+            <h2>VI · A pergunta do&nbsp;farol</h2>
+            <p class="gann-eyebrow" style="margin:0">06 · Utilidade</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Critério</div>
+            <h3>Toda decisão passa pela&nbsp;placa</h3>
+            <p>
+              Antes de um token novo, um componente, uma animação ou uma superfície:
+              isso ajuda quem navega a encontrar o caminho?
+            </p>
+            <p>
+              Se a resposta for atenção, novidade ou moda — recusamos.
+              Se for alinhamento, clareza e continuidade — avançamos.
+            </p>
+          </article>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Placa · sala das lâmpadas</div>
+            <blockquote>“Isso ajuda os navegadores a encontrar seu caminho?”</blockquote>
+            <cite>O Farol e o Meridiano · critério único</cite>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-util"></div>
+            <p class="gann-plot-note">Plate VII · Placa · critério gravado</p>
+          </div>
+        </section>
+
+        <section class="gann-section" id="juramento">
+          <div class="gann-section-head">
+            <h2>VII · O que juramos&nbsp;repetir</h2>
+            <p class="gann-eyebrow" style="margin:0">07 · Juramento</p>
+          </div>
+
+          <article class="gann-card gann-prose">
+            <div class="gann-label">Compromisso</div>
+            <h3>Identidade = decisões em&nbsp;série</h3>
+            <p>
+              Uma marca não nasce de um símbolo. Nasce quando uma decisão encontra outra —
+              até a linha ficar tão clara que ninguém a confunde.
+            </p>
+          </article>
+
+          <div class="gann-lifeline">
+            <div class="gann-life-item">
+              <time>01</time>
+              <h3>Manter a referência</h3>
+              <p>Mesmo quando a tempestade pedir atalho.</p>
+            </div>
+            <div class="gann-life-item">
+              <time>02</time>
+              <h3>Uma tinta, relações claras</h3>
+              <p>Derivação antes de exceção.</p>
+            </div>
+            <div class="gann-life-item">
+              <time>03</time>
+              <h3>Silêncio útil</h3>
+              <p>Remover o que não orienta.</p>
+            </div>
+            <div class="gann-life-item">
+              <time>04</time>
+              <h3>Material mensurável</h3>
+              <p>Papel, traço e geometria sem disfarce.</p>
+            </div>
+            <div class="gann-life-item" style="padding-bottom:0">
+              <time>05</time>
+              <h3>Perguntar pela rota</h3>
+              <p>Útil aos navegadores — ou não entra.</p>
+            </div>
+          </div>
+
+          <div class="gann-evidence">
+            <div class="gann-label">Fecho</div>
+            <blockquote>
+              Não algo que chama atenção. Algo que mantém a direção — por tempo suficiente para que os outros confiem nela.
+            </blockquote>
+            <cite>Manifesto Meridian · VII</cite>
+          </div>
+
+          <div class="gann-plot-block">
+            <div class="gann-plot-stage" id="plot-juramento"></div>
+            <p class="gann-plot-note">Plate VIII · Cadeia · decisão → decisão → meridiano</p>
+          </div>
+
+          <footer class="gann-footer">
+            <span>Meridian Design System · Manifesto</span>
+            <span>
+              <a class="gann-ds-link" href="./historia.html">O Farol ↗</a>
+              ·
+              <a class="gann-ds-link" href="./index.html">Design System ↗</a>
+            </span>
+          </footer>
+        </section>
+      </div>
+
+      <aside class="gann-reader-aside" aria-label="At a glance">
+        <div class="gann-aside-plate" id="aside-eixo" role="img" aria-label="Eixo Meridian em plotter"></div>
+        <p class="gann-aside-caption">Plate · Eixo · stroke 1u · referência</p>
+        <h2 class="gann-aside-title">At a glance</h2>
+        <a class="gann-fact" data-nav href="#referencia">
+          <span class="gann-eyebrow" style="margin:0">I</span>
+          <span>Referência estável antes de ornamentação ou mood.</span>
+          <span class="gann-fact-link">Ver princípio I ↗</span>
+        </a>
+        <a class="gann-fact" data-nav href="#tinta">
+          <span class="gann-eyebrow" style="margin:0">II</span>
+          <span>Single-Ink: menos pigmentos, mais relações.</span>
+          <span class="gann-fact-link">Ver princípio II ↗</span>
+        </a>
+        <a class="gann-fact" data-nav href="#util">
+          <span class="gann-eyebrow" style="margin:0">VI</span>
+          <span>A pergunta do farol filtra cada decisão.</span>
+          <span class="gann-fact-link">Ver princípio VI ↗</span>
+        </a>
+        <div class="gann-aside-plate gann-aside-plate--secondary" id="aside-placa" role="img" aria-label="Placa do critério"></div>
+        <p class="gann-aside-caption">Plate · Critério · útil aos navegadores?</p>
+      </aside>
+    </div>
+  </main>
+
+  </div>
+  <script type="module" src="./src/manifesto-app.ts"></script>
+</body>
+</html>

@@ -19,7 +19,7 @@ export interface ButtonProps
   loading?: boolean;
 }
 
-/** Meridian line button — local press ripple + scale(0.97) physics (jhosephe gestures). */
+/** Meridian line button — local press ripple + scale(0.97) physics (Meridian gestures). */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { className, variant, loading, disabled, onPointerDown, children, type = 'button', ...props },
   ref,

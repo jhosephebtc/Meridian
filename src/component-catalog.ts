@@ -1,6 +1,6 @@
 /**
  * Catálogo Meridian Components Lab
- * Origem gestual: jhosephe · Visual: SVG line / single-ink
+ * Origem gestual: Meridian · Visual: SVG line / single-ink
  */
 
 export type ComponentCategory =
@@ -56,6 +56,7 @@ export type DemoKind =
   | 'steps'
   | 'gallery'
   | 'filmstrip'
+  | 'timeline'
   | 'image-frame'
   | 'image-inspector'
   | 'data-table'
@@ -140,12 +141,13 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'accordion-scroll', name: 'Accordion Scroll', category: 'surfaces', blurb: 'Scroll + seções expansíveis.', demo: 'accordion', install: 'accordion-scroll', interactive: true },
   { id: 'vertical-gallery', name: 'Vertical Gallery', category: 'surfaces', blurb: 'Tiles com seletor de proporção.', demo: 'gallery', install: 'vertical-gallery', interactive: true },
   { id: 'filmstrip-gallery', name: 'Filmstrip', category: 'surfaces', blurb: 'Tira horizontal arrastável 1:1.', demo: 'filmstrip', install: 'filmstrip-gallery', interactive: true },
+  { id: 'timeline', name: 'Timeline', category: 'navigation', blurb: 'Eixo horizontal 1:1 + momentum + reveal editorial.', demo: 'timeline', install: 'timeline', interactive: true },
   { id: 'image-frame', name: 'Image Frame', category: 'surfaces', blurb: 'Placa 4px + caption mono + padding interno.', demo: 'image-frame', install: 'image-frame', interactive: true },
   { id: 'image-tile', name: 'Image Tile', category: 'surfaces', blurb: 'Tile editorial com bleed e gutter.', demo: 'image-frame', install: 'image-tile', interactive: true },
 
   // Overlays — menus & modals
   { id: 'dialog', name: 'Line Dialog', category: 'overlays', blurb: 'Modal centrado, dim seco, Esc fecha.', demo: 'dialog', install: 'dialog', interactive: true },
-  { id: 'sheet-modal', name: 'Sheet Modal', category: 'overlays', blurb: 'Bottom sheet Vaul-like com handle.', demo: 'sheet', install: 'sheet-modal', interactive: true },
+  { id: 'sheet-modal', name: 'Sheet Modal', category: 'overlays', blurb: 'Bottom sheet sheet com handle.', demo: 'sheet', install: 'sheet-modal', interactive: true },
   { id: 'drawer-modal', name: 'Drawer', category: 'overlays', blurb: 'Painel lateral com backdrop dim.', demo: 'drawer', install: 'drawer-modal', interactive: true },
   { id: 'confirm-modal', name: 'Confirm Modal', category: 'overlays', blurb: 'Confirmação destrutiva / primária.', demo: 'dialog', install: 'confirm-modal', interactive: true },
   { id: 'menu', name: 'Dropdown Menu', category: 'overlays', blurb: 'Menu ancorado no gatilho, itens + atalhos.', demo: 'menu', install: 'menu', interactive: true },
@@ -158,7 +160,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
 
   // Navigation
   { id: 'gallery', name: 'Gallery Slider', category: 'navigation', blurb: 'Carrossel com setas e dots.', demo: 'gallery', install: 'gallery', interactive: true },
-  { id: 'segmented-control', name: 'Segmented Control', category: 'navigation', blurb: 'Clip-path tabs Emil.', demo: 'segmented', install: 'segmented-control', interactive: true },
+  { id: 'segmented-control', name: 'Segmented Control', category: 'navigation', blurb: 'Clip-path tabs Meridian.', demo: 'segmented', install: 'segmented-control', interactive: true },
   { id: 'step-navigation', name: 'Step Navigation', category: 'navigation', blurb: 'Passos numerados com estado atual.', demo: 'steps', install: 'step-navigation', interactive: true },
   { id: 'accordion', name: 'Accordion', category: 'navigation', blurb: 'Seções colapsáveis com chevron.', demo: 'accordion', install: 'accordion', interactive: true },
   { id: 'finance-navigation', name: 'Finance Nav', category: 'navigation', blurb: 'Mercados / ordem / histórico.', demo: 'segmented', install: 'finance-navigation', interactive: true },

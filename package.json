@@ -19,6 +19,7 @@
     "./page-enter": "./src/page-enter.ts",
     "./plotter-svg": "./src/plotter-svg.ts",
     "./atelier-engine": "./src/atelier-engine.ts",
+    "./timeline": "./src/timeline.ts",
     "./tokens.css": "./src/tokens.css",
     "./fonts.css": "./src/fonts.css",
     "./components.css": "./src/components.css"

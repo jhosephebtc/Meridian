@@ -15,6 +15,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         preview: resolve(__dirname, 'preview.html'),
         gann: resolve(__dirname, 'gann.html'),
+        historia: resolve(__dirname, 'historia.html'),
+        manifesto: resolve(__dirname, 'manifesto.html'),
         components: resolve(__dirname, 'components.html'),
       },
     },

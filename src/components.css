@@ -198,7 +198,7 @@ body {
   margin: 0;
 }
 
-/* Hairline vertical (colunas do leitor Deimos) */
+/* Hairline vertical (colunas do leitor Arquival) */
 .ds-rule-y {
   width: var(--ds-hairline, 1px);
   align-self: stretch;
@@ -209,7 +209,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   2. NAVEGAÇÃO — TOPBAR TRANSLÚCIDA + SCROLL-EDGE FADE (Apple/Emil + Deimos)
+   2. NAVEGAÇÃO — TOPBAR TRANSLÚCIDA + SCROLL-EDGE FADE (Apple/+ Arquival)
    -------------------------------------------------------------------------- */
 .ds-topbar {
   position: sticky;
@@ -352,7 +352,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   3. CLIP-PATH SEAMLESS SEGMENTED TABS (Técnica Assinatura Emil Kowalski)
+   3. CLIP-PATH SEAMLESS SEGMENTED TABS (Técnica Assinatura Meridian Motion)
    Duas camadas sobrepostas; a camada ativa desliza via `clip-path: inset(...)`
    invertendo cor de fundo e texto no mesmo pixel sem dessincronia.
    -------------------------------------------------------------------------- */
@@ -426,7 +426,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   4. SISTEMA DUAL-RADIUS DE BOTÕES (Anthropic Pills + Squircles + Emil Press)
+   4. SISTEMA DUAL-RADIUS DE BOTÕES (Pills + Squircles + press tátil)
    -------------------------------------------------------------------------- */
 .ds-btn {
   position: relative;
@@ -490,7 +490,7 @@ body {
   color: var(--ds-fg);
 }
 
-/* Variantes Tonais (Progressão Anthropic: Tertiary → Secondary → Primary) */
+/* Variantes Tonais (Progressão tonal: Tertiary → Secondary → Primary) */
 .ds-btn-primary {
   background-color: var(--ds-accent);
   border-color: var(--ds-accent);
@@ -539,7 +539,7 @@ body {
   }
 }
 
-/* Botão Hold-to-Confirm Assimétrico (Emil Kowalski: linear ao segurar, ease-out ao soltar) */
+/* Botão Hold-to-Confirm Assimétrico (Meridian Motion: linear ao segurar, ease-out ao soltar) */
 .ds-btn-hold {
   overflow: hidden;
   background-color: var(--ds-surface-1);
@@ -566,7 +566,7 @@ body {
   transition: clip-path 1.4s linear;
 }
 
-/* Blur crossfade para labels de botão/modo (Emil < 20px blur bridge) */
+/* Blur crossfade para labels de botão/modo  */
 .ds-blur-morph {
   display: inline-block;
   transition:
@@ -582,14 +582,14 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   5. POPOVERS ORIGIN-AWARE & TOOLTIPS SKIP-DELAY (Emil Kowalski)
+   5. POPOVERS ORIGIN-AWARE & TOOLTIPS SKIP-DELAY (Meridian Motion)
    -------------------------------------------------------------------------- */
 .ds-popover {
   position: absolute;
   z-index: 80;
   border-radius: var(--ds-radius-card);
   background-color: var(--ds-bg);
-  border: 1px solid var(--ds-border-strong);
+  border: 0;
   box-shadow: var(--ds-shadow-popover);
   transform-origin: var(--ds-origin, top right);
   opacity: 0;
@@ -644,13 +644,13 @@ body {
     visibility 0s linear 0s;
 }
 
-/* Pula animação ao deslizar para tooltips irmãos já abertos (Emil rule!) */
+/* Pula animação ao deslizar para tooltips irmãos já abertos (regra Meridian) */
 .ds-tooltip[data-instant="true"] {
   transition-duration: 0ms;
 }
 
 /* --------------------------------------------------------------------------
-   6. PALETA DE COMANDO ⌘K — ZERO ANIMAÇÃO (Emil Frequency Gate: 100+/dia)
+   6. PALETA DE COMANDO ⌘K — ZERO ANIMAÇÃO (Frequency Gate: 100+/dia)
    -------------------------------------------------------------------------- */
 .ds-cmdk-backdrop {
   position: fixed;
@@ -739,7 +739,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   7. GRID ASSIMÉTRICO EDITORIAL (Linhagem Anthropic + Sibling Dimming)
+   7. GRID ASSIMÉTRICO EDITORIAL (Linhagem Editorial + Sibling Dimming)
    -------------------------------------------------------------------------- */
 .ds-masonry-row {
   display: grid;
@@ -774,7 +774,7 @@ body {
   transition: opacity var(--ds-duration-base) var(--ds-ease-out);
 }
 
-/* Anthropic signature: suaviza irmãos ao focar um card (somente ponteiro fino!) */
+/* Sibling dim: suaviza irmãos ao focar um card (somente ponteiro fino!) */
 @media (hover: hover) and (pointer: fine) {
   .ds-masonry-group:has(.ds-editorial-card:hover) .ds-editorial-card:not(:hover) {
     opacity: 0.54;
@@ -806,7 +806,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. LEITOR DEIMOS — TOC | prosa | aside (placa menor + At a glance)
+   8. LEITOR ARQUIVAL — TOC | prosa | aside (placa menor + At a glance)
    -------------------------------------------------------------------------- */
 .ds-reader-grid {
   display: grid;
@@ -978,7 +978,7 @@ body {
   font-weight: 500;
 }
 
-/* Sentença citável — Deimos: dotted underline + tint no hover (sem blur) */
+/* Sentença citável — Arquival: dotted underline + tint no hover (sem blur) */
 .ds-claim {
   border-radius: 0;
   padding: 0.1em 0.12em;
@@ -1022,7 +1022,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   9. LIFELINE CRONOLOGIA & ESTANTE 3D DE DOSSIÊS (Linhagem Deimos + Emil Drag)
+   9. LIFELINE CRONOLOGIA & ESTANTE 3D DE DOSSIÊS (Linhagem Arquival + arrasto 1:1)
    -------------------------------------------------------------------------- */
 .ds-lifeline-viewport {
   overflow-x: auto;
@@ -1116,7 +1116,7 @@ body {
   border: 1px solid var(--ds-border-strong);
   border-left: 0;
   border-radius: 0 4px 4px 0;
-  box-shadow: var(--ds-shadow-raised);
+  box-shadow: none;
   padding: 16px 14px;
   display: flex;
   flex-direction: column;
@@ -1156,7 +1156,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   10. MOLDURA SVG 1:1 TRAVADA (Diretriz Arquitetural Lunar+Earth+Gemini)
+   10. MOLDURA SVG 1:1 TRAVADA (Diretriz Arquitetural Meridian)
    -------------------------------------------------------------------------- */
 .ds-svg-frame {
   position: relative;
@@ -1223,13 +1223,13 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   12. VAUL-CURVE DRAWER / SHEET — estilo Deimos archival (papel + sombra suave)
+   12. DRAWER DRAWER / SHEET — estilo arquival Meridian (papel + sombra suave)
    -------------------------------------------------------------------------- */
 .ds-drawer-backdrop {
   position: fixed;
   inset: 0;
   z-index: 160;
-  /* Só escurecimento — sem blur (padrão Deimos / Meridian) */
+  /* Só escurecimento — sem blur (padrão Meridian) */
   background-color: rgba(20, 16, 12, 0.34);
   opacity: 0;
   pointer-events: none;
@@ -1339,7 +1339,7 @@ html[data-page-ready="true"] .ds-page-enter {
 }
 
 /* --------------------------------------------------------------------------
-   14. FOOTER EDITORIAL (inspirado Anthropic — marca | acordeões | missão)
+   14. FOOTER EDITORIAL (editorial Meridian — marca | acordeões | missão)
    -------------------------------------------------------------------------- */
 .ds-footer {
   background-color: var(--ds-inverted-bg);
@@ -1543,6 +1543,211 @@ html[data-page-ready="true"] .ds-page-enter {
   .ds-footer-brand { order: 0; }
   .ds-footer-nav { order: 2; }
   .ds-footer-aside { order: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   TIMELINE — eixo horizontal 1:1 + momentum + reveal editorial
+   -------------------------------------------------------------------------- */
+.ds-timeline {
+  position: relative;
+  width: 100%;
+  --ds-timeline-node-w: 210px;
+  --ds-timeline-gap: 28px;
+  --ds-timeline-rail-y: 46px;
+}
+
+.ds-timeline-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  touch-action: pan-y;
+  cursor: grab;
+  scrollbar-width: none;
+  padding: 12px 0 18px;
+  outline: none;
+}
+
+.ds-timeline-viewport::-webkit-scrollbar { display: none; }
+.ds-timeline-viewport[data-dragging="true"] { cursor: grabbing; }
+.ds-timeline-viewport:focus-visible {
+  box-shadow: var(--ds-shadow-focus);
+  border-radius: var(--ds-radius-squircle);
+}
+
+.ds-timeline-track {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-timeline-gap);
+  width: max-content;
+  padding: 0 24px 0 8px;
+}
+
+.ds-timeline-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--ds-timeline-rail-y);
+  height: 1px;
+  border-top: 1px dashed var(--ds-rule-strong);
+  pointer-events: none;
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0.45;
+  transition:
+    transform var(--ds-duration-reveal) var(--ds-ease-editorial),
+    opacity var(--ds-duration-base) var(--ds-ease-out);
+}
+
+.ds-timeline[data-revealed="true"] .ds-timeline-rail {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.ds-timeline-rail-progress {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--ds-fg);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 380ms var(--ds-ease-drawer);
+  opacity: 0.85;
+}
+
+.ds-timeline-node {
+  position: relative;
+  appearance: none;
+  width: var(--ds-timeline-node-w);
+  flex-shrink: 0;
+  padding: 62px 4px 0 0;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  color: var(--ds-fg);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 420ms var(--ds-ease-editorial),
+    transform 420ms var(--ds-ease-editorial);
+  transition-delay: calc(var(--tl-i, 0) * 70ms);
+}
+
+.ds-timeline-node[data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.ds-timeline-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--ds-font-mono);
+  font-size: 12px;
+  color: var(--ds-fg-muted);
+  letter-spacing: 0.02em;
+  transition: color var(--ds-duration-fast) ease, font-weight var(--ds-duration-fast) ease;
+}
+
+.ds-timeline-dot {
+  position: absolute;
+  top: 40px;
+  left: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 9999px;
+  background-color: var(--ds-bg);
+  border: 1.5px solid var(--ds-fg);
+  box-shadow: none;
+  transition:
+    transform 280ms var(--ds-ease-drawer),
+    background-color var(--ds-duration-fast) ease;
+}
+
+.ds-timeline-title {
+  display: block;
+  font-family: var(--ds-font-display);
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 5px;
+  transition: color var(--ds-duration-fast) ease;
+}
+
+.ds-timeline-desc {
+  display: block;
+  font-family: var(--ds-font-sans);
+  font-size: 12.5px;
+  color: var(--ds-fg-muted);
+  line-height: 1.45;
+}
+
+.ds-timeline-node[aria-pressed="true"] .ds-timeline-dot,
+.ds-timeline-node[data-active="true"] .ds-timeline-dot {
+  background-color: var(--ds-fg);
+  transform: scale(1.28);
+}
+
+.ds-timeline-node[aria-pressed="true"] .ds-timeline-label,
+.ds-timeline-node[data-active="true"] .ds-timeline-label {
+  color: var(--ds-fg);
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-timeline-node:hover .ds-timeline-dot {
+    transform: scale(1.12);
+  }
+  .ds-timeline-node[aria-pressed="true"]:hover .ds-timeline-dot {
+    transform: scale(1.28);
+  }
+  .ds-timeline-node:hover .ds-timeline-label {
+    color: var(--ds-fg);
+  }
+}
+
+.ds-timeline-node:focus-visible {
+  outline: none;
+}
+.ds-timeline-node:focus-visible .ds-timeline-dot {
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.ds-timeline-detail {
+  margin-top: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: var(--ds-radius-card);
+  border: 1px solid var(--ds-border);
+  background-color: var(--ds-bg-tint-subtle);
+  transition: opacity 180ms var(--ds-ease-out), transform 220ms var(--ds-ease-out);
+}
+
+.ds-timeline-detail[data-morphing="true"] {
+  opacity: 0.4;
+  transform: translateY(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-timeline-rail,
+  .ds-timeline-rail-progress,
+  .ds-timeline-node,
+  .ds-timeline-dot,
+  .ds-timeline-detail {
+    transition: none !important;
+  }
+  .ds-timeline-rail,
+  .ds-timeline-node {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

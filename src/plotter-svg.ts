@@ -3,11 +3,11 @@
  * Gramática Visual de Blueprints SVG & Globo Ortográfico 81k (100% TypeScript · Zero Deps)
  *
  * Linhagem:
- *  • Plotter (`pasqualevitiello/plotter`) — 1 tinta (`currentColor`), 1 espessura (`1`),
+ *  • Plotter (`gramática plotter`) — 1 tinta (`currentColor`), 1 espessura (`1`),
  *    hierarquia estrita por opacidade e tracejado semântico (`data-plotter-role`),
  *    formas transparentes (`fill="none"`), setas de 6 unidades a 45°, hachura a -45° (pitch 12),
  *    rótulos discretos sem stroke (0.72 nomes / 0.50 valores).
- *  • Anthropic 81k Interviews (`anthropic.com/features/81k-interviews`) — globo editorial
+ *  • globo pontilhado Meridian (`anthropic.com/features/81k-interviews`) — globo editorial
  *    pontilhado em projeção ortográfica com rotas/transferências e leitura limpa sobre papel.
  *
  * Portabilidade: retorna strings SVG editáveis puras (Web) ou estruturas de geometria tipadas
@@ -165,7 +165,7 @@ export function projectOrthographic(
 
 /**
  * Aproximação paramétrica compacta dos continentes para pontilhado cartográfico editorial
- * (estilo Globo 81k Interviews da Anthropic — 100% procedural, zero GeoJSON pesado!)
+ * (estilo globo malha pontilhada Meridian — 100% procedural, zero GeoJSON pesado!)
  */
 export function isLandApprox(lat: number, lon: number): boolean {
   // América do Norte
@@ -229,7 +229,7 @@ export interface PlottedGlobeOptions {
 }
 
 /**
- * Renderiza o Globo Ortográfico Pontilhado (Anthropic 81k) seguindo integralmente
+ * Renderiza o Globo Ortográfico Pontilhado (malha pontilhada) seguindo integralmente
  * a gramática visual do Plotter (`data-plotter`, `data-plotter-role`, 1-unit ink).
  */
 export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
@@ -284,7 +284,7 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
     }
   }
 
-  // 4. Pontilhado Continental (Anthropic 81k dot aesthetic — sem fills pesados!)
+  // 4. Pontilhado Continental (malha pontilhada dot aesthetic — sem fills pesados!)
   for (let lat = -72; lat <= 78; lat += step) {
     const lonStep = step / Math.max(0.28, Math.cos((lat * Math.PI) / 180));
     for (let lon = -180; lon < 180; lon += lonStep) {

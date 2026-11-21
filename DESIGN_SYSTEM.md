@@ -1,8 +1,8 @@
 # 08 — MERIDIAN Design System (`v1.4.0`)
 
-**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone Paper Shaders e Arte Generativa para o ecossistema _Lunar + Earth AI + Gemini Studio_ (42 projetos em 100% TypeScript · React Native + Web · CSS Puro · SVG 1:1).**
+**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone Paper Shaders e Arte Generativa para o ecossistema _Meridian_ (42 projetos em 100% TypeScript · React Native + Web · CSS Puro · SVG 1:1).**
 
-> **Linhagem de Referência:** síntese deliberada dos arquivos *Anthropic Research*, *Deimos* (White / Aqua / Terracotta / Dark), espectro **Soft Chromatic** (Blush / Butter / Mist / Lilac), aquarelas de **Anthropic Economic Scenarios**, globo **81k**, gramática **Plotter**, **HalfTone Dots** (`shaders.paper.design`), e motion de **Emil Kowalski**.
+> **Linhagem de Referência:** síntese deliberada dos arquivos *Meridian Editorial*, *Arquival* (White / Aqua / Terracotta / Dark), espectro **Soft Chromatic** (Blush / Butter / Mist / Lilac), aquarelas de **cenários aquarela Meridian**, globo **81k**, gramática **Plotter**, **HalfTone Dots** (`shaders.paper.design`), e motion de **Meridian Motion**.
 
 ---
 
@@ -11,47 +11,47 @@
 ### Por que "Meridian"?
 O ecossistema atende dois públicos opostos sobre o mesmo motor TypeScript:
 1. **Modo Invisível (B2C Cotidiano — Blocos 1 e 2):** apps de clima, qualidade do ar, saúde da família, imóveis e voz que precisam transmitir **calma editorial, clareza humana e zero jargão técnico/astrológico**.
-2. **Modo Técnico Auditável (Pro / Ciclos / B2B — Blocos 3, 4 e 5):** terminais Gann–Jenkins, efemérides em 4 camadas, backtests BigQuery e dossiês territoriais que exigem **rigor científico, rastreabilidade de fonte e precisão geométrica 1:1**.
+2. **Modo Técnico Auditável (Pro / Ciclos / B2B — Blocos 3, 4 e 5):** terminais Gann–Jenkins, efemérides em 4 camadas, backtests ledger analítico e dossiês territoriais que exigem **rigor científico, rastreabilidade de fonte e precisão geométrica 1:1**.
 
 **Meridian** une os dois mundos sob uma estética **Swiss Archival Editorial + Modern Research Product**:
-- **Editorial e confiável** (como *Anthropic Research* e *Deimos*): sem neon, sem roxo-no-escuro, sem cards hiper-aninhados, sem brilho artificial.
+- **Editorial e confiável** (como *Meridian Editorial* e *Arquival*): sem neon, sem roxo-no-escuro, sem cards hiper-aninhados, sem brilho artificial.
 - **Tátil e impresso**: superfícies com **PaperGrain em canvas overlay** (`#ds-paper-grain` — nunca data-URL em CSS var), fotografia arquivística com `mix-blend-mode: multiply` e **scrollbars hairline** (2px, track transparente).
-- **Fluido e sem latência** (como *Linear*, *Vercel* e *Apple Fluid Interfaces*): navegação nítida, `clip-path` tabs sem dessincronia, resposta instantânea no pointer-down (`scale(0.97)`), atalhos de teclado sem atraso (`0ms`) e física de gestos 1:1.
+- **Fluido e sem latência** (como *Linear*, *Vercel* e *interfaces fluidas*): navegação nítida, `clip-path` tabs sem dessincronia, resposta instantânea no pointer-down (`scale(0.97)`), atalhos de teclado sem atraso (`0ms`) e física de gestos 1:1.
 
 ---
 
 ## 2. Motor Multi-Superfície "Single-Ink" + Soft Chromatic (9 atmosferas)
 
-Inspirado na arquitetura de *Deimos* (`color-mix(in srgb, var(--fg) X%, var(--bg))`) somada à escada tonal quente da *Anthropic*, toda a hierarquia de bordas, divisórias, textos secundários e estados de hover deriva de **uma única cor de tinta (`--ds-fg`)** interagindo com a cor do papel (`--ds-bg`).
+Inspirado na arquitetura de *Arquival* (`color-mix(in srgb, var(--fg) X%, var(--bg))`) somada à escada tonal quente Meridian, toda a hierarquia de bordas, divisórias, textos secundários e estados de hover deriva de **uma única cor de tinta (`--ds-fg`)** interagindo com a cor do papel (`--ds-bg`).
 
 Ordem do espectro (`SURFACE_SPECTRUM` em `tokens.ts`):  
 `ivory → blush → butter → mist → aqua → lilac → terracotta → obsidian` (+ `paper` para dossiês).
 
 | Superfície (`data-surface`) | Linhagem | Fundo `--ds-bg` | Tinta `--ds-fg` | Contraste | Uso |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`ivory`** *(Padrão)* | Anthropic Research | `#FAF9F5` | `#141413` | **17.6:1** | Home B2C, pesquisa |
-| **`paper`** | Deimos White | `#FFFFFF` | `#0A0A0A` | **19.8:1** | Dossiês PDF, B2B |
+| **`ivory`** *(Padrão)* | Meridian Editorial | `#FAF9F5` | `#141413` | **17.6:1** | Home B2C, pesquisa |
+| **`paper`** | Paper Archive | `#FFFFFF` | `#0A0A0A` | **19.8:1** | Dossiês PDF, B2B |
 | **`blush`** | Soft Chromatic | `#E8C4C0` | `#1A1414` | **9.8:1** | Capas HalfTone, cultura |
 | **`butter`** | Soft Chromatic | `#E8D9A8` | `#1A1710` | AAA | Editorial quente suave |
 | **`mist`** | Soft Chromatic | `#C5D4CE` | `#141816` | AAA | Clima / natureza suave |
-| **`aqua`** | Deimos Blue | `#A4CED0` | `#171614` | **10.4:1** | Earth AI, AQI, Agro |
+| **`aqua`** | Aqua Archive | `#A4CED0` | `#171614` | **10.4:1** | Ambiente, AQI, Agro |
 | **`lilac`** | Soft Chromatic | `#C9C0D8` | `#16141A` | AAA | Narrativa / voz |
-| **`terracotta`** | Deimos Orange | `#EDBB99` | `#171614` | **10.4:1** | Cultura, Solar, Gann |
-| **`obsidian`** | Deimos Dark | `#0E0E0D` | `#FAF9F5` | **18.4:1** | Terminal Pro noturno |
+| **`terracotta`** | Terracotta Archive | `#EDBB99` | `#171614` | **10.4:1** | Cultura, Solar, Gann |
+| **`obsidian`** | Obsidian Archive | `#0E0E0D` | `#FAF9F5` | **18.4:1** | Terminal Pro noturno |
 
 ### Derivados Dinâmicos (`color-mix` no CSS / RGBA pré-resolvido em `tokens.ts`)
 - `--ds-bg-tint-subtle`: `4.5%` de `--ds-fg` sobre `--ds-bg` (hover suave, molduras de gráficos)
 - `--ds-bg-tint-muted`: `8.5%` de `--ds-fg` sobre `--ds-bg` (item ativo no TOC, destaque de citação)
-- `--ds-rule`: `10%` de `--ds-fg` transparente (hairline Deimos — seções, captions, listas)
+- `--ds-rule`: `10%` de `--ds-fg` transparente (hairline Arquival — seções, captions, listas)
 - `--ds-rule-strong`: `16%` de `--ds-fg` transparente (trilho Lifeline, ênfase leve)
 - `--ds-border`: `10%` de `--ds-fg` transparente (cards, inputs, tabs — mesma sutileza da rule)
 - `--ds-border-strong`: `18%` de `--ds-fg` transparente (popovers, foco; nunca pesado)
-- Leitor 3 colunas Deimos: `--ds-toc-width: 152px` · fluid · `--ds-aside-width: 264px` · `--ds-reader-gap: 32px`
+- Leitor 3 colunas Arquival: `--ds-toc-width: 152px` · fluid · `--ds-aside-width: 264px` · `--ds-reader-gap: 32px`
 
 ### Paleta Orgânica Contida & Sinais Semânticos
-Herdada da estratégia *Anthropic* (tons terrosos usados **exclusivamente** em tags de categoria, séries de gráficos SVG e pontos de status — nunca como fundos saturados de página):
+Herdada da estratégia Meridian (tons terrosos usados **exclusivamente** em tags de categoria, séries de gráficos SVG e pontos de status — nunca como fundos saturados de página):
 - **Olive** `#5E6E47` *(Earth / Agro / Pólen)* · **Sky** `#477085` *(Clima / Atmosfera)* · **Coral** `#B55A42` *(Social / Hype / Térmico)* · **Ochre** `#9A7134` *(Solar / Ciclos)* · **Slate** `#56606E` *(Finanças / Dados)*.
-- **Sinais de Verificação:** `support`, `caution`, `refute`, `info` com calibração automática de contraste AAA/AA em `aqua`, `terracotta` e `obsidian`. Também suporta `[data-signals="monochrome"]` (estilo arquivístico puro do Deimos, onde forma geométrica + tinta única distinguem o estado sem depender de cor).
+- **Sinais de Verificação:** `support`, `caution`, `refute`, `info` com calibração automática de contraste AAA/AA em `aqua`, `terracotta` e `obsidian`. Também suporta `[data-signals="monochrome"]` (estilo arquivístico puro do Arquival, onde forma geométrica + tinta única distinguem o estado sem depender de cor).
 
 ---
 
@@ -89,16 +89,16 @@ Capas/placas usam `@paper-design/shaders` `halftoneDots`. **`u_size` ≥ ~0.4 de
 | :--- | :--- | :--- |
 | **Superfície padrão** | `ivory` *(ou `aqua` / `terracotta` por vertical)* | `obsidian` *(ou `paper` para dossiês/impressão)* |
 | **Densidade & padding** | `--ds-density: 1`, cards `24px`, prosa `17px` | `--ds-density: 0.88`, cards `18px`, prosa `15px` |
-| **Hierarquia de dados** | Dados físicos Google (Clima/AQI/Pólen/Rua) em 1º plano; conselhos em linguagem natural | 4 Camadas expostas (Astronomia, Casas/Dignidades, Gann/Jenkins, Backtest BigQuery) |
-| **Proveniência** | Selo limpo de fonte confiável ("Google Weather · Atualizado 14:10") | Sobrescritos clicáveis `¹²³` + classificação `Tier A / B / C` + graus tabulares |
+| **Hierarquia de dados** | Dados físicos (Clima/AQI/Pólen/Rua) em 1º plano; conselhos em linguagem natural | 4 Camadas expostas (Astronomia, Casas/Dignidades, Gann/Jenkins, Backtest ledger analítico) |
+| **Proveniência** | Selo limpo de fonte confiável ("Clima · Atualizado 14:10") | Sobrescritos clicáveis `¹²³` + classificação `Tier A / B / C` + graus tabulares |
 
 ---
 
 ## 4.5 Components Lab & shadcn Registry
 
-Página interativa: [`components.html`](./components.html) — catálogo dos **64 componentes** do lab [jhosephe](https://jhosephe.vercel.app/) reexpressos em gramática Meridian (traço SVG / single-ink).
+Página interativa: [`components.html`](./components.html) — catálogo dos **64 componentes** do lab [Meridian](https://Meridian.vercel.app/) reexpressos em gramática Meridian (traço SVG / single-ink).
 
-- **Gestos:** física tátil do jhosephe (pressão local, dial por ângulo absoluto, captura de ponteiro 1:1, Frequency Gate ⌘K).
+- **Gestos:** física tátil do Meridian (pressão local, dial por ângulo absoluto, captura de ponteiro 1:1, Frequency Gate ⌘K).
 - **Visual:** sem glass glow — hairlines, anéis SVG, dual-radius Meridian.
 - **Install:** `npx shadcn@latest add <origin>/r/button.json` (índice em `public/r/registry.json`). Fontes React em `registry/meridian/`; build via `npm run registry`.
 
@@ -124,7 +124,7 @@ Arquivos de fonte locais: `assets/fonts/` (`Geist-Variable`, `GeistSerifVF`, `Ge
 
 ## 6. Sistema Dual-Radius & Botões
 
-Herdado da gramática *Anthropic* com resposta tátil de *Emil Kowalski*:
+Herdado da gramática Meridian com resposta tátil Meridian Motion:
 - **Pills (`9999px`)** → navegação, tabs segmentadas, seletores de tema/modo, tags de categoria e setas circulares de carrossel.
 - **Squircles (`8px`)** → ações utilitárias (`Filtrar`, `Exportar`, `Ver mais`), campos de busca, controles de toolbar e toasts.
 - **Plates (`4px`) / Cards (`12px`)** → placas editoriais de imagem (`4px`) e containers estruturais / molduras SVG (`12px`).
@@ -133,10 +133,10 @@ Herdado da gramática *Anthropic* com resposta tátil de *Emil Kowalski*:
 
 ---
 
-## 7. Navegação, Motion & Design Engineering (`emilkowalski/skills`)
+## 7. Navegação, Motion & Design Engineering (`Motion Lab`)
 
 ### 7.1 The Frequency Gate — Quando NÃO Animar
-Regra #1 de Emil Kowalski aplicada rigorosamente ao Meridian:
+Regra #1 de Meridian Motion aplicada rigorosamente ao Meridian:
 
 | Frequência de Uso | Exemplos no Ecossistema | Decisão de Motion |
 | :--- | :--- | :--- |
@@ -151,9 +151,9 @@ Regra #1 de Emil Kowalski aplicada rigorosamente ao Meridian:
 | :--- | :--- | :--- |
 | `--ds-ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | Entradas, saídas, press, popovers, dropdowns (sensação imediata) |
 | `--ds-ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | Movimento em tela e deslizamento de *Clip-Path Tabs* |
-| `--ds-ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | Drawers e Bottom Sheets estilo iOS / Vaul |
-| `--ds-ease-snappy` | `cubic-bezier(0.85, 0, 0, 1)` | Indicadores rápidos de seleção (Anthropic) |
-| `--ds-ease-editorial` | `cubic-bezier(0.22, 1, 0.36, 1)` | Revelação de placas e zoom suave `1.018` em imagens (Deimos) |
+| `--ds-ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | Drawers e Bottom Sheets estilo iOS / Drawer |
+| `--ds-ease-snappy` | `cubic-bezier(0.85, 0, 0, 1)` | Indicadores rápidos de seleção (Meridian) |
+| `--ds-ease-editorial` | `cubic-bezier(0.22, 1, 0.36, 1)` | Revelação de placas e zoom suave `1.018` em imagens (Arquival) |
 | `--ds-ease-volume` | `cubic-bezier(0.22, 0.8, 0.25, 1)` | Abertura 3D de dossiês na estante |
 
 ### 7.3 Padrões de Navegação & Micro-Interação Implementados
@@ -164,7 +164,7 @@ Regra #1 de Emil Kowalski aplicada rigorosamente ao Meridian:
 5. **Tooltips com Skip-Delay (`[data-instant]`):** o 1º tooltip aguarda `320ms` para evitar disparos acidentais; ao deslizar o cursor para botões irmãos na mesma barra, os tooltips seguintes trocam em **`0ms`**!
 6. **Blur Crossfade (`filter: blur(2px)`):** ponte sutil durante trocas de texto/estado em botões e badges para fundir os dois estados num único objeto contínuo.
 7. **Hold-to-Confirm Assimétrico:** ações sensíveis/destrutivas preenchem `clip-path` em **`linear 1.4s`** enquanto pressionadas (percepção honesta do tempo) e recuam em **`180ms ease-out`** se soltas antes do fim.
-8. **Sonner Toast Stack Interruptível:** construído com **CSS transitions** (nunca `@keyframes`, para poder ser interrompido/retomado no meio do trajeto), entrando e saindo pelo mesmo eixo vertical (`translateY(100%)`).
+8. **Toast Stack Interruptível:** construído com **CSS transitions** (nunca `@keyframes`, para poder ser interrompido/retomado no meio do trajeto), entrando e saindo pelo mesmo eixo vertical (`translateY(100%)`).
 9. **Gestos 1:1 com Projeção de Momentum & Rubber-Band:** fase *Track* sem easing (1:1 com o ponteiro via `setPointerCapture` e escrita direta em `transform`/scroll, sem atualizar CSS variables no pai!); fase *Release* projeta o destino com `projectMomentum(v, 0.998)` e amortece bordas com `rubberband(overshoot, dim, 0.55)`.
 
 ### 7.4 Paridade React Native / Expo (`tokens.ts` + `animate-expo`)
@@ -177,18 +177,18 @@ Regra #1 de Emil Kowalski aplicada rigorosamente ao Meridian:
 
 ## 8. Padrões Estruturais & Componentes Editoriais
 
-1. **Grid Assimétrico Editorial (12 colunas — Anthropic):** alterna ritmos assimétricos (`3+8`, `6+3`, `8+3`) sem repetir o mesmo padrão em duas linhas seguidas. Ao passar o ponteiro fino sobre um card, os cards irmãos recuam suavemente para `opacity: 0.54`, criando foco de galeria de revista.
-2. **Leitor Enciclopédico em 3 Colunas (Deimos):** TOC `152px` | prosa `65ch` com **claims** (hover: *dotted underline* + tint, sem blur/glow) e sobrescritos `¹²³` | aside `264px` com placa menor + *At a Glance*. Empilha em mobile (`prosa → placa`).
+1. **Grid Assimétrico Editorial (12 colunas — Meridian):** alterna ritmos assimétricos (`3+8`, `6+3`, `8+3`) sem repetir o mesmo padrão em duas linhas seguidas. Ao passar o ponteiro fino sobre um card, os cards irmãos recuam suavemente para `opacity: 0.54`, criando foco de galeria de revista.
+2. **Leitor Enciclopédico em 3 Colunas (Arquival):** TOC `152px` | prosa `65ch` com **claims** (hover: *dotted underline* + tint, sem blur/glow) e sobrescritos `¹²³` | aside `264px` com placa menor + *At a Glance*. Empilha em mobile (`prosa → placa`).
 3b. **Page enter:** `.ds-page-veil` + `markPageReady()` (`page-enter.ts`) — revela com `--ds-enter-scale` (nunca `scale(0)`).
-3. **Cronologia Horizontal `Lifeline` (Deimos):** trilho horizontal arrastável 1:1 com eixo tracejado (`1px dashed var(--ds-rule-strong)`), marcadores de ciclo/ano e cartões interativos — funciona tanto para *Cronologia Climática/Urbana* (B2C) quanto para *Janelas de Confluência & Ciclos* (Técnico).
-4. **Estante Tátil 3D de Dossiês (Deimos):** lombadas verticais em `preserve-3d` com brilho especular e borda de páginas caneladas (`--ds-pattern-page-ribs`), abrindo em `800ms` para revelar relatórios PDF gerados (*Raio-X Endereço #11*, *Atlas Gann-Jenkins #26*, *Simulador Solar #36*, *Observatório Pulse #30*).
-5. **Footer editorial (Anthropic):** grade 3 colunas — marca compacta | acordeões `<details>` com hairlines e chevron | bloco “Nossa missão” + links externos `↗`. Um acordeão aberto por vez. Componente `.ds-footer` em `components.css`.
+3. **Cronologia Horizontal `Lifeline` (Arquival):** trilho horizontal arrastável 1:1 com eixo tracejado (`1px dashed var(--ds-rule-strong)`), marcadores de ciclo/ano e cartões interativos — funciona tanto para *Cronologia Climática/Urbana* (B2C) quanto para *Janelas de Confluência & Ciclos* (Técnico).
+4. **Estante Tátil 3D de Dossiês (Arquival):** lombadas verticais em `preserve-3d` com brilho especular e borda de páginas caneladas (`--ds-pattern-page-ribs`), abrindo em `800ms` para revelar relatórios PDF gerados (*Raio-X Endereço #11*, *Atlas Gann-Jenkins #26*, *Simulador Solar #36*, *Observatório Pulse #30*).
+5. **Footer editorial (Meridian):** grade 3 colunas — marca compacta | acordeões `<details>` com hairlines e chevron | bloco “Nossa missão” + links externos `↗`. Um acordeão aberto por vez. Componente `.ds-footer` em `components.css`.
 
 ---
 
 ## 9. Gramática SVG Blueprint (Plotter) & Globo Ortográfico 81k (`plotter-svg.ts`)
 
-Para elevar todos os desenhos técnicos, ilustrações explicativas, globos e instrumentos geométricos do ecossistema (atendendo à Seção 5 da `00-arquitetura-global.md`), o Meridian adota a gramática vetorial de **[Plotter](https://github.com/pasqualevitiello/plotter)** (*Pasquale Vitiello*) combinada ao estilo de globo pontilhado de **[What 81,000 people want from AI](https://www.anthropic.com/features/81k-interviews)**.
+Para elevar todos os desenhos técnicos, ilustrações explicativas, globos e instrumentos geométricos do ecossistema (atendendo à Seção 5 da `00-arquitetura-global.md`), o Meridian adota a gramática vetorial de **[Plotter](https://github.com/gramática plotter)** (*Pasquale Vitiello*) combinada ao estilo de globo pontilhado de **[What 81,000 people want from AI](https://meridian)**.
 
 ### 9.1 Regras Absolutas de Desenho Plotter
 - **Uma tinta, uma espessura (`1` unidade):** todos os traços usam `--plotter-ink: var(--ds-fg)` (`currentColor`) e `stroke-width: 1`. Nunca engrosse uma linha para dar ênfase — a hierarquia vem exclusivamente da **opacidade** e do **tracejado semântico**.
@@ -215,14 +215,14 @@ Em `plotter-svg.ts`, `renderPlottedGlobeSvg()` executa projeção ortográfica 3
 
 ## 10. Atelier Generativo em 100% TypeScript (`atelier-engine.ts`)
 
-Inspirado diretamente nas animações de aquarela e pincéis de **[Scenarios for our Economic Future — Anthropic Institute](https://www.anthropic.com/institute/econ-scenarios)** e nos algoritmos de mídia física do `p5.brush`, o Meridian inclui um **motor criativo completo em 100% TypeScript estrito** — simulando a ergonomia de `p5.js` (`setup`, `draw`, `noise2D`, `fbm2D`, `randomGaussian`, `lerp`, `mapRange`), mas **sem depender de `p5.js` nem de JavaScript não tipado**.
+Inspirado diretamente nas animações de aquarela e pincéis de **[Scenarios for our Economic Future — estúdio editorial Meridian
 
 ### 10.1 As 5 Primitivas de Mídia Física (`MeridianAtelier`)
 
 | Mídia / Método | Algoritmo Físico em TypeScript | Uso Ideal no Ecossistema |
 | :--- | :--- | :--- |
 | **Aquarela (`watercolorWash` / `watercolorBand`)** | Subdivisão recursiva de polígonos com deslocamento normal gaussiano (`deformPolygon`), camadas translúcidas em `multiply` (ou `screen` no `obsidian`) + anel de acúmulo capilar na borda úmida (*wet-edge pigment pooling*). | Faixas de cenários econômicos/climáticos, nuvens atmosféricas, manchas editoriais de abertura. |
-| **Blocos Preenchidos a Pincel (`brushFillRect`)** | Inspirado nos cubos lado a lado da Anthropic (`econ-scenarios`): pintura incremental sobre canvas persistente com tiras de aquarela + cerdas úmidas horizontais + contorno esboçado a lápis `2H`. | Matrizes de tarefas/sinais, barras de progresso orgânicas, status de confluência e cenários interativos. |
+| **Blocos Preenchidos a Pincel (`brushFillRect`)** | Inspirado nos cubos lado a lado Meridian (`econ-scenarios`): pintura incremental sobre canvas persistente com tiras de aquarela + cerdas úmidas horizontais + contorno esboçado a lápis `2H`. | Matrizes de tarefas/sinais, barras de progresso orgânicas, status de confluência e cenários interativos. |
 | **Lápis Grafite (`graphitePencil`, `handDrawnRect`, `hatchArea`)** | `4–8` microfibras paralelas (`2H / HB / 4B`) moduladas por `fbm2D` (tremor orgânico manual) e micro-grãos depositados sobre os picos do papel + hachura por recorte Cohen–Sutherland. | Rascunhos arquitetônicos, contornos de gráficos, cadernos Gann–Jenkins, diagramas de endereço. |
 | **Giz de Cera / Pastel Seco (`waxCrayon`)** | Stippling anisotrópico de elipses cerosas filtradas pela máscara do dente do papel (`noise2D(x*0.36, y*0.36) > tooth`), deixando falhas orgânicas de papel algodão. | Colagens editoriais quentes (Terracotta / Ivory), destaques em Cultura Pop, Solar 3D e cards compartilháveis. |
 | **Pincel Tinta Sumi-e (`inkBrush`)** | Cerdas divididas com largura modulada por curva de pressão senoidal e efeito *dry-brush* (`kasure`) progressivo nas pontas. | Traços caligráficos de ênfase, espirais *Square of Nine*, assinaturas visuais de capítulo. |
@@ -230,7 +230,7 @@ Inspirado diretamente nas animações de aquarela e pincéis de **[Scenarios for
 ### 10.2 Portabilidade Web + React Native & Performance 120fps
 - **Interface `AtelierDrawingBackend` agnóstica:** na Web usa `createCanvasBackend(canvas, dpr)` (Canvas 2D nativo); em React Native / Expo conecta o mesmo motor ao `@shopify/react-native-skia` implementando apenas 6 primitivas (`clear`, `setCompositeMode`, `fillPolygon`, `strokePolyline`, `fillDot`, `fillEllipse`).
 - **Pintura Incremental (< 1ms/frame):** diferentemente de loops que apagam e redesenham toda a cena a cada frame, os sketches pintam **incrementalmente sobre papel persistente** — mantendo custo médio abaixo de `0.7ms/frame` (folga total para 120Hz ProMotion!).
-- **Disciplina Emil Kowalski + Acessibilidade:** `runMeridianSketch()` pausa automaticamente fora da viewport (`IntersectionObserver`) e, sob `prefers-reduced-motion: reduce`, sintetiza instantaneamente a ilustração final estática sem rodar `requestAnimationFrame`.
+- **Disciplina Meridian Motion + Acessibilidade:** `runMeridianSketch()` pausa automaticamente fora da viewport (`IntersectionObserver`) e, sob `prefers-reduced-motion: reduce`, sintetiza instantaneamente a ilustração final estática sem rodar `requestAnimationFrame`.
 
 ### 10.3 Os 4 Presets Editoriais Inclusos
 1. `createEconWatercolorSketch()` — Matriz 4×3 de blocos preenchendo lado a lado em aquarela + faixas de cenário e curvas 4B (homenagem direta ao `anthropic.com/institute/econ-scenarios`).

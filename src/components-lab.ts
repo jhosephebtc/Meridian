@@ -1519,7 +1519,7 @@ function ensureHosts(): void {
     sheet.className = 'lab-sheet';
     sheet.innerHTML = `<div class="lab-sheet-handle"></div>
       <h2 class="serif" style="font-family:var(--ds-font-display);font-weight:400;margin:8px 0">Bottom sheet</h2>
-      <p style="color:var(--ds-fg-muted);font-size:14px;line-height:1.5;margin:0 0 16px">Vaul-like sheet · drag handle visual · Esc closes.</p>
+      <p style="color:var(--ds-fg-muted);font-size:14px;line-height:1.5;margin:0 0 16px">sheet sheet · drag handle visual · Esc closes.</p>
       <button type="button" class="ml-btn ml-btn-primary" data-sheet-close>Done</button>`;
     document.body.append(back, sheet);
     back.addEventListener('click', () => setSheet(false));
