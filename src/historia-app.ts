@@ -5,7 +5,8 @@
 import { PAPER_SHADER } from './tokens';
 import { mountPaperGrain } from './paper-grain';
 import { markPageReady } from './page-enter';
-import { initI18n } from './i18n';
+import { initI18n, getLang, t, type Lang } from './i18n';
+import { applyHistoriaEssay } from './i18n-historia';
 import './i18n.css';
 
 type LayoutMode = 'masthead' | 'rail';
@@ -197,21 +198,23 @@ function renderMeridianos(host: HTMLElement): void {
 }
 
 function renderFarol(host: HTMLElement, compact = false): void {
-  const W = compact ? 320 : 560;
-  const H = compact ? 320 : 380;
-  const baseX = W / 2;
-  const ground = H - (compact ? 48 : 56);
-  const towerW = compact ? 28 : 36;
-  const towerH = compact ? 110 : 150;
+  const W = compact ? 280 : 560;
+  const H = compact ? 280 : 380;
+  const baseX = compact ? W * 0.38 : W / 2;
+  const ground = H - (compact ? 36 : 56);
+  const towerW = compact ? 22 : 36;
+  const towerH = compact ? 96 : 150;
   const top = ground - towerH;
   const lampY = top + 14;
-  const beamLen = compact ? 100 : 180;
+  const beamLen = compact ? 120 : 180;
+  const pad = compact ? 18 : 48;
 
   host.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" data-plotter="true" fill="none"
+      preserveAspectRatio="xMidYMid meet"
       aria-label="Elevação de farol com feixe animado">
-      <rect x="16" y="16" width="${W - 32}" height="${H - 32}" data-plotter-role="guide" rx="0"/>
-      <line class="ht-draw" x1="${compact ? 28 : 48}" y1="${ground}" x2="${W - (compact ? 28 : 48)}" y2="${ground}" data-plotter-role="centerline"/>
+      <rect x="12" y="12" width="${W - 24}" height="${H - 24}" data-plotter-role="guide" rx="0"/>
+      <line class="ht-draw" x1="${pad}" y1="${ground}" x2="${W - pad}" y2="${ground}" data-plotter-role="centerline"/>
       <path class="ht-draw" style="--ht-delay:80ms"
         d="M ${baseX - towerW} ${ground} L ${baseX - towerW * 0.72} ${top + 28} L ${baseX + towerW * 0.72} ${top + 28} L ${baseX + towerW} ${ground} Z"
         data-plotter-role="secondary"/>
@@ -219,13 +222,13 @@ function renderFarol(host: HTMLElement, compact = false): void {
         x="${baseX - towerW * 0.55}" y="${top}" width="${towerW * 1.1}" height="28" data-plotter-role="primary"/>
       <circle class="ht-fade ht-pulse ht-ambient" style="--ht-delay:1.2s;--ht-opacity:1"
         cx="${baseX}" cy="${lampY}" r="5" fill="currentColor" stroke="none" data-plotter-role="primary"/>
-      <g class="ht-beam ht-ambient" style="--ht-ox:${baseX}px;--ht-oy:${lampY}px;--ht-delay:1.4s;transform-origin:${baseX}px ${lampY}px;transform-box:view-box">
+      <g class="ht-beam ht-ambient" style="--ht-delay:1.4s;transform-origin:${baseX}px ${lampY}px;transform-box:view-box">
         <line class="ht-draw" style="--ht-delay:280ms"
-          x1="${baseX + 8}" y1="${lampY}" x2="${baseX + beamLen}" y2="${lampY - 28}" data-plotter-role="primary"/>
+          x1="${baseX + 8}" y1="${lampY}" x2="${Math.min(baseX + beamLen, W - 20)}" y2="${lampY - 18}" data-plotter-role="primary"/>
       </g>
       <g class="ht-beam-soft ht-ambient" style="--ht-delay:1.7s;transform-origin:${baseX}px ${lampY}px;transform-box:view-box">
         <line class="ht-draw" style="--ht-delay:320ms"
-          x1="${baseX + 8}" y1="${lampY}" x2="${baseX + beamLen * 0.92}" y2="${lampY + 36}" data-plotter-role="transfer"/>
+          x1="${baseX + 8}" y1="${lampY}" x2="${Math.min(baseX + beamLen * 0.85, W - 20)}" y2="${lampY + 28}" data-plotter-role="transfer"/>
       </g>
       ${
         compact
@@ -337,14 +340,16 @@ function renderTempestade(host: HTMLElement): void {
 }
 
 function renderMeridianoAside(host: HTMLElement): void {
-  const W = 320;
-  const H = 240;
+  const W = 280;
+  const H = 210;
   const cx = W / 2;
   const cy = H / 2;
-  const r = 78;
+  const r = 68;
   host.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" data-plotter="true" fill="none"
+      preserveAspectRatio="xMidYMid meet"
       aria-label="Meridiano central">
+      <rect x="10" y="10" width="${W - 20}" height="${H - 20}" data-plotter-role="guide" rx="0"/>
       <g class="ht-spin ht-ambient" style="--ht-delay:0.6s;transform-origin:${cx}px ${cy}px;transform-box:view-box">
         <circle class="ht-draw" cx="${cx}" cy="${cy}" r="${r}" data-plotter-role="secondary" fill="none"/>
         <ellipse class="ht-draw ht-dash-flow ht-ambient" style="--ht-delay:1s" cx="${cx}" cy="${cy}" rx="${r * 0.35}" ry="${r}" data-plotter-role="transfer" fill="none"/>
@@ -423,8 +428,18 @@ function mountPlots(): void {
   observePlots(hosts);
 }
 
+function syncHistoriaLang(lang: Lang = getLang()): void {
+  applyHistoriaEssay(lang);
+  document.title = t('hist.docTitle', lang);
+}
+
 function init(): void {
   initI18n();
+  syncHistoriaLang();
+  window.addEventListener('meridian:lang', ((e: CustomEvent<{ lang: Lang }>) => {
+    syncHistoriaLang(e.detail.lang);
+  }) as EventListener);
+
   mountPaperGrain({
     seed: 20241120,
     speckleStrength: PAPER_SHADER.defaultSpeckle * 0.85,

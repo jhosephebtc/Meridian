@@ -91,16 +91,16 @@
 
   /* Grid & Layout Containers */
   --ds-max-wide: 1440px;                               /* Galeria / Masonry editorial */
-  --ds-max-editorial: 1180px;                          /* Leitor 3 colunas Arquival     */
+  --ds-max-editorial: 1280px;                          /* Leitor 3 colunas Arquival     */
   --ds-max-prose: 65ch;                                /* guia tipográfico (~65 chars) */
   --ds-gutter-mobile: 16px;
   --ds-gutter-tablet: 24px;
   --ds-gutter-desktop: 32px;                         /* Arquival reader gap (≥1100px) */
   --ds-topbar-height: 58px;
   /* Leitor 3 colunas — proporções proporções arquivais: 152 · fluid · 264 */
-  --ds-toc-width: 152px;
-  --ds-aside-width: 264px;
-  --ds-reader-gap: 32px;
+  --ds-toc-width: 148px;
+  --ds-aside-width: 280px;
+  --ds-reader-gap: 28px;
   --ds-hairline: 1px;                                /* espessura; sutileza vem da opacidade */
 
   /* Sistema Dual-Radius (Pills + Squircles & editorial Meridian Plates) */

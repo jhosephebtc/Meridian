@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="theme-color" content="#FAF9F5" id="meta-theme-color" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.svg" />
   <title>MERIDIAN — Design System</title>
   <style>
     /* ========================================================================
@@ -1762,14 +1764,264 @@
 
     /* História — tipografia e leitor alinhados ao dossiê Gann */
     #historia.section-block {
+      position: relative;
+      isolation: isolate;
       padding-top: clamp(48px, 7vw, 88px);
       padding-bottom: clamp(56px, 8vw, 104px);
+      overflow: visible;
+    }
+    .historia-ambient {
+      position: absolute;
+      inset: -32px -12px -64px;
+      z-index: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .historia-ambient-motif {
+      position: absolute;
+      opacity: 0;
+      color: var(--ds-fg);
+      transform-origin: center center;
+      transition: opacity 700ms var(--ds-ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+      will-change: opacity, transform;
+    }
+    .historia-ambient-motif[data-visible="true"] {
+      opacity: 0.42;
+    }
+    .historia-ambient-motif[data-slot="mid"][data-visible="true"] {
+      opacity: 0.32;
+    }
+    .historia-ambient-motif[data-slot="left"][data-visible="true"],
+    .historia-ambient-motif[data-slot="right"][data-visible="true"] {
+      opacity: 0.48;
+    }
+    .historia-ambient-motif .ha-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    .historia-ambient-motif .ha-stroke {
+      stroke: currentColor;
+      stroke-width: 1.55;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .historia-ambient-motif .ha-star {
+      fill: currentColor;
+      stroke: none;
+      opacity: 0.9;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: ha-twinkle 2.8s ease-in-out infinite;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-draw {
+      stroke-dasharray: 360;
+      stroke-dashoffset: 360;
+    }
+    .historia-ambient-motif[data-visible="true"] .ha-draw {
+      animation: ha-draw 1.25s var(--ds-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-star-line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      opacity: 0.7;
+      stroke-width: 1.25;
+    }
+    .historia-ambient-motif[data-visible="true"] .ha-star-line {
+      animation: ha-draw 1.45s var(--ds-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-bird {
+      animation: ha-fly var(--ha-dur, 5s) ease-in-out infinite;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-bird-body {
+      transform-box: fill-box;
+      transform-origin: center;
+      transform: scale(var(--ha-scale, 1));
+    }
+    .historia-ambient-motif .ha-wing {
+      transform-box: fill-box;
+      transform-origin: 0px 0px;
+      animation: ha-flap 0.55s ease-in-out infinite;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-wing-r {
+      animation-name: ha-flap-r;
+    }
+    .historia-ambient-motif .ha-boat-sail {
+      animation: ha-sail 11s ease-in-out infinite;
+      animation-delay: var(--ha-delay, 0s);
+      transform-origin: 140px 110px;
+    }
+    .historia-ambient-motif .ha-boat-bob {
+      transform-origin: 140px 110px;
+      animation: ha-bob 3.2s ease-in-out infinite;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-sail {
+      transform-box: fill-box;
+      transform-origin: left center;
+      animation: ha-sail-billow 3.8s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-wave {
+      opacity: 0.65;
+      stroke-dasharray: 5 7;
+      animation: ha-wave-drift 5.5s linear infinite;
+      animation-delay: var(--ha-delay, 0s);
+    }
+    .historia-ambient-motif .ha-wave-b { animation-duration: 7s; opacity: 0.5; }
+    .historia-ambient-motif .ha-wave-c { animation-duration: 9s; opacity: 0.35; }
+    .historia-ambient-motif .ha-horizon {
+      opacity: 0.45;
+      stroke-dasharray: 5 7;
+    }
+    .historia-ambient-motif .ha-sextant { opacity: 0.9; }
+    .historia-ambient-motif .ha-nav-sway {
+      transform-origin: 96px 188px;
+      animation: ha-nav-sway 5.5s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-sextant-scan {
+      transform-origin: 148px 90px;
+      animation: ha-sextant-scan 6s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-sight {
+      opacity: 0.4;
+      stroke-dasharray: 3 5;
+      animation: ha-sight-pulse 2.4s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-compass-spin {
+      transform-origin: 100px 100px;
+      animation: ha-compass-spin 18s linear infinite;
+    }
+    .historia-ambient-motif .ha-compass-label {
+      fill: currentColor;
+      font-family: var(--ds-font-mono, ui-monospace, monospace);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+    .historia-ambient-motif .ha-constellation-drift {
+      transform-origin: 140px 90px;
+      animation: ha-constellation-drift 22s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-beacon {
+      transform-origin: 90px 56px;
+      animation: ha-beacon 4.5s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-beam {
+      opacity: 0.35;
+      stroke-dasharray: 4 6;
+      animation: ha-beam 3.2s ease-in-out infinite;
+    }
+    .historia-ambient-motif .ha-beam-mid { animation-delay: 0.6s; opacity: 0.25; }
+    @keyframes ha-draw {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes ha-twinkle {
+      0%, 100% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.35); }
+    }
+    @keyframes ha-fly {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(36px, -22px); }
+      40% { transform: translate(72px, -6px); }
+      60% { transform: translate(48px, 14px); }
+      80% { transform: translate(18px, -10px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes ha-flap {
+      0%, 100% { transform: rotate(-14deg); }
+      50% { transform: rotate(28deg); }
+    }
+    @keyframes ha-flap-r {
+      0%, 100% { transform: rotate(14deg); }
+      50% { transform: rotate(-28deg); }
+    }
+    @keyframes ha-bob {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(10px) rotate(2.5deg); }
+    }
+    @keyframes ha-sail {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(28px); }
+    }
+    @keyframes ha-sail-billow {
+      0%, 100% { transform: skewX(0deg); }
+      50% { transform: skewX(-4deg); }
+    }
+    @keyframes ha-wave-drift {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -64; }
+    }
+    @keyframes ha-nav-sway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2.5deg); }
+    }
+    @keyframes ha-sextant-scan {
+      0%, 100% { transform: rotate(-8deg); }
+      50% { transform: rotate(12deg); }
+    }
+    @keyframes ha-sight-pulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.65; }
+    }
+    @keyframes ha-compass-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes ha-constellation-drift {
+      0%, 100% { transform: rotate(-3deg) scale(1); }
+      50% { transform: rotate(4deg) scale(1.04); }
+    }
+    @keyframes ha-beacon {
+      0%, 100% { transform: rotate(-6deg); }
+      50% { transform: rotate(8deg); }
+    }
+    @keyframes ha-beam {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.55; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .historia-ambient-motif .ha-bird,
+      .historia-ambient-motif .ha-wing,
+      .historia-ambient-motif .ha-wing-r,
+      .historia-ambient-motif .ha-boat-bob,
+      .historia-ambient-motif .ha-boat-sail,
+      .historia-ambient-motif .ha-sail,
+      .historia-ambient-motif .ha-wave,
+      .historia-ambient-motif .ha-star,
+      .historia-ambient-motif .ha-nav-sway,
+      .historia-ambient-motif .ha-sextant-scan,
+      .historia-ambient-motif .ha-compass-spin,
+      .historia-ambient-motif .ha-constellation-drift,
+      .historia-ambient-motif .ha-beacon,
+      .historia-ambient-motif .ha-beam,
+      .historia-ambient-motif .ha-sight {
+        animation: none !important;
+      }
+      .historia-ambient-motif .ha-draw,
+      .historia-ambient-motif .ha-star-line {
+        stroke-dashoffset: 0;
+      }
+      .historia-ambient-motif[data-visible="true"] { opacity: 0.28; }
+    }
+    @media (max-width: 860px) {
+      .historia-ambient-motif[data-visible="true"] { opacity: 0.36; }
+      .historia-ambient-motif[data-slot="mid"][data-visible="true"] { opacity: 0.28; }
     }
     .historia-layout {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1fr;
       gap: 0;
       align-items: start;
+      overflow: visible;
     }
     @media (min-width: 1100px) {
       .historia-layout {
@@ -1778,16 +2030,19 @@
       }
     }
     .historia-essay {
-      max-width: 62ch;
+      position: relative;
+      z-index: 1;
+      max-width: min(58ch, 100%);
       display: flex;
       flex-direction: column;
       gap: 0;
-      font-size: 14px;
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.62;
       letter-spacing: var(--ds-tracking-body);
+      padding-block: 4px 8px;
     }
     .historia-essay-kicker {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
       letter-spacing: var(--ds-tracking-eyebrow);
@@ -1796,70 +2051,83 @@
     }
     .historia-essay-title {
       font-family: var(--ds-font-display);
-      font-size: clamp(2.25rem, 5.5vw, 4rem);
+      font-size: clamp(2.35rem, 5.8vw, 4.15rem);
       font-weight: 400;
       font-synthesis-weight: none;
-      line-height: 1.08;
+      line-height: 1.05;
       letter-spacing: var(--ds-tracking-mega);
-      margin: 0 0 16px;
-      max-width: 18ch;
+      margin: 0 0 1.35em;
+      max-width: 14ch;
       text-wrap: balance;
       color: var(--ds-fg);
     }
+    #home-historia-prose {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0;
+    }
     .historia-essay p {
       margin: 0;
-      font-size: 14px;
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.62;
       letter-spacing: var(--ds-tracking-body);
       color: var(--ds-fg-muted);
-      max-width: 62ch;
+      max-width: 54ch;
       text-wrap: pretty;
+      text-align: left;
     }
     .historia-essay p + p {
-      margin-top: var(--ds-block-gap);
+      margin-top: 0.85em;
     }
     .historia-essay p.historia-lead {
       font-family: var(--ds-font-display);
-      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-      line-height: 1.45;
+      font-size: clamp(1.15rem, 2vw, 1.42rem);
+      line-height: 1.42;
       letter-spacing: var(--ds-tracking-heading);
       color: var(--ds-fg-secondary);
-      max-width: 46ch;
-      margin: 0 0 1.25em;
+      max-width: 42ch;
+      margin: 0 0 1.6em;
     }
     .historia-essay p.historia-beat {
       color: var(--ds-fg);
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.55;
       margin: 0;
       max-width: 42ch;
     }
     .historia-essay p.historia-beat + p.historia-beat {
-      margin-top: 0.35em;
+      margin-top: 0.28em;
     }
     .historia-essay .historia-spacer {
-      height: calc(var(--ds-block-gap) * 1.6);
+      height: clamp(1.6em, 3vw, 2.4em);
     }
     .historia-pull {
-      margin: 1.25em 0;
-      padding: 12px 0 0;
+      margin: 1.6em 0 1.5em;
+      padding: 14px 0 0 14px;
       border: 0;
       border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+      border-left: var(--ds-hairline, 1px) solid var(--ds-rule);
+      max-width: 36ch;
+      align-self: flex-start;
     }
     .historia-pull p {
       margin: 0;
       font-family: var(--ds-font-display);
-      font-size: 1.05rem;
-      line-height: 1.4;
+      font-size: clamp(1.08rem, 1.6vw, 1.22rem);
+      line-height: 1.35;
       letter-spacing: var(--ds-tracking-lead);
       color: var(--ds-fg);
-      max-width: 36ch;
+      max-width: 28ch;
+      text-wrap: balance;
+      text-align: left;
     }
     .historia-plaque {
-      margin: 1.4em 0;
-      padding: 12px 0 0;
+      margin: 1.75em 0;
+      padding: 16px 0 0 14px;
       border: 0;
       border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+      border-left: var(--ds-hairline, 1px) solid var(--ds-rule);
       background: transparent;
       text-align: left;
     }
@@ -1882,12 +2150,13 @@
       text-wrap: balance;
     }
     .historia-coda {
-      margin-top: 1.75em;
-      padding-top: 14px;
+      margin-top: 2.25em;
+      padding-top: 18px;
       border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      max-width: 48ch;
     }
     .historia-coda h3 {
       font-family: var(--ds-font-sans);
@@ -1913,6 +2182,7 @@
     }
     .historia-halftone-panel {
       position: sticky;
+      z-index: 1;
       top: calc(var(--ds-topbar-height, 72px) + 16px);
       display: flex;
       flex-direction: column;
@@ -3689,9 +3959,10 @@
       <div class="container-wide">
         <div class="historia-layout">
           <article class="historia-essay">
-            <div class="eyebrow historia-essay-kicker">00 · História</div>
-            <h2 class="historia-essay-title">O Farol e o&nbsp;Meridiano</h2>
+            <div class="eyebrow historia-essay-kicker" data-home="hist.kicker">00 · História</div>
+            <h2 class="historia-essay-title" data-home="hist.title">O Farol e o&nbsp;Meridiano</h2>
 
+            <div id="home-historia-prose">
             <p class="historia-lead">Muito antes dos mapas ocuparem mesas de capitães e muito antes de instrumentos dizerem às pessoas exatamente onde estavam, atravessar o oceano era um exercício de convicção.</p>
 
             <p>Navegar significava escolher uma direção e acreditar nela.</p>
@@ -3887,6 +4158,7 @@
             <p>Não algo que chama atenção.</p>
             <p>Mas algo que mantém a direção.</p>
             <p>Por tempo suficiente para que os outros confiem nela.</p>
+            </div>
 
             <div class="historia-coda">
               <div class="eyebrow" data-i18n="coda.eyebrow">Por isso Meridian</div>
@@ -3903,7 +4175,7 @@
 
           <aside class="historia-halftone-panel" aria-label="Placa HalfTone Paper Shaders">
             <div class="historia-halftone" id="historia-halftone" role="img" aria-label="Furacão em HalfTone Dots médios"></div>
-            <p class="historia-halftone-cap">Plate · Hurricane · Paper Halftone Dots · pontos médios</p>
+            <p class="historia-halftone-cap" data-home="halftone.cap">Plate · Hurricane · Paper Halftone Dots · pontos médios</p>
           </aside>
         </div>
       </div>
@@ -3914,10 +4186,10 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">01 · Motor Multi-Superfície &amp; PaperGrain</div>
-            <h2 class="section-title">Paleta Single-Ink com Derivação Automática</h2>
+            <div class="eyebrow" data-home="cores.eyebrow">01 · Motor Multi-Superfície &amp; PaperGrain</div>
+            <h2 class="section-title" data-home="cores.title">Paleta Single-Ink com Derivação Automática</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-home="cores.desc">
             Clique em qualquer amostra para copiar o token/HEX. Bordas, divisórias hairline e fundos sutis são calculados automaticamente via <code>color-mix()</code> (CSS) e pré-resolvidos em <code>tokens.ts</code> (React Native).
           </p>
         </div>
@@ -3963,10 +4235,10 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">02 · Hierarquia em 3 Vozes (Meridian + Apple)</div>
-            <h2 class="section-title">Escala por Contraste de Forma, Não de Peso</h2>
+            <div class="eyebrow" data-home="type.eyebrow">02 · Hierarquia em 3 Vozes (Meridian + Apple)</div>
+            <h2 class="section-title" data-home="type.title">Escala por Contraste de Forma, Não de Peso</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-home="type.desc">
             Família <strong>Geist</strong> em três vozes: <code>Geist Serif</code> no display (peso <code>400</code>, tracking negativo); <code>Geist</code> na prosa (máx. <code>65ch</code>); <code>Geist Mono</code> com <code>tabular-nums</code>.
           </p>
         </div>
@@ -4025,10 +4297,10 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">03 · Navegação &amp; Motion · Motion Lab</div>
-            <h2 class="section-title">Dual-Radius, Clip-Path Tabs &amp; Física Tátil</h2>
+            <div class="eyebrow" data-home="motion.eyebrow">03 · Navegação &amp; Motion · Motion Lab</div>
+            <h2 class="section-title" data-home="motion.title">Dual-Radius, Clip-Path Tabs &amp; Física Tátil</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-home="motion.desc">
             Pills (<code>9999px</code>) para navegação e filtros; Squircles (<code>8px</code>) para ações utilitárias. Zero <code>transition: all</code>, zero <code>ease-in</code>, <code>scale(0.97)</code> no pointer-down e tooltips com skip-delay.
           </p>
         </div>
@@ -4222,8 +4494,8 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">04 · Dois Arquétipos Editoriais no Mesmo Sistema</div>
-            <h2 class="section-title">Galeria Assimétrica &amp; Leitor Enciclopédico</h2>
+            <div class="eyebrow" data-home="editorial.eyebrow">04 · Editorial</div>
+            <h2 class="section-title" data-home="editorial.title">Galeria Assimétrica &amp; Leitor Enciclopédico</h2>
           </div>
           <div class="cliptabs" data-cliptabs="editorial-switch">
             <div class="cliptabs-track">
@@ -4764,7 +5036,7 @@
         <details class="footer-acc">
           <summary>Sistema <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
-            <button type="button" data-nav-target="historia">O Farol e o Meridiano</button>
+            <button type="button" data-nav-target="historia" data-i18n="hist.title">O Farol e o Meridiano</button>
             <button type="button" data-nav-target="cores">Superfícies Single-Ink</button>
             <button type="button" data-nav-target="tipografia">Tipografia 3 vozes</button>
             <button type="button" data-nav-target="interacoes">Motion &amp; Frequency Gate</button>
@@ -4809,14 +5081,13 @@
 
       <div class="footer-aside">
         <div class="footer-aside-block">
-          <h3>Nossa missão</h3>
-          <p>
-            Meridian une o cotidiano calmo e o rigor auditável num motor Single-Ink —
-            papel tátil, uma tinta, navegação sem latência para Meridian.
+          <h3 data-home="footer.mission.h">Nossa missão</h3>
+          <p data-home="footer.mission.p">
+            Meridian une o cotidiano calmo e o rigor auditável num motor Single-Ink — papel tátil, uma tinta, navegação sem latência.
           </p>
         </div>
         <div class="footer-aside-block">
-          <h3>Abrir</h3>
+          <h3 data-home="footer.open">Abrir</h3>
           <div class="footer-ext">
             <a href="./preview.html">Meridian Studio <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
             <a href="./components.html">Components Lab <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
@@ -4839,12 +5110,12 @@
   <div class="nav-rail-backdrop" id="nav-rail-backdrop" data-open="false"></div>
   <aside class="nav-rail" id="nav-rail" data-open="false" role="dialog" aria-modal="true" aria-label="Navegação">
     <div class="nav-rail-head">
-      <button class="nav-rail-close" id="btn-close-nav-rail" type="button" aria-label="Fechar menu">Close ×</button>
-      <span class="eyebrow" style="margin:0">Ir para</span>
+      <button class="nav-rail-close" id="btn-close-nav-rail" type="button" aria-label="Fechar menu" data-home="rail.close">Close ×</button>
+      <span class="eyebrow" style="margin:0" data-home="rail.goto">Ir para</span>
     </div>
 
     <div class="nav-rail-group">
-      <div class="eyebrow">Destinos</div>
+      <div class="eyebrow" data-home="rail.dest">Destinos</div>
       <nav class="nav-rail-list" aria-label="Páginas">
         <a href="./components.html" data-primary>Components Lab ↗</a>
         <a href="./preview.html">Prévia de App ↗</a>
@@ -4856,7 +5127,7 @@
     </div>
 
     <div class="nav-rail-group">
-      <div class="eyebrow">Seções nesta página</div>
+      <div class="eyebrow" data-home="rail.sections">Seções nesta página</div>
       <nav class="nav-rail-list" aria-label="Seções do Design System">
         <button type="button" data-nav-target="historia">01 · História</button>
         <button type="button" data-nav-target="cores">02 · Superfícies</button>
@@ -7110,5 +7381,6 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
   </script>
   <script type="module" src="./src/i18n-boot.ts"></script>
   <script type="module" src="./src/historia-halftone.ts"></script>
+  <script type="module" src="./src/historia-ambient-svg.ts"></script>
 </body>
 </html>

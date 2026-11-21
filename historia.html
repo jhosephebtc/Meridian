@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#FAF9F5" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.svg" />
   <title>O Farol e o Meridiano — História · Meridian Archival</title>
   <meta name="description" content="Ensaio ilustrado O Farol e o Meridiano: diagramação Arquival, plotter D2 e a pergunta que orienta o Meridian Design System." />
   <link rel="stylesheet" href="./src/tokens.css" />
@@ -22,7 +24,7 @@
       <button class="ds-burger gann-burger" id="gann-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gann-rail">
         <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <a class="gann-brand" href="./historia.html">O Farol</a>
+      <a class="gann-brand" href="./historia.html" data-i18n="hist.brand">O Farol</a>
 
       <nav class="gann-nav-center" aria-label="Seções">
         <a data-nav href="#oceano" data-i18n="hist.nav.oceano">Oceano</a>
@@ -60,13 +62,13 @@
       <span class="gann-eyebrow" style="margin:0">Sumário</span>
     </div>
     <nav class="gann-rail-nav" aria-label="Seções laterais">
-      <a data-nav href="#oceano">01 · Oceano</a>
-      <a data-nav href="#desvio">02 · Desvio</a>
-      <a data-nav href="#meridianos">03 · Meridianos</a>
-      <a data-nav href="#farol">04 · Farol</a>
-      <a data-nav href="#placa">05 · Placa</a>
-      <a data-nav href="#identidade">06 · Identidade</a>
-      <a data-nav href="#marca">07 · Marca</a>
+      <a data-nav href="#oceano" data-i18n="hist.rail.oceano">01 · Oceano</a>
+      <a data-nav href="#desvio" data-i18n="hist.rail.desvio">02 · Desvio</a>
+      <a data-nav href="#meridianos" data-i18n="hist.rail.meridianos">03 · Meridianos</a>
+      <a data-nav href="#farol" data-i18n="hist.rail.farol">04 · Farol</a>
+      <a data-nav href="#placa" data-i18n="hist.rail.placa">05 · Placa</a>
+      <a data-nav href="#identidade" data-i18n="hist.rail.identidade">06 · Identidade</a>
+      <a data-nav href="#marca" data-i18n="hist.rail.marca">07 · Marca</a>
     </nav>
     <p class="gann-rail-meta">
       Tipografia e coluna iguais ao dossiê Gann: prosa <strong>body-lg</strong>, leitor Arquival de três faixas.
@@ -95,13 +97,13 @@
       <aside class="gann-reader-toc" aria-label="Sumário sticky">
         <p class="gann-eyebrow">Contents</p>
         <nav>
-          <a class="ds-toc-link" data-nav href="#oceano">Oceano</a>
-          <a class="ds-toc-link" data-nav href="#desvio">Desvio</a>
-          <a class="ds-toc-link" data-nav href="#meridianos">Meridianos</a>
-          <a class="ds-toc-link" data-nav href="#farol">Farol</a>
-          <a class="ds-toc-link" data-nav href="#placa">Placa</a>
-          <a class="ds-toc-link" data-nav href="#identidade">Identidade</a>
-          <a class="ds-toc-link" data-nav href="#marca">Marca</a>
+          <a class="ds-toc-link" data-nav href="#oceano" data-i18n="hist.nav.oceano">Oceano</a>
+          <a class="ds-toc-link" data-nav href="#desvio" data-i18n="hist.nav.desvio">Desvio</a>
+          <a class="ds-toc-link" data-nav href="#meridianos" data-i18n="hist.nav.meridianos">Meridianos</a>
+          <a class="ds-toc-link" data-nav href="#farol" data-i18n="hist.nav.farol">Farol</a>
+          <a class="ds-toc-link" data-nav href="#placa" data-i18n="hist.nav.placa">Placa</a>
+          <a class="ds-toc-link" data-nav href="#identidade" data-i18n="hist.nav.identidade">Identidade</a>
+          <a class="ds-toc-link" data-nav href="#marca" data-i18n="hist.nav.marca">Marca</a>
         </nav>
       </aside>
 
@@ -113,8 +115,9 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Narrativa</div>
-            <h3>Convicção antes do&nbsp;instrumento</h3>
+            <div class="gann-label" data-hist="oceano.label">Narrativa</div>
+            <h3 data-hist="oceano.h3">Convicção antes do&nbsp;instrumento</h3>
+            <div data-hist="oceano.body">
             <p>
               Muito antes dos mapas ocuparem mesas de&nbsp;capitães e&nbsp;muito antes de&nbsp;instrumentos dizerem às&nbsp;pessoas exatamente onde estavam, atravessar o&nbsp;oceano era um&nbsp;exercício de&nbsp;convicção.
             </p>
@@ -123,6 +126,7 @@
             <p>O&nbsp;horizonte parecia igual em todas as&nbsp;direções.</p>
             <p>Durante o&nbsp;dia, céu e&nbsp;água se&nbsp;confundiam.</p>
             <p>Durante a&nbsp;noite, a&nbsp;escuridão apagava quase tudo.</p>
+            </div>
           </article>
 
           <div class="gann-plot-block">
@@ -144,18 +148,18 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Tese</div>
-            <h3>O desvio em&nbsp;pequenas medidas</h3>
-            <p>Era nesse vazio que os navegadores descobriam uma verdade desconfortável:</p>
+            <div class="gann-label" data-hist="desvio.label">Tese</div>
+            <h3 data-hist="desvio.h3">O desvio em&nbsp;pequenas medidas</h3>
+            <div data-hist="desvio.intro"><p>Era nesse vazio que os navegadores descobriam uma verdade desconfortável:</p></div>
           </article>
 
           <div class="gann-evidence">
             <div class="gann-label">Pull</div>
-            <blockquote>ninguém se perde de uma vez.</blockquote>
-            <cite>Ensaio · O Farol e o Meridiano</cite>
+            <blockquote data-hist="desvio.pull">ninguém se perde de uma vez.</blockquote>
+            <cite data-hist="desvio.cite">Ensaio · O Farol e o Meridiano</cite>
           </div>
 
-          <article class="gann-card gann-prose">
+          <article class="gann-card gann-prose" data-hist="desvio.body">
             <p>Ninguém acorda numa manhã e&nbsp;decide abandonar sua rota.</p>
             <p>O&nbsp;desvio acontece em pequenas medidas.</p>
             <p>Alguns graus hoje. Outros amanhã.</p>
@@ -181,8 +185,9 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Referência</div>
-            <h3>Não bastava ter uma&nbsp;direção</h3>
+            <div class="gann-label" data-hist="meridianos.label">Referência</div>
+            <h3 data-hist="meridianos.h3">Não bastava ter uma&nbsp;direção</h3>
+            <div data-hist="meridianos.body">
             <p>Por isso os antigos navegadores valorizavam uma ideia simples.</p>
             <p>Não bastava ter uma direção. Era preciso possuir uma referência.</p>
             <p>Algo estável. Algo que permanecesse igual quando tudo ao&nbsp;redor mudasse.</p>
@@ -194,6 +199,7 @@
               que tornavam tudo aquilo possível. Até porque referências raramente recebem aplausos.
               Elas apenas cumprem seu papel.
             </p>
+            </div>
           </article>
 
           <div class="gann-plot-block">
@@ -209,8 +215,9 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Personagem</div>
-            <h3>Referência que se&nbsp;vê</h3>
+            <div class="gann-label" data-hist="farol.label">Personagem</div>
+            <h3 data-hist="farol.h3">Referência que se&nbsp;vê</h3>
+            <div data-hist="farol.body">
             <p>Em uma costa distante existia um velho farol construído sobre penhascos escuros.</p>
             <p>Ele também era uma referência. Mas, ao&nbsp;contrário dos meridianos, podia ser visto.</p>
             <p>
@@ -223,15 +230,16 @@
               Não possuía a&nbsp;luz mais potente nem a&nbsp;arquitetura mais impressionante.
               Outros faróis eram maiores. Outros eram mais modernos. Alguns até mais bonitos.
             </p>
+            </div>
           </article>
 
           <div class="gann-evidence">
             <div class="gann-label">Pull</div>
-            <blockquote>Mas nenhum era tão confiável.</blockquote>
-            <cite>Reputação merecida · não planejada</cite>
+            <blockquote data-hist="farol.pull">Mas nenhum era tão confiável.</blockquote>
+            <cite data-hist="farol.cite">Reputação merecida · não planejada</cite>
           </div>
 
-          <article class="gann-card gann-prose">
+          <article class="gann-card gann-prose" data-hist="farol.body2">
             <p>Os navegadores diziam algo estranho sobre ele.</p>
             <p>Diziam que não confiavam em sua luz. Confiavam em suas decisões.</p>
             <p>A&nbsp;frase parecia sem sentido. Como um farol poderia tomar decisões?</p>
@@ -251,8 +259,9 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Critério</div>
-            <h3>Toda decisão passava por&nbsp;ali</h3>
+            <div class="gann-label" data-hist="placa.label">Critério</div>
+            <h3 data-hist="placa.h3">Toda decisão passava por&nbsp;ali</h3>
+            <div data-hist="placa.body">
             <p>Ao longo das décadas, inúmeros responsáveis passaram por aquela torre.</p>
             <p>
               Alguns queriam transformá-la em atração turística. Outros queriam torná-la mais lucrativa.
@@ -260,15 +269,16 @@
             </p>
             <p>Todas as propostas pareciam inteligentes. Todas possuíam argumentos convincentes. Todas prometiam alguma espécie de&nbsp;ganho.</p>
             <p>Mas havia uma pergunta gravada numa pequena placa de&nbsp;metal perto da sala das lâmpadas. Uma pergunta simples.</p>
+            </div>
           </article>
 
           <div class="gann-evidence">
             <div class="gann-label">Placa de metal · sala das lâmpadas</div>
-            <blockquote>“Isso ajuda os navegadores a encontrar seu caminho?”</blockquote>
-            <cite>Critério único · nunca mudava</cite>
+            <blockquote data-hist="placa.pull">“Isso ajuda os navegadores a encontrar seu caminho?”</blockquote>
+            <cite data-hist="placa.cite">Critério único · nunca mudava</cite>
           </div>
 
-          <article class="gann-card gann-prose">
+          <article class="gann-card gann-prose" data-hist="placa.body2">
             <p>Nada além disso. Toda decisão passava por ali.</p>
             <p>Toda mudança. Toda oportunidade. Todo investimento. Toda inovação. Toda recusa.</p>
             <p>A&nbsp;pergunta nunca mudava. E, justamente por isso, o&nbsp;farol nunca se perdia.</p>
@@ -287,19 +297,19 @@
 
           <div class="gann-lifeline">
             <div class="gann-life-item">
-              <time>Critério</time>
-              <h3>Útil aos navegadores?</h3>
-              <p>Filtro único para mudança, investimento e&nbsp;recusa.</p>
+              <time data-hist="placa.life1.t">Critério</time>
+              <h3 data-hist="placa.life1.h">Útil aos navegadores?</h3>
+              <p data-hist="placa.life1.p">Filtro único para mudança, investimento e&nbsp;recusa.</p>
             </div>
             <div class="gann-life-item">
-              <time>Atenção × alinhamento</time>
-              <h3>Crescer × ser útil</h3>
-              <p>Outros perseguiam tendência; o&nbsp;farol perseguia coerência.</p>
+              <time data-hist="placa.life2.t">Atenção × alinhamento</time>
+              <h3 data-hist="placa.life2.h">Crescer × ser útil</h3>
+              <p data-hist="placa.life2.p">Outros perseguiam tendência; o&nbsp;farol perseguia coerência.</p>
             </div>
             <div class="gann-life-item" style="padding-bottom:0">
-              <time>Padrão</time>
-              <h3>Confiança merecida</h3>
-              <p>Reputação não planejada — repetida até ser reconhecida.</p>
+              <time data-hist="placa.life3.t">Padrão</time>
+              <h3 data-hist="placa.life3.h">Confiança merecida</h3>
+              <p data-hist="placa.life3.p">Reputação não planejada — repetida até ser reconhecida.</p>
             </div>
           </div>
         </section>
@@ -311,8 +321,9 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Princípio</div>
-            <h3>A luz como&nbsp;manifestação</h3>
+            <div class="gann-label" data-hist="identidade.label">Princípio</div>
+            <h3 data-hist="identidade.h3">A luz como&nbsp;manifestação</h3>
+            <div data-hist="identidade.body">
             <p>
               Pouco a&nbsp;pouco, uma reputação começou a&nbsp;surgir — não porque tivesse sido planejada,
               mas porque havia sido merecida. Os navegadores passaram a&nbsp;confiar nele não por causa do&nbsp;que dizia,
@@ -334,15 +345,16 @@
               Uma linha feita de&nbsp;princípios. De&nbsp;critérios. De&nbsp;escolhas repetidas.
               De&nbsp;decisões tomadas quando ninguém estava observando.
             </p>
+            </div>
           </article>
 
           <div class="gann-evidence">
             <div class="gann-label">Pull</div>
-            <blockquote>As coisas mais importantes quase nunca são visíveis.</blockquote>
-            <cite>Confiança · reputação · convicção · direção · meridiano</cite>
+            <blockquote data-hist="identidade.pull">As coisas mais importantes quase nunca são visíveis.</blockquote>
+            <cite data-hist="identidade.cite">Confiança · reputação · convicção · direção · meridiano</cite>
           </div>
 
-          <article class="gann-card gann-prose">
+          <article class="gann-card gann-prose" data-hist="identidade.body2">
             <p>
               A&nbsp;confiança não é visível. A&nbsp;reputação não é visível. A&nbsp;convicção não é visível.
               A&nbsp;direção não é visível. O&nbsp;meridiano não é visível.
@@ -369,22 +381,24 @@
           </div>
 
           <article class="gann-card gann-prose">
-            <div class="gann-label">Coda</div>
-            <h3>Por isso Meridian</h3>
+            <div class="gann-label" data-hist="marca.label">Coda</div>
+            <h3 data-hist="marca.h3">Por isso Meridian</h3>
+            <div data-hist="marca.body">
             <p>
               No fim, o&nbsp;farol nunca foi lembrado por sua torre. Nunca foi lembrado por sua luz.
               Nunca foi lembrado por sua aparência. Foi lembrado porque permaneceu alinhado ao&nbsp;seu meridiano.
               Porque, quando tempestades chegavam, ele continuava sendo aquilo que havia decidido ser.
             </p>
+            </div>
           </article>
 
           <div class="gann-evidence">
             <div class="gann-label">Definição</div>
-            <blockquote>E talvez essa seja a definição mais simples de uma grande marca.</blockquote>
-            <cite>Não algo que chama atenção — algo que mantém a direção</cite>
+            <blockquote data-hist="marca.pull">E talvez essa seja a definição mais simples de uma grande marca.</blockquote>
+            <cite data-hist="marca.cite">Não algo que chama atenção — algo que mantém a direção</cite>
           </div>
 
-          <article class="gann-card gann-prose">
+          <article class="gann-card gann-prose" data-hist="marca.body2">
             <p>Não algo que chama atenção. Mas algo que mantém a&nbsp;direção.</p>
             <p>Por tempo suficiente para que os outros confiem nela.</p>
             <p>
@@ -400,7 +414,7 @@
           </div>
 
           <footer class="gann-footer">
-            <span>Meridian Design System · O Farol e o Meridiano</span>
+            <span data-i18n="hist.footer">Meridian Design System · O Farol e o Meridiano</span>
             <span>
               <a class="gann-ds-link" href="./manifesto.html">Manifesto ↗</a>
               ·
@@ -412,25 +426,25 @@
 
       <aside class="gann-reader-aside" aria-label="At a glance">
         <div class="gann-aside-plate" id="aside-farol" role="img" aria-label="Elevação do farol em plotter"></div>
-        <p class="gann-aside-caption">Plate · Farol · elevação plotter D2 · stroke 1u</p>
-        <h2 class="gann-aside-title">At a glance</h2>
+        <p class="gann-aside-caption" data-hist="aside.cap1">Plate · Farol · elevação plotter D2 · stroke 1u</p>
+        <h2 class="gann-aside-title" data-hist="aside.glance">At a glance</h2>
         <a class="gann-fact" data-nav href="#oceano">
-          <span class="gann-eyebrow" style="margin:0">Oceano</span>
-          <span>Sem mapa, navegar é&nbsp;escolher uma direção e&nbsp;acreditar nela.</span>
-          <span class="gann-fact-link">Ver seção 01 ↗</span>
+          <span class="gann-eyebrow" style="margin:0" data-hist="aside.f1.t">Oceano</span>
+          <span data-hist="aside.f1.b">Sem mapa, navegar é&nbsp;escolher uma direção e&nbsp;acreditar nela.</span>
+          <span class="gann-fact-link" data-hist="aside.f1.l">Ver seção 01 ↗</span>
         </a>
         <a class="gann-fact" data-nav href="#meridianos">
-          <span class="gann-eyebrow" style="margin:0">Meridianos</span>
-          <span>Referências invisíveis — raramente recebem aplausos; apenas cumprem o&nbsp;papel.</span>
-          <span class="gann-fact-link">Ver seção 03 ↗</span>
+          <span class="gann-eyebrow" style="margin:0" data-hist="aside.f2.t">Meridianos</span>
+          <span data-hist="aside.f2.b">Referências invisíveis — raramente recebem aplausos; apenas cumprem o&nbsp;papel.</span>
+          <span class="gann-fact-link" data-hist="aside.f2.l">Ver seção 03 ↗</span>
         </a>
         <a class="gann-fact" data-nav href="#placa">
-          <span class="gann-eyebrow" style="margin:0">Placa</span>
-          <span>“Isso ajuda os navegadores a&nbsp;encontrar seu caminho?”</span>
-          <span class="gann-fact-link">Ver seção 05 ↗</span>
+          <span class="gann-eyebrow" style="margin:0" data-hist="aside.f3.t">Placa</span>
+          <span data-hist="aside.f3.b">“Isso ajuda os navegadores a&nbsp;encontrar seu caminho?”</span>
+          <span class="gann-fact-link" data-hist="aside.f3.l">Ver seção 05 ↗</span>
         </a>
         <div class="gann-aside-plate gann-aside-plate--secondary" id="aside-meridiano" role="img" aria-label="Meridianos no globo"></div>
-        <p class="gann-aside-caption">Plate · Meridianos · linha invisível · coerência</p>
+        <p class="gann-aside-caption" data-hist="aside.cap2">Plate · Meridianos · linha invisível · coerência</p>
       </aside>
     </div>
   </main>

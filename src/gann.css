@@ -47,8 +47,13 @@ html, body {
   padding: 12px clamp(16px, 3vw, 28px);
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   min-height: 58px;
+  flex-wrap: wrap;
+}
+.gann-chrome-inner [data-lang-slot],
+.gann-chrome-inner .ds-lang {
+  flex-shrink: 0;
 }
 
 .gann-brand {
@@ -292,27 +297,51 @@ html, body {
   padding-top: 18px;
   border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
   min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .gann-aside-plate {
+  position: relative;
   width: 100%;
-  max-width: 280px;
+  max-width: 100%;
   aspect-ratio: 1 / 1;
   background: var(--ds-surface-2);
   overflow: hidden;
   margin: 0 0 10px;
+  box-sizing: border-box;
 }
 .gann-aside-plate--secondary {
   margin-top: 22px;
   aspect-ratio: 4 / 3;
 }
+.gann-aside-plate > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+}
 .gann-aside-plate > canvas,
-.gann-aside-plate > div,
-.gann-aside-plate img {
+.gann-aside-plate > img,
+.gann-aside-plate > div:not(.gann-plot-badge) {
   width: 100% !important;
   height: 100% !important;
   display: block;
   object-fit: cover;
+}
+/* Nunca esticar o badge — era o que cropava a placa (width/height 100%) */
+.gann-aside-plate > .gann-plot-badge {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  right: auto;
+  top: auto;
+  width: auto !important;
+  height: auto !important;
+  max-width: calc(100% - 20px);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .gann-aside-caption {
@@ -362,16 +391,21 @@ html, body {
   .gann-fact:hover { background-color: var(--ds-bg-tint-subtle); }
 }
 
-@media (min-width: 1100px) {
+/* 3 colunas só com largura suficiente — evita aside esmagada/cropada */
+@media (min-width: 1200px) {
   .gann-reader {
-    grid-template-columns: var(--ds-toc-width) minmax(0, 1fr) var(--ds-aside-width);
-    gap: var(--ds-reader-gap, 32px);
+    grid-template-columns:
+      var(--ds-toc-width)
+      minmax(0, 1fr)
+      minmax(var(--ds-aside-width), var(--ds-aside-width));
+    gap: var(--ds-reader-gap, 28px);
   }
   .gann-reader-toc {
     display: block;
     position: sticky;
     top: calc(var(--ds-topbar-height) + 16px);
     align-self: start;
+    min-width: 0;
   }
   .gann-reader-toc .gann-eyebrow { margin-bottom: 10px; }
   .gann-reader-toc nav {
@@ -384,6 +418,7 @@ html, body {
       -1px 0 0 0 var(--ds-rule),
       1px 0 0 0 var(--ds-rule);
     padding-inline: clamp(18px, 2vw, 28px);
+    min-width: 0;
   }
   .gann-reader-aside {
     margin-top: 0;
@@ -392,14 +427,27 @@ html, body {
     position: sticky;
     top: calc(var(--ds-topbar-height) + 16px);
     align-self: start;
+    min-width: var(--ds-aside-width);
+    width: var(--ds-aside-width);
+    max-width: var(--ds-aside-width);
+    overflow: visible;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
   }
   .gann-aside-plate { max-width: none; }
+  .gann-fact span:nth-child(2),
+  .gann-aside-caption,
+  .gann-aside-title {
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: manual;
+  }
 }
 
-@media (min-width: 960px) and (max-width: 1099px) {
+@media (min-width: 960px) and (max-width: 1199px) {
   .gann-reader {
     grid-template-columns: var(--ds-toc-width) minmax(0, 1fr);
-    gap: var(--ds-reader-gap, 32px);
+    gap: var(--ds-reader-gap, 28px);
   }
   .gann-reader-toc {
     display: block;
@@ -415,6 +463,25 @@ html, body {
   .gann-reader-main {
     box-shadow: -1px 0 0 0 var(--ds-rule);
     padding-inline-start: clamp(18px, 2vw, 28px);
+  }
+  /* Aside sobe para faixa completa — sem coluna estreita */
+  .gann-reader-aside {
+    grid-column: 1 / -1;
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+    display: grid;
+    grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+    gap: 18px 28px;
+    align-items: start;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+    position: static;
+  }
+  .gann-reader-aside .gann-aside-plate { max-width: 280px; }
+  .gann-reader-aside .gann-aside-plate--secondary {
+    grid-column: 1;
   }
 }
 
