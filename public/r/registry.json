@@ -69,6 +69,11 @@
       "title": "Meridian oklch-palette"
     },
     {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Meridian color-picker"
+    },
+    {
       "name": "detent-dial",
       "type": "registry:ui",
       "title": "Meridian detent-dial"
@@ -119,9 +124,19 @@
       "title": "Meridian combobox"
     },
     {
-      "name": "dialog",
+      "name": "select",
       "type": "registry:ui",
-      "title": "Meridian dialog"
+      "title": "Meridian select"
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "Meridian time-picker"
+    },
+    {
+      "name": "range-picker",
+      "type": "registry:ui",
+      "title": "Meridian range-picker"
     },
     {
       "name": "smooth-shape",
@@ -164,14 +179,64 @@
       "title": "Meridian image-frame"
     },
     {
-      "name": "data-table",
+      "name": "image-tile",
       "type": "registry:ui",
-      "title": "Meridian data-table"
+      "title": "Meridian image-tile"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Meridian dialog"
+    },
+    {
+      "name": "sheet-modal",
+      "type": "registry:ui",
+      "title": "Meridian sheet-modal"
+    },
+    {
+      "name": "drawer-modal",
+      "type": "registry:ui",
+      "title": "Meridian drawer-modal"
+    },
+    {
+      "name": "confirm-modal",
+      "type": "registry:ui",
+      "title": "Meridian confirm-modal"
     },
     {
       "name": "menu",
       "type": "registry:ui",
       "title": "Meridian menu"
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Meridian context-menu"
+    },
+    {
+      "name": "popover-menu",
+      "type": "registry:ui",
+      "title": "Meridian popover-menu"
+    },
+    {
+      "name": "market-picker",
+      "type": "registry:ui",
+      "title": "Meridian market-picker"
+    },
+    {
+      "name": "currency-picker",
+      "type": "registry:ui",
+      "title": "Meridian currency-picker"
+    },
+    {
+      "name": "ephemeris-picker",
+      "type": "registry:ui",
+      "title": "Meridian ephemeris-picker"
+    },
+    {
+      "name": "financial-order-modal",
+      "type": "registry:ui",
+      "title": "Meridian financial-order-modal"
     },
     {
       "name": "gallery",
@@ -182,11 +247,6 @@
       "name": "segmented-control",
       "type": "registry:ui",
       "title": "Meridian segmented-control"
-    },
-    {
-      "name": "context-menu",
-      "type": "registry:ui",
-      "title": "Meridian context-menu"
     },
     {
       "name": "step-navigation",
@@ -229,6 +289,91 @@
       "title": "Meridian metric-card"
     },
     {
+      "name": "kpi-strip",
+      "type": "registry:ui",
+      "title": "Meridian kpi-strip"
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Meridian data-table"
+    },
+    {
+      "name": "info-table",
+      "type": "registry:ui",
+      "title": "Meridian info-table"
+    },
+    {
+      "name": "ledger-table",
+      "type": "registry:ui",
+      "title": "Meridian ledger-table"
+    },
+    {
+      "name": "comparison-table",
+      "type": "registry:ui",
+      "title": "Meridian comparison-table"
+    },
+    {
+      "name": "source-table",
+      "type": "registry:ui",
+      "title": "Meridian source-table"
+    },
+    {
+      "name": "chart-line",
+      "type": "registry:ui",
+      "title": "Meridian chart-line"
+    },
+    {
+      "name": "chart-area",
+      "type": "registry:ui",
+      "title": "Meridian chart-area"
+    },
+    {
+      "name": "chart-bar",
+      "type": "registry:ui",
+      "title": "Meridian chart-bar"
+    },
+    {
+      "name": "chart-hbar",
+      "type": "registry:ui",
+      "title": "Meridian chart-hbar"
+    },
+    {
+      "name": "chart-candles",
+      "type": "registry:ui",
+      "title": "Meridian chart-candles"
+    },
+    {
+      "name": "chart-donut",
+      "type": "registry:ui",
+      "title": "Meridian chart-donut"
+    },
+    {
+      "name": "chart-sparkline",
+      "type": "registry:ui",
+      "title": "Meridian chart-sparkline"
+    },
+    {
+      "name": "chart-scatter",
+      "type": "registry:ui",
+      "title": "Meridian chart-scatter"
+    },
+    {
+      "name": "chart-radar",
+      "type": "registry:ui",
+      "title": "Meridian chart-radar"
+    },
+    {
+      "name": "chart-histogram",
+      "type": "registry:ui",
+      "title": "Meridian chart-histogram"
+    },
+    {
+      "name": "financial-chart",
+      "type": "registry:ui",
+      "title": "Meridian financial-chart"
+    },
+    {
       "name": "instrument",
       "type": "registry:ui",
       "title": "Meridian instrument"
@@ -269,34 +414,9 @@
       "title": "Meridian race-telemetry"
     },
     {
-      "name": "financial-chart",
-      "type": "registry:ui",
-      "title": "Meridian financial-chart"
-    },
-    {
-      "name": "market-picker",
-      "type": "registry:ui",
-      "title": "Meridian market-picker"
-    },
-    {
-      "name": "currency-picker",
-      "type": "registry:ui",
-      "title": "Meridian currency-picker"
-    },
-    {
-      "name": "financial-order-modal",
-      "type": "registry:ui",
-      "title": "Meridian financial-order-modal"
-    },
-    {
       "name": "astronomy-instrument",
       "type": "registry:ui",
       "title": "Meridian astronomy-instrument"
-    },
-    {
-      "name": "ephemeris-picker",
-      "type": "registry:ui",
-      "title": "Meridian ephemeris-picker"
     },
     {
       "name": "astrology-wheel",

@@ -701,15 +701,17 @@ body {
 }
 
 .ds-cmdk-list::-webkit-scrollbar {
-  width: 2px !important;
-  height: 2px !important;
+  width: 8px !important;
+  height: 8px !important;
   background: transparent !important;
 }
 
 .ds-cmdk-list::-webkit-scrollbar-thumb {
   background-color: color-mix(in srgb, var(--ds-fg) 22%, transparent) !important;
+  background-clip: padding-box !important;
   border-radius: 0 !important;
-  border: 0 !important;
+  border: solid transparent !important;
+  border-width: 0 4px 0 2px !important;
   box-shadow: none !important;
 }
 

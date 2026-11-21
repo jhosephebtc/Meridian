@@ -23,6 +23,31 @@ function qs<T extends Element>(root: ParentNode, sel: string): T {
 
 /* ---------- Demo builders ---------- */
 
+function inkPress(btn: HTMLElement, e: PointerEvent): void {
+  const r = btn.getBoundingClientRect();
+  btn.style.setProperty('--ml-press-x', `${e.clientX - r.left}px`);
+  btn.style.setProperty('--ml-press-y', `${e.clientY - r.top}px`);
+  btn.dataset.pressed = 'true';
+  btn.dataset.ink = 'true';
+  window.setTimeout(() => {
+    delete btn.dataset.ink;
+  }, 420);
+}
+
+function bindLabPressInk(root: ParentNode = document): void {
+  root.querySelectorAll<HTMLElement>('.ml-btn').forEach((btn) => {
+    if (btn.dataset.inkBound === 'true') return;
+    btn.dataset.inkBound = 'true';
+    btn.addEventListener('pointerdown', (e) => {
+      if (btn.hasAttribute('disabled')) return;
+      inkPress(btn, e);
+    });
+    btn.addEventListener('pointerup', () => delete btn.dataset.pressed);
+    btn.addEventListener('pointercancel', () => delete btn.dataset.pressed);
+    btn.addEventListener('pointerleave', () => delete btn.dataset.pressed);
+  });
+}
+
 function demoButton(): HTMLElement {
   const wrap = document.createElement('div');
   wrap.className = 'ml-btn-row';
@@ -35,13 +60,9 @@ function demoButton(): HTMLElement {
     btn.type = 'button';
     btn.className = cls;
     btn.textContent = label;
-    btn.addEventListener('pointerdown', (e) => {
-      const r = btn.getBoundingClientRect();
-      btn.style.setProperty('--ml-press-x', `${e.clientX - r.left}px`);
-      btn.style.setProperty('--ml-press-y', `${e.clientY - r.top}px`);
-    });
     wrap.append(btn);
   }
+  bindLabPressInk(wrap);
   return wrap;
 }
 
@@ -197,35 +218,72 @@ function demoBarSlider(): HTMLElement {
   el.setAttribute('role', 'slider');
   el.setAttribute('aria-valuemin', '0');
   el.setAttribute('aria-valuemax', '11');
+  el.setAttribute('aria-label', 'Bar slider');
+  el.tabIndex = 0;
   let value = 5;
+  let dragging = false;
   const cells: HTMLButtonElement[] = [];
-  const paint = () => {
+  const paint = (animate = true) => {
     cells.forEach((c, i) => {
-      c.dataset.on = String(i <= value);
+      const on = i <= value;
+      c.dataset.on = String(on);
+      c.dataset.edge = String(i === value);
+      if (animate) c.style.setProperty('--ml-bar-delay', `${Math.abs(i - value) * 12}ms`);
     });
     el.setAttribute('aria-valuenow', String(value));
+  };
+  const valueFromClientX = (clientX: number) => {
+    const r = el.getBoundingClientRect();
+    const t = clamp((clientX - r.left) / r.width, 0, 1);
+    return Math.round(t * (cells.length - 1));
+  };
+  const setFromPointer = (clientX: number) => {
+    const next = valueFromClientX(clientX);
+    if (next === value) return;
+    value = next;
+    paint(true);
   };
   for (let i = 0; i < 12; i++) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'ml-bar-cell';
+    b.tabIndex = -1;
     b.setAttribute('aria-label', `Level ${i}`);
-    b.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
-      value = i;
-      paint();
-      b.setPointerCapture(e.pointerId);
-    });
-    b.addEventListener('pointerenter', (e) => {
-      if (e.buttons === 1) {
-        value = i;
-        paint();
-      }
-    });
     cells.push(b);
     el.append(b);
   }
-  paint();
+  el.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    dragging = true;
+    el.dataset.dragging = 'true';
+    el.setPointerCapture(e.pointerId);
+    setFromPointer(e.clientX);
+  });
+  el.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    setFromPointer(e.clientX);
+  });
+  const release = () => {
+    if (!dragging) return;
+    dragging = false;
+    delete el.dataset.dragging;
+  };
+  el.addEventListener('pointerup', release);
+  el.addEventListener('pointercancel', release);
+  el.addEventListener('lostpointercapture', release);
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      value = clamp(value + 1, 0, 11);
+      paint(true);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      value = clamp(value - 1, 0, 11);
+      paint(true);
+    }
+  });
+  paint(false);
   return el;
 }
 
@@ -386,23 +444,108 @@ function demoAccordion(): HTMLElement {
   const el = document.createElement('div');
   el.className = 'ml-acc';
   const items = [
-    ['Paper grain', 'Canvas overlay with size + intensity controls.'],
+    ['Paper grain', 'Canvas overlay with size + intensity controls — open/close uses grid-template-rows 0fr→1fr.'],
     ['Hairline scroll', '2px thumb, transparent track — Chromium + Firefox.'],
-    ['Frequency Gate', '⌘K and root tabs animate at 0ms.'],
+    ['Frequency Gate', '⌘K and root tabs animate at 0ms; accordion keeps 280ms ease-out.'],
   ] as const;
+  const setOpen = (target: HTMLElement | null) => {
+    el.querySelectorAll<HTMLElement>('.ml-acc-item').forEach((n) => {
+      const open = n === target;
+      n.dataset.open = String(open);
+      n.querySelector('button')?.setAttribute('aria-expanded', String(open));
+    });
+  };
   items.forEach(([t, b], i) => {
     const item = document.createElement('div');
     item.className = 'ml-acc-item';
+    const panelId = `ml-acc-panel-${i}-${Math.random().toString(36).slice(2, 7)}`;
+    item.innerHTML = `<button type="button" class="ml-acc-trigger" aria-expanded="${i === 0}" aria-controls="${panelId}">
+        <span>${t}</span><span class="ml-acc-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="ml-acc-panel" id="${panelId}" role="region">
+        <div class="ml-acc-panel-inner"><p>${b}</p></div>
+      </div>`;
     if (i === 0) item.dataset.open = 'true';
-    item.innerHTML = `<button type="button" class="ml-acc-trigger"><span>${t}</span><span>+</span></button>
-      <div class="ml-acc-panel">${b}</div>`;
     item.querySelector('button')!.addEventListener('click', () => {
       const open = item.dataset.open === 'true';
-      el.querySelectorAll('.ml-acc-item').forEach((n) => delete (n as HTMLElement).dataset.open);
-      if (!open) item.dataset.open = 'true';
+      setOpen(open ? null : item);
     });
     el.append(item);
   });
+  return el;
+}
+
+function demoColorPicker(): HTMLElement {
+  const swatches = [
+    { name: 'Olive', hex: '#5E6E47', l: 0.48, c: 0.06, h: 125 },
+    { name: 'Sky', hex: '#477085', l: 0.5, c: 0.06, h: 230 },
+    { name: 'Coral', hex: '#B55A42', l: 0.55, c: 0.1, h: 35 },
+    { name: 'Ochre', hex: '#9A7134', l: 0.55, c: 0.09, h: 75 },
+    { name: 'Slate', hex: '#56606E', l: 0.45, c: 0.02, h: 250 },
+    { name: 'Ink', hex: '#141413', l: 0.18, c: 0.005, h: 90 },
+    { name: 'Ivory', hex: '#FAF9F5', l: 0.97, c: 0.008, h: 95 },
+    { name: 'Aqua', hex: '#A4CED0', l: 0.8, c: 0.04, h: 200 },
+    { name: 'Terra', hex: '#EDBB99', l: 0.82, c: 0.06, h: 55 },
+    { name: 'Blush', hex: '#E8C4C0', l: 0.84, c: 0.04, h: 20 },
+    { name: 'Mist', hex: '#C5D4CE', l: 0.84, c: 0.02, h: 160 },
+    { name: 'Lilac', hex: '#C9C0D8', l: 0.82, c: 0.04, h: 300 },
+  ];
+  let L = 0.55;
+  let C = 0.08;
+  let H = 55;
+  const el = document.createElement('div');
+  el.className = 'ml-color';
+  el.innerHTML = `
+    <div class="ml-color-preview" style="--ml-swatch:${swatches[8]!.hex}"></div>
+    <div class="ml-color-meta"><span class="ml-color-name">Terra</span><span class="ml-color-oklch">oklch(0.82 0.06 55)</span></div>
+    <div class="ml-color-grid">${swatches
+      .map(
+        (s, i) =>
+          `<button type="button" class="ml-color-swatch" data-i="${i}" data-active="${i === 8}" style="--swatch:${s.hex}" title="${s.name}" aria-label="${s.name}"></button>`,
+      )
+      .join('')}</div>
+    <div class="ml-color-sliders">
+      <label class="ml-color-row">L<input type="range" min="0" max="100" value="82" data-axis="l"/><span data-read="l">0.82</span></label>
+      <label class="ml-color-row">C<input type="range" min="0" max="20" value="6" data-axis="c"/><span data-read="c">0.06</span></label>
+      <label class="ml-color-row">H<input type="range" min="0" max="360" value="55" data-axis="h"/><span data-read="h">55</span></label>
+    </div>`;
+  const preview = qs<HTMLElement>(el, '.ml-color-preview');
+  const nameEl = qs<HTMLElement>(el, '.ml-color-name');
+  const oklchEl = qs<HTMLElement>(el, '.ml-color-oklch');
+  const paint = (label?: string) => {
+    const css = `oklch(${L.toFixed(2)} ${C.toFixed(2)} ${Math.round(H)})`;
+    preview.style.setProperty('--ml-swatch', css);
+    preview.style.background = css;
+    oklchEl.textContent = css;
+    if (label) nameEl.textContent = label;
+    qs<HTMLElement>(el, '[data-read="l"]').textContent = L.toFixed(2);
+    qs<HTMLElement>(el, '[data-read="c"]').textContent = C.toFixed(2);
+    qs<HTMLElement>(el, '[data-read="h"]').textContent = String(Math.round(H));
+  };
+  el.querySelectorAll<HTMLButtonElement>('.ml-color-swatch').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const s = swatches[Number(btn.dataset.i)]!;
+      L = s.l;
+      C = s.c;
+      H = s.h;
+      el.querySelectorAll('.ml-color-swatch').forEach((b) => delete (b as HTMLElement).dataset.active);
+      btn.dataset.active = 'true';
+      qs<HTMLInputElement>(el, '[data-axis="l"]').value = String(Math.round(L * 100));
+      qs<HTMLInputElement>(el, '[data-axis="c"]').value = String(Math.round(C * 100));
+      qs<HTMLInputElement>(el, '[data-axis="h"]').value = String(Math.round(H));
+      paint(s.name);
+    });
+  });
+  el.querySelectorAll<HTMLInputElement>('.ml-color-sliders input').forEach((input) => {
+    input.addEventListener('input', () => {
+      if (input.dataset.axis === 'l') L = Number(input.value) / 100;
+      if (input.dataset.axis === 'c') C = Number(input.value) / 100;
+      if (input.dataset.axis === 'h') H = Number(input.value);
+      el.querySelectorAll('.ml-color-swatch').forEach((b) => delete (b as HTMLElement).dataset.active);
+      paint('Custom');
+    });
+  });
+  paint('Terra');
   return el;
 }
 
@@ -541,24 +684,672 @@ function demoAudioMeter(): HTMLElement {
   return svg as unknown as HTMLElement;
 }
 
-function demoSvgInstrument(kind: string): HTMLElement {
+function demoSvgInstrument(_kind: string): HTMLElement {
   const el = document.createElement('div');
-  if (kind.includes('financial') || kind.includes('tide') || kind.includes('race') || kind.includes('lunar') || kind.includes('astronomy') || kind.includes('attitude') || kind.includes('instrument') || kind.includes('telemetry')) {
-    el.innerHTML = `
-      <svg class="ml-svg" viewBox="0 0 200 100" aria-hidden="true">
-        <path d="M8 72 C40 72 36 28 70 40 S110 88 140 52 S170 20 192 36" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-        <line x1="8" y1="88" x2="192" y2="88" stroke="currentColor" stroke-opacity="0.2" stroke-width="1"/>
-        <text x="8" y="14">PLOT · 1u</text>
-      </svg>`;
-    return el.firstElementChild as HTMLElement;
+  el.innerHTML = `
+    <svg class="ml-svg" viewBox="0 0 200 100" aria-hidden="true">
+      <path d="M8 72 C40 72 36 28 70 40 S110 88 140 52 S170 20 192 36" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+      <line x1="8" y1="88" x2="192" y2="88" stroke="currentColor" stroke-opacity="0.2" stroke-width="1"/>
+      <text x="8" y="14">PLOT · 1u</text>
+    </svg>`;
+  return el.firstElementChild as HTMLElement;
+}
+
+function seriesPath(values: number[], w: number, h: number, pad = 8): string {
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const span = max - min || 1;
+  return values
+    .map((v, i) => {
+      const x = pad + (i / (values.length - 1)) * (w - pad * 2);
+      const y = h - pad - ((v - min) / span) * (h - pad * 2);
+      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
+    .join(' ');
+}
+
+function demoChartLine(area = false): HTMLElement {
+  const values = [22, 28, 25, 40, 36, 48, 44, 58, 52, 66, 61, 74];
+  const d = seriesPath(values, 220, 110);
+  const areaD = `${d} L${220 - 8} ${110 - 8} L8 ${110 - 8} Z`;
+  const el = document.createElement('div');
+  el.className = 'ml-chart';
+  el.innerHTML = `
+    <svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Line chart">
+      <line x1="8" y1="102" x2="212" y2="102" stroke="currentColor" stroke-opacity="0.18"/>
+      <line x1="8" y1="8" x2="8" y2="102" stroke="currentColor" stroke-opacity="0.18"/>
+      ${area ? `<path d="${areaD}" fill="currentColor" fill-opacity="0.08" stroke="none"/>` : ''}
+      <path d="${d}" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="12" y="16">SERIES · AQI</text>
+    </svg>
+    <div class="ml-chart-legend ds-mono">12 pts · hover scrub</div>`;
+  const svg = el.querySelector('svg')!;
+  svg.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect();
+    const t = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    const i = Math.round(t * (values.length - 1));
+    qs<HTMLElement>(el, '.ml-chart-legend').textContent = `t=${String(i).padStart(2, '0')} · ${values[i]}`;
+  });
+  return el;
+}
+
+function demoChartBar(horizontal = false): HTMLElement {
+  const vals = [42, 68, 35, 80, 55, 72];
+  const el = document.createElement('div');
+  el.className = 'ml-chart';
+  if (horizontal) {
+    el.innerHTML = `<div class="ml-hbar">${vals
+      .map(
+        (v, i) =>
+          `<div class="ml-hbar-row"><span class="ds-mono">${['A', 'B', 'C', 'D', 'E', 'F'][i]}</span><div class="ml-hbar-track"><div style="width:${v}%"></div></div><span class="ds-mono">${v}</span></div>`,
+      )
+      .join('')}</div>`;
+  } else {
+    el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Bar chart">
+      ${vals
+        .map((v, i) => {
+          const h = (v / 100) * 80;
+          const x = 20 + i * 32;
+          return `<rect x="${x}" y="${100 - h}" width="18" height="${h}" fill="currentColor" fill-opacity="${0.35 + i * 0.08}"/>`;
+        })
+        .join('')}
+      <line x1="12" y1="100" x2="208" y2="100" stroke="currentColor" stroke-opacity="0.2"/>
+    </svg>`;
   }
-  return demoCompass();
+  return el;
+}
+
+function demoChartCandles(): HTMLElement {
+  const candles = [
+    [40, 70, 35, 60],
+    [60, 78, 55, 72],
+    [72, 80, 50, 54],
+    [54, 68, 48, 66],
+    [66, 84, 62, 78],
+    [78, 90, 70, 74],
+    [74, 82, 60, 64],
+  ];
+  const el = document.createElement('div');
+  el.className = 'ml-chart';
+  el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Candlestick">
+    ${candles
+      .map(([o, h, l, c], i) => {
+        const x = 22 + i * 28;
+        const yO = 100 - o;
+        const yC = 100 - c;
+        const top = Math.min(yO, yC);
+        const body = Math.abs(yO - yC) || 2;
+        return `<line x1="${x}" y1="${100 - h}" x2="${x}" y2="${100 - l}" stroke="currentColor" stroke-width="1"/>
+          <rect x="${x - 6}" y="${top}" width="12" height="${body}" fill="none" stroke="currentColor" stroke-width="1.2"/>`;
+      })
+      .join('')}
+    <text x="12" y="16">OHLC · 1u</text>
+  </svg>`;
+  return el;
+}
+
+function demoChartDonut(): HTMLElement {
+  const parts = [0.35, 0.25, 0.2, 0.2];
+  let a0 = -Math.PI / 2;
+  const arcs = parts.map((p, i) => {
+    const a1 = a0 + p * Math.PI * 2;
+    const x0 = 60 + Math.cos(a0) * 42;
+    const y0 = 60 + Math.sin(a0) * 42;
+    const x1 = 60 + Math.cos(a1) * 42;
+    const y1 = 60 + Math.sin(a1) * 42;
+    const large = p > 0.5 ? 1 : 0;
+    const d = `M ${x0} ${y0} A 42 42 0 ${large} 1 ${x1} ${y1}`;
+    a0 = a1;
+    return `<path d="${d}" fill="none" stroke="currentColor" stroke-width="10" stroke-opacity="${0.25 + i * 0.18}"/>`;
+  });
+  const el = document.createElement('div');
+  el.className = 'ml-chart';
+  el.innerHTML = `<svg class="ml-svg" viewBox="0 0 120 120" aria-label="Donut">
+    ${arcs.join('')}
+    <text x="60" y="58" text-anchor="middle" fill="currentColor" fill-opacity="0.9" font-family="var(--ds-font-display)" font-size="18">100</text>
+    <text x="60" y="74" text-anchor="middle">TOTAL</text>
+  </svg>`;
+  return el;
+}
+
+function demoChartSpark(): HTMLElement {
+  const values = [12, 18, 14, 22, 19, 28, 24, 31, 27, 36];
+  const d = seriesPath(values, 160, 40, 2);
+  const el = document.createElement('div');
+  el.className = 'ml-metric';
+  el.innerHTML = `<div class="ml-metric-value" style="font-size:1.6rem">+12.4%</div>
+    <svg width="160" height="40" viewBox="0 0 160 40" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>
+    <div class="ml-metric-label">Sparkline · 7d</div>`;
+  return el;
+}
+
+function demoChartScatter(): HTMLElement {
+  const pts = [
+    [20, 70],
+    [35, 55],
+    [48, 62],
+    [60, 40],
+    [75, 48],
+    [90, 30],
+    [110, 36],
+    [130, 22],
+    [150, 28],
+    [170, 18],
+  ];
+  const el = document.createElement('div');
+  el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 200 100" aria-label="Scatter">
+    <line x1="12" y1="88" x2="188" y2="88" stroke="currentColor" stroke-opacity="0.2"/>
+    <line x1="12" y1="12" x2="12" y2="88" stroke="currentColor" stroke-opacity="0.2"/>
+    ${pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="currentColor"/>`).join('')}
+  </svg>`;
+  return el.firstElementChild as HTMLElement;
+}
+
+function demoChartRadar(): HTMLElement {
+  const vals = [0.8, 0.55, 0.7, 0.4, 0.9, 0.6];
+  const n = vals.length;
+  const poly = vals
+    .map((v, i) => {
+      const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+      return `${60 + Math.cos(a) * 42 * v},${60 + Math.sin(a) * 42 * v}`;
+    })
+    .join(' ');
+  const rings = [0.33, 0.66, 1]
+    .map(
+      (s) =>
+        `<polygon points="${Array.from({ length: n }, (_, i) => {
+          const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+          return `${60 + Math.cos(a) * 42 * s},${60 + Math.sin(a) * 42 * s}`;
+        }).join(' ')}" fill="none" stroke="currentColor" stroke-opacity="0.15"/>`,
+    )
+    .join('');
+  const el = document.createElement('div');
+  el.innerHTML = `<svg class="ml-svg" viewBox="0 0 120 120" aria-label="Radar">${rings}
+    <polygon points="${poly}" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.2"/>
+  </svg>`;
+  return el.firstElementChild as HTMLElement;
+}
+
+function demoChartHisto(): HTMLElement {
+  const bins = [8, 14, 22, 30, 26, 18, 12, 7, 4];
+  const max = Math.max(...bins);
+  const el = document.createElement('div');
+  el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 220 100" aria-label="Histogram">
+    ${bins
+      .map((b, i) => {
+        const h = (b / max) * 72;
+        return `<rect x="${16 + i * 22}" y="${88 - h}" width="18" height="${h}" fill="currentColor" fill-opacity="0.45"/>`;
+      })
+      .join('')}
+    <line x1="12" y1="88" x2="208" y2="88" stroke="currentColor" stroke-opacity="0.2"/>
+  </svg>`;
+  return el.firstElementChild as HTMLElement;
+}
+
+function demoMenu(): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'ml-menu-wrap';
+  wrap.innerHTML = `
+    <button type="button" class="ml-btn" data-menu-trigger>Actions ▾</button>
+    <div class="ml-menu" data-open="false" role="menu">
+      <button type="button" role="menuitem">Export SVG <span>⇧E</span></button>
+      <button type="button" role="menuitem">Duplicate <span>⌘D</span></button>
+      <button type="button" role="menuitem">Move to…</button>
+      <hr/>
+      <button type="button" role="menuitem" data-danger>Delete <span>⌫</span></button>
+    </div>`;
+  const trigger = qs<HTMLButtonElement>(wrap, '[data-menu-trigger]');
+  const menu = qs<HTMLElement>(wrap, '.ml-menu');
+  const close = () => {
+    menu.dataset.open = 'false';
+  };
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu.dataset.open = menu.dataset.open === 'true' ? 'false' : 'true';
+  });
+  menu.querySelectorAll('button').forEach((b) =>
+    b.addEventListener('click', () => {
+      pushToast(`Menu · ${b.textContent?.split('\n')[0]?.trim()}`);
+      close();
+    }),
+  );
+  document.addEventListener('click', close);
+  return wrap;
+}
+
+function demoContextMenu(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-ctx-stage';
+  el.textContent = 'Right-click or long-press this plate';
+  const menu = document.createElement('div');
+  menu.className = 'ml-menu ml-ctx-menu';
+  menu.dataset.open = 'false';
+  menu.innerHTML = `<button type="button">Inspect</button><button type="button">Copy path</button><button type="button">Pin</button>`;
+  el.append(menu);
+  const openAt = (x: number, y: number) => {
+    const r = el.getBoundingClientRect();
+    menu.style.left = `${x - r.left}px`;
+    menu.style.top = `${y - r.top}px`;
+    menu.dataset.open = 'true';
+  };
+  el.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    openAt(e.clientX, e.clientY);
+  });
+  let timer = 0;
+  el.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'touch') {
+      timer = window.setTimeout(() => openAt(e.clientX, e.clientY), 480);
+    }
+  });
+  el.addEventListener('pointerup', () => clearTimeout(timer));
+  el.addEventListener('pointerleave', () => clearTimeout(timer));
+  document.addEventListener('click', () => {
+    menu.dataset.open = 'false';
+  });
+  return el;
+}
+
+function demoSelect(): HTMLElement {
+  const options = ['Ivory editorial', 'Aqua climate', 'Terracotta warm', 'Obsidian terminal'];
+  let value = options[0]!;
+  const el = document.createElement('div');
+  el.className = 'ml-field ml-select-field';
+  el.innerHTML = `<label id="ml-select-label">Atmosphere</label>
+    <div class="ml-select-wrap">
+      <button type="button" class="ml-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ml-select-label">
+        <span class="ml-select-value">${value}</span>
+        <span class="ml-select-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="ml-select-list" role="listbox" data-open="false" hidden>
+        ${options
+          .map(
+            (o, i) =>
+              `<button type="button" class="ml-select-option" role="option" data-value="${o}" aria-selected="${i === 0}">${o}</button>`,
+          )
+          .join('')}
+      </div>
+    </div>`;
+  const trigger = qs<HTMLButtonElement>(el, '.ml-select-trigger');
+  const list = qs<HTMLElement>(el, '.ml-select-list');
+  const valueEl = qs<HTMLElement>(el, '.ml-select-value');
+  const setOpen = (open: boolean) => {
+    list.dataset.open = String(open);
+    list.hidden = !open;
+    trigger.setAttribute('aria-expanded', String(open));
+  };
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(list.dataset.open !== 'true');
+  });
+  list.querySelectorAll<HTMLButtonElement>('.ml-select-option').forEach((opt) => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      value = opt.dataset.value!;
+      valueEl.textContent = value;
+      list.querySelectorAll('.ml-select-option').forEach((o) => o.setAttribute('aria-selected', 'false'));
+      opt.setAttribute('aria-selected', 'true');
+      setOpen(false);
+    });
+  });
+  document.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+  return el;
+}
+
+function demoPicker(kind: string): HTMLElement {
+  const items =
+    kind.includes('currency')
+      ? ['USD', 'BRL', 'EUR', 'JPY', 'GBP']
+      : kind.includes('ephemeris') || kind.includes('oklch')
+        ? ['Sol', 'Lua', 'Mercúrio', 'Vênus', 'Marte']
+        : ['PETR4', 'VALE3', 'ITUB4', 'BBDC4', 'WEGE3'];
+  const el = document.createElement('div');
+  el.className = 'ml-picker';
+  el.innerHTML = `<input type="search" placeholder="Filter…" class="ml-picker-input" />
+    <div class="ml-picker-list"></div>`;
+  const list = qs<HTMLElement>(el, '.ml-picker-list');
+  const input = qs<HTMLInputElement>(el, 'input');
+  const paint = () => {
+    const q = input.value.toLowerCase();
+    list.innerHTML = items
+      .filter((x) => x.toLowerCase().includes(q))
+      .map((x) => `<button type="button" class="ml-picker-item"><span>${x}</span><span class="ds-mono">select</span></button>`)
+      .join('');
+    list.querySelectorAll('button').forEach((b) =>
+      b.addEventListener('click', () => {
+        pushToast(`Picked · ${b.querySelector('span')?.textContent}`);
+        list.querySelectorAll('button').forEach((x) => x.removeAttribute('data-active'));
+        b.dataset.active = 'true';
+      }),
+    );
+  };
+  input.addEventListener('input', paint);
+  paint();
+  return el;
+}
+
+function demoCombobox(): HTMLElement {
+  return demoPicker('market');
+}
+
+function demoDatePicker(): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'ml-datepicker';
+  const field = demoInput(false);
+  qs<HTMLInputElement>(field, 'input').placeholder = '2026-11-20';
+  const cal = demoCalendar();
+  cal.hidden = true;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'ml-btn';
+  btn.textContent = 'Pick date';
+  btn.addEventListener('click', () => {
+    cal.hidden = !cal.hidden;
+  });
+  wrap.append(field, btn, cal);
+  return wrap;
+}
+
+function demoTimePicker(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-time';
+  let h = 14;
+  let m = 30;
+  const paint = () => {
+    qs<HTMLElement>(el, '.ml-time-read').textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  };
+  el.innerHTML = `
+    <div class="ml-time-read ds-mono">14:30</div>
+    <div class="ml-time-cols">
+      <div><button type="button" data-h="1">▲</button><button type="button" data-h="-1">▼</button></div>
+      <div><button type="button" data-m="5">▲</button><button type="button" data-m="-5">▼</button></div>
+    </div>`;
+  el.querySelectorAll('button').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dh = Number((b as HTMLElement).dataset.h || 0);
+      const dm = Number((b as HTMLElement).dataset.m || 0);
+      h = (h + dh + 24) % 24;
+      m = (m + dm + 60) % 60;
+      paint();
+    });
+  });
+  paint();
+  return el;
+}
+
+function demoFileDrop(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-drop';
+  el.innerHTML = `<div class="ds-mono">Drop files here</div><div style="font-size:12px;color:var(--ds-fg-muted)">SVG · CSV · PDF</div>`;
+  el.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    el.dataset.active = 'true';
+  });
+  el.addEventListener('dragleave', () => delete el.dataset.active);
+  el.addEventListener('drop', (e) => {
+    e.preventDefault();
+    delete el.dataset.active;
+    const n = e.dataTransfer?.files?.length ?? 0;
+    pushToast(`Received ${n} file(s)`);
+  });
+  el.addEventListener('click', () => pushToast('Choose files…'));
+  return el;
+}
+
+function demoSheet(): HTMLElement {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'ml-btn ml-btn-primary';
+  btn.textContent = 'Open sheet';
+  btn.addEventListener('click', () => setSheet(true));
+  return btn;
+}
+
+function demoDrawer(): HTMLElement {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'ml-btn';
+  btn.textContent = 'Open drawer';
+  btn.addEventListener('click', () => setDrawerLab(true));
+  return btn;
+}
+
+function demoSteps(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-steps';
+  let cur = 1;
+  const paint = () => {
+    el.querySelectorAll('.ml-step').forEach((s, i) => {
+      (s as HTMLElement).dataset.state = i < cur ? 'done' : i === cur ? 'current' : 'todo';
+    });
+  };
+  el.innerHTML = [0, 1, 2, 3]
+    .map((i) => `<button type="button" class="ml-step" data-i="${i}"><span>${i + 1}</span><em>${['Brief', 'Draft', 'Review', 'Ship'][i]}</em></button>`)
+    .join('<span class="ml-step-rule"></span>');
+  el.querySelectorAll('.ml-step').forEach((b) =>
+    b.addEventListener('click', () => {
+      cur = Number((b as HTMLElement).dataset.i);
+      paint();
+    }),
+  );
+  paint();
+  return el;
+}
+
+function plateArt(seed: number): string {
+  const y1 = 20 + (seed % 5) * 8;
+  const y2 = 50 + ((seed * 3) % 7) * 4;
+  return `<svg class="ml-gallery-art" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="160" height="100" fill="var(--ds-surface-2)"/>
+    <path d="M0 ${y1} Q40 ${y2} 80 ${y1 + 10} T160 ${y2}" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="1"/>
+    <path d="M0 ${y2} Q50 ${y1} 100 ${y2 + 8} T160 ${y1}" fill="none" stroke="currentColor" stroke-opacity="0.55" stroke-width="1.2"/>
+    <circle cx="${40 + seed * 7}" cy="${30 + seed * 3}" r="3" fill="currentColor" fill-opacity="0.4"/>
+  </svg>`;
+}
+
+function demoGallery(): HTMLElement {
+  const slides = ['Plate I', 'Plate II', 'Plate III', 'Plate IV'];
+  const ratios: Array<[string, string]> = [
+    ['1:1', '1 / 1'],
+    ['4:5', '4 / 5'],
+    ['16:9', '16 / 9'],
+    ['3:4', '3 / 4'],
+  ];
+  let i = 0;
+  let aspect = ratios[2]![1];
+  const el = document.createElement('div');
+  el.className = 'ml-gallery';
+  el.innerHTML = `
+    <div class="ml-gallery-ratios">${ratios
+      .map(([label, val], ri) => `<button type="button" data-aspect="${val}" data-active="${ri === 2}">${label}</button>`)
+      .join('')}</div>
+    <div class="ml-gallery-frame" style="--ml-aspect:${aspect}">${plateArt(0)}<span>${slides[0]}</span></div>
+    <div class="ml-gallery-nav"><button type="button" data-d="-1">←</button><div class="ml-gallery-dots"></div><button type="button" data-d="1">→</button></div>`;
+  const frame = qs<HTMLElement>(el, '.ml-gallery-frame');
+  const label = qs<HTMLElement>(frame, 'span');
+  const dots = qs<HTMLElement>(el, '.ml-gallery-dots');
+  const paint = () => {
+    frame.style.setProperty('--ml-aspect', aspect);
+    frame.innerHTML = `${plateArt(i)}<span>${slides[i]}</span>`;
+    dots.innerHTML = slides.map((_, di) => `<button type="button" data-i="${di}" data-on="${di === i}"></button>`).join('');
+    dots.querySelectorAll('button').forEach((b) =>
+      b.addEventListener('click', () => {
+        i = Number((b as HTMLElement).dataset.i);
+        paint();
+      }),
+    );
+  };
+  el.querySelectorAll<HTMLButtonElement>('.ml-gallery-ratios button').forEach((b) => {
+    b.addEventListener('click', () => {
+      aspect = b.dataset.aspect!;
+      el.querySelectorAll('.ml-gallery-ratios button').forEach((x) => delete (x as HTMLElement).dataset.active);
+      b.dataset.active = 'true';
+      paint();
+    });
+  });
+  el.querySelectorAll('[data-d]').forEach((b) =>
+    b.addEventListener('click', () => {
+      i = (i + Number((b as HTMLElement).dataset.d) + slides.length) % slides.length;
+      paint();
+    }),
+  );
+  paint();
+  return el;
+}
+
+function demoFilmstrip(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-filmstrip';
+  el.innerHTML = Array.from({ length: 8 }, (_, i) => {
+    return `<button type="button" class="ml-film-cell" data-active="${i === 0}">
+      ${plateArt(i + 2)}
+      <span class="ds-mono">${String(i + 1).padStart(2, '0')}</span>
+    </button>`;
+  }).join('');
+  el.querySelectorAll<HTMLButtonElement>('.ml-film-cell').forEach((cell) => {
+    cell.addEventListener('click', () => {
+      el.querySelectorAll('.ml-film-cell').forEach((c) => delete (c as HTMLElement).dataset.active);
+      cell.dataset.active = 'true';
+    });
+  });
+  return el;
+}
+
+function demoImageFrame(inspect = false): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-frame';
+  el.innerHTML = `
+    <div class="ml-frame-plate" ${inspect ? 'data-inspect="true"' : ''}>
+      ${plateArt(5)}
+      <div class="ml-frame-cross" aria-hidden="true"></div>
+    </div>
+    <div class="ml-frame-caption">
+      <span>PLATE · 4px · gutter 12</span>
+      <span class="ml-frame-xy">—</span>
+    </div>
+    ${inspect ? '<div class="ml-frame-tools"><button type="button" class="ml-btn" data-inspect-toggle>Toggle crosshair</button></div>' : ''}`;
+  const plate = qs<HTMLElement>(el, '.ml-frame-plate');
+  const xy = qs<HTMLElement>(el, '.ml-frame-xy');
+  const update = (clientX: number, clientY: number) => {
+    const r = plate.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    const y = Math.max(0, Math.min(1, (clientY - r.top) / r.height));
+    plate.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+    plate.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+    xy.textContent = `${Math.round(x * 100)},${Math.round(y * 100)}`;
+  };
+  plate.addEventListener('pointermove', (e) => {
+    if (plate.dataset.inspect === 'true') update(e.clientX, e.clientY);
+  });
+  plate.addEventListener('pointerdown', (e) => {
+    plate.dataset.inspect = 'true';
+    update(e.clientX, e.clientY);
+  });
+  el.querySelector('[data-inspect-toggle]')?.addEventListener('click', () => {
+    const on = plate.dataset.inspect === 'true';
+    if (on) delete plate.dataset.inspect;
+    else plate.dataset.inspect = 'true';
+  });
+  return el;
+}
+
+function demoDataTable(): HTMLElement {
+  const rows = [
+    ['PETR4', '38.42', '+1.2%', 'A'],
+    ['VALE3', '62.10', '−0.4%', 'A'],
+    ['ITUB4', '28.55', '+0.8%', 'B'],
+    ['BBDC4', '14.02', '−1.1%', 'B'],
+    ['WEGE3', '48.90', '+2.3%', 'A'],
+  ];
+  const el = document.createElement('div');
+  el.className = 'ml-table-wrap';
+  el.innerHTML = `<table class="ml-table">
+    <thead><tr><th data-sort>Ticker</th><th data-sort>Price</th><th data-sort>Δ</th><th>Tier</th></tr></thead>
+    <tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table>`;
+  el.querySelectorAll('tbody tr').forEach((tr) => {
+    tr.addEventListener('click', () => {
+      el.querySelectorAll('tr').forEach((x) => x.removeAttribute('data-active'));
+      tr.setAttribute('data-active', 'true');
+    });
+  });
+  return el;
+}
+
+function demoInfoTable(): HTMLElement {
+  const pairs = [
+    ['Address', 'Av. Paulista, 1000'],
+    ['AQI', '28 · Good'],
+    ['Source', 'Tier A · MCP'],
+    ['Updated', '20 Nov 14:10'],
+  ];
+  const el = document.createElement('div');
+  el.className = 'ml-info-table';
+  el.innerHTML = pairs
+    .map(([k, v]) => `<div><span class="ds-mono">${k}</span><strong>${v}</strong></div>`)
+    .join('');
+  return el;
+}
+
+function demoLedgerTable(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-table-wrap';
+  el.innerHTML = `<table class="ml-table ml-ledger">
+    <thead><tr><th>Date</th><th>Memo</th><th>Debit</th><th>Credit</th></tr></thead>
+    <tbody>
+      <tr><td class="ds-mono">11-18</td><td>Solar credit</td><td></td><td class="ds-mono">1.240</td></tr>
+      <tr><td class="ds-mono">11-19</td><td>Grid fee</td><td class="ds-mono">180</td><td></td></tr>
+      <tr><td class="ds-mono">11-20</td><td>Offset</td><td></td><td class="ds-mono">420</td></tr>
+    </tbody>
+  </table>`;
+  return el;
+}
+
+function demoKpiStrip(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-kpi-strip';
+  el.innerHTML = [
+    ['AQI', '28', '−6%'],
+    ['Temp', '23°', '+1'],
+    ['UV', '4', 'ok'],
+    ['Pollen', '1/5', 'low'],
+  ]
+    .map(
+      ([k, v, d]) =>
+        `<div class="ml-kpi"><span class="ds-mono">${k}</span><strong>${v}</strong><em class="ds-mono">${d}</em></div>`,
+    )
+    .join('');
+  return el;
+}
+
+function demoConsole(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'ml-console';
+  el.innerHTML = Array.from({ length: 6 }, (_, i) => {
+    const on = i % 2 === 0;
+    return `<button type="button" class="ml-console-key" data-on="${on}" aria-pressed="${on}">
+      <span class="ml-console-led"></span><span class="ds-mono">CH${i + 1}</span>
+    </button>`;
+  }).join('');
+  el.querySelectorAll('button').forEach((b) =>
+    b.addEventListener('click', () => {
+      const next = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', String(next));
+      b.dataset.on = String(next);
+    }),
+  );
+  return el;
 }
 
 function demoPlate(item: CatalogItem): HTMLElement {
   const el = document.createElement('div');
   el.className = 'ml-plate-empty';
-  el.textContent = `Line plate · install via shadcn · ${item.install}`;
+  el.innerHTML = `<div class="ds-mono" style="margin-bottom:6px">${item.category.toUpperCase()}</div>
+    <div>Line plate · <code>${item.install}</code></div>
+    <div style="margin-top:8px;font-size:12px;color:var(--ds-fg-muted)">${item.blurb}</div>`;
   return el;
 }
 
@@ -585,6 +1376,8 @@ function buildDemo(item: CatalogItem): HTMLElement {
       return demoKeypad();
     case 'tactile-lever':
       return demoLever();
+    case 'tactile-console':
+      return demoConsole();
     case 'progress':
       return demoProgress();
     case 'metric':
@@ -601,6 +1394,28 @@ function buildDemo(item: CatalogItem): HTMLElement {
       return demoToast();
     case 'dialog':
       return demoDialog();
+    case 'sheet':
+      return demoSheet();
+    case 'drawer':
+      return demoDrawer();
+    case 'menu':
+      return demoMenu();
+    case 'context-menu':
+      return demoContextMenu();
+    case 'select':
+      return demoSelect();
+    case 'picker':
+      return demoPicker(item.id);
+    case 'color-picker':
+      return demoColorPicker();
+    case 'combobox':
+      return demoCombobox();
+    case 'date-picker':
+      return demoDatePicker();
+    case 'time-picker':
+      return demoTimePicker();
+    case 'file-drop':
+      return demoFileDrop();
     case 'command':
       return demoCommand();
     case 'scroll':
@@ -611,6 +1426,44 @@ function buildDemo(item: CatalogItem): HTMLElement {
       return demoCompass();
     case 'audio-meter':
       return demoAudioMeter();
+    case 'steps':
+      return demoSteps();
+    case 'gallery':
+      return demoGallery();
+    case 'filmstrip':
+      return demoFilmstrip();
+    case 'image-frame':
+      return demoImageFrame(false);
+    case 'image-inspector':
+      return demoImageFrame(true);
+    case 'data-table':
+      return demoDataTable();
+    case 'info-table':
+      return demoInfoTable();
+    case 'ledger-table':
+      return demoLedgerTable();
+    case 'kpi-strip':
+      return demoKpiStrip();
+    case 'chart-line':
+      return demoChartLine(false);
+    case 'chart-area':
+      return demoChartLine(true);
+    case 'chart-bar':
+      return demoChartBar(false);
+    case 'chart-hbar':
+      return demoChartBar(true);
+    case 'chart-candles':
+      return demoChartCandles();
+    case 'chart-donut':
+      return demoChartDonut();
+    case 'chart-spark':
+      return demoChartSpark();
+    case 'chart-scatter':
+      return demoChartScatter();
+    case 'chart-radar':
+      return demoChartRadar();
+    case 'chart-histo':
+      return demoChartHisto();
     case 'svg-instrument':
       return demoSvgInstrument(item.id);
     default:
@@ -659,6 +1512,44 @@ function ensureHosts(): void {
     const input = qs<HTMLInputElement>(panel, 'input');
     input.addEventListener('input', () => renderCmdkList(input.value));
   }
+  if (!document.querySelector('.lab-sheet-backdrop')) {
+    const back = document.createElement('div');
+    back.className = 'lab-sheet-backdrop';
+    const sheet = document.createElement('div');
+    sheet.className = 'lab-sheet';
+    sheet.innerHTML = `<div class="lab-sheet-handle"></div>
+      <h2 class="serif" style="font-family:var(--ds-font-display);font-weight:400;margin:8px 0">Bottom sheet</h2>
+      <p style="color:var(--ds-fg-muted);font-size:14px;line-height:1.5;margin:0 0 16px">Vaul-like sheet · drag handle visual · Esc closes.</p>
+      <button type="button" class="ml-btn ml-btn-primary" data-sheet-close>Done</button>`;
+    document.body.append(back, sheet);
+    back.addEventListener('click', () => setSheet(false));
+    sheet.querySelector('[data-sheet-close]')!.addEventListener('click', () => setSheet(false));
+  }
+  if (!document.querySelector('.lab-drawer-backdrop')) {
+    const back = document.createElement('div');
+    back.className = 'lab-drawer-backdrop';
+    const drawer = document.createElement('div');
+    drawer.className = 'lab-drawer';
+    drawer.innerHTML = `<div class="ds-eyebrow">Drawer</div>
+      <h2 style="font-family:var(--ds-font-display);font-weight:400;margin:8px 0 12px">Tokens & filters</h2>
+      <p style="color:var(--ds-fg-muted);font-size:13.5px;line-height:1.5">Lateral panel with dim backdrop — Meridian rail grammar.</p>
+      <button type="button" class="ml-btn" data-drawer-close style="margin-top:16px">Close</button>`;
+    document.body.append(back, drawer);
+    back.addEventListener('click', () => setDrawerLab(false));
+    drawer.querySelector('[data-drawer-close]')!.addEventListener('click', () => setDrawerLab(false));
+  }
+}
+
+function setSheet(open: boolean): void {
+  ensureHosts();
+  qs<HTMLElement>(document, '.lab-sheet-backdrop').dataset.open = String(open);
+  qs<HTMLElement>(document, '.lab-sheet').dataset.open = String(open);
+}
+
+function setDrawerLab(open: boolean): void {
+  ensureHosts();
+  qs<HTMLElement>(document, '.lab-drawer-backdrop').dataset.open = String(open);
+  qs<HTMLElement>(document, '.lab-drawer').dataset.open = String(open);
 }
 
 function pushToast(message: string): void {
@@ -774,11 +1665,13 @@ function renderSidebar(): void {
     'all',
     'controls',
     'inputs',
+    'overlays',
+    'tables',
+    'charts',
     'surfaces',
     'navigation',
     'feedback',
     'instruments',
-    'finance',
     'astronomy',
     'weather',
   ];
@@ -829,6 +1722,8 @@ function initChrome(): void {
     if (e.key === 'Escape') {
       setCmdk(false);
       setDialog(false);
+      setSheet(false);
+      setDrawerLab(false);
       setRail(false);
     }
   });

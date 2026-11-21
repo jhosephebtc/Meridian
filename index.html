@@ -793,14 +793,15 @@
       width: 40px;
       height: 40px;
       border-radius: var(--ds-radius-squircle);
-      display: none;
+      display: grid;
       place-items: center;
       cursor: pointer;
       color: var(--ds-fg);
       flex-shrink: 0;
       padding: 0;
-      transition: transform var(--ds-duration-press) var(--ds-ease-out);
+      transition: transform var(--ds-duration-press) var(--ds-ease-out), border-color 140ms var(--ds-ease-out);
     }
+    .ds-burger:hover { border-color: var(--ds-fg); }
     .ds-burger:active { transform: scale(var(--ds-press-scale)); }
     .ds-burger:focus-visible { outline: none; box-shadow: var(--ds-shadow-focus); }
     .ds-burger-lines {
@@ -859,17 +860,41 @@
       left: 0;
       bottom: 0;
       z-index: 141;
-      width: min(300px, 88vw);
+      width: min(320px, 88vw);
       background-color: var(--ds-bg);
       border-radius: 0 16px 16px 0;
-      box-shadow:
-        1px 0 0 0 var(--ds-rule),
-        24px 0 56px -16px rgba(28, 20, 12, 0.22);
+      border-right: var(--ds-hairline) solid var(--ds-border-strong);
       transform: translateX(-105%);
       transition: transform var(--ds-duration-drawer) var(--ds-ease-drawer);
       display: flex;
       flex-direction: column;
       padding: 18px 20px 28px;
+      overflow: auto;
+    }
+    .nav-rail-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+    .nav-rail-group .eyebrow { margin: 0 0 8px; }
+    .nav-rail-list a {
+      display: block;
+      text-decoration: none;
+      font-family: var(--ds-font-sans);
+      font-size: 14px;
+      color: var(--ds-fg-secondary);
+      padding: 11px 12px;
+      border-radius: 10px;
+    }
+    .nav-rail-list a:hover {
+      background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+      color: var(--ds-fg);
+    }
+    .nav-rail-list a[data-primary] {
+      color: var(--ds-fg);
+      font-weight: 500;
+      border: 1px solid var(--ds-border);
     }
     .nav-rail[data-open="true"] { transform: translateX(0); }
     .nav-rail-head {
@@ -921,7 +946,6 @@
 
     @media (max-width: 1040px) {
       .topbar-nav-wrap { display: none; }
-      .ds-burger { display: grid; }
     }
 
     .topbar-controls {
@@ -929,6 +953,18 @@
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
+    }
+
+    .topbar-components-cta {
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 720px) {
+      .topbar-controls .btn-pill:not(.topbar-components-cta),
+      .topbar-controls #btn-mode-toggle,
+      .topbar-controls #btn-open-drawer {
+        display: none;
+      }
     }
 
     /* Surface swatch pill switcher */
@@ -2819,13 +2855,18 @@
         <span class="kbd-hint">⌘K</span>
       </button>
 
+      <!-- Components Lab -->
+      <a href="./components.html" class="btn btn-sm btn-primary btn-pill topbar-components-cta" data-tip="Abrir Components Lab · menus, modais, tabelas, gráficos">
+        Components ↗
+      </a>
+
       <!-- Prévia Real de Produto -->
       <a href="./preview.html" class="btn btn-sm btn-secondary btn-pill" data-tip="Abrir Prévia Real de Produto (Meridian Studio)">
         Prévia de App ↗
       </a>
 
       <!-- Drawer de Tokens -->
-      <button class="btn btn-sm btn-primary" id="btn-open-drawer" data-tip="Abrir drawer Vaul com tokens CSS/TS">
+      <button class="btn btn-sm btn-tertiary" id="btn-open-drawer" data-tip="Abrir drawer Vaul com tokens CSS/TS">
         Tokens
       </button>
     </div>
@@ -2845,8 +2886,8 @@
               Um meridiano visual entre o&nbsp;cotidiano calmo e&nbsp;o&nbsp;rigor técnico: papel tátil, uma só tinta, navegação sem latência — para React&nbsp;Native, Web em&nbsp;CSS puro e&nbsp;SVG&nbsp;1:1.
             </p>
             <div class="btn-row" style="margin-top:0;">
-              <a href="./preview.html" class="btn btn-primary">Abrir Prévia Real de App ↗</a>
-              <a href="./components.html" class="btn btn-secondary btn-pill">Components Lab ↗</a>
+              <a href="./components.html" class="btn btn-primary">Abrir Components Lab ↗</a>
+              <a href="./preview.html" class="btn btn-secondary btn-pill">Prévia de App ↗</a>
               <a href="./gann.html" class="btn btn-secondary btn-pill">Dossiê W.D. Gann ↗</a>
               <button class="btn btn-secondary btn-pill" id="hero-open-drawer">Inspecionar Tokens CSS &amp; TS</button>
               <button class="btn btn-tertiary btn-pill" id="hero-open-cmdk">Navegação Rápida <span class="kbd-hint">⌘K</span></button>
@@ -3843,25 +3884,40 @@
     </div>
   </footer>
 
-  <!-- ================= MOBILE NAV RAIL (hamburger → X) ================= -->
+  <!-- ================= NAV RAIL (hamburger → X · desktop + mobile) ================= -->
   <div class="nav-rail-backdrop" id="nav-rail-backdrop" data-open="false"></div>
   <aside class="nav-rail" id="nav-rail" data-open="false" role="dialog" aria-modal="true" aria-label="Navegação">
     <div class="nav-rail-head">
       <button class="nav-rail-close" id="btn-close-nav-rail" type="button" aria-label="Fechar menu">Close ×</button>
-      <span class="eyebrow" style="margin:0">Seções</span>
+      <span class="eyebrow" style="margin:0">Ir para</span>
     </div>
-    <nav class="nav-rail-list" aria-label="Seções do Design System">
-      <button type="button" data-nav-target="historia">01 · História</button>
-      <button type="button" data-nav-target="cores">02 · Superfícies</button>
-      <button type="button" data-nav-target="tipografia">03 · Tipografia</button>
-      <button type="button" data-nav-target="interacoes">04 · Motion</button>
-      <button type="button" data-nav-target="editorial">05 · Editorial</button>
-      <button type="button" data-nav-target="cronologia">06 · Lifeline</button>
-      <button type="button" data-nav-target="svg-viz">07 · SVG 1:1</button>
-      <button type="button" data-nav-target="atelier">08 · Atelier TS</button>
-    </nav>
+
+    <div class="nav-rail-group">
+      <div class="eyebrow">Destinos</div>
+      <nav class="nav-rail-list" aria-label="Páginas">
+        <a href="./components.html" data-primary>Components Lab ↗</a>
+        <a href="./preview.html">Prévia de App ↗</a>
+        <a href="./gann.html">Dossiê W.D. Gann ↗</a>
+        <a href="./index.html#topo">Design System · topo</a>
+      </nav>
+    </div>
+
+    <div class="nav-rail-group">
+      <div class="eyebrow">Seções nesta página</div>
+      <nav class="nav-rail-list" aria-label="Seções do Design System">
+        <button type="button" data-nav-target="historia">01 · História</button>
+        <button type="button" data-nav-target="cores">02 · Superfícies</button>
+        <button type="button" data-nav-target="tipografia">03 · Tipografia</button>
+        <button type="button" data-nav-target="interacoes">04 · Motion</button>
+        <button type="button" data-nav-target="editorial">05 · Editorial</button>
+        <button type="button" data-nav-target="cronologia">06 · Lifeline</button>
+        <button type="button" data-nav-target="svg-viz">07 · SVG 1:1</button>
+        <button type="button" data-nav-target="atelier">08 · Atelier TS</button>
+      </nav>
+    </div>
+
     <p class="nav-rail-meta">
-      Menu mobile · mesmas seções do clip-path nav. Esc ou backdrop fecha.
+      Menu global · Components, Preview, Gann e seções. Esc ou backdrop fecha.
     </p>
   </aside>
 
@@ -4624,7 +4680,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       const CMDK_ACTIONS = [
         { title: 'Ir para: História do Meridian', hint: '↵', run: () => document.getElementById('historia').scrollIntoView({ behavior: 'smooth' }) },
         { title: 'Abrir Prévia Real de App (Meridian Studio · preview.html)', hint: '↗', run: () => { window.location.href = './preview.html'; } },
-        { title: 'Abrir Components Lab (64 · shadcn registry)', hint: '↗', run: () => { window.location.href = './components.html'; } },
+        { title: 'Abrir Components Lab (menus · tabelas · gráficos · shadcn)', hint: '↗', run: () => { window.location.href = './components.html'; } },
         { title: 'Abrir Dossiê W.D. Gann (HalfTone + Plotter D2)', hint: '↗', run: () => { window.location.href = './gann.html'; } },
         { title: 'Superfície: Ivory Editorial (#FAF9F5)', hint: '1', run: () => applySurface('ivory') },
         { title: 'Superfície: Paper White (#FFFFFF)', hint: '2', run: () => applySurface('paper') },

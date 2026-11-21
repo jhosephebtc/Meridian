@@ -665,8 +665,9 @@ html[data-surface="obsidian"] .ds-paper-grain-layer {
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
 *::-webkit-scrollbar {
-  width: 2px !important;
-  height: 2px !important;
+  /* gutter 8px → thumb 2px com margem mínima da borda direita */
+  width: 8px !important;
+  height: 8px !important;
   background: transparent !important;
 }
 
@@ -689,7 +690,9 @@ body::-webkit-scrollbar-thumb,
   background-color: color-mix(in srgb, var(--ds-fg) 28%, transparent) !important;
   background-clip: padding-box !important;
   border-radius: 0 !important;
-  border: none !important;
+  /* margem mínima da borda lateral (direita/inferior) */
+  border: solid transparent !important;
+  border-width: 0 4px 0 2px !important;
   box-shadow: none !important;
   min-height: 24px;
 }
