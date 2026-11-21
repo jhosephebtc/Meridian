@@ -3804,27 +3804,27 @@
               Grain
             </button>
             <div class="popover" id="grain-popover" data-open="false" aria-hidden="true" role="dialog" aria-label="Controles de textura e sinais">
-              <div class="eyebrow" style="margin-bottom:8px;">Intensidade</div>
+              <div class="eyebrow" data-home="grain.intensity" style="margin-bottom:8px;">Intensidade</div>
               <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
                 <button class="btn btn-sm btn-tertiary" data-set-grain="off">Off</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain="subtle">Suave</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain="subtle" data-home="grain.subtle">Suave</button>
                 <button class="btn btn-sm btn-primary" data-set-grain="editorial">Edit.</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain="tactile">Tátil</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain="tactile" data-home="grain.tactile">Tátil</button>
               </div>
-              <div class="eyebrow" style="margin-bottom:8px;">Tamanho do grão</div>
+              <div class="eyebrow" data-home="grain.size" style="margin-bottom:8px;">Tamanho do grão</div>
               <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
-                <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine">Fino</button>
-                <button class="btn btn-sm btn-primary" data-set-grain-size="medium">Médio</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse">Grosso</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky">Grumo</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine" data-home="grain.fine">Fino</button>
+                <button class="btn btn-sm btn-primary" data-set-grain-size="medium" data-home="grain.medium">Médio</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse" data-home="grain.coarse">Grosso</button>
+                <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky" data-home="grain.chunky">Grumo</button>
               </div>
-              <div class="eyebrow" style="margin-bottom:8px;">Estilo de Sinais</div>
+              <div class="eyebrow" data-home="grain.signals" style="margin-bottom:8px;">Estilo de Sinais</div>
               <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin-bottom:10px;">
-                <button class="btn btn-sm btn-primary" data-set-signals="chromatic">Cromático</button>
-                <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome">Monocromo</button>
+                <button class="btn btn-sm btn-primary" data-set-signals="chromatic" data-home="grain.chromatic">Cromático</button>
+                <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome" data-home="grain.mono">Monocromo</button>
               </div>
               <div class="mono" style="font-size:10.5px; color:var(--ds-fg-muted); line-height:1.45;">
-                Intensidade = opacidade · Tamanho = repaint do canvas.
+                <span data-home="grain.help">Intensidade = opacidade · Tamanho = repaint do canvas.</span>
                 <span id="grain-blend-readout">edit. · médio</span>
               </div>
             </div>
@@ -3853,7 +3853,7 @@
         </button>
       </div>
 
-      <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Seções do Design System">
+      <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Seções do Design System" data-i18n-attr="aria-label:nav.sections">
         <div class="topbar-nav-links">
           <button class="topbar-link" type="button" data-nav-target="historia" data-active="true" data-i18n="nav.historia">História</button>
           <button class="topbar-link" type="button" data-nav-target="cores" data-i18n="nav.surfaces">Superfícies</button>
@@ -3960,7 +3960,7 @@
         <div class="historia-layout">
           <article class="historia-essay">
             <div class="eyebrow historia-essay-kicker" data-home="hist.kicker">00 · História</div>
-            <h2 class="historia-essay-title" data-home="hist.title">O Farol e o&nbsp;Meridiano</h2>
+            <h2 class="historia-essay-title" data-home-html="hist.title">O Farol e o&nbsp;Meridiano</h2>
 
             <div id="home-historia-prose">
             <p class="historia-lead">Muito antes dos mapas ocuparem mesas de capitães e muito antes de instrumentos dizerem às pessoas exatamente onde estavam, atravessar o oceano era um exercício de convicção.</p>
@@ -4198,32 +4198,32 @@
 
         <div class="sub-grid-2">
           <div class="panel-card">
-            <div class="eyebrow">Paleta Orgânica Contida · Linhagem Editorial</div>
-            <p style="margin:6px 0 0; font-size:13.5px; color:var(--ds-fg-muted);">
+            <div class="eyebrow" data-home="cores.organic.eyebrow">Paleta Orgânica Contida · Linhagem Editorial</div>
+            <p style="margin:6px 0 0; font-size:13.5px; color:var(--ds-fg-muted);" data-home="cores.organic.desc">
               Tons terrosos usados estritamente em categorias, tags e séries de gráficos SVG — preservando a serenidade do papel.
             </p>
             <div class="organic-pills" id="organic-pills">
-              <button class="organic-tag" data-copy-var="--ds-organic-olive"><span class="dot-indicator" style="background:var(--ds-organic-olive)"></span>Olive · Earth / Agro</button>
-              <button class="organic-tag" data-copy-var="--ds-organic-sky"><span class="dot-indicator" style="background:var(--ds-organic-sky)"></span>Sky · Clima / AQI</button>
-              <button class="organic-tag" data-copy-var="--ds-organic-coral"><span class="dot-indicator" style="background:var(--ds-organic-coral)"></span>Coral · Social / Hype</button>
-              <button class="organic-tag" data-copy-var="--ds-organic-ochre"><span class="dot-indicator" style="background:var(--ds-organic-ochre)"></span>Ochre · Solar / Ciclos</button>
-              <button class="organic-tag" data-copy-var="--ds-organic-slate"><span class="dot-indicator" style="background:var(--ds-organic-slate)"></span>Slate · Finanças / B2B</button>
+              <button class="organic-tag" data-copy-var="--ds-organic-olive"><span class="dot-indicator" style="background:var(--ds-organic-olive)"></span><span data-home="cores.tag.olive">Olive · Terra / Agro</span></button>
+              <button class="organic-tag" data-copy-var="--ds-organic-sky"><span class="dot-indicator" style="background:var(--ds-organic-sky)"></span><span data-home="cores.tag.sky">Sky · Clima / AQI</span></button>
+              <button class="organic-tag" data-copy-var="--ds-organic-coral"><span class="dot-indicator" style="background:var(--ds-organic-coral)"></span><span data-home="cores.tag.coral">Coral · Social / Hype</span></button>
+              <button class="organic-tag" data-copy-var="--ds-organic-ochre"><span class="dot-indicator" style="background:var(--ds-organic-ochre)"></span><span data-home="cores.tag.ochre">Ochre · Solar / Ciclos</span></button>
+              <button class="organic-tag" data-copy-var="--ds-organic-slate"><span class="dot-indicator" style="background:var(--ds-organic-slate)"></span><span data-home="cores.tag.slate">Slate · Finanças / B2B</span></button>
             </div>
           </div>
 
           <div class="panel-card">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-              <div class="eyebrow">Sinais de Verificação &amp; Telemetria</div>
-              <button class="btn btn-sm btn-pill btn-tertiary" id="btn-toggle-signals">Alternar Monocromo</button>
+              <div class="eyebrow" data-home="cores.signals.eyebrow">Sinais de Verificação &amp; Telemetria</div>
+              <button class="btn btn-sm btn-pill btn-tertiary" id="btn-toggle-signals" data-home="cores.signals.toggle">Alternar Monocromo</button>
             </div>
-            <p style="margin:6px 0 0; font-size:13.5px; color:var(--ds-fg-muted);">
+            <p style="margin:6px 0 0; font-size:13.5px; color:var(--ds-fg-muted);" data-home="cores.signals.desc">
               Calibrados para alto contraste até sobre Aqua e Terracotta — com modo monocromático arquivístico (Arquival) baseado em forma geométrica.
             </p>
             <div class="organic-pills">
-              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="var(--ds-signal-support)"/></svg>Support · Confirmado</span>
-              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><polygon points="5,1 9,9 1,9" fill="var(--ds-signal-caution)"/></svg>Caution · Orbe / Alerta</span>
-              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" transform="rotate(45 5 5)" fill="var(--ds-signal-refute)"/></svg>Refute · Risco Crítico</span>
-              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" fill="var(--ds-signal-info)"/></svg>Info · Fonte / API</span>
+              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="var(--ds-signal-support)"/></svg><span data-home="cores.signal.support">Support · Confirmado</span></span>
+              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><polygon points="5,1 9,9 1,9" fill="var(--ds-signal-caution)"/></svg><span data-home="cores.signal.caution">Caution · Orbe / Alerta</span></span>
+              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" transform="rotate(45 5 5)" fill="var(--ds-signal-refute)"/></svg><span data-home="cores.signal.refute">Refute · Risco Crítico</span></span>
+              <span class="organic-tag" style="cursor:default;"><svg width="10" height="10" viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" fill="var(--ds-signal-info)"/></svg><span data-home="cores.signal.info">Info · Fonte / API</span></span>
             </div>
           </div>
         </div>
@@ -4248,7 +4248,7 @@
             <div class="eyebrow">Geist Serif · H1</div>
             <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">clamp(38px, 4.8vw, 72px)</div>
           </div>
-          <div class="serif" style="font-size:var(--ds-text-h1); line-height:var(--ds-lh-display); letter-spacing:var(--ds-tracking-display);">
+          <div class="serif" data-home="type.sample.h1" style="font-size:var(--ds-text-h1); line-height:var(--ds-lh-display); letter-spacing:var(--ds-tracking-display);">
             Confluência Planetária &amp; Atmosfera
           </div>
           <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">weight 400 · lh 1.08 · ls -0.022em</div>
@@ -4261,7 +4261,7 @@
           </div>
           <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:24px;">
             <span class="serif tabular" style="font-size:var(--ds-text-metric); line-height:var(--ds-lh-metric); letter-spacing:var(--ds-tracking-metric);" id="live-metric-readout">84.2°</span>
-            <span class="serif" style="font-size:var(--ds-text-h3); color:var(--ds-fg-secondary);">Índice de Confluência &amp; Qualidade do Ar</span>
+            <span class="serif" data-home="type.sample.h2" style="font-size:var(--ds-text-h3); color:var(--ds-fg-secondary);">Índice de Confluência &amp; Qualidade do Ar</span>
           </div>
           <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">tabular-nums · zero jitter</div>
         </div>
@@ -4271,7 +4271,7 @@
             <div class="eyebrow">Functional Sans · Prose</div>
             <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">17px · max-width: 65ch</div>
           </div>
-          <p style="margin:0; max-width:65ch; font-size:var(--ds-text-body-lg); line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body);">
+          <p data-home="type.sample.prose" style="margin:0; max-width:65ch; font-size:var(--ds-text-body-lg); line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body);">
             A coluna de leitura enciclopédica limita cada linha a 65 caracteres (regra do UI Cheatsheet de Meridian Motion), garantindo ritmo confortável em relatórios de endereço, análises climáticas e resumos diários sem fadiga ocular.
           </p>
           <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">weight 400 · lh 1.58 · ls -0.006em</div>
@@ -4282,7 +4282,7 @@
             <div class="eyebrow">Technical Mono · Telemetria</div>
             <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">11px–13px · tabular-nums</div>
           </div>
-          <div class="mono tabular" style="font-size:12.5px; display:flex; flex-wrap:wrap; gap:18px; color:var(--ds-fg-secondary);">
+          <div class="mono tabular" data-home-html="type.voice.mono" style="font-size:12.5px; display:flex; flex-wrap:wrap; gap:18px; color:var(--ds-fg-secondary);">
             <span>LAT -23.5505° · LON -46.6333°</span>
             <span>AQI 28 · PM2.5 6.4 µg/m³</span>
             <span>SQ9 63.75° · TIER A (BIGQUERY)</span>
@@ -4308,49 +4308,49 @@
         <div class="lab-grid">
           <!-- Card 1: Dual-Radius Buttons + Hold-to-Confirm -->
           <div class="panel-card">
-            <div class="eyebrow">Botões · Progressão Tonal &amp; Hold-to-Confirm Assimétrico</div>
+            <div class="eyebrow" data-home="motion.btns.eyebrow">Botões · Progressão Tonal &amp; Hold-to-Confirm Assimétrico</div>
             <div class="btn-row">
-              <button class="btn btn-primary" data-toast="Ação primária confirmada (120ms ease-out)">Executar Backtest</button>
-              <button class="btn btn-secondary" data-toast="Ver mais — Squircle 8px">Ver mais →</button>
-              <button class="btn btn-tertiary" data-toast="Filtro aplicado">Filtrar</button>
-              <button class="btn btn-ghost" data-toast="Ação secundária">Cancelar</button>
-              <button class="btn btn-secondary" disabled>Desabilitado</button>
+              <button class="btn btn-primary" data-toast="Ação primária confirmada (120ms ease-out)" data-home="motion.btn.primary">Executar Backtest</button>
+              <button class="btn btn-secondary" data-toast="Ver mais — Squircle 8px" data-home="motion.btn.secondary">Ver mais →</button>
+              <button class="btn btn-tertiary" data-toast="Filtro aplicado" data-home="motion.btn.tertiary">Filtrar</button>
+              <button class="btn btn-ghost" data-toast="Ação secundária" data-home="motion.btn.ghost">Cancelar</button>
+              <button class="btn btn-secondary" disabled data-home="motion.btn.disabled">Desabilitado</button>
             </div>
             <div class="btn-row">
-              <button class="btn btn-pill btn-primary" data-toast="Nav Pill ativo (9999px)">Pesquisa</button>
-              <button class="btn btn-pill btn-secondary" data-toast="Nav Pill secundário">Clima &amp; Ar</button>
-              <button class="btn btn-pill btn-tertiary" data-toast="Nav Pill terciário">Ciclos 4D</button>
+              <button class="btn btn-pill btn-primary" data-toast="Nav Pill ativo (9999px)" data-home="motion.btn.search">Pesquisa</button>
+              <button class="btn btn-pill btn-secondary" data-toast="Nav Pill secundário" data-home="motion.btn.climate">Clima &amp; Ar</button>
+              <button class="btn btn-pill btn-tertiary" data-toast="Nav Pill terciário" data-home="motion.btn.cycles">Ciclos 4D</button>
               <button class="btn btn-circle" aria-label="Anterior" data-toast="Placa anterior">←</button>
               <button class="btn btn-circle" aria-label="Próximo" data-toast="Próxima placa">→</button>
             </div>
             <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--ds-rule); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
               <div>
-                <div style="font-size:13px; font-weight:500;">Hold-to-Confirm Assimétrico</div>
+                <div style="font-size:13px; font-weight:500;" data-home="motion.hold.title">Hold-to-Confirm Assimétrico</div>
                 <div style="font-size:12px; color:var(--ds-fg-muted);">1.4s <code>linear</code> ao segurar · 180ms <code>ease-out</code> ao soltar</div>
               </div>
               <button class="btn btn-hold" id="btn-hold-confirm">
-                <span>Segure para Limpar Cache</span>
-                <span class="btn-hold-fill" aria-hidden="true">Confirmando…</span>
+                <span data-home="motion.hold.btn">Segure para Limpar Cache</span>
+                <span class="btn-hold-fill" aria-hidden="true" data-home="motion.hold.fill">Confirmando…</span>
               </button>
             </div>
           </div>
 
           <!-- Card 2: Clip-Path Tabs + Skip-Delay Tooltip Toolbar -->
           <div class="panel-card">
-            <div class="eyebrow">Clip-Path Tabs + Skip-Delay Tooltips (Meridian Motion)</div>
-            <p style="margin:6px 0 14px; font-size:13px; color:var(--ds-fg-muted);">
+            <div class="eyebrow" data-home="motion.tabs.eyebrow">Clip-Path Tabs + Skip-Delay Tooltips (Meridian Motion)</div>
+            <p style="margin:6px 0 14px; font-size:13px; color:var(--ds-fg-muted);" data-home-html="motion.tabs.desc">
               A camada ativa desliza por <code>clip-path: inset(...)</code> invertendo cor e texto no mesmo pixel. Passe o mouse na barra abaixo: o 1º tooltip espera 300ms; os irmãos trocam em <strong>0ms</strong>.
             </p>
             <div style="margin-bottom:16px;">
               <div class="cliptabs" data-cliptabs="demo-cluster">
                 <div class="cliptabs-track">
-                  <button class="cliptabs-btn" data-cluster="A" data-active="true">Cluster A · Gann</button>
-                  <button class="cliptabs-btn" data-cluster="B">Cluster B · Ambiente</button>
-                  <button class="cliptabs-btn" data-cluster="C">Cluster C · Mídia</button>
+                  <button class="cliptabs-btn" data-cluster="A" data-active="true" data-home="motion.cluster.a">Cluster A · Gann</button>
+                  <button class="cliptabs-btn" data-cluster="B" data-home="motion.cluster.b">Cluster B · Ambiente</button>
+                  <button class="cliptabs-btn" data-cluster="C" data-home="motion.cluster.c">Cluster C · Mídia</button>
                   <div class="cliptabs-overlay" aria-hidden="true">
-                    <span>Cluster A · Gann</span>
-                    <span>Cluster B · Ambiente</span>
-                    <span>Cluster C · Mídia</span>
+                    <span data-home="motion.cluster.a">Cluster A · Gann</span>
+                    <span data-home="motion.cluster.b">Cluster B · Ambiente</span>
+                    <span data-home="motion.cluster.c">Cluster C · Mídia</span>
                   </div>
                 </div>
               </div>
@@ -4360,7 +4360,7 @@
             </div>
 
             <div style="padding-top:14px; border-top:1px solid var(--ds-rule); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-              <span class="eyebrow">Barra Skip-Delay (passe rápido)</span>
+              <span class="eyebrow" data-home="motion.skip.bar">Barra Skip-Delay (passe rápido)</span>
               <div style="display:flex; gap:6px;">
                 <button class="btn btn-icon btn-tertiary" data-tip="Camada 1 · Astronomia Pura" data-toast="Camada 1 selecionada">1</button>
                 <button class="btn btn-icon btn-tertiary" data-tip="Camada 2 · Casas &amp; Dignidades" data-toast="Camada 2 selecionada">2</button>
@@ -4374,39 +4374,39 @@
 
         <!-- Frequency Gate Summary Table -->
         <div class="panel-card" style="margin-top:20px;">
-          <div class="eyebrow">The Animation Frequency Gate · Regra de Ouro</div>
+          <div class="eyebrow" data-home="motion.gate.eyebrow">The Animation Frequency Gate · Regra de Ouro</div>
           <table class="spec-table">
             <thead>
               <tr>
-                <th>Frequência</th>
-                <th>Componente no Ecossistema</th>
-                <th>Decisão Meridian</th>
-                <th>Curva / Duração</th>
+                <th data-home="motion.gate.th1">Frequência</th>
+                <th data-home="motion.gate.th2">Componente no Ecossistema</th>
+                <th data-home="motion.gate.th3">Decisão Meridian</th>
+                <th data-home="motion.gate.th4">Curva / Duração</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="mono">100+ / dia</td>
-                <td>Paleta <code>⌘K</code>, atalhos de teclado, troca de abas raiz mobile</td>
-                <td><strong>Zero animação</strong> (instantâneo)</td>
+                <td data-home-html="motion.gate.r1c2">Paleta <code>⌘K</code>, atalhos de teclado, troca de abas raiz mobile</td>
+                <td data-home-html="motion.gate.r1c3"><strong>Zero animação</strong> (instantâneo)</td>
                 <td class="mono">0ms · animation: 'none'</td>
               </tr>
               <tr>
                 <td class="mono">10–50 / dia</td>
-                <td>Press de botões, hover de links, foco em cards</td>
-                <td>Micro-feedback imediato (hover só em ponteiro fino)</td>
+                <td data-home="motion.gate.r2c2">Press de botões, hover de links, foco em cards</td>
+                <td data-home="motion.gate.r2c3">Micro-feedback imediato (hover só em ponteiro fino)</td>
                 <td class="mono">scale(0.97) · 120ms ease-out</td>
               </tr>
               <tr>
                 <td class="mono">Ocasional</td>
-                <td>Popovers origin-aware, Clip-Path Tabs, Drawer, Toasts</td>
-                <td>Transição interruptível (nunca keyframes dinâmicos)</td>
+                <td data-home="motion.gate.r3c2">Popovers origin-aware, Clip-Path Tabs, Drawer, Toasts</td>
+                <td data-home="motion.gate.r3c3">Transição interruptível (nunca keyframes dinâmicos)</td>
                 <td class="mono">140–220ms (UI) · 380ms (Drawer)</td>
               </tr>
               <tr>
                 <td class="mono">Raro / 1ª vez</td>
-                <td>Abertura de dossiê 3D, revelação de placa arquivística</td>
-                <td>Orçamento de deleite editorial</td>
+                <td data-home="motion.gate.r4c2">Abertura de dossiê 3D, revelação de placa arquivística</td>
+                <td data-home="motion.gate.r4c3">Orçamento de deleite editorial</td>
                 <td class="mono">560–800ms · volume / editorial</td>
               </tr>
             </tbody>
@@ -4416,7 +4416,7 @@
         <!-- Primitives embutidos (do Components Lab → página principal) -->
         <div class="panel-card ds-primitives" style="margin-top:20px;">
           <div class="eyebrow">Primitives · Select · Switch · Accordion · Field</div>
-          <p style="margin:6px 0 18px; font-size:13px; color:var(--ds-fg-muted); max-width:62ch;">
+          <p style="margin:6px 0 18px; font-size:13px; color:var(--ds-fg-muted); max-width:62ch;" data-home="motion.prim.desc">
             Componentes do Lab embutidos no showcase — mesma gramática Single-Ink, sem dependência de framework.
           </p>
           <div class="primitives-grid">
@@ -4424,13 +4424,13 @@
               <div class="eyebrow" style="margin-bottom:10px;">Select Meridian</div>
               <div class="ds-select" data-ds-select>
                 <button type="button" class="ds-select-trigger" aria-expanded="false" aria-haspopup="listbox">
-                  <span data-ds-select-label>Cluster A · Gann</span>
+                  <span data-ds-select-label data-home="motion.cluster.a">Cluster A · Gann</span>
                   <svg class="ds-select-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
                 <div class="ds-select-list" role="listbox" data-open="false" hidden>
-                  <button type="button" class="ds-select-option" role="option" data-value="A" aria-selected="true">Cluster A · Gann</button>
-                  <button type="button" class="ds-select-option" role="option" data-value="B" aria-selected="false">Cluster B · Ambiente</button>
-                  <button type="button" class="ds-select-option" role="option" data-value="C" aria-selected="false">Cluster C · Mídia</button>
+                  <button type="button" class="ds-select-option" role="option" data-value="A" aria-selected="true" data-home="motion.cluster.a">Cluster A · Gann</button>
+                  <button type="button" class="ds-select-option" role="option" data-value="B" aria-selected="false" data-home="motion.cluster.b">Cluster B · Ambiente</button>
+                  <button type="button" class="ds-select-option" role="option" data-value="C" aria-selected="false" data-home="motion.cluster.c">Cluster C · Mídia</button>
                 </div>
               </div>
             </div>
@@ -4441,11 +4441,11 @@
                 <button type="button" class="ds-switch" role="switch" aria-checked="true" id="demo-switch-jenkins" data-tip="Offset Jenkins 63.75°">
                   <span class="ds-switch-thumb" aria-hidden="true"></span>
                 </button>
-                <label for="demo-switch-jenkins" style="font-size:13px; color:var(--ds-fg-secondary); cursor:pointer;">Jenkins 63.75° ativo</label>
+                <label for="demo-switch-jenkins" style="font-size:13px; color:var(--ds-fg-secondary); cursor:pointer;" data-home="motion.switch.label">Jenkins 63.75° ativo</label>
               </div>
               <label class="ds-field" style="margin-top:14px;">
-                <span>Endereço de auditoria</span>
-                <input type="text" placeholder="Av. Paulista, 1578 — São Paulo" value="Av. Paulista, 1578" />
+                <span data-home="motion.field.label">Endereço de auditoria</span>
+                <input type="text" data-home="motion.field.ph" placeholder="Av. Paulista, 1578 — São Paulo" value="Av. Paulista, 1578" />
               </label>
             </div>
 
@@ -4453,21 +4453,21 @@
               <div class="eyebrow" style="margin-bottom:10px;">Accordion</div>
               <div class="ds-accordion" data-ds-accordion>
                 <details class="ds-acc-item" open data-anim="open">
-                  <summary>PaperGrain canvas <span class="ds-acc-meta">overlay global</span></summary>
+                  <summary><span data-home="motion.acc.pg.s">PaperGrain canvas</span> <span class="ds-acc-meta">overlay global</span></summary>
                   <div class="ds-acc-collapse">
-                    <div class="ds-acc-body">Ruído procedural em canvas fullscreen — sem data-URL. Intensidade e tamanho controlados pelo popover do header.</div>
+                    <div class="ds-acc-body" data-home="motion.acc.pg.b">Ruído procedural em canvas fullscreen — sem data-URL. Intensidade e tamanho controlados pelo popover do header.</div>
                   </div>
                 </details>
                 <details class="ds-acc-item">
-                  <summary>HalfTone Dots <span class="ds-acc-meta">Paper shaders</span></summary>
+                  <summary><span data-home="motion.acc.ht.s">HalfTone Dots</span> <span class="ds-acc-meta">Paper shaders</span></summary>
                   <div class="ds-acc-collapse">
-                    <div class="ds-acc-body">Malha de pontos médios (<code>u_size ≈ 0.18</code>) na História — imagem convertida em gramática tipográfica.</div>
+                    <div class="ds-acc-body" data-home-html="motion.acc.ht.b">Malha de pontos médios (<code>u_size ≈ 0.18</code>) na História — imagem convertida em gramática tipográfica.</div>
                   </div>
                 </details>
                 <details class="ds-acc-item">
-                  <summary>Atelier Engine <span class="ds-acc-meta">zero p5.js</span></summary>
+                  <summary><span data-home="motion.acc.at.s">Atelier Engine</span> <span class="ds-acc-meta">zero p5.js</span></summary>
                   <div class="ds-acc-collapse">
-                    <div class="ds-acc-body">Aquarela, grid erodido e fan de curvas em TypeScript puro — presets animados + pintura livre no canvas.</div>
+                    <div class="ds-acc-body" data-home="motion.acc.at.b">Aquarela, grid erodido e fan de curvas em TypeScript puro — presets animados + pintura livre no canvas.</div>
                   </div>
                 </details>
               </div>
@@ -4478,12 +4478,12 @@
         <!-- Inverted Stark Contrast Strip (Meridian) -->
         <div class="inverted-strip">
           <div>
-            <div class="mono" style="font-size:11px; opacity:0.7; letter-spacing:0.08em; text-transform:uppercase;">Banda Estrutural Invertida · Linhagem Editorial</div>
-            <div class="serif" style="font-size:26px; line-height:1.15; margin-top:4px;">Contraste seco sem depender de gradientes neon</div>
+            <div class="mono" data-home="motion.inv.kicker" style="font-size:11px; opacity:0.7; letter-spacing:0.08em; text-transform:uppercase;">Banda Estrutural Invertida · Linhagem Editorial</div>
+            <div class="serif" data-home="motion.inv.title" style="font-size:26px; line-height:1.15; margin-top:4px;">Contraste seco sem depender de gradientes neon</div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-pill btn-inv-primary" data-toast="Ação primária invertida">Explorar Catálogo</button>
-            <button class="btn btn-pill btn-inv-ghost" id="btn-strip-drawer">Ver tokens.ts</button>
+            <button class="btn btn-pill btn-inv-primary" data-toast="Ação primária invertida" data-home="motion.inv.explore">Explorar Catálogo</button>
+            <button class="btn btn-pill btn-inv-ghost" id="btn-strip-drawer" data-home="motion.inv.tokens">Ver tokens.ts</button>
           </div>
         </div>
       </div>
@@ -4499,11 +4499,11 @@
           </div>
           <div class="cliptabs" data-cliptabs="editorial-switch">
             <div class="cliptabs-track">
-              <button class="cliptabs-btn" data-ed-view="masonry" data-active="true">Masonry Assimétrico</button>
-              <button class="cliptabs-btn" data-ed-view="reader">Leitor 3 Colunas</button>
+              <button class="cliptabs-btn" data-ed-view="masonry" data-active="true" data-home="ed.tab.masonry">Masonry Assimétrico</button>
+              <button class="cliptabs-btn" data-ed-view="reader" data-home="ed.tab.reader">Leitor 3 Colunas</button>
               <div class="cliptabs-overlay" aria-hidden="true">
-                <span>Masonry Assimétrico</span>
-                <span>Leitor 3 Colunas</span>
+                <span data-home="ed.tab.masonry">Masonry Assimétrico</span>
+                <span data-home="ed.tab.reader">Leitor 3 Colunas</span>
               </div>
             </div>
           </div>
@@ -4531,7 +4531,7 @@
                   </svg>
                 </div>
                 <div class="card-meta-bar">
-                  <span class="eyebrow" data-b2c="Clima &amp; Saúde · #01" data-tech="Camada 1–4 · #26">Clima &amp; Saúde · #01</span>
+                  <span class="eyebrow" data-home="ed.card1.eyebrow" data-b2c="Clima &amp; Saúde · #01" data-tech="Camada 1–4 · #26">Clima &amp; Saúde · #01</span>
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">20 NOV 2026</span>
                     <button class="tiny-more-btn" aria-expanded="false" aria-label="Expandir metadados" data-toggle-extra="extra-1">
@@ -4539,8 +4539,8 @@
                     </button>
                   </div>
                 </div>
-                <h3 class="card-title" data-b2c="Guardião Família: janela segura de passeio e ar limpo" data-tech="Terminal Gann–Jenkins AI: confluência em escala 1:1">Guardião Família: janela segura de passeio e ar limpo</h3>
-                <p class="card-desc" data-b2c="Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos." data-tech="Cruzamento determinístico de Square of Nine, ângulos secretos 63,75° e trânsitos rápidos/lentos auditados via ledger analítico.">Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos.</p>
+                <h3 class="card-title" data-home="ed.card1.title" data-b2c="Guardião Família: janela segura de passeio e ar limpo" data-tech="Terminal Gann–Jenkins AI: confluência em escala 1:1">Guardião Família: janela segura de passeio e ar limpo</h3>
+                <p class="card-desc" data-home="ed.card1.desc" data-b2c="Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos." data-tech="Cruzamento determinístico de Square of Nine, ângulos secretos 63,75° e trânsitos rápidos/lentos auditados via ledger analítico.">Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos.</p>
                 <div class="card-extra" id="extra-1" hidden>Conector: env-connector · Superfície sugerida: Ivory / Aqua · Latência alvo: &lt;180ms</div>
               </article>
 
@@ -4559,7 +4559,7 @@
                   </svg>
                 </div>
                 <div class="card-meta-bar">
-                  <span class="eyebrow" data-b2c="Imóveis &amp; Rua · #11" data-tech="Ambiente &amp; Ciclos · #27">Imóveis &amp; Rua · #11</span>
+                  <span class="eyebrow" data-home="ed.card2.eyebrow" data-b2c="Imóveis &amp; Rua · #11" data-tech="Ambiente &amp; Ciclos · #27">Imóveis &amp; Rua · #11</span>
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">18 NOV 2026</span>
                     <button class="tiny-more-btn" aria-expanded="false" aria-label="Expandir metadados" data-toggle-extra="extra-2">
@@ -4567,8 +4567,8 @@
                     </button>
                   </div>
                 </div>
-                <h3 class="card-title" data-b2c="Raio-X Real do Endereço antes de assinar o contrato" data-tech="AgroCiclos AI: anomalia térmica e embeddings AlphaEarth 10m">Raio-X Real do Endereço antes de assinar o contrato</h3>
-                <p class="card-desc" data-b2c="Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial." data-tech="Séries de satélite AlphaEarth cruzadas com janelas sazonais de precipitação e volatilidade histórica de commodities.">Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial.</p>
+                <h3 class="card-title" data-home="ed.card2.title" data-b2c="Raio-X Real do Endereço antes de assinar o contrato" data-tech="AgroCiclos AI: anomalia térmica e embeddings AlphaEarth 10m">Raio-X Real do Endereço antes de assinar o contrato</h3>
+                <p class="card-desc" data-home="ed.card2.desc" data-b2c="Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial." data-tech="Séries de satélite AlphaEarth cruzadas com janelas sazonais de precipitação e volatilidade histórica de commodities.">Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial.</p>
                 <div class="card-extra" id="extra-2" hidden>Conector: env-connector + visão · Superfície sugerida: Paper White · Exportação PDF</div>
               </article>
             </div>
@@ -4586,11 +4586,11 @@
                   </svg>
                 </div>
                 <div class="card-meta-bar">
-                  <span class="eyebrow" data-b2c="Energia &amp; Casa · #36" data-tech="Observatório · #30">Energia &amp; Casa · #36</span>
+                  <span class="eyebrow" data-home="ed.card3.eyebrow" data-b2c="Energia &amp; Casa · #36" data-tech="Observatório · #30">Energia &amp; Casa · #36</span>
                   <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">15 NOV 2026</span>
                 </div>
-                <h3 class="card-title" data-b2c="Simulador Solar 3D com incidência real por telhado" data-tech="Pulse &amp; DNA: sentimento Pulse Social vs. ciclos de atenção">Simulador Solar 3D com incidência real por telhado</h3>
-                <p class="card-desc" data-b2c="Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras." data-tech="Mapeia divergências entre pico de euforia social (AltRank / Galaxy Score) e janelas harmônicas de exaustão.">Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras.</p>
+                <h3 class="card-title" data-home="ed.card3.title" data-b2c="Simulador Solar 3D com incidência real por telhado" data-tech="Pulse &amp; DNA: sentimento Pulse Social vs. ciclos de atenção">Simulador Solar 3D com incidência real por telhado</h3>
+                <p class="card-desc" data-home="ed.card3.desc" data-b2c="Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras." data-tech="Mapeia divergências entre pico de euforia social (AltRank / Galaxy Score) e janelas harmônicas de exaustão.">Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras.</p>
               </article>
 
               <article class="editorial-card col-5">
@@ -4604,11 +4604,11 @@
                   </svg>
                 </div>
                 <div class="card-meta-bar">
-                  <span class="eyebrow" data-b2c="Cultura &amp; Voz · #21" data-tech="Risco Global · #29">Cultura &amp; Voz · #21</span>
+                  <span class="eyebrow" data-home="ed.card4.eyebrow" data-b2c="Cultura &amp; Voz · #21" data-tech="Risco Global · #29">Cultura &amp; Voz · #21</span>
                   <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">12 NOV 2026</span>
                 </div>
-                <h3 class="card-title" data-b2c="Jornal de 3 Minutos narrado para o seu bairro" data-tech="Chronos Earth Watch: atividade geomagnética NOAA &amp; USGS">Jornal de 3 Minutos narrado para o seu bairro</h3>
-                <p class="card-desc" data-b2c="Síntese em áudio TTS + cartões limpos com fontes verificáveis sobre clima, trânsito e assuntos do dia." data-tech="Monitoramento contínuo de tempestades solares Kp, sismicidade global e impacto em infraestrutura crítica.">Síntese em áudio TTS + cartões limpos com fontes verificáveis sobre clima, trânsito e assuntos do dia.</p>
+                <h3 class="card-title" data-home="ed.card4.title" data-b2c="Jornal de 3 Minutos narrado para o seu bairro" data-tech="Chronos Earth Watch: atividade geomagnética NOAA &amp; USGS">Jornal de 3 Minutos narrado para o seu bairro</h3>
+                <p class="card-desc" data-home="ed.card4.desc" data-b2c="Síntese em áudio TTS + cartões limpos com fontes verificáveis sobre clima, trânsito e assuntos do dia." data-tech="Monitoramento contínuo de tempestades solares Kp, sismicidade global e impacto em infraestrutura crítica.">Síntese em áudio TTS + cartões limpos com fontes verificáveis sobre clima, trânsito e assuntos do dia.</p>
               </article>
             </div>
           </div>
@@ -4618,7 +4618,7 @@
         <div class="view-panel" id="view-reader" hidden>
           <div class="reader-grid">
             <aside class="reader-toc" aria-label="Sumário do dossiê">
-              <div class="eyebrow" style="padding:0 10px 8px;">Conteúdo</div>
+              <div class="eyebrow" data-home="ed.toc" style="padding:0 10px 8px;">Conteúdo</div>
               <button class="toc-item" aria-current="true" data-toc-jump="rd-overview">Visão geral</button>
               <button class="toc-item" aria-current="false" data-toc-jump="rd-method">Verificação &amp; Fontes</button>
               <button class="toc-item" aria-current="false" data-toc-jump="rd-sources">Referências (Tier A–C)</button>
@@ -4638,20 +4638,20 @@
                 </div>
 
                 <div class="pull-quote" id="rd-method">
-                  <blockquote>
+                  <blockquote data-home="ed.quote">
                     “Quando um sistema mostra exatamente de onde veio cada dado, a confiança nasce da arquitetura — não do marketing.”
                   </blockquote>
-                  <div class="mono" style="font-size:11.5px; color:var(--ds-fg-muted);">
+                  <div class="mono" data-home="ed.quote.cite" style="font-size:11.5px; color:var(--ds-fg-muted);">
                     — Princípio Editorial Meridian · Linhagem Arquival &amp; Meridian Editorial
                   </div>
                 </div>
 
                 <div class="reader-section" id="rd-sources">
-                  <div class="eyebrow" style="margin-bottom:10px;">Fontes Verificadas (clique nas frases acima para destacar)</div>
+                  <div class="eyebrow" data-home="ed.sources" style="margin-bottom:10px;">Fontes Verificadas (clique nas frases acima para destacar)</div>
                   <div class="source-row" id="src-1">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">01</span>
                     <div>
-                      <div style="font-size:13.5px; font-weight:500;">Telemetria ambiental — ar e pólen</div>
+                      <div style="font-size:13.5px; font-weight:500;" data-home="ed.src1">Telemetria ambiental — ar e pólen</div>
                       <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">env-connector · Sensor físico em tempo real</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
@@ -4659,7 +4659,7 @@
                   <div class="source-row" id="src-2">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
                     <div>
-                      <div style="font-size:13.5px; font-weight:500;">Imagens satélite — embeddings 10m</div>
+                      <div style="font-size:13.5px; font-weight:500;" data-home="ed.src2">Imagens satélite — embeddings 10m</div>
                       <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);" data-i18n="src.orbital">orbital-archive · Série histórica orbital</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
@@ -4667,7 +4667,7 @@
                   <div class="source-row" id="src-3">
                     <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
                     <div>
-                      <div style="font-size:13.5px; font-weight:500;">Ledger de Backtest — Confluência &amp; Validação Estatística</div>
+                      <div style="font-size:13.5px; font-weight:500;" data-home="ed.src3">Ledger de Backtest — Confluência &amp; Validação Estatística</div>
                       <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">ephemeris-connector · Motor determinístico TypeScript</div>
                     </div>
                     <span class="tier-badge">Tier B</span>
@@ -4688,21 +4688,21 @@
                 </svg>
               </div>
               <div class="mono" style="font-size:10px; color:var(--ds-fg-muted); margin-bottom:16px;">PLATE I · MULTIPLY SOBRE PAPEL</div>
-              <div class="serif" style="font-size:21px; margin-bottom:8px;">Em resumo</div>
+              <div class="serif" data-home="ed.glance" style="font-size:21px; margin-bottom:8px;">Em resumo</div>
               <button class="fact-btn" data-cite="1">
-                <span class="eyebrow" style="font-size:9.5px;">Qualidade do Ar</span>
-                <span style="font-size:13px;">AQI 28 (Bom) · Janela ideal de atividades externas até 16h30.</span>
-                <span class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 01 ↗</span>
+                <span class="eyebrow" data-home="ed.fact1.t" style="font-size:9.5px;">Qualidade do Ar</span>
+                <span data-home="ed.fact1.b" style="font-size:13px;">AQI 28 (Bom) · Janela ideal de atividades externas até 16h30.</span>
+                <span class="mono" data-home="ed.fact1.l" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 01 ↗</span>
               </button>
               <button class="fact-btn" data-cite="2">
-                <span class="eyebrow" style="font-size:9.5px;">Microclima 10m</span>
-                <span style="font-size:13px;">Cobertura arbórea de 41% reduz pico térmico em 2,4 °C.</span>
-                <span class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 02 ↗</span>
+                <span class="eyebrow" data-home="ed.fact2.t" style="font-size:9.5px;">Microclima 10m</span>
+                <span data-home="ed.fact2.b" style="font-size:13px;">Cobertura arbórea de 41% reduz pico térmico em 2,4 °C.</span>
+                <span class="mono" data-home="ed.fact2.l" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 02 ↗</span>
               </button>
               <button class="fact-btn" data-cite="3">
-                <span class="eyebrow" style="font-size:9.5px;">Auditoria</span>
-                <span style="font-size:13px;">3 conectores de dados sincronizados · 0 cálculos alucinados.</span>
-                <span class="mono" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 03 ↗</span>
+                <span class="eyebrow" data-home="ed.fact3.t" style="font-size:9.5px;">Auditoria</span>
+                <span data-home="ed.fact3.b" style="font-size:13px;">3 conectores de dados sincronizados · 0 cálculos alucinados.</span>
+                <span class="mono" data-home="ed.fact3.l" style="font-size:10px; color:var(--ds-fg-muted);">Ver fonte 03 ↗</span>
               </button>
             </aside>
           </div>
@@ -4715,19 +4715,19 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">05 · Cronologia Lifeline &amp; Estante Tátil 3D (gestos táteis Meridian)</div>
-            <h2 class="section-title">Arrasto 1:1 com Momentum &amp; Volumes Arquivísticos</h2>
+            <div class="eyebrow" data-home="ll.eyebrow">05 · Cronologia Lifeline &amp; Estante Tátil 3D (gestos táteis Meridian)</div>
+            <h2 class="section-title" data-home="ll.title">Arrasto 1:1 com Momentum &amp; Volumes Arquivísticos</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-home="ll.desc">
             Arraste horizontalmente a linha do tempo com o mouse/dedo (rastreamento 1:1 + projeção exponencial de momentum no release) e passe ou toque nos dossiês 3D abaixo.
           </p>
         </div>
 
         <div class="lifeline-shell">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-            <span class="serif" style="font-size:24px;" id="lifeline-heading">Lifeline · Janelas do Ciclo</span>
+            <span class="serif" data-home="ll.heading" style="font-size:24px;" id="lifeline-heading">Lifeline · Janelas do Ciclo</span>
             <div style="display:flex; align-items:center; gap:8px;">
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);" id="lifeline-range">ARRASTE ↔ · 1:1 DIRECT TRACK</span>
+              <span class="mono" data-home="ll.range" style="font-size:11px; color:var(--ds-fg-muted);" id="lifeline-range">ARRASTE ↔ · 1:1 DIRECT TRACK</span>
               <button class="btn btn-circle" id="btn-ll-prev" aria-label="Rolar para esquerda">←</button>
               <button class="btn btn-circle" id="btn-ll-next" aria-label="Rolar para direita">→</button>
             </div>
@@ -4742,7 +4742,7 @@
 
           <div id="lifeline-detail" class="panel-card" style="margin-top:10px; padding:14px 16px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
             <div>
-              <div class="eyebrow" id="ll-detail-tag">MARCO SELECIONADO</div>
+              <div class="eyebrow" id="ll-detail-tag" data-home="ll.detail.tag">MARCO SELECIONADO</div>
               <div style="font-size:14px; margin-top:3px;" id="ll-detail-text">Clique em qualquer ponto do eixo tracejado para inspecionar os dados verificados.</div>
             </div>
             <span class="tier-badge" id="ll-detail-badge">Tier A</span>
@@ -4754,7 +4754,7 @@
           <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px;">
             <div>
               <div class="eyebrow">Biblioteca de Dossiês PDF · CSS preserve-3d &amp; Páginas Caneladas</div>
-              <h3 class="serif" style="font-size:26px; margin:4px 0 0;">Estante Tátil de Relatórios</h3>
+              <h3 class="serif" data-home="ll.shelf" style="font-size:26px; margin:4px 0 0;">Estante Tátil de Relatórios</h3>
             </div>
             <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">Passe o mouse ou clique para abrir o volume (800ms volume curve)</span>
           </div>
@@ -4849,10 +4849,10 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">06 · Gramática Plotter SVG (gramática plotter) &amp; Globo 81k</div>
-            <h2 class="section-title">Blueprints Vetoriais Editáveis &amp; Escala 1:1 Travada</h2>
+            <div class="eyebrow" data-home="svg.eyebrow">06 · Gramática Plotter SVG (gramática plotter) &amp; Globo 81k</div>
+            <h2 class="section-title" data-home="svg.title">Blueprints Vetoriais Editáveis &amp; Escala 1:1 Travada</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-home-html="svg.desc">
             Uma tinta (<code>currentColor</code>), uma espessura (<code>1u</code>), formas transparentes e hierarquia por opacidade + tracejado semântico (<code>data-plotter-role</code>) inspirados no <strong>Plotter</strong> e no globo de <em>globo pontilhado Meridian</em>.
           </p>
         </div>
@@ -4861,13 +4861,13 @@
         <div class="svg-instrument-card" style="margin-bottom:24px;">
           <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:12px;">
             <div>
-              <div class="eyebrow">Globo Ortográfico 81k · plotter-svg.ts (Canvas Canônico 560×440)</div>
-              <h3 class="serif" style="font-size:25px; margin:3px 0 0;">Globo Editorial Pontilhado em Gramática Plotter</h3>
+              <div class="eyebrow" data-home="svg.globe.eye">Globo Ortográfico 81k · plotter-svg.ts (Canvas Canônico 560×440)</div>
+              <h3 class="serif" data-home="svg.globe.h3" style="font-size:25px; margin:3px 0 0;">Globo Editorial Pontilhado em Gramática Plotter</h3>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-              <button class="btn btn-sm btn-secondary" id="btn-globe-spin" aria-pressed="true">Girar: ON</button>
-              <button class="btn btn-sm btn-tertiary" id="btn-globe-reset">Resetar Ângulo</button>
-              <button class="btn btn-sm btn-primary" id="btn-globe-export">Exportar .SVG</button>
+              <button class="btn btn-sm btn-secondary" id="btn-globe-spin" aria-pressed="true" data-home="svg.spin">Girar: ON</button>
+              <button class="btn btn-sm btn-tertiary" id="btn-globe-reset" data-home="svg.reset">Resetar Ângulo</button>
+              <button class="btn btn-sm btn-primary" id="btn-globe-export" data-home="svg.export">Exportar .SVG</button>
             </div>
           </div>
 
@@ -4875,16 +4875,16 @@
 
           <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
             <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px;">
-              <span class="eyebrow">Isolamento de Papel (Plotter):</span>
+              <span class="eyebrow" data-home="svg.iso">Isolamento de Papel (Plotter):</span>
               <button class="btn btn-sm btn-pill btn-primary" data-plotter-iso="all">Todos</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="primary">Primary (1.0)</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="secondary">81k Dots (0.32)</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="centerline">Centerline (8 3 1 3)</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="transfer">Transfer (4 6)</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="guide">Guides (0.14)</button>
-              <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="dimension">Cota &amp; Leader</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="dimension" data-home="svg.dimension">Cota &amp; Leader</button>
             </div>
-            <span class="mono tabular" id="globe-telemetry" style="font-size:11px; color:var(--ds-fg-muted);">
+            <span class="mono tabular" id="globe-telemetry" data-home="svg.globe.drag" style="font-size:11px; color:var(--ds-fg-muted);">
               LON -46° · TILT 15° · Arraste 1:1 no globo para orbitar
             </span>
           </div>
@@ -4895,8 +4895,8 @@
           <div class="svg-instrument-card">
             <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Modo Técnico · Camadas 1–3</div>
-                <h3 class="serif" style="font-size:23px; margin:3px 0 0;">Mandala Harmônica &amp; Ângulos Gann–Jenkins</h3>
+                <div class="eyebrow" data-home="svg.gann.eye">Modo Técnico · Camadas 1–3</div>
+                <h3 class="serif" data-home="svg.gann.h3" style="font-size:23px; margin:3px 0 0;">Mandala Harmônica &amp; Ângulos Gann–Jenkins</h3>
               </div>
               <span class="tier-badge">1:1 LOCK</span>
             </div>
@@ -4907,7 +4907,7 @@
 
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <div style="display:flex; gap:6px; align-items:center;">
-                <span class="eyebrow">Divisão 360°/n:</span>
+                <span class="eyebrow" data-home="svg.division">Divisão 360°/n:</span>
                 <button class="btn btn-sm btn-pill btn-tertiary" data-harmonic="4">n=4</button>
                 <button class="btn btn-sm btn-pill btn-tertiary" data-harmonic="6">n=6</button>
                 <button class="btn btn-sm btn-pill btn-primary" data-harmonic="8">n=8</button>
@@ -4924,10 +4924,10 @@
           <div class="svg-instrument-card">
             <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Modo Invisível B2C · Ambiente</div>
-                <h3 class="serif" style="font-size:23px; margin:3px 0 0;">Bússola Ambiental &amp; Conforto 24h</h3>
+                <div class="eyebrow" data-home="svg.env.eye">Modo Invisível B2C · Ambiente</div>
+                <h3 class="serif" data-home="svg.env.h3" style="font-size:23px; margin:3px 0 0;">Bússola Ambiental &amp; Conforto 24h</h3>
               </div>
-              <span class="tier-badge" id="env-status-badge">Favorável</span>
+              <span class="tier-badge" id="env-status-badge" data-home="svg.env.favorable">Favorável</span>
             </div>
 
             <div class="svg-frame">
@@ -4936,11 +4936,11 @@
 
             <div style="display:flex; flex-direction:column; gap:8px;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <label for="env-hour-slider" class="eyebrow">Explorar Horário do Dia</label>
+                <label for="env-hour-slider" class="eyebrow" data-home="svg.env.hour">Explorar Horário do Dia</label>
                 <span class="mono tabular" id="env-hour-label" style="font-size:12.5px; font-weight:600;">10:00 · AQI 26 · 23 °C</span>
               </div>
               <input id="env-hour-slider" class="range-control" type="range" min="0" max="23" value="10" />
-              <div id="env-guidance" style="font-size:13px; color:var(--ds-fg-secondary);">
+              <div id="env-guidance" data-home="svg.env.guide" style="font-size:13px; color:var(--ds-fg-secondary);">
                 Ar limpo e radiação amena — ótima janela para caminhada, parque ou exercícios ao ar livre.
               </div>
             </div>
@@ -4954,10 +4954,10 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">07 · Atelier Generativo · atelier-engine.ts v1.3 · Zero p5.js</div>
-            <h2 class="section-title">Aquarelas, Pincéis, Lápis &amp; Giz de Cera em TypeScript</h2>
+            <div class="eyebrow" data-home="atelier.eyebrow">07 · Atelier Generativo · atelier-engine.ts v1.3 · Zero p5.js</div>
+            <h2 class="section-title" data-home="atelier.title">Aquarelas, Pincéis, Lápis &amp; Giz de Cera em TypeScript</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-home-html="atelier.desc">
             Motor leve em TypeScript: aquarela de poucas camadas, grid erodido, fan de curvas e traços chalk — inspirado em <em>cenários aquarela Meridian</em>, sem p5.js. Preset animado ou <strong>pintura livre</strong>.
           </p>
         </div>
@@ -4967,23 +4967,23 @@
           <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
             <div class="cliptabs" data-cliptabs="atelier-preset">
               <div class="cliptabs-track">
-                <button class="cliptabs-btn" data-atelier-preset="econ" data-active="true">Cenários Aquarela</button>
-                <button class="cliptabs-btn" data-atelier-preset="botanical">Botânica &amp; Lápis</button>
-                <button class="cliptabs-btn" data-atelier-preset="celestial">Caderno Gann 4B</button>
-                <button class="cliptabs-btn" data-atelier-preset="crayon">Giz de Cera</button>
+                <button class="cliptabs-btn" data-atelier-preset="econ" data-active="true" data-home="atelier.preset.econ">Cenários Aquarela</button>
+                <button class="cliptabs-btn" data-atelier-preset="botanical" data-home="atelier.preset.botanical">Botânica &amp; Lápis</button>
+                <button class="cliptabs-btn" data-atelier-preset="celestial" data-home="atelier.preset.celestial">Caderno Gann 4B</button>
+                <button class="cliptabs-btn" data-atelier-preset="crayon" data-home="atelier.preset.crayon">Giz de Cera</button>
                 <div class="cliptabs-overlay" aria-hidden="true">
-                  <span>Cenários Aquarela</span>
-                  <span>Botânica &amp; Lápis</span>
-                  <span>Caderno Gann 4B</span>
-                  <span>Giz de Cera</span>
+                  <span data-home="atelier.preset.econ">Cenários Aquarela</span>
+                  <span data-home="atelier.preset.botanical">Botânica &amp; Lápis</span>
+                  <span data-home="atelier.preset.celestial">Caderno Gann 4B</span>
+                  <span data-home="atelier.preset.crayon">Giz de Cera</span>
                 </div>
               </div>
             </div>
 
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-              <button class="btn btn-sm btn-secondary" id="btn-atelier-replay">↻ Reproduzir</button>
-              <button class="btn btn-sm btn-tertiary" id="btn-atelier-seed">Nova Semente</button>
-              <button class="btn btn-sm btn-ghost" id="btn-atelier-clear">Limpar Papel</button>
+              <button class="btn btn-sm btn-secondary" id="btn-atelier-replay" data-home="atelier.replay">↻ Reproduzir</button>
+              <button class="btn btn-sm btn-tertiary" id="btn-atelier-seed" data-home="atelier.seed">Nova Semente</button>
+              <button class="btn btn-sm btn-ghost" id="btn-atelier-clear" data-home="atelier.clear">Limpar Papel</button>
             </div>
           </div>
 
@@ -4998,15 +4998,15 @@
           <!-- Interactive Freehand Analog Brushes + Pigment Picker -->
           <div class="atelier-controls-bar">
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-              <span class="eyebrow">Pincel Livre:</span>
-              <button class="btn btn-sm btn-pill btn-primary" data-brush="watercolor">Aquarela</button>
-              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="pencil">Lápis 4B</button>
-              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="crayon">Giz de Cera</button>
-              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="ink">Pincel Tinta</button>
+              <span class="eyebrow" data-home="atelier.brush.label">Pincel Livre:</span>
+              <button class="btn btn-sm btn-pill btn-primary" data-brush="watercolor" data-home="atelier.brush.watercolor">Aquarela</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="pencil" data-home="atelier.brush.pencil">Lápis 4B</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="crayon" data-home="atelier.brush.crayon">Giz de Cera</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="ink" data-home="atelier.brush.ink">Pincel Tinta</button>
             </div>
 
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-              <span class="eyebrow">Pigmento:</span>
+              <span class="eyebrow" data-home="atelier.pigment">Pigmento:</span>
               <div style="display:inline-flex; align-items:center; gap:6px;" id="atelier-pigments">
                 <button class="pigment-swatch" data-pigment="coral" aria-pressed="true" style="background:var(--ds-organic-coral)" data-tip="Pigmento Coral"></button>
                 <button class="pigment-swatch" data-pigment="sky" aria-pressed="false" style="background:var(--ds-organic-sky)" data-tip="Pigmento Sky"></button>
@@ -5034,25 +5034,25 @@
 
       <nav class="footer-nav" aria-label="Índice do sistema">
         <details class="footer-acc">
-          <summary>Sistema <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary><span data-home="footer.acc.system">Sistema</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
             <button type="button" data-nav-target="historia" data-i18n="hist.title">O Farol e o Meridiano</button>
-            <button type="button" data-nav-target="cores">Superfícies Single-Ink</button>
-            <button type="button" data-nav-target="tipografia">Tipografia 3 vozes</button>
-            <button type="button" data-nav-target="interacoes">Motion &amp; Frequency Gate</button>
+            <button type="button" data-nav-target="cores" data-home="footer.sys.surfaces">Superfícies Single-Ink</button>
+            <button type="button" data-nav-target="tipografia" data-home="footer.sys.type">Tipografia 3 vozes</button>
+            <button type="button" data-nav-target="interacoes" data-home="footer.sys.motion">Motion &amp; Frequency Gate</button>
           </div>
         </details>
         <details class="footer-acc">
-          <summary>Editorial <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary><span data-home="footer.acc.editorial">Editorial</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
-            <button type="button" data-nav-target="editorial">Leitor 3 colunas</button>
-            <button type="button" data-nav-target="cronologia">Lifeline &amp; estante</button>
-            <button type="button" data-nav-target="svg-viz">Plotter SVG 1:1</button>
-            <button type="button" data-nav-target="atelier">Atelier generativo</button>
+            <button type="button" data-nav-target="editorial" data-home="footer.ed.reader">Leitor 3 colunas</button>
+            <button type="button" data-nav-target="cronologia" data-home="footer.ed.lifeline">Lifeline &amp; estante</button>
+            <button type="button" data-nav-target="svg-viz" data-home="footer.ed.svg">Plotter SVG 1:1</button>
+            <button type="button" data-nav-target="atelier" data-home="footer.ed.atelier">Atelier generativo</button>
           </div>
         </details>
         <details class="footer-acc">
-          <summary>Artefatos <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary><span data-home="footer.acc.artifacts">Artefatos</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
             <span>DESIGN_SYSTEM.md</span>
             <span>tokens.css · components.css</span>
@@ -5061,20 +5061,20 @@
           </div>
         </details>
         <details class="footer-acc">
-          <summary>Atalhos <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary><span data-home="footer.acc.shortcuts">Atalhos</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
-            <span>⌘K / / — paleta instantânea</span>
-            <span>1–8 — trocar superfície</span>
-            <span>M — modo B2C / técnico</span>
+            <span data-home="footer.hotkey.1">⌘K / / — paleta instantânea</span>
+            <span data-home="footer.hotkey.2">1–8 — trocar superfície</span>
+            <span data-home="footer.hotkey.3">M — modo B2C / técnico</span>
           </div>
         </details>
         <details class="footer-acc">
-          <summary>Compromissos <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary><span data-home="footer.acc.commitments">Compromissos</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="footer-acc-panel">
-            <span>PaperGrain canvas — sem data-URL</span>
-            <span>Scrollbar hairline · overlay sem blur</span>
-            <span>Zero transition:all · zero ease-in</span>
-            <span>100% TypeScript estrito</span>
+            <span data-home="footer.commit.1">PaperGrain canvas — sem data-URL</span>
+            <span data-home="footer.commit.2">Scrollbar hairline · overlay sem blur</span>
+            <span data-home="footer.commit.3">Zero transition:all · zero ease-in</span>
+            <span data-home="footer.commit.4">100% TypeScript estrito</span>
           </div>
         </details>
       </nav>
@@ -5118,29 +5118,29 @@
       <div class="eyebrow" data-home="rail.dest">Destinos</div>
       <nav class="nav-rail-list" aria-label="Páginas">
         <a href="./components.html" data-primary>Components Lab ↗</a>
-        <a href="./preview.html">Prévia de App ↗</a>
+        <a href="./preview.html" data-home="rail.preview">Prévia de App ↗</a>
         <a href="./manifesto.html" data-i18n="footer.manifesto">Manifesto ↗</a>
         <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
         <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
-        <a href="./index.html#topo">Design System · topo</a>
+        <a href="./index.html#topo" data-home="rail.home">Design System · topo</a>
       </nav>
     </div>
 
     <div class="nav-rail-group">
       <div class="eyebrow" data-home="rail.sections">Seções nesta página</div>
-      <nav class="nav-rail-list" aria-label="Seções do Design System">
-        <button type="button" data-nav-target="historia">01 · História</button>
-        <button type="button" data-nav-target="cores">02 · Superfícies</button>
-        <button type="button" data-nav-target="tipografia">03 · Tipografia</button>
-        <button type="button" data-nav-target="interacoes">04 · Motion</button>
-        <button type="button" data-nav-target="editorial">05 · Editorial</button>
-        <button type="button" data-nav-target="cronologia">06 · Lifeline</button>
-        <button type="button" data-nav-target="svg-viz">07 · SVG 1:1</button>
-        <button type="button" data-nav-target="atelier">08 · Atelier TS</button>
+      <nav class="nav-rail-list" aria-label="Seções do Design System" data-i18n-attr="aria-label:nav.sections">
+        <button type="button" data-nav-target="historia" data-home="rail.sec.historia">01 · História</button>
+        <button type="button" data-nav-target="cores" data-home="rail.sec.cores">02 · Superfícies</button>
+        <button type="button" data-nav-target="tipografia" data-home="rail.sec.tipografia">03 · Tipografia</button>
+        <button type="button" data-nav-target="interacoes" data-home="rail.sec.interacoes">04 · Motion</button>
+        <button type="button" data-nav-target="editorial" data-home="rail.sec.editorial">05 · Editorial</button>
+        <button type="button" data-nav-target="cronologia" data-home="rail.sec.cronologia">06 · Lifeline</button>
+        <button type="button" data-nav-target="svg-viz" data-home="rail.sec.svg">07 · SVG 1:1</button>
+        <button type="button" data-nav-target="atelier" data-home="rail.sec.atelier">08 · Atelier TS</button>
       </nav>
     </div>
 
-    <p class="nav-rail-meta">
+    <p class="nav-rail-meta" data-home="rail.meta">
       Menu global · Components, Preview, Gann e seções. Esc ou backdrop fecha.
     </p>
   </aside>
@@ -5708,8 +5708,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       function renderLifeline() {
         const items = LIFELINE_DATA[state.mode];
-        document.getElementById('lifeline-heading').textContent =
-          state.mode === 'invisible' ? 'Lifeline · Ritmo Ambiental 24h' : 'Lifeline · Ciclos & Confluência 1986–2027';
+        const llHeading = document.getElementById('lifeline-heading');
+        if (llHeading && !llHeading.hasAttribute('data-home')) {
+          llHeading.textContent =
+            state.mode === 'invisible' ? 'Lifeline · Ritmo Ambiental 24h' : 'Lifeline · Ciclos & Confluência 1986–2027';
+        }
         const track = document.getElementById('lifeline-track');
         track.innerHTML = '<div class="lifeline-rail"></div>' + items.map((item, i) => `
           <button class="lifeline-node" data-ll-idx="${i}" aria-pressed="${i === 1 ? 'true' : 'false'}">
@@ -5726,8 +5729,14 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         const items = LIFELINE_DATA[state.mode];
         const item = items[idx] || items[0];
         document.querySelectorAll('.lifeline-node').forEach((n, i) => n.setAttribute('aria-pressed', i === idx ? 'true' : 'false'));
-        document.getElementById('ll-detail-tag').textContent = `${item.y} · ${item.title}`;
-        document.getElementById('ll-detail-text').textContent = item.desc;
+        const tag = document.getElementById('ll-detail-tag');
+        const detail = document.getElementById('ll-detail-text');
+        if (tag && tag.hasAttribute('data-home')) {
+          detail.textContent = `${item.y} · ${item.title} — ${item.desc}`;
+        } else {
+          tag.textContent = `${item.y} · ${item.title}`;
+          detail.textContent = item.desc;
+        }
         document.getElementById('ll-detail-badge').textContent = item.tier;
       }
 
@@ -6519,7 +6528,10 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       document.getElementById('btn-globe-spin').addEventListener('click', (e) => {
         globeState.spinning = !globeState.spinning;
         e.currentTarget.setAttribute('aria-pressed', String(globeState.spinning));
-        e.currentTarget.textContent = `Girar: ${globeState.spinning ? 'ON' : 'OFF'}`;
+        const prev = e.currentTarget.textContent || 'Girar: ON';
+        const spaced = / :\s*(ON|OFF)\s*$/i.test(prev);
+        const prefix = prev.replace(/\s*(ON|OFF)\s*$/i, '').replace(/:\s*$/, '').trim();
+        e.currentTarget.textContent = `${prefix}${spaced ? ' : ' : ': '}${globeState.spinning ? 'ON' : 'OFF'}`;
       });
       document.getElementById('btn-globe-reset').addEventListener('click', () => {
         globeState.rotLon = -46; globeState.tiltLat = 15; renderPlottedGlobe();
