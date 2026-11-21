@@ -4309,6 +4309,196 @@
       .ds-switch:active .ds-switch-thumb,
       .ds-select-trigger:active { transform: none !important; width: auto; }
     }
+    /* ================= 09. HABILIDADES, TASTE & LINHAGEM ================= */
+    .skills-cli-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 16px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      border: 1px solid var(--ds-border);
+      background: var(--ds-surface-1);
+    }
+    .skills-cli-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+    }
+    .skills-cli-code {
+      font-family: var(--ds-font-mono);
+      font-size: 12.5px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--ds-rule);
+      background: var(--ds-surface-2);
+      color: var(--ds-fg);
+      user-select: all;
+    }
+    .skills-cli-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+    .skill-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 18px;
+      border-radius: 10px;
+      border: 1px solid var(--ds-rule);
+      background: var(--ds-surface-1);
+      transition:
+        border-color var(--ds-duration-fast) var(--ds-ease-out),
+        background-color var(--ds-duration-fast) var(--ds-ease-out);
+    }
+    .skill-card[data-featured="true"] {
+      border-color: var(--ds-border-strong);
+      background: var(--ds-surface-2);
+    }
+    .skill-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .skill-card-name {
+      font-family: var(--ds-font-mono);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--ds-fg);
+    }
+    .skill-card-tag {
+      font-family: var(--ds-font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      border: 1px solid var(--ds-rule);
+      color: var(--ds-fg-muted);
+    }
+    .skill-card[data-featured="true"] .skill-card-tag {
+      border-color: var(--ds-fg);
+      color: var(--ds-fg);
+    }
+    .skill-card-desc {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--ds-fg-secondary);
+      flex: 1;
+    }
+    .skill-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--ds-rule);
+      font-family: var(--ds-font-mono);
+      font-size: 11px;
+    }
+    .skill-card-link {
+      color: var(--ds-fg-muted);
+      text-decoration: none;
+    }
+    .skill-copy-btn {
+      padding: 5px 10px;
+      min-height: 28px;
+      font-family: var(--ds-font-mono);
+      font-size: 11px;
+      border-radius: 9999px;
+      border: 1px solid var(--ds-border);
+      background: transparent;
+      color: var(--ds-fg);
+      cursor: pointer;
+      transition:
+        background-color var(--ds-duration-fast) var(--ds-ease-out),
+        transform var(--ds-duration-press) var(--ds-ease-out);
+    }
+    .skill-copy-btn:active {
+      transform: scale(0.97);
+    }
+    .skill-copy-btn:focus-visible,
+    .skill-card-link:focus-visible,
+    .credit-card:focus-visible {
+      outline: 2px solid var(--ds-fg);
+      outline-offset: 2px;
+    }
+    .credits-subhead {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-top: 22px;
+      border-top: 1px solid var(--ds-rule);
+    }
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .credit-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 15px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--ds-rule);
+      background: var(--ds-surface-1);
+      color: var(--ds-fg);
+      text-decoration: none;
+      transition:
+        border-color var(--ds-duration-fast) var(--ds-ease-out),
+        background-color var(--ds-duration-fast) var(--ds-ease-out),
+        transform var(--ds-duration-press) var(--ds-ease-out);
+    }
+    .credit-card:active {
+      transform: scale(0.97);
+    }
+    .credit-card-title {
+      font-family: var(--ds-font-display);
+      font-weight: 400;
+      font-size: 19px;
+      line-height: 1.15;
+    }
+    .credit-card-role {
+      font-family: var(--ds-font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ds-fg-muted);
+    }
+    .credit-card-note {
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--ds-fg-secondary);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .skill-card:hover { border-color: var(--ds-border-strong); }
+      .skill-card-link:hover { color: var(--ds-fg); text-decoration: underline; text-underline-offset: 3px; }
+      .skill-copy-btn:hover { background: var(--ds-bg-tint-muted); }
+      .credit-card:hover { border-color: var(--ds-border-strong); background: var(--ds-surface-2); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .skill-card, .skill-copy-btn, .skill-copy-btn:active, .credit-card, .credit-card:active {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4325,7 +4515,7 @@
             <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
           </svg>
           <span class="brand-wordmark">Meridian</span>
-          <span class="brand-ver">v1.4</span>
+          <span class="brand-ver">v1.5</span>
         </a>
 
         <nav class="site-places" aria-label="Páginas">
@@ -4372,6 +4562,13 @@
           </div>
 
           <div data-lang-slot aria-label="Idioma"></div>
+
+          <a class="site-gh-star" href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer" aria-label="Dar estrela ao Meridian no GitHub" data-i18n-attr="aria-label:nav.githubAria,title:nav.githubAria">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            <svg class="site-gh-star-ico" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.6 9.95 5.55l4.35.63-3.15 3.07.74 4.33L8 11.53 4.11 13.58l.74-4.33L1.7 6.18l4.35-.63L8 1.6Z"/></svg>
+            <span class="site-gh-star-label" data-i18n="nav.star">Estrelar</span>
+            <span class="site-gh-star-count" data-gh-stars hidden></span>
+          </a>
 
           <div class="menu-anchor align-end popover-anchor" id="shortcuts-anchor">
             <button type="button" class="topbar-link" data-menu-toggle aria-expanded="false" aria-haspopup="menu" id="btn-shortcuts">
@@ -4460,6 +4657,7 @@
             <button class="header-menu-item" type="button" data-nav-target="cronologia" data-i18n="nav.lifeline">Lifeline</button>
             <button class="header-menu-item" type="button" data-nav-target="svg-viz" data-i18n="nav.svg">SVG 1:1</button>
             <button class="header-menu-item" type="button" data-nav-target="atelier" data-i18n="nav.atelier">Atelier TS</button>
+            <button class="header-menu-item" type="button" data-nav-target="habilidades" data-i18n="nav.skills">Habilidades</button>
           </div>
         </div>
       </nav>
@@ -5458,7 +5656,7 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow" data-home="svg.eyebrow">06 · Gramática Plotter SVG (gramática plotter) &amp; Globo 81k</div>
+            <div class="eyebrow" data-home="svg.eyebrow">06 · Gramática Plotter SVG (pasqualevitiello/plotter) &amp; Globo 81k</div>
             <h2 class="section-title" data-home="svg.title">Blueprints Vetoriais Editáveis &amp; Escala 1:1 Travada</h2>
           </div>
           <p class="section-desc" data-home-html="svg.desc">
@@ -5975,6 +6173,189 @@
         </div>
       </div>
     </section>
+    <!-- ================= 09. HABILIDADES AGÊNTICAS, TASTE & LINHAGEM ================= -->
+    <section class="section-block" id="habilidades">
+      <div class="container-wide">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow" data-home="skills.eyebrow">09 · Habilidades Agênticas, Taste &amp; Linhagem</div>
+            <h2 class="section-title" data-home="skills.title">Habilidades Meridian &amp; Craft Aberto.</h2>
+          </div>
+          <p class="section-desc" data-home="skills.desc">
+            Regras verificáveis (DESIGN.md), roteamento (AGENTS.md), 8 skills modulares incluindo uma skill dedicada de gostos (meridian-taste) e atribuição direta às referências que moldam o sistema.
+          </p>
+        </div>
+
+        <div class="skills-cli-bar">
+          <div class="skills-cli-meta">
+            <span class="eyebrow" style="margin:0" data-home="skills.cliLabel">Instalar pacote de skills</span>
+            <code class="skills-cli-code">npx skills add jhosephebtc/Meridian</code>
+            <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian" data-home="skills.copyAll">Copiar comando</button>
+          </div>
+          <div class="skills-cli-links">
+            <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/DESIGN.md" target="_blank" rel="noopener noreferrer">DESIGN.md ↗</a>
+            <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/AGENTS.md" target="_blank" rel="noopener noreferrer">AGENTS.md ↗</a>
+            <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/CREDITS.md" target="_blank" rel="noopener noreferrer">skills/CREDITS.md ↗</a>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card" data-featured="true">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-taste</span>
+              <span class="skill-card-tag">Taste Core</span>
+            </div>
+            <p class="skill-card-desc">10 pilares de discernimento, critério do Farol, revisão em tabela Before/After/Why, checklist anti-slop e captura contínua via learn-taste.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-taste/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-taste">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-design-system</span>
+              <span class="skill-card-tag">Tokens · 13</span>
+            </div>
+            <p class="skill-card-desc">Engine Single-Ink com color-mix(), 13 superfícies, tokens semânticos CSS/TS, tipografia Geist em 3 vozes e i18n em 4 idiomas.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-design-system/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-design-system">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-paper-shaders</span>
+              <span class="skill-card-tag">Canvas · GL</span>
+            </div>
+            <p class="skill-card-desc">PaperGrain em canvas nativo (sem data-URL), HalfTone hex finíssimo (&lt;0.18), scrollbars hairline em Chromium e véu de entrada.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-paper-shaders/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-paper-shaders">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-motion</span>
+              <span class="skill-card-tag">Emil Gate</span>
+            </div>
+            <p class="skill-card-desc">Frequency Gate (0ms em ⌘K), 6 curvas bezier sem ease-in, abas clip-path, hold-to-confirm 1.4s/180ms, drag 1:1 e paridade RN Skia.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-motion/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-motion">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-plotter-svg</span>
+              <span class="skill-card-tag">13 Roles</span>
+            </div>
+            <p class="skill-card-desc">Blueprints vetoriais editáveis em 13 roles semânticas, globo ortográfico 81k pontilhado e mostradores Gann 1:1 travados.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-plotter-svg/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-plotter-svg">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-atelier</span>
+              <span class="skill-card-tag">Zero p5.js</span>
+            </div>
+            <p class="skill-card-desc">Motor generativo 100% TypeScript (&lt;0.7ms/frame) com aquarela wet-on-wet, lápis grafite 2H/4B, giz de cera e pincel sumi-e.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-atelier/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-atelier">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-editorial-archival</span>
+              <span class="skill-card-tag">3-Col · B2B</span>
+            </div>
+            <p class="skill-card-desc">Leitor 3 colunas (152px · 65ch · 264px), citações Tier A–C interativas, Timeline, estante 3D preserve-3d e chrome dual.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-editorial-archival/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-editorial-archival">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-components</span>
+              <span class="skill-card-tag">89 Items</span>
+            </div>
+            <p class="skill-card-desc">Catálogo de 89 componentes táteis em linha SVG, manifestos shadcn em public/r/ e prompts individuais de instalação.</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-components/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-components">Copiar CLI</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="credits-subhead">
+          <div>
+            <div class="eyebrow" style="margin-bottom:4px;" data-home="skills.creditsEye">Atribuição &amp; Referências Externas</div>
+            <h3 class="h3" style="margin:0; font-size:24px;" data-home="skills.creditsTitle">Construído sobre craft aberto — nunca sem crédito.</h3>
+          </div>
+          <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/CREDITS.md" target="_blank" rel="noopener noreferrer" style="font-family:var(--ds-font-mono); font-size:12px;">Inventário completo em CREDITS.md ↗</a>
+        </div>
+
+        <div class="credits-grid">
+          <a class="credit-card" href="https://deimos.evilrabbit.com/" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Design Reference · Zeitgeist &amp; Geist</span>
+            <span class="credit-card-title">Evil Rabbit — Deimos</span>
+            <span class="credit-card-note">Single-Ink em color-mix(), superfícies archival (Paper, Aqua, Terracotta, Obsidian), leitor 3 colunas, estante 3D e família Geist.</span>
+          </a>
+
+          <a class="credit-card" href="https://github.com/emilkowalski/skills" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Agent Skills · Motion &amp; Taste</span>
+            <span class="credit-card-title">Emil Kowalski (skills)</span>
+            <span class="credit-card-note">Frequency Gate (0ms ⌘K), curvas bezier, abas clip-path, hold-to-confirm, Vaul/Sonner, gestos 1:1, mobile-native e metodologia learn-taste.</span>
+          </a>
+
+          <a class="credit-card" href="https://github.com/pasqualevitiello/plotter" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Agent Skill · SVG Blueprint</span>
+            <span class="credit-card-title">Pasquale Vitiello — Plotter</span>
+            <span class="credit-card-note">13 roles semânticas SVG (data-plotter-role), uma tinta currentColor, cotas abertas e isolamento didático data-plotter-isolate.</span>
+          </a>
+
+          <a class="credit-card" href="https://shaders.paper.design/" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">WebGL Shader · Materiality</span>
+            <span class="credit-card-title">Paper Design Shaders</span>
+            <span class="credit-card-note">@paper-design/shaders halftoneDotsFragmentShader aplicado em malha hexagonal fina nas chapas archivals e Dossiê Gann.</span>
+          </a>
+
+          <a class="credit-card" href="https://jhosephe.vercel.app/" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Skills · Tactile Lab</span>
+            <span class="credit-card-title">Jhosephe UI</span>
+            <span class="credit-card-note">Física tátil (--ml-press-x/y, captura angular 270°, ledger consoles) e base do catálogo de 64→89 componentes Single-Ink.</span>
+          </a>
+
+          <a class="credit-card" href="https://www.anthropic.com/research" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Editorial · Scenarios &amp; 81k</span>
+            <span class="credit-card-title">Anthropic Research</span>
+            <span class="credit-card-note">Ground marfim #FAF9F5, dual-radius, masonry 12 colunas com dim, footer em acordeões e estética globo 81k + blocos em aquarela.</span>
+          </a>
+
+          <a class="credit-card" href="https://github.com/acamposuribe/p5.brush" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Generative Research</span>
+            <span class="credit-card-title">Tyler Hobbs &amp; p5.brush</span>
+            <span class="credit-card-note">Subdivisão gaussiana recursiva, borda úmida de pigmento e pincéis secos portados para TypeScript puro sem dependências.</span>
+          </a>
+
+          <a class="credit-card" href="https://ui.shadcn.com/" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Registry Spec</span>
+            <span class="credit-card-title">shadcn/ui Registry</span>
+            <span class="credit-card-note">Esquema de distribuição JSON (public/r/registry.json) para instalação via CLI e prompts individuais nos 89 componentes.</span>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ================= FOOTER EDITORIAL (Meridian: marca | acordeões | missão) ================= -->
@@ -5982,7 +6363,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a class="footer-logo" href="#topo">Meridian</a>
-        <span class="footer-ver">Design System · v1.4</span>
+        <span class="footer-ver">Design System · v1.5</span>
       </div>
 
       <nav class="footer-nav" aria-label="Índice do sistema">
@@ -6003,6 +6384,7 @@
             <button type="button" data-nav-target="cronologia" data-home="footer.ed.lifeline">Lifeline &amp; estante</button>
             <button type="button" data-nav-target="svg-viz" data-home="footer.ed.svg">Plotter SVG 1:1</button>
             <button type="button" data-nav-target="atelier" data-home="footer.ed.atelier">Atelier generativo</button>
+            <button type="button" data-nav-target="habilidades" data-home="skills.footerEd">Habilidades &amp; Craft</button>
           </div>
         </details>
         <details class="footer-acc">
@@ -6012,6 +6394,7 @@
             <span>tokens.css · components.css</span>
             <span>tokens.ts · paper-grain.ts</span>
             <span>atelier-engine.ts · plotter-svg.ts</span>
+            <span>DESIGN.md · AGENTS.md · skills/</span>
           </div>
         </details>
         <details class="footer-acc">
@@ -6049,6 +6432,7 @@
             <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
             <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
             <a href="#btn-open-drawer" id="footer-open-tokens">Tokens CSS &amp; TS <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
+            <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
           </div>
         </div>
       </div>
@@ -6078,6 +6462,7 @@
         <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
         <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
         <a href="./index.html#topo" data-home="rail.home">Design System · topo</a>
+        <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ ↗</a>
       </nav>
     </div>
 
@@ -6093,6 +6478,7 @@
         <button type="button" data-nav-target="cronologia" data-home="rail.sec.cronologia">06 · Lifeline</button>
         <button type="button" data-nav-target="svg-viz" data-home="rail.sec.svg">07 · SVG 1:1</button>
         <button type="button" data-nav-target="atelier" data-home="rail.sec.atelier">08 · Atelier TS</button>
+        <button type="button" data-nav-target="habilidades" data-home="skills.railItem">09 · Habilidades &amp; Craft</button>
       </nav>
     </div>
 
@@ -7133,6 +7519,9 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         { title: 'Atelier: Colagem em Giz de Cera', hint: 'A', run: () => { selectAtelierPreset('crayon'); document.getElementById('atelier').scrollIntoView(); } },
         { title: 'Ir para: Leitor 3 Colunas', hint: '↵', run: () => { switchEditorialView('reader'); document.getElementById('editorial').scrollIntoView(); } },
         { title: 'Ir para: Lifeline & Estante 3D', hint: '↵', run: () => document.getElementById('cronologia').scrollIntoView() },
+        { title: 'Ir para: 09 · Habilidades, Taste & Créditos', hint: 'S', run: () => document.getElementById('habilidades').scrollIntoView() },
+        { title: 'Abrir Components Lab (89 componentes + prompts)', hint: '↗', run: () => { window.location.href = './components.html'; } },
+        { title: 'Dar estrela no GitHub (jhosephebtc/Meridian)', hint: '★', run: () => { window.open('https://github.com/jhosephebtc/Meridian', '_blank', 'noopener,noreferrer'); } },
       ];
 
       const cmdkBackdrop = document.getElementById('cmdk-backdrop');
@@ -7314,6 +7703,9 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         const copyOrg = e.target.closest('[data-copy-var]');
         if (copyOrg) { const val = cssVar(copyOrg.dataset.copyVar); copyText(val, `Copiado ${copyOrg.dataset.copyVar} (${val})`); return; }
 
+        const copySkill = e.target.closest('[data-copy-skill]');
+        if (copySkill) { copyText(copySkill.dataset.copySkill, `Copiado: ${copySkill.dataset.copySkill}`); return; }
+
         const toastBtn = e.target.closest('[data-toast]');
         if (toastBtn) { showToast(toastBtn.dataset.toast); return; }
 
@@ -7482,7 +7874,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       const topbar = document.getElementById('topbar');
       const progressBar = document.getElementById('scroll-progress');
       const mainNav = document.querySelector('[data-cliptabs="main-nav"]');
-      const sectionIds = ['historia', 'cores', 'tokens', 'tipografia', 'interacoes', 'editorial', 'cronologia', 'svg-viz', 'atelier'];
+      const sectionIds = ['historia', 'cores', 'tokens', 'tipografia', 'interacoes', 'editorial', 'cronologia', 'svg-viz', 'atelier', 'habilidades'];
 
       function markSectionNav(activeBtn) {
         if (!activeBtn) return;
@@ -8536,6 +8928,8 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           '.plotter-stage',
           '.masonry-card',
           '.reader-column',
+          '.skill-card',
+          '.credit-card',
         ].join(','));
 
         const seen = new Set();

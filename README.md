@@ -1,120 +1,114 @@
-# MERIDIAN Design System (`v1.4.1`)
+# MERIDIAN Design System (`v1.5.0`)
 
-**Components Lab:** open [`components.html`](./components.html) for all 64 tactile line components (Meridian gestures × Meridian SVG grammar). Install via shadcn:
+**Single-Ink Multi-Surface Editorial System** — **PaperGrain** via native HTML5 `<canvas>`, **HalfTone** WebGL dots via `@paper-design/shaders`, asymmetric motion governance (**Frequency Gate**), flat editable **Plotter SVG** blueprints (`data-plotter-role`), an orthographic **81k Globe**, **89 tactile line components** with copyable AI install prompts (`public/r/registry.json`), **8 modular agent skills** (including **`meridian-taste`**), and a **100% TypeScript generative watercolor, graphite, wax-crayon & sumi-e engine** (zero `p5.js`).
 
-```sh
-npm run registry
-npx shadcn@latest add http://localhost:5173/r/button.json
-# or after deploy: https://<your-host>/r/registry.json
+> ⭐ **Like Meridian?** [**Star `jhosephebtc/Meridian` on GitHub**](https://github.com/jhosephebtc/Meridian) — every page header includes a live GitHub Star CTA.
+
+---
+
+## Live Applications (Vercel Production)
+
+- **Design System & Showcase:** [`https://meridian-olive-phi.vercel.app/index.html`](https://meridian-olive-phi.vercel.app/index.html)
+- **Components Lab (89 Components + AI Install Prompts):** [`https://meridian-olive-phi.vercel.app/components.html`](https://meridian-olive-phi.vercel.app/components.html)
+- **Meridian Studio (Interactive 3-View Workspace Preview):** [`https://meridian-olive-phi.vercel.app/preview.html`](https://meridian-olive-phi.vercel.app/preview.html)
+- **Editorial Manifesto:** [`https://meridian-olive-phi.vercel.app/manifesto.html`](https://meridian-olive-phi.vercel.app/manifesto.html)
+- **O Farol e o Meridiano (Archival Essay & PaperGrain):** [`https://meridian-olive-phi.vercel.app/historia.html`](https://meridian-olive-phi.vercel.app/historia.html)
+- **Dossiê W.D. Gann (HalfTone + Plotter D2):** [`https://meridian-olive-phi.vercel.app/gann.html`](https://meridian-olive-phi.vercel.app/gann.html)
+- **Complete Technical Specification:** [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md)
+- **Agent Taste & Engineering Rules:** [`DESIGN.md`](./DESIGN.md) · [`AGENTS.md`](./AGENTS.md) · [`skills/CREDITS.md`](./skills/CREDITS.md)
+
+---
+
+## Agent Skills & Taste System (`skills/` + `DESIGN.md` + `AGENTS.md`)
+
+Meridian ships a structured, verifiable skill kit grounded in everything actually implemented in the codebase, plus a dedicated taste & critique skill (**`meridian-taste`**).
+
+```bash
+npx skills add jhosephebtc/Meridian
+# or target a single skill, e.g.:
+npx skills add jhosephebtc/Meridian --skill meridian-taste
 ```
 
-
-**Sistema Visual, Editorial, Navegacional, de Motion, Blueprints SVG (Plotter), HalfTone e Arte Generativa 100% TypeScript** para o ecossistema **Meridian** (React Native + Web · CSS Puro · SVG 1:1).
-
-![Meridian Plotted 81k Globe](./assets/meridian-globe-81k.svg)
-
----
-
-## Linhagem & Pilares
-
-- **Meridian Editorial & cenários aquarela:** Ivory `#FAF9F5`, dual-radius, masonry assimétrico, paleta orgânica, aquarelas.
-- **Meridian Arquival + Soft Chromatic:** Single-Ink + pastéis (`blush` / `butter` / `mist` / `lilac`), leitor 3 colunas, Lifeline, estante 3D.
-- **PaperGrain canvas (v1.4):** overlay `#ds-paper-grain` — **nunca** data-URL em CSS var (browsers descartavam o PNG). Speckles com alpha, visível em ivory.
-- **HalfTone Paper Shaders:** malha fina (`HALFTONE.size ≈ 0.12`) — size ≥ 0.4 derrete a imagem.
-- **Meridian Motion:** Frequency Gate (`⌘K` 0ms), clip-path tabs, drawer **só dim** (sem blur), burger **3 linhas → X**, page enter veil.
-- **Scrollbar hairline:** 2px, track transparente, canvas visível.
-- **Plotter + Globo 81k + Atelier TS:** gramática SVG 1 tinta + aquarela/lápis/giz/sumi-e.
+| Skill | Focus | Primary Source Files |
+| :--- | :--- | :--- |
+| [**`meridian-taste`**](./skills/meridian-taste/SKILL.md) | **Dedicated taste & critique skill:** Lighthouse Criterion, 10 pillars of taste, `Before / After / Why` review protocol, anti-slop checklist, and continuous `learn-taste` capture | `DESIGN.md`, `DESIGN_SYSTEM.md` |
+| [`meridian-design-system`](./skills/meridian-design-system/SKILL.md) | Single-Ink `color-mix()` (`9%` / `12%`), 13 surfaces, Geist 3-voice typography (`Geist`, `Geist Serif`, `Geist Mono`), Dual-Radius, `pt/en/es/fr` i18n | `src/tokens.css`, `src/tokens.ts`, `src/fonts.css`, `src/i18n.ts` |
+| [`meridian-paper-shaders`](./skills/meridian-paper-shaders/SKILL.md) | Canvas PaperGrain (`opacity`, `dust`, `scratch`, `double`), `@paper-design/shaders` HalfTone (`u_size < 0.2`), Chromium hairline `2px` scrollbars, `.ds-burger` → `X`, `.ds-page-veil` | `src/paper-grain.ts`, `src/halftone-mount.ts`, `src/page-enter.ts` |
+| [`meridian-motion`](./skills/meridian-motion/SKILL.md) | Animation Frequency Gate (`0ms` `⌘K`), 6 easing curves (zero `ease-in`, zero `transition: all`), clip-path tabs, asymmetric Hold (`1.4s / 180ms`), 1:1 drag + `projectMomentum`, RN Reanimated 4 + Haptics | `src/tokens.ts`, `src/components.css`, `src/timeline.ts` |
+| [`meridian-plotter-svg`](./skills/meridian-plotter-svg/SKILL.md) | 13 semantic `data-plotter-role` blueprint layers, `fill="none"` discipline, didactic isolation, 81k orthographic globe & Gann 1:1 instruments | `src/plotter-svg.ts`, `src/historia-ambient-svg.ts`, `src/gann-app.ts` |
+| [`meridian-atelier`](./skills/meridian-atelier/SKILL.md) | Zero-`p5.js` strict TypeScript watercolor wash, graphite `2H/4B`, wax crayon & sumi-e engine (`< 0.7ms/frame`) | `src/atelier-engine.ts` |
+| [`meridian-editorial-archival`](./skills/meridian-editorial-archival/SKILL.md) | 3-column archival reader (`152px` TOC · `65ch` prose · `264px` aside), clickable claims, `Lifeline` / `Timeline`, `preserve-3d` shelf, dual chrome | `src/components.css`, `src/gann.css`, `gann.html`, `historia.html`, `manifesto.html` |
+| [`meridian-components`](./skills/meridian-components/SKILL.md) | 89 tactile SVG-line components, `public/r/` shadcn registry manifests, interactive demos & per-component AI install prompts | `src/component-catalog.ts`, `src/components-lab.ts`, `registry/meridian/`, `scripts/build-registry.mjs` |
 
 ---
 
-## Atmosferas (`data-surface`)
+## Components Lab & Per-Component Install Prompts (89 Components)
 
-| Superfície | Ground | Ink | Uso |
-| :--- | :---: | :---: | :--- |
-| **`ivory`** *(padrão)* | `#FAF9F5` | `#141413` | Home B2C / pesquisa |
-| **`paper`** | `#FFFFFF` | `#0A0A0A` | Dossiês / PDF |
-| **`blush` · `butter` · `mist` · `lilac`** | pastéis | tinta quente | Soft Chromatic / capas |
-| **`aqua`** | `#A4CED0` | `#171614` | Clima / Ambiente |
-| **`terracotta`** | `#EDBB99` | `#171614` | Cultura / Gann / Solar |
-| **`obsidian`** | `#0E0E0D` | `#FAF9F5` | Terminal Pro |
+[`components.html`](https://meridian-olive-phi.vercel.app/components.html) documents all **89 components** across 11 categories (`controls`, `inputs`, `overlays`, `charts`, `surfaces`, `navigation`, `instruments`, `tables`, `feedback`, `astronomy`, `weather`) with live Single-Ink demos across all 13 surfaces.
 
-Espectro UI: `SURFACE_SPECTRUM` em `src/tokens.ts`.
+Every component card includes:
+- **Live Interactive Demo** (including the interactive **`timeline`** component powered by `createTimeline` from `src/timeline.ts`).
+- **One-Click shadcn CLI Install** (`npx shadcn@latest add https://meridian-olive-phi.vercel.app/r/<id>.json`).
+- **Per-Component Prompt Section** (`Copiar prompt` + expand/collapse preview) containing a self-contained, component-specific prompt generated by `buildInstallPrompt()` in `src/component-catalog.ts` (localized in **PT / EN / ES / FR**) covering prerequisites, CLI install command, token usage, and `DESIGN.md` taste invariants (`0ms` high-frequency gate, `1px` `color-mix()` hairlines, zero `ease-in`).
 
 ---
 
-## Prévia ao Vivo
+## The 13 Single-Ink Surfaces
 
-- **Showcase DS:** https://jhosephebtc.github.io/Meridian/
-- **Meridian Studio:** https://jhosephebtc.github.io/Meridian/preview.html
-- **Dossiê W.D. Gann:** https://jhosephebtc.github.io/Meridian/gann.html
+Every color token derives dynamically from a paper background (`--ds-bg`) and a single ink (`--ds-fg`) using `color-mix(in srgb, var(--ds-fg) ...)`:
 
----
-
-## Estrutura
-
-```text
-Meridian/
-├── DESIGN_SYSTEM.md          # Spec completa v1.4.1
-├── index.html                # Showcase interativo
-├── preview.html              # Prévia de produto
-├── gann.html                 # Dossiê archival + HalfTone
-├── src/
-│   ├── index.ts              # Barrel (tokens, paper-grain, page-enter, plotter, atelier)
-│   ├── tokens.css / tokens.ts
-│   ├── components.css        # Burger→X, claim, drawer dim, veil…
-│   ├── paper-grain.ts        # Canvas overlay (sem data-URL)
-│   ├── page-enter.ts         # markPageReady()
-│   ├── plotter-svg.ts
-│   ├── atelier-engine.ts
-│   ├── gann.css / gann-app.ts
-│   └── preview.css / preview-app.ts
-└── assets/
-```
+| ID | Label | Ground (`--ds-bg`) | Ink (`--ds-fg`) | Contrast | Primary Role |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `ivory` | **Ivory Editorial** | `#FAF9F5` | `#141413` | `17.6:1 (AAA)` | Default B2C calm editorial surface |
+| `paper` | **Paper White** | `#FFFFFF` | `#0A0A0A` | `19.8:1 (AAA)` | B2B dossiers, PDF reports & documentation |
+| `blush` | Soft Blush | `#E8C4C0` | `#1A1414` | `9.8:1 (AAA)` | Warm rose chromatic paper |
+| `apricot` | Soft Apricot | `#E8C8A8` | `#1A1612` | `10.0:1 (AAA)` | Warm peach editorial ground |
+| `butter` | Soft Butter | `#E8D9A8` | `#1A1810` | `10.1:1 (AAA)` | Warm cream note-taking paper |
+| `sage` | Soft Sage | `#B8C5A8` | `#141812` | `9.8:1 (AAA)` | Botanical & environmental briefings |
+| `mist` | Soft Mist | `#C5D4CE` | `#141816` | `9.6:1 (AAA)` | Cool mineral daylight surface |
+| `aqua` | **Signature Aqua** | `#A4CED0` | `#171614` | `10.4:1 (AAA)` | Cartography, climate & air quality |
+| `sky` | Soft Sky | `#B0C8D6` | `#12161A` | `9.9:1 (AAA)` | Atmospheric telemetry & clear sky views |
+| `slate` | Soft Slate | `#B5BFC9` | `#141618` | `9.7:1 (AAA)` | Technical ledgers & archival plates |
+| `lilac` | Soft Lilac | `#C9C0D8` | `#16141A` | `9.7:1 (AAA)` | Editorial essays & manifesto views |
+| `terracotta` | **Warm Terracotta** | `#EDBB99` | `#171614` | `10.4:1 (AAA)` | Biographies, Audio briefings & Solar 3D |
+| `obsidian` | **Obsidian Dark** | `#0E0E0D` | `#FAF9F5` | `18.4:1 (AAA)` | Pro Observatory & Gann–Jenkins Night Mode |
 
 ---
 
-## Local (`npm run dev`)
+## Attribution, External Skills & Design References
+
+Meridian is built with explicit respect and gratitude toward the creators whose open skills, design systems, and research shaped this repository (full inventory in [`skills/CREDITS.md`](./skills/CREDITS.md)):
+
+| Source / Author | Link | What Meridian Uses & Credits |
+| :--- | :--- | :--- |
+| **Evil Rabbit — Deimos (Design Zeitgeist) & Geist** | [`deimos.evilrabbit.com`](https://deimos.evilrabbit.com/) · [`vercel.com/font`](https://vercel.com/font) | Reference design architecture for the Single-Ink `color-mix()` engine, archival surfaces (*Paper White*, *Signature Aqua*, *Warm Terracotta*, *Obsidian Dark*), 3-column encyclopedic reader (`152px · 65ch · 264px`), Tier A–C claim citations, `Lifeline` chronology, `preserve-3d` dossier shelf, monochrome signals, and **Geist / Geist Serif / Geist Mono** variable fonts. |
+| **Emil Kowalski (`emilkowalski/skills`)** | [`github.com/emilkowalski/skills`](https://github.com/emilkowalski/skills) · [`animations.dev`](https://animations.dev/) | Skill design & physics behind `meridian-motion` and `meridian-taste`: Animation Frequency Gate (`0ms` `⌘K`), custom easing curves (zero `ease-in`), clip-path seamless tabs, origin-aware popovers, skip-delay tooltips (`320ms → 0ms`), asymmetric hold-to-confirm (`1.4s / 180ms`), Vaul/Sonner interruptible patterns, 1:1 pointer momentum/rubberbanding, React Native + Haptics parity, `Before/After/Why` reviews, and `learn-taste` discipline. |
+| **Pasquale Vitiello (`pasqualevitiello/plotter`)** | [`github.com/pasqualevitiello/plotter`](https://github.com/pasqualevitiello/plotter) | Architectural SVG grammar adopted in `src/plotter-svg.ts` & `meridian-plotter-svg`: 1 ink (`currentColor`), 1 hairline thickness, 13 `data-plotter-role` layers, `fill="none"`, open 45° arrowheads, `-45°` hatch, and didactic role isolation (`data-plotter-isolate`). |
+| **Paper Design (`@paper-design/shaders`)** | [`shaders.paper.design`](https://shaders.paper.design/) | WebGL `halftoneDotsFragmentShader` powering archival print plates in `src/halftone-mount.ts` and `gann.html`. |
+| **Jhosephe UI (`jhosephebtc`)** | [`jhosephe.vercel.app`](https://jhosephe.vercel.app/) | Tactile pointer-capture physics (`--ml-press-x/y`, 270° dials, 1:1 scrubs), `jhosephe-svg-motion` precision, and the original 64-component foundation expanded to 89 components. |
+| **Anthropic Research / Econ Scenarios / 81k** | [`anthropic.com/research`](https://www.anthropic.com/research) | Warm `#FAF9F5` editorial ground, dual-radius tokens (`pill` + `squircle`), asymmetric 12-col masonry gallery, `<details>` accordion footer, contained earthy pigments, dotted orthographic globe aesthetic, and painterly watercolor blocks. |
+| **Tyler Hobbs & `p5.brush`** | [`github.com/acamposuribe/p5.brush`](https://github.com/acamposuribe/p5.brush) | Recursive Gaussian polygon subdivision and wet-edge / tooth algorithms adapted into zero-dependency TypeScript in `src/atelier-engine.ts`. |
+| **shadcn/ui Registry** | [`ui.shadcn.com`](https://ui.shadcn.com/) | JSON distribution format (`public/r/*.json`, `public/r/registry.json`) for `npx shadcn@latest add`. |
+
+---
+
+## Development & Verification Commands
 
 ```bash
 npm install
-npm run dev
+npm run dev        # Vite dev server
+npm run typecheck  # Strict TypeScript check (tsc --noEmit)
+npm run registry   # Rebuild public/r/ (89 items + registry.json)
+npm run build      # registry + tsc --noEmit + Vite production bundle (6 HTML pages → dist/)
+npm run preview    # Serve dist/ locally
 ```
 
-- Showcase: `http://localhost:5173/`
-- Studio: `http://localhost:5173/preview.html`
-- Gann: `http://localhost:5173/gann.html`
+## Keyboard Shortcuts
 
-Atalhos: **`1`–`5`** atmosferas · **`M`** modo · **`⌘K` / `/`** paleta.
+- `⌘K` / `Ctrl+K` / `/`: Instant `0ms` command palette (`index.html`, `preview.html`).
+- `1`–`9` & `0`: Instant surface switching (`preview.html` 10 quick slots; `1`–`5` in `index.html`).
+- `M`: Toggle `B2C Invisible` ↔ `Pro Technical Audit` mode.
 
 ---
 
-## Uso rápido
-
-```html
-<link rel="stylesheet" href="./src/tokens.css" />
-<link rel="stylesheet" href="./src/components.css" />
-<html data-surface="ivory" data-mode="invisible" data-grain="editorial">
-```
-
-```ts
-import {
-  mountPaperGrain,
-  markPageReady,
-  HALFTONE,
-  PAPER_SHADER,
-  SURFACE_SPECTRUM,
-} from '@meridian/design-system';
-
-mountPaperGrain();
-markPageReady();
-```
-
-Hamburger:
-
-```html
-<button class="ds-burger" aria-expanded="false" aria-label="Abrir menu">
-  <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
-</button>
-```
-
-Documentação completa: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
+*Built in Vite, strict TypeScript, and pure CSS — MIT License.*

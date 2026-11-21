@@ -1,0 +1,34 @@
+# Credits, External Skills & Design References (`Meridian v1.5.0`)
+
+Meridian synthesizes original engineering (`atelier-engine.ts`, 13-surface token architecture, 4-language i18n, 89-component SVG-line lab) with publicly shared skills, open-source tooling, and canonical design references from external creators. Every external influence implemented on the site and encoded in [`skills/`](./) is credited below.
+
+---
+
+## 1. Reference Design Systems & Visual Architecture
+
+| Creator / Project | Link | What Meridian Adopts & Adapts | Where Used in Meridian |
+| :--- | :--- | :--- | :--- |
+| **Evil Rabbit — Deimos / Design Zeitgeist** | [deimos.evilrabbit.com](https://deimos.evilrabbit.com/) | **Single-Ink** `color-mix()` archival engine across Paper White, Signature Aqua, Warm Terracotta, and Obsidian Dark; cotton-paper surface materiality; 3-column encyclopedic reader (`152px` TOC · `65ch` prose · `264px` aside plate) with clickable claim citations and Tier A–C provenance; horizontal `Lifeline` chronology; tactile `preserve-3d` dossier shelf; monochrome geometric signal mode; and **Geist / Geist Serif / Geist Mono** typography. | `src/tokens.css`, `src/tokens.ts`, `src/fonts.css`, `src/components.css`, `src/gann.css`, `gann.html`, `historia.html`, `manifesto.html`, `preview.html`, `index.html` |
+| **Anthropic Research, Economic Scenarios & 81k Interviews** | [anthropic.com/research](https://www.anthropic.com/research) · [econ-scenarios](https://www.anthropic.com/institute/econ-scenarios) · [81k-interviews](https://www.anthropic.com/features/81k-interviews) | Warm `ivory` (`#FAF9F5`) reading ground; dual-radius grammar (`pill` + `squircle`); 12-column asymmetric masonry gallery with sibling dim; 3-column `<details>` accordion footer; earthy contained organic palette (`olive`, `sky`, `coral`, `ochre`, `slate`); orthographic dotted globe aesthetic; and filled watercolor scenario blocks + fan trajectories. | `src/tokens.ts`, `src/plotter-svg.ts`, `src/atelier-engine.ts`, `index.html` |
+| **Jhosephe UI (`jhosephebtc`)** | [jhosephe.vercel.app](https://jhosephe.vercel.app/) | Tactile gesture physics (`--ml-press-x/y` local pointer press ripple, `-135°→135°` absolute-angle dial capture, 1:1 bar slider scrub, console LED toggles) and the 64-component foundation re-expressed in Meridian Single-Ink SVG line grammar and expanded to **89 components**. | `components.html`, `src/component-catalog.ts`, `src/components-lab.ts`, `src/components-lab.css`, `registry/meridian/*` |
+
+---
+
+## 2. External Agent Skills Used & Referenced
+
+| Author & Repository | Skill Names Used | Principles Encoded into Meridian | Meridian Files & Skills |
+| :--- | :--- | :--- | :--- |
+| **Emil Kowalski** — [`emilkowalski/skills`](https://github.com/emilkowalski/skills) · [animations.dev](https://animations.dev) | `emil-design-eng`, `animate`, `animate-expo`, `animation-performance`, `animation-vocabulary`, `apple-design`, `ask-emil`, `ask-sonner`, `break-ui`, `choreograph`, `find-animation-opportunities`, `gestures`, `improve-animations`, `learn-taste`, `mobile-native`, `pick-ui-library`, `prototype`, `remove-animations`, `review-animations`, `write-swift` | **The Animation Frequency Gate** (`0ms` `⌘K` & high-frequency root switches); custom easing curves (`--ds-ease-out`, `--ds-ease-in-out`, `--ds-ease-drawer`, zero `ease-in`); `clip-path` seamless tabs; origin-aware popovers (`scale(0.96)`); skip-delay tooltips (`320ms → 0ms`); asymmetric hold-to-confirm (`1.4s linear / 180ms ease-out`); interruptible Sonner-style CSS-transition toasts; Vaul-style drawers/sheets; 1:1 pointer drag + `projectMomentum` + `rubberband`; React Native Reanimated 4 + `expo-haptics` parity; Mobile-Native Web baseline; `Before/After/Why` review tables; and the `DESIGN.md` / `learn-taste` methodology. | `skills/meridian-motion/SKILL.md`, `skills/meridian-taste/SKILL.md`, `DESIGN.md`, `src/tokens.ts`, `src/components.css`, `src/timeline.ts` |
+| **Pasquale Vitiello** — [`pasqualevitiello/plotter`](https://github.com/pasqualevitiello/plotter) | `plotter` | Flat editable blueprint SVG grammar: 1 ink (`currentColor`), 1 hairline thickness, 13 semantic `data-plotter-role` layers (`primary`, `section`, `secondary`, `dimension`, `leader`, `hatch`, `guide`, `grid`, `centerline`, `hidden`, `absent`, `proposed`, `transfer`), transparent shapes (`fill="none"`), open 45° arrowheads (`6u`), `-45°` hatch pitch `12u`, true gap-cleared dimension lines, discreet `stroke="none"` labels (`0.72` / `0.50`), and didactic role isolation (`data-plotter-isolate`). | `skills/meridian-plotter-svg/SKILL.md`, `src/plotter-svg.ts`, `src/tokens.css`, `src/historia-ambient-svg.ts`, `src/gann-app.ts`, `src/manifesto-app.ts` |
+| **Jhosephe (`jhosephebtc`)** | `jhosephe`, `jhosephe-svg-motion` | Tactile component contracts, `en-US` sentence-case UI lab baseline, frame-0 cover legibility, and 1:1 SVG hardware proportions. | `skills/meridian-components/SKILL.md`, `registry/meridian/*`, `src/components-lab.ts` |
+
+---
+
+## 3. Libraries, Shaders & Ecosystem Tooling
+
+| Library / Spec | Author / Source | Usage in Meridian |
+| :--- | :--- | :--- |
+| **`@paper-design/shaders`** (`halftoneDotsFragmentShader`) | [Paper Design (`shaders.paper.design`)](https://shaders.paper.design/) | WebGL fine-mesh halftone dot plates in `src/halftone-mount.ts` and `gann.html` (`HALFTONE.size` `0.12–0.18`). |
+| **`geist`** (`Geist`, `Geist Serif`, `Geist Mono`) | [Vercel / Evil Rabbit](https://vercel.com/font) | Local `.woff2` variable fonts bundled in `assets/fonts/` and declared in `src/fonts.css`. |
+| **shadcn/ui Registry Schema** | [ui.shadcn.com](https://ui.shadcn.com/) | JSON item manifests (`public/r/*.json`, `public/r/registry.json`) generated by `scripts/build-registry.mjs` for `npx shadcn@latest add`. |
+| **Tyler Hobbs & `p5.brush`** | Generative watercolor research | Recursive Gaussian polygon subdivision (`deformPolygon`), wet-edge pigment pooling, and dry-brush/tooth masking adapted into zero-dependency strict TypeScript in `src/atelier-engine.ts`. |

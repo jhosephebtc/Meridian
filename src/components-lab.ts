@@ -1,15 +1,18 @@
 import './site-chrome';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
+import { createTimeline } from './timeline.ts';
 import {
   CATEGORY_LABELS,
   COMPONENT_CATALOG,
   type CatalogItem,
   type ComponentCategory,
   type DemoKind,
+  buildInstallPrompt,
+  buildSystemInstallPrompt,
   installCommand,
 } from './component-catalog.ts';
-import { initI18n } from './i18n';
+import { getLang, initI18n, type Lang } from './i18n';
 import './i18n.css';
 
 const REGISTRY_BASE = `${location.origin}${location.pathname.replace(/[^/]*$/, '')}r`;
@@ -1242,6 +1245,22 @@ function demoFilmstrip(): HTMLElement {
   return el;
 }
 
+function demoTimeline(): HTMLElement {
+  const host = document.createElement('div');
+  host.className = 'lab-timeline-host';
+  createTimeline(host, {
+    activeIndex: 1,
+    animate: false,
+    items: [
+      { label: '06:30', title: 'Ivory · Paper', description: 'Single-Ink ground' },
+      { label: '10:00', title: 'Plotter 1:1', description: '13 semantic roles' },
+      { label: '14:30', title: 'Atelier TS', description: '< 0.7ms/frame' },
+      { label: '20:00', title: 'Obsidian', description: '4-layer audit' },
+    ],
+  });
+  return host;
+}
+
 function demoImageFrame(inspect = false): HTMLElement {
   const el = document.createElement('div');
   el.className = 'ml-frame';
@@ -1456,6 +1475,8 @@ function buildDemo(item: CatalogItem): HTMLElement {
       return demoGallery();
     case 'filmstrip':
       return demoFilmstrip();
+    case 'timeline':
+      return demoTimeline();
     case 'image-frame':
       return demoImageFrame(false);
     case 'image-inspector':
@@ -1543,7 +1564,7 @@ function ensureHosts(): void {
     sheet.className = 'lab-sheet';
     sheet.innerHTML = `<div class="lab-sheet-handle"></div>
       <h2 class="serif" style="font-family:var(--ds-font-display);font-weight:400;margin:8px 0">Bottom sheet</h2>
-      <p style="color:var(--ds-fg-muted);font-size:14px;line-height:1.5;margin:0 0 16px">sheet sheet · drag handle visual · Esc closes.</p>
+      <p style="color:var(--ds-fg-muted);font-size:14px;line-height:1.5;margin:0 0 16px">Bottom sheet · drag handle · Esc closes.</p>
       <button type="button" class="ml-btn ml-btn-primary" data-sheet-close>Done</button>`;
     document.body.append(back, sheet);
     back.addEventListener('click', () => setSheet(false));
@@ -1645,9 +1666,104 @@ function filtered(): CatalogItem[] {
   });
 }
 
+const LAB_TEXT: Record<
+  Lang,
+  {
+    allCats: string;
+    promptTitle: string;
+    copyPrompt: string;
+    copied: string;
+    expand: string;
+    collapse: string;
+    copyCli: string;
+    heroPrompt: string;
+    heroEyebrow: string;
+    heroTitle: string;
+    heroDesc: string;
+    searchPlaceholder: string;
+  }
+> = {
+  pt: {
+    allCats: 'Todos os componentes',
+    promptTitle: 'Prompt de instalação',
+    copyPrompt: 'Copiar prompt',
+    copied: 'Copiado ✓',
+    expand: 'Ver completo',
+    collapse: 'Recolher',
+    copyCli: 'Copiar CLI',
+    heroPrompt: 'Copiar prompt do sistema',
+    heroEyebrow: 'Components Lab · v1.5 · 89 componentes',
+    heroTitle: 'Componentes em linha tátil para sentir — e instalar',
+    heroDesc:
+      'Catálogo expandido do Meridian: 89 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único com prompt individual de instalação para IA e registry shadcn.',
+    searchPlaceholder: 'Buscar componentes…',
+  },
+  en: {
+    allCats: 'All components',
+    promptTitle: 'Install prompt',
+    copyPrompt: 'Copy prompt',
+    copied: 'Copied ✓',
+    expand: 'Full prompt',
+    collapse: 'Collapse',
+    copyCli: 'Copy CLI',
+    heroPrompt: 'Copy system prompt',
+    heroEyebrow: 'Components Lab · v1.5 · 89 components',
+    heroTitle: 'Line components you can feel — and install',
+    heroDesc:
+      'Expanded Meridian catalog: 89 tactile controls, menus, modals, sheets, drawers, pickers, tables, charts, and instruments in single-ink SVG grammar with per-component AI install prompts and shadcn registry.',
+    searchPlaceholder: 'Search components…',
+  },
+  es: {
+    allCats: 'Todos los componentes',
+    promptTitle: 'Prompt de instalación',
+    copyPrompt: 'Copiar prompt',
+    copied: 'Copiado ✓',
+    expand: 'Ver completo',
+    collapse: 'Contraer',
+    copyCli: 'Copiar CLI',
+    heroPrompt: 'Copiar prompt del sistema',
+    heroEyebrow: 'Components Lab · v1.5 · 89 componentes',
+    heroTitle: 'Componentes en línea táctil para sentir — e instalar',
+    heroDesc:
+      'Catálogo expandido de Meridian: 89 controles, menús, modales, sheets, drawers, pickers, tablas, gráficos e instrumentos en trazo único con prompt de instalación por componente y registry shadcn.',
+    searchPlaceholder: 'Buscar componentes…',
+  },
+  fr: {
+    allCats: 'Tous les composants',
+    promptTitle: 'Prompt d’installation',
+    copyPrompt: 'Copier le prompt',
+    copied: 'Copié ✓',
+    expand: 'Tout voir',
+    collapse: 'Réduire',
+    copyCli: 'Copier CLI',
+    heroPrompt: 'Copier le prompt système',
+    heroEyebrow: 'Components Lab · v1.5 · 89 composants',
+    heroTitle: 'Des composants ligne tactiles — à ressentir et installer',
+    heroDesc:
+      'Catalogue Meridian étendu : 89 contrôles, menus, modales, sheets, tiroirs, sélecteurs, tableaux, graphiques et instruments en encre unique avec prompt d’installation par composant et registry shadcn.',
+    searchPlaceholder: 'Rechercher un composant…',
+  },
+};
+
+function syncLabHeroCopy(lang: Lang): void {
+  const copy = LAB_TEXT[lang];
+  const eyebrow = document.getElementById('lab-hero-eyebrow');
+  const title = document.getElementById('lab-hero-title');
+  const desc = document.getElementById('lab-hero-desc');
+  const search = document.getElementById('lab-search-input') as HTMLInputElement | null;
+  const sysBtn = document.getElementById('lab-copy-system-prompt');
+  if (eyebrow) eyebrow.textContent = copy.heroEyebrow;
+  if (title) title.textContent = copy.heroTitle;
+  if (desc) desc.textContent = copy.heroDesc;
+  if (search) search.placeholder = copy.searchPlaceholder;
+  if (sysBtn) sysBtn.textContent = copy.heroPrompt;
+}
+
 function renderGrid(): void {
   const grid = qs<HTMLElement>(document, '#lab-grid');
   const count = qs<HTMLElement>(document, '#lab-count');
+  const lang = getLang();
+  const copy = LAB_TEXT[lang];
   const items = filtered();
   count.textContent = `${items.length} / ${COMPONENT_CATALOG.length}`;
   grid.innerHTML = '';
@@ -1662,18 +1778,56 @@ function renderGrid(): void {
     const meta = document.createElement('div');
     meta.className = 'lab-card-meta';
     const cmd = installCommand(item.install, REGISTRY_BASE);
+    const prompt = buildInstallPrompt(item, REGISTRY_BASE, lang);
     meta.innerHTML = `
       <div class="ds-eyebrow">${CATEGORY_LABELS[item.category]}${item.interactive ? ' · live' : ''}</div>
       <h3>${item.name}</h3>
       <p>${item.blurb}</p>
+      <div class="lab-prompt-section" data-expanded="false">
+        <div class="lab-prompt-head">
+          <span class="ds-eyebrow">${copy.promptTitle}</span>
+          <div class="lab-prompt-btns">
+            <button type="button" class="lab-prompt-expand-btn" aria-expanded="false">${copy.expand}</button>
+            <button type="button" class="lab-prompt-copy-btn">${copy.copyPrompt}</button>
+          </div>
+        </div>
+        <pre class="lab-prompt-pre" aria-label="${item.name} — ${copy.promptTitle}"></pre>
+      </div>
       <div class="lab-card-actions">
-        <button type="button" class="ml-btn" data-copy="${cmd.replace(/"/g, '&quot;')}">Copy install</button>
+        <button type="button" class="ml-btn" data-copy-cli>${copy.copyCli}</button>
         <code title="${cmd}">${cmd}</code>
       </div>`;
-    meta.querySelector('[data-copy]')!.addEventListener('click', async () => {
+
+    const promptBox = qs<HTMLElement>(meta, '.lab-prompt-section');
+    const preEl = qs<HTMLElement>(meta, '.lab-prompt-pre');
+    const copyPromptBtn = qs<HTMLButtonElement>(meta, '.lab-prompt-copy-btn');
+    const expandBtn = qs<HTMLButtonElement>(meta, '.lab-prompt-expand-btn');
+    preEl.textContent = prompt;
+
+    expandBtn.addEventListener('click', () => {
+      const next = promptBox.dataset.expanded !== 'true';
+      promptBox.dataset.expanded = String(next);
+      expandBtn.setAttribute('aria-expanded', String(next));
+      expandBtn.textContent = next ? copy.collapse : copy.expand;
+    });
+
+    copyPromptBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(prompt);
+        copyPromptBtn.textContent = copy.copied;
+        pushToast(`${copy.copied} · ${item.name}`);
+        window.setTimeout(() => {
+          copyPromptBtn.textContent = copy.copyPrompt;
+        }, 1400);
+      } catch {
+        pushToast('Clipboard unavailable');
+      }
+    });
+
+    meta.querySelector('[data-copy-cli]')!.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(cmd);
-        pushToast(`Copied · ${item.install}`);
+        pushToast(`Copied CLI · ${item.install}`);
       } catch {
         pushToast('Clipboard unavailable');
       }
@@ -1685,6 +1839,7 @@ function renderGrid(): void {
 
 function renderSidebar(): void {
   const nav = qs<HTMLElement>(document, '#lab-cats');
+  const copy = LAB_TEXT[getLang()];
   const cats: Array<ComponentCategory | 'all'> = [
     'all',
     'controls',
@@ -1703,11 +1858,12 @@ function renderSidebar(): void {
   const wrap = document.createElement('div');
   wrap.className = 'lab-cat';
   for (const c of cats) {
+    const n = c === 'all' ? COMPONENT_CATALOG.length : COMPONENT_CATALOG.filter((i) => i.category === c).length;
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'lab-cat-btn';
     b.dataset.active = String(c === activeCategory);
-    b.textContent = c === 'all' ? 'All components' : CATEGORY_LABELS[c];
+    b.innerHTML = `<span>${c === 'all' ? copy.allCats : CATEGORY_LABELS[c]}</span><span class="lab-cat-count">${n}</span>`;
     b.addEventListener('click', () => {
       activeCategory = c;
       renderSidebar();
@@ -1754,12 +1910,13 @@ function initChrome(): void {
 }
 
 function init(): void {
-  initI18n();
+  const lang = initI18n();
   mountPaperGrain({ seed: 20261120 });
   bootPaperGrainExtras();
   markPageReady();
   ensureHosts();
   initChrome();
+  syncLabHeroCopy(lang);
   renderSidebar();
   renderGrid();
 
@@ -1771,6 +1928,28 @@ function init(): void {
 
   const banner = document.getElementById('lab-registry-cmd');
   if (banner) banner.textContent = `npx shadcn@latest add ${REGISTRY_BASE}/registry.json`;
+
+  document.getElementById('lab-copy-system-prompt')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    const currentLang = getLang();
+    const copy = LAB_TEXT[currentLang];
+    try {
+      await navigator.clipboard.writeText(buildSystemInstallPrompt(REGISTRY_BASE, currentLang));
+      btn.textContent = copy.copied;
+      pushToast(`${copy.copied} · Meridian v1.5`);
+      window.setTimeout(() => {
+        btn.textContent = copy.heroPrompt;
+      }, 1400);
+    } catch {
+      pushToast('Clipboard unavailable');
+    }
+  });
+
+  window.addEventListener('meridian:lang', ((ev: CustomEvent<{ lang: Lang }>) => {
+    syncLabHeroCopy(ev.detail.lang);
+    renderSidebar();
+    renderGrid();
+  }) as EventListener);
 }
 
 init();

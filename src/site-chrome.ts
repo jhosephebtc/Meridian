@@ -9,9 +9,68 @@ function closeHeaderMenus(except?: Element | null): void {
   });
 }
 
+const GH_STARS_CACHE_KEY = 'meridian-gh-stars-v1';
+const GH_STARS_TTL_MS = 15 * 60 * 1000;
+
+function formatStarCount(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k`;
+  return String(n);
+}
+
+function applyStarBadges(slots: NodeListOf<HTMLElement>, count: number): void {
+  const text = formatStarCount(count);
+  slots.forEach((el) => {
+    el.textContent = text;
+    el.hidden = false;
+  });
+}
+
+function hydrateGitHubStars(): void {
+  const slots = document.querySelectorAll<HTMLElement>('[data-gh-stars]');
+  if (!slots.length) return;
+
+  try {
+    const raw = sessionStorage.getItem(GH_STARS_CACHE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as { count?: unknown; ts?: unknown };
+      if (
+        typeof parsed.count === 'number'
+        && typeof parsed.ts === 'number'
+        && Date.now() - parsed.ts < GH_STARS_TTL_MS
+      ) {
+        applyStarBadges(slots, parsed.count);
+        return;
+      }
+    }
+  } catch {
+    /* ignore cache read failures */
+  }
+
+  fetch('https://api.github.com/repos/jhosephebtc/Meridian', {
+    headers: { Accept: 'application/vnd.github+json' },
+  })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data: { stargazers_count?: unknown } | null) => {
+      if (!data || typeof data.stargazers_count !== 'number') return;
+      applyStarBadges(slots, data.stargazers_count);
+      try {
+        sessionStorage.setItem(
+          GH_STARS_CACHE_KEY,
+          JSON.stringify({ count: data.stargazers_count, ts: Date.now() }),
+        );
+      } catch {
+        /* ignore quota errors */
+      }
+    })
+    .catch(() => {
+      /* offline or rate-limited — keep hidden silently */
+    });
+}
+
 export function bindSiteChrome(): void {
   if (document.documentElement.dataset.siteChrome === 'on') return;
   document.documentElement.dataset.siteChrome = 'on';
+  hydrateGitHubStars();
 
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null;

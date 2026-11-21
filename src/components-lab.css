@@ -33,6 +33,10 @@
 
 .lab-cat-btn {
   appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   border: 0;
   background: transparent;
   text-align: left;
@@ -47,6 +51,13 @@
     color var(--ds-duration-fast) var(--ds-ease-out),
     background-color var(--ds-duration-fast) var(--ds-ease-out),
     transform var(--ds-duration-press) var(--ds-ease-out);
+}
+
+.lab-cat-count {
+  font-family: var(--ds-font-mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-fg-subtle);
 }
 
 .lab-cat-btn[data-active="true"] {
@@ -1759,7 +1770,8 @@
   .ml-btn, .ml-slider-thumb, .ml-dial .ml-dial-knob, .ml-switch-thumb,
   .lab-toast, .lab-dialog, .lab-sheet, .lab-drawer, .ml-progress-fill,
   .lab-card, .ml-menu, .ml-film-cell, .ml-key, .ml-console-key, .ml-kpi,
-  .ml-color-swatch, .ml-acc-panel, .ml-acc-trigger .ml-acc-icon {
+  .ml-color-swatch, .ml-acc-panel, .ml-acc-trigger .ml-acc-icon,
+  .lab-prompt-copy-btn, .lab-prompt-expand-btn {
     transition: none !important;
   }
   .ml-chart-svg .ml-draw,
@@ -1769,4 +1781,127 @@
   .ml-btn[data-ink="true"]::after {
     animation: none !important;
   }
+}
+
+/* ---------- Timeline card stage ---------- */
+.lab-timeline-host {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.lab-timeline-host .ds-timeline-node {
+  width: 146px;
+}
+
+/* ---------- Per-component install prompt section ---------- */
+.lab-prompt-section {
+  margin-top: 8px;
+  padding: 10px 11px;
+  border: var(--ds-hairline) solid var(--ds-rule);
+  border-radius: var(--ds-radius-squircle);
+  background: var(--ds-surface-1);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.lab-prompt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lab-prompt-head .ds-eyebrow {
+  margin: 0;
+  font-size: 9.5px;
+}
+
+.lab-prompt-btns {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.lab-prompt-copy-btn,
+.lab-prompt-expand-btn {
+  appearance: none;
+  border: var(--ds-hairline) solid var(--ds-border-strong);
+  background: var(--ds-bg);
+  color: var(--ds-fg);
+  font-family: var(--ds-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: var(--ds-radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition:
+    background-color 140ms var(--ds-ease-out),
+    border-color 140ms var(--ds-ease-out),
+    color 140ms var(--ds-ease-out),
+    transform 120ms var(--ds-ease-out);
+}
+
+.lab-prompt-expand-btn {
+  background: transparent;
+  color: var(--ds-fg-muted);
+  border-color: var(--ds-border);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lab-prompt-copy-btn:hover {
+    background: var(--ds-fg);
+    color: var(--ds-bg);
+    border-color: var(--ds-fg);
+  }
+  .lab-prompt-expand-btn:hover {
+    color: var(--ds-fg);
+    border-color: var(--ds-border-strong);
+  }
+}
+
+.lab-prompt-copy-btn:active,
+.lab-prompt-expand-btn:active {
+  transform: scale(var(--ds-press-scale, 0.97));
+}
+
+.lab-prompt-copy-btn:focus-visible,
+.lab-prompt-expand-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.lab-prompt-pre {
+  margin: 0;
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  line-height: 1.48;
+  color: var(--ds-fg-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 4.55em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
+
+.lab-prompt-section[data-expanded="true"] .lab-prompt-pre {
+  max-height: 240px;
+  overflow: auto;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.lab-install-banner .lab-banner-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
 }

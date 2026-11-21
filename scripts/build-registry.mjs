@@ -108,7 +108,7 @@ const items = ids.map((id) => {
 const registry = {
   $schema: 'https://ui.shadcn.com/schema/registry.json',
   name: 'meridian',
-  homepage: 'https://github.com/meridian-ds/Meridian',
+  homepage: 'https://github.com/jhosephebtc/Meridian',
   items,
 };
 

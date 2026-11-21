@@ -24,7 +24,8 @@ import {
   getPaperGrainOpacity,
 } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
-import { initI18n } from './i18n';
+import { initI18n, getLang, type Lang } from './i18n';
+import { applyPreviewI18n } from './i18n-preview.ts';
 import './i18n.css';
 import {
   renderPlottedGlobeSvg,
@@ -139,8 +140,48 @@ function syncClipTabs(container: HTMLElement | null, activeBtn: HTMLElement | nu
   overlay.style.clipPath = `inset(0 ${Math.max(0, rightPct).toFixed(2)}% 0 ${Math.max(0, leftPct).toFixed(2)}% round 9999px)`;
 }
 
+function hexLum(hex: string): number {
+  const m = hex.replace('#', '');
+  const rgb = [0, 2, 4].map((i) => {
+    const v = parseInt(m.slice(i, i + 2), 16) / 255;
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+}
+
+function contrastRatioLabel(bg: string, fg: string): string {
+  const l1 = hexLum(bg);
+  const l2 = hexLum(fg);
+  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  const tier = ratio >= 7 ? 'AAA' : ratio >= 4.5 ? 'AA' : 'A';
+  return `${ratio.toFixed(1)}:1 ${tier}`;
+}
+
+function syncStatusBar(): void {
+  const meta = SURFACES[appState.surface];
+  const swatchEl = document.getElementById('prev-stat-swatch');
+  const surfEl = document.getElementById('prev-stat-surface');
+  const contrastEl = document.getElementById('prev-stat-contrast');
+  const modeBtn = document.getElementById('prev-mode-toggle');
+  const grainEl = document.getElementById('prev-stat-grain');
+
+  if (swatchEl) swatchEl.style.background = meta.bg;
+  if (surfEl) surfEl.textContent = `${meta.label} · ${meta.bg}`;
+  if (contrastEl) contrastEl.textContent = contrastRatioLabel(meta.bg, meta.fg);
+  if (modeBtn) {
+    const technical = document.documentElement.getAttribute('data-mode') === 'technical';
+    const key = technical ? 'status.modeTechnical' : 'status.modeInvisible';
+    modeBtn.setAttribute('data-prev', key);
+    applyPreviewI18n(getLang());
+  }
+  if (grainEl) {
+    const pct = Math.round(getPaperGrainOpacity() * 100);
+    grainEl.textContent = `Grain: ${appState.grain} · ${appState.grainSize} · ${pct}%`;
+  }
+}
+
 /* ==========================================================================
-   3. WORKSPACE NAVIGATION & 5-SURFACE SINGLE-INK ENGINE
+   3. WORKSPACE NAVIGATION & 13-SURFACE SINGLE-INK ENGINE
    ========================================================================== */
 function setView(view: WorkspaceView): void {
   appState.view = view;
@@ -167,6 +208,7 @@ function setView(view: WorkspaceView): void {
     renderGlobe();
     mountObservatorySketch();
   }
+  syncStatusBar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -180,6 +222,7 @@ function setSurface(surface: SurfaceId, announce = true): void {
 
   renderEnvCompass();
   renderGlobe();
+  syncStatusBar();
   if (appState.view === 'today') mountHeroWatercolor();
   if (appState.view === 'observatory') mountObservatorySketch();
   if (announce) showToast(`Atmosfera: ${SURFACES[surface].label}`);
@@ -193,6 +236,7 @@ function setGrain(grain: GrainPreset): void {
     b.classList.toggle('ds-btn-primary', active);
     b.classList.toggle('ds-btn-tertiary', !active);
   });
+  syncStatusBar();
   showToast(`Intensidade: ${grain}`);
 }
 
@@ -205,6 +249,7 @@ function setGrainSize(size: GrainSizeId): void {
     b.classList.toggle('ds-btn-primary', active);
     b.classList.toggle('ds-btn-tertiary', !active);
   });
+  syncStatusBar();
   showToast(`Tamanho do grão: ${GRAIN_SIZES[size].label}`);
 }
 
@@ -225,6 +270,7 @@ function applyGrainOpacity(raw: number | string, announce = false): void {
   const pct = Math.max(20, Math.min(100, Math.round(Number(raw))));
   const opacity = setPaperGrainOpacity(pct / 100);
   syncGrainOpacityUi(opacity);
+  syncStatusBar();
   if (announce) showToast(`Opacidade do grão: ${pct}%`);
 }
 
@@ -331,6 +377,8 @@ function renderEnvCompass(): void {
   document.getElementById('preview-hour-note')!.textContent = cur.note;
 }
 
+const LIFELINE_HOURS = [6, 10, 13, 17, 20] as const;
+
 const LIFELINE_EVENTS = [
   { t: '06:30', title: 'Brisa Limpa · AQI 21', text: 'Melhor ar do dia para corrida leve e abrir janelas.' },
   { t: '10:00', title: 'Janela Segura · 23°C', text: 'Asfalto fresco e pólen baixo para passeio em família.' },
@@ -353,20 +401,25 @@ function initLifeline(): void {
     </button>
   `).join('');
 
-  let dragging = false, startX = 0, startScroll = 0, lastX = 0, lastT = 0, vx = 0, raf = 0;
+  let dragging = false, moved = false, startX = 0, startScroll = 0, lastX = 0, lastT = 0, vx = 0, raf = 0;
 
   viewport.addEventListener('pointerdown', (e) => {
     cancelAnimationFrame(raf);
     dragging = true;
+    moved = false;
     startX = lastX = e.clientX;
     startScroll = viewport.scrollLeft;
     lastT = performance.now();
     vx = 0;
-    viewport.dataset.dragging = 'true';
-    viewport.setPointerCapture(e.pointerId);
   });
   viewport.addEventListener('pointermove', (e) => {
     if (!dragging) return;
+    if (!moved) {
+      if (Math.abs(e.clientX - startX) < 5) return;
+      moved = true;
+      viewport.dataset.dragging = 'true';
+      try { viewport.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+    }
     const now = performance.now();
     const dt = Math.max(1, now - lastT);
     vx = (lastX - e.clientX) / dt;
@@ -378,6 +431,7 @@ function initLifeline(): void {
     if (!dragging) return;
     dragging = false;
     viewport.dataset.dragging = 'false';
+    if (!moved) return;
     let v = vx * 16;
     const step = () => {
       if (Math.abs(v) < 0.25) return;
@@ -394,6 +448,14 @@ function initLifeline(): void {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.ll-node');
     if (!btn) return;
     track.querySelectorAll('.ll-node').forEach((n) => n.setAttribute('aria-pressed', n === btn ? 'true' : 'false'));
+    const idx = Number(btn.dataset.ll);
+    const hour = LIFELINE_HOURS[idx];
+    if (typeof hour === 'number') {
+      appState.envHour = hour;
+      const range = document.getElementById('preview-hour-range') as HTMLInputElement | null;
+      if (range) range.value = String(hour);
+      renderEnvCompass();
+    }
   });
 
   document.getElementById('ll-left')?.addEventListener('click', () => viewport.scrollBy({ left: -220, behavior: 'smooth' }));
@@ -535,9 +597,10 @@ function bootstrap(): void {
     { label: 'Tela: Observatório Pro (Globo 81k + Aquarela)', hint: 'V3', run: () => setView('observatory') },
     ...SURFACE_ORDER.map((s, idx) => ({
       label: `Atmosfera: ${SURFACES[s].label} (${SURFACES[s].bg})`,
-      hint: String(idx + 1),
+      hint: idx < 9 ? String(idx + 1) : idx === 9 ? '0' : '·',
       run: () => setSurface(s),
     })),
+    { label: 'Ir para Components Lab (89 componentes)', hint: '↗', run: () => { window.location.href = './components.html'; } },
     { label: 'Ir para Showcase completo do Design System', hint: '↗', run: () => { window.location.href = './index.html'; } },
   ];
 
@@ -717,6 +780,21 @@ function bootstrap(): void {
     mountObservatorySketch();
     showToast(`Preset Atelier: ${appState.obsPreset}`);
   });
+  document.getElementById('btn-obs-export')?.addEventListener('click', () => {
+    const canvas = document.getElementById('obs-atelier-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = `meridian-atelier-${appState.obsPreset}-${appState.surface}.png`;
+    link.click();
+    showToast('Prancheta Atelier exportada (.PNG)');
+  });
+  document.getElementById('prev-mode-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-mode') === 'technical' ? 'invisible' : 'technical';
+    document.documentElement.setAttribute('data-mode', next);
+    syncStatusBar();
+    showToast(next === 'technical' ? 'Modo Técnico Pro ativo' : 'Modo Invisível B2C ativo');
+  });
 
   // Scroll hairline
   const topbar = document.getElementById('app-topbar')!;
@@ -766,11 +844,25 @@ function bootstrap(): void {
     }
     if ((e.target as HTMLElement).matches('input, textarea, select')) return;
     if (e.key === '/') { e.preventDefault(); setCmdk(true); }
-    else if (/^[1-8]$/.test(e.key)) setSurface(SURFACE_ORDER[Number(e.key) - 1]);
+    else if (e.key.toLowerCase() === 'm') {
+      const next = document.documentElement.getAttribute('data-mode') === 'technical' ? 'invisible' : 'technical';
+      document.documentElement.setAttribute('data-mode', next);
+      syncStatusBar();
+      showToast(next === 'technical' ? 'Modo Técnico Pro ativo' : 'Modo Invisível B2C ativo');
+    } else if (/^[1-9]$/.test(e.key)) setSurface(SURFACE_ORDER[Number(e.key) - 1]);
+    else if (e.key === '0') setSurface(SURFACE_ORDER[9]);
   });
 
   // Initial render
   initI18n();
+  applyPreviewI18n(getLang());
+  window.addEventListener('meridian:lang', (ev) => {
+    const lang = (ev as CustomEvent<{ lang: Lang }>).detail?.lang ?? getLang();
+    applyPreviewI18n(lang);
+    syncStatusBar();
+    const nav = document.querySelector<HTMLElement>('[data-cliptabs="workspace-nav"]');
+    syncClipTabs(nav, nav?.querySelector<HTMLElement>(`[data-view="${appState.view}"]`) ?? null);
+  });
   bootPaperGrainExtras();
   syncGrainOpacityUi(getPaperGrainOpacity());
   syncLayerToggle('[data-grain-dust-pick]', document.documentElement.dataset.grainDust === 'on');

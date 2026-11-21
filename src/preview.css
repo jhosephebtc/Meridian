@@ -44,6 +44,38 @@
   flex-shrink: 0;
 }
 
+@media (max-width: 600px) {
+  .ds-topbar {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 6px;
+  }
+  .brand-mark {
+    gap: 6px;
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  .brand-title {
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .topbar-right {
+    gap: 4px;
+  }
+  .topbar-right .ds-btn-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    padding: 0;
+  }
+  .topbar-right .site-menu-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
+
 .swatch-pill-group {
   display: inline-flex;
   align-items: center;
@@ -422,6 +454,101 @@
 @media (hover: hover) and (pointer: fine) {
   .cmdk-item-btn:hover {
     background-color: var(--ds-bg-tint-muted);
+  }
+}
+
+/* ==========================================================================
+   PREVIEW LIVE STATUS BAR & AUDIT TABLE RESPONSIVENESS
+   ========================================================================== */
+.preview-status-bar {
+  position: relative;
+  border-bottom: 1px solid var(--ds-rule);
+  background: color-mix(in srgb, var(--ds-surface-1) 68%, transparent);
+}
+
+.preview-status-inner {
+  max-width: var(--ds-max-w, 1200px);
+  margin: 0 auto;
+  padding: 9px clamp(16px, 3vw, 28px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 14px;
+  font-family: var(--ds-font-mono);
+  font-size: 11px;
+  color: var(--ds-fg-muted);
+}
+
+.preview-status-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  min-height: 26px;
+  border-radius: 9999px;
+  border: 1px solid var(--ds-border);
+  background: var(--ds-surface-1);
+  color: var(--ds-fg);
+  font-family: var(--ds-font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--ds-duration-fast) var(--ds-ease-out),
+    border-color var(--ds-duration-fast) var(--ds-ease-out),
+    transform var(--ds-duration-press) var(--ds-ease-out);
+}
+
+.preview-status-pill:active {
+  transform: scale(0.97);
+}
+
+.preview-status-pill:focus-visible {
+  outline: 2px solid var(--ds-fg);
+  outline-offset: 2px;
+}
+
+.preview-status-swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--ds-fg) 35%, transparent);
+  background: var(--ds-bg);
+  flex-shrink: 0;
+}
+
+.audit-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.audit-table {
+  min-width: 560px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .preview-status-pill:hover {
+    background: var(--ds-surface-2);
+    border-color: var(--ds-border-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-status-pill,
+  .preview-status-pill:active {
+    transition: none;
+    transform: none;
   }
 }
 

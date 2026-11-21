@@ -147,7 +147,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
 
   // Overlays — menus & modals
   { id: 'dialog', name: 'Line Dialog', category: 'overlays', blurb: 'Modal centrado, dim seco, Esc fecha.', demo: 'dialog', install: 'dialog', interactive: true },
-  { id: 'sheet-modal', name: 'Sheet Modal', category: 'overlays', blurb: 'Bottom sheet sheet com handle.', demo: 'sheet', install: 'sheet-modal', interactive: true },
+  { id: 'sheet-modal', name: 'Sheet Modal', category: 'overlays', blurb: 'Bottom sheet tátil com alça e fechamento por Esc.', demo: 'sheet', install: 'sheet-modal', interactive: true },
   { id: 'drawer-modal', name: 'Drawer', category: 'overlays', blurb: 'Painel lateral com backdrop dim.', demo: 'drawer', install: 'drawer-modal', interactive: true },
   { id: 'confirm-modal', name: 'Confirm Modal', category: 'overlays', blurb: 'Confirmação destrutiva / primária.', demo: 'dialog', install: 'confirm-modal', interactive: true },
   { id: 'menu', name: 'Dropdown Menu', category: 'overlays', blurb: 'Menu ancorado no gatilho, itens + atalhos.', demo: 'menu', install: 'menu', interactive: true },
@@ -214,6 +214,126 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'tide-instrument', name: 'Tide Curve', category: 'weather', blurb: 'Curva de maré contínua.', demo: 'chart-area', install: 'tide-instrument', interactive: true },
 ] as const;
 
-export function installCommand(id: string, baseUrl = 'https://meridian.local/r'): string {
+export function installCommand(id: string, baseUrl = 'https://meridian-olive-phi.vercel.app/r'): string {
   return `npx shadcn@latest add ${baseUrl}/${id}.json`;
+}
+
+export type PromptLang = 'pt' | 'en' | 'es' | 'fr';
+
+const DIAL_ALIAS_IDS = new Set(['dial', 'detent-dial', 'camera-dial', 'camera-wheel']);
+
+function pascalCase(id: string): string {
+  return id
+    .split('-')
+    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .join('');
+}
+
+function resolveTarget(id: string): { symbol: string; file: string } {
+  if (DIAL_ALIAS_IDS.has(id)) {
+    return { symbol: 'Dial', file: 'components/meridian/dial.tsx' };
+  }
+  return { symbol: pascalCase(id), file: `components/meridian/${id}.tsx` };
+}
+
+export function buildInstallPrompt(
+  item: CatalogItem,
+  baseUrl = 'https://meridian-olive-phi.vercel.app/r',
+  lang: PromptLang = 'pt',
+): string {
+  const cmd = installCommand(item.install, baseUrl);
+  const { symbol, file } = resolveTarget(item.install);
+  const skillsCmd = 'npx skills add jhosephebtc/Meridian --skill meridian-components --skill meridian-taste';
+
+  if (lang === 'en') {
+    return [
+      `Install and configure the Meridian component "${item.name}" (${item.id}, category: ${item.category}).`,
+      `Behavior: ${item.blurb}`,
+      '',
+      '1. Install from the Meridian shadcn registry:',
+      `   ${cmd}`,
+      `   (Optional agent skills: ${skillsCmd})`,
+      `2. Verify target files: ${file} (export \`${symbol}\`) and styles/meridian-ui.css, ensuring Meridian Single-Ink CSS tokens (--ds-bg, --ds-fg, --ds-border, --ds-rule, --ds-font-display, --ds-font-sans, --ds-font-mono, --ds-ease-out) are loaded from tokens.css.`,
+      '3. Enforce Meridian taste guardrails: single-ink hairline strokes (currentColor), scale(0.97) on :active, @media (hover: hover) and (pointer: fine) for hover, zero `transition: all`, zero `ease-in`, tabular-nums on numeric readouts, and prefers-reduced-motion support.',
+      '4. Verify on both `data-surface="ivory"` and `data-surface="obsidian"`, test keyboard/focus-visible navigation, and run `npx tsc --noEmit`.',
+    ].join('\n');
+  }
+
+  if (lang === 'es') {
+    return [
+      `Instala y configura el componente Meridian "${item.name}" (${item.id}, categoría: ${item.category}).`,
+      `Comportamiento: ${item.blurb}`,
+      '',
+      '1. Instalar vía registry shadcn de Meridian:',
+      `   ${cmd}`,
+      `   (Opcional — skills para el agente: ${skillsCmd})`,
+      `2. Verifica los archivos generados: ${file} (export \`${symbol}\`) y styles/meridian-ui.css, asegurando los tokens Single-Ink (--ds-bg, --ds-fg, --ds-border, --ds-rule, --ds-font-*, --ds-ease-out) desde tokens.css.`,
+      '3. Mantén las reglas de gusto Meridian: trazos finos en una sola tinta (currentColor), scale(0.97) en :active, hover en @media (hover: hover) and (pointer: fine), cero `transition: all`, cero `ease-in`, tabular-nums en números y soporte a prefers-reduced-motion.',
+      '4. Valida en `data-surface="ivory"` y `data-surface="obsidian"`, prueba teclado/focus-visible y ejecuta `npx tsc --noEmit`.',
+    ].join('\n');
+  }
+
+  if (lang === 'fr') {
+    return [
+      `Installe et configure le composant Meridian "${item.name}" (${item.id}, catégorie : ${item.category}).`,
+      `Comportement : ${item.blurb}`,
+      '',
+      '1. Installer via le registry shadcn Meridian :',
+      `   ${cmd}`,
+      `   (Optionnel — skills agent : ${skillsCmd})`,
+      `2. Vérifie les fichiers cibles : ${file} (export \`${symbol}\`) et styles/meridian-ui.css, avec les tokens Single-Ink (--ds-bg, --ds-fg, --ds-border, --ds-rule, --ds-font-*, --ds-ease-out) chargés depuis tokens.css.`,
+      '3. Respecte les règles de goût Meridian : traits fins Single-Ink (currentColor), scale(0.97) au :active, hover sous @media (hover: hover) and (pointer: fine), zéro `transition: all`, zéro `ease-in`, tabular-nums et prefers-reduced-motion.',
+      '4. Vérifie sous `data-surface="ivory"` et `data-surface="obsidian"`, teste le focus clavier et lance `npx tsc --noEmit`.',
+    ].join('\n');
+  }
+
+  return [
+    `Instale e integre o componente Meridian "${item.name}" (${item.id}, categoria: ${item.category}).`,
+    `Comportamento: ${item.blurb}`,
+    '',
+    '1. Instalar pelo registry shadcn do Meridian:',
+    `   ${cmd}`,
+    `   (Opcional — skills de gosto e componentes: ${skillsCmd})`,
+    `2. Verifique os arquivos destino: ${file} (export \`${symbol}\`) e styles/meridian-ui.css, garantindo que os tokens Single-Ink (--ds-bg, --ds-fg, --ds-border, --ds-rule, --ds-font-display, --ds-font-sans, --ds-font-mono, --ds-ease-out) estejam importados via tokens.css.`,
+    '3. Mantenha as regras de gosto Meridian: traços hairline em tinta única (currentColor), scale(0.97) no :active, hover restrito a @media (hover: hover) and (pointer: fine), zero `transition: all`, zero `ease-in`, tabular-nums em leituras numéricas e suporte a prefers-reduced-motion.',
+    '4. Valide em `data-surface="ivory"` e `data-surface="obsidian"`, teste navegação por teclado/focus-visible e rode `npx tsc --noEmit`.',
+  ].join('\n');
+}
+
+export function buildSystemInstallPrompt(
+  baseUrl = 'https://meridian-olive-phi.vercel.app/r',
+  lang: PromptLang = 'pt',
+): string {
+  const reg = `${baseUrl}/registry.json`;
+  const skills = 'npx skills add jhosephebtc/Meridian';
+  if (lang === 'en') {
+    return [
+      'Set up the Meridian Design System (v1.5.0) and install its agent skills & component registry:',
+      `1. Agent skills + taste rules: ${skills}`,
+      `2. Component registry index: npx shadcn@latest add ${reg}`,
+      '3. Load src/tokens.css + src/fonts.css + src/components.css (or styles/meridian-ui.css), call mountPaperGrain() + bootPaperGrainExtras() + markPageReady(), and keep Single-Ink, Frequency Gate, and Plotter SVG rules active.',
+    ].join('\n');
+  }
+  if (lang === 'es') {
+    return [
+      'Configura Meridian Design System (v1.5.0) e instala sus skills y registry de componentes:',
+      `1. Skills y taste para el agente: ${skills}`,
+      `2. Índice del registry: npx shadcn@latest add ${reg}`,
+      '3. Carga src/tokens.css + src/fonts.css + src/components.css, inicia mountPaperGrain() + bootPaperGrainExtras() + markPageReady() y respeta Single-Ink, Frequency Gate y Plotter SVG.',
+    ].join('\n');
+  }
+  if (lang === 'fr') {
+    return [
+      'Configure Meridian Design System (v1.5.0) et installe ses skills et son registry :',
+      `1. Skills & goût pour l’agent : ${skills}`,
+      `2. Index du registry : npx shadcn@latest add ${reg}`,
+      '3. Charge src/tokens.css + src/fonts.css + src/components.css, lance mountPaperGrain() + bootPaperGrainExtras() + markPageReady() et respecte Single-Ink, Frequency Gate et Plotter SVG.',
+    ].join('\n');
+  }
+  return [
+    'Configure o Meridian Design System (v1.5.0) com suas skills de gosto e registry de 89 componentes:',
+    `1. Skills & Taste para o agente: ${skills}`,
+    `2. Índice completo do registry shadcn: npx shadcn@latest add ${reg}`,
+    '3. Carregue src/tokens.css + src/fonts.css + src/components.css, inicialize mountPaperGrain() + bootPaperGrainExtras() + markPageReady() e preserve Single-Ink, Frequency Gate e gramática Plotter SVG.',
+  ].join('\n');
 }
