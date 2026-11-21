@@ -364,13 +364,24 @@ body {
   border-radius: var(--ds-radius-pill);
   border: 1px solid var(--ds-border);
   background-color: var(--ds-bg-tint-subtle);
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  isolation: isolate;
+  -webkit-overflow-scrolling: touch;
 }
+.ds-cliptabs::-webkit-scrollbar { display: none; }
 
 .ds-cliptabs-track {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 2px;
+  flex: 0 0 auto;
+  width: max-content;
+  min-width: 100%;
 }
 
 .ds-cliptabs-btn {
@@ -387,6 +398,7 @@ body {
   border-radius: var(--ds-radius-pill);
   cursor: pointer;
   white-space: nowrap;
+  flex: 0 0 auto;
   transition: color var(--ds-duration-fast) ease;
 }
 
@@ -416,6 +428,9 @@ body {
 }
 
 .ds-cliptabs-overlay .ds-cliptabs-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-ui-md);
   font-weight: 500;
@@ -423,6 +438,9 @@ body {
   padding: 7px 14px;
   color: var(--ds-accent-fg);
   white-space: nowrap;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------
@@ -587,10 +605,17 @@ body {
 .ds-popover {
   position: absolute;
   z-index: 80;
+  width: min(300px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
+  max-height: min(70vh, 520px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(12px, 2.4vw, 16px);
   border-radius: var(--ds-radius-card);
   background-color: var(--ds-bg);
-  border: 0;
-  box-shadow: var(--ds-shadow-popover);
+  border: 1px solid var(--ds-border, var(--ds-rule));
+  box-shadow: none;
   transform-origin: var(--ds-origin, top right);
   opacity: 0;
   visibility: hidden;
@@ -600,6 +625,20 @@ body {
     opacity var(--ds-duration-tooltip) var(--ds-ease-out),
     transform var(--ds-duration-tooltip) var(--ds-ease-out),
     visibility 0s linear var(--ds-duration-tooltip);
+}
+
+@media (max-width: 420px) {
+  .ds-popover {
+    position: fixed;
+    top: auto;
+    right: 12px;
+    left: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    width: auto;
+    max-width: none;
+    max-height: min(62vh, 480px);
+    transform-origin: bottom center;
+  }
 }
 
 .ds-popover[data-open="true"] {
@@ -675,7 +714,7 @@ body {
   border-radius: var(--ds-radius-card);
   background-color: var(--ds-bg);
   border: 1px solid var(--ds-border-strong);
-  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1251,12 +1290,9 @@ body {
   height: 100dvh;
   background-color: var(--ds-bg);
   background-image: none;
-  border-left: 0;
+  border-left: 1px solid var(--ds-rule);
   border-radius: 16px 0 0 16px;
-  box-shadow:
-    -1px 0 0 0 var(--ds-rule),
-    -24px 0 56px -16px rgba(28, 20, 12, 0.22),
-    -8px 0 20px -10px rgba(28, 20, 12, 0.1);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   transform: translateX(100%);

@@ -2,8 +2,9 @@
  * MERIDIAN — O Farol e o Meridiano
  * Plotter D2 · stroke-draw + ambient loops · dual chrome
  */
+import './site-chrome';
 import { PAPER_SHADER } from './tokens';
-import { mountPaperGrain } from './paper-grain';
+import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n, getLang, t, type Lang } from './i18n';
 import { applyHistoriaEssay } from './i18n-historia';
@@ -442,11 +443,11 @@ function init(): void {
 
   mountPaperGrain({
     seed: 20241120,
-    speckleStrength: PAPER_SHADER.defaultSpeckle * 0.85,
+    speckleStrength: PAPER_SHADER.defaultSpeckle,
     fiberDensity: PAPER_SHADER.defaultFiber,
     size: PAPER_SHADER.defaultSize,
   });
-
+  bootPaperGrainExtras();
   const saved = (localStorage.getItem('meridian-historia-layout') as LayoutMode | null) ?? 'masthead';
   setLayout(saved === 'rail' ? 'rail' : 'masthead');
 

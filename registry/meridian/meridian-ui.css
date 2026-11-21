@@ -1082,7 +1082,8 @@
 }
 .ml-color-swatch:active { transform: scale(0.94); }
 .ml-color-swatch[data-active="true"] {
-  box-shadow: 0 0 0 2px var(--ds-bg), 0 0 0 3.5px var(--ds-fg);
+  border: 1px solid color-mix(in srgb, var(--ds-fg) 42%, transparent);
+  box-shadow: none;
 }
 .ml-color-sliders { display: flex; flex-direction: column; gap: 10px; }
 .ml-color-row {

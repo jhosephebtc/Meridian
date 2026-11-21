@@ -1,6 +1,7 @@
 import { initI18n, getLang, type Lang } from './i18n';
 import { applyHomeI18n } from './i18n-home';
 import './i18n.css';
+import './site-chrome';
 
 function syncHome(lang: Lang = getLang()): void {
   if (!document.getElementById('home-historia-prose')) return;

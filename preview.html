@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/preview.css" />
   <link rel="stylesheet" href="./src/i18n.css" />
+  <link rel="stylesheet" href="./src/site-chrome.css" />
 </head>
 <body>
   <div class="ds-page-veil" aria-hidden="false"></div>
@@ -44,7 +45,10 @@
 
       <div class="topbar-right">
         <div data-lang-slot></div>
-        <div class="swatch-pill-group" role="group" aria-label="Atmosfera cromática suave">
+        <div class="menu-anchor align-end">
+          <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" data-i18n="nav.surface">Superfície</button>
+          <div class="header-menu" data-open="false" role="menu">
+        <div class="swatch-pill-group swatch-row" role="group" aria-label="Atmosfera cromática suave">
           <button class="swatch-btn" data-surface-pick="ivory" aria-pressed="true" style="background:#FAF9F5" title="Ivory Editorial"></button>
           <button class="swatch-btn" data-surface-pick="blush" aria-pressed="false" style="background:#E8C4C0" title="Soft Blush"></button>
           <button class="swatch-btn" data-surface-pick="butter" aria-pressed="false" style="background:#E8D9A8" title="Soft Butter"></button>
@@ -53,6 +57,8 @@
           <button class="swatch-btn" data-surface-pick="lilac" aria-pressed="false" style="background:#C9C0D8" title="Soft Lilac"></button>
           <button class="swatch-btn" data-surface-pick="terracotta" aria-pressed="false" style="background:#EDBB99" title="Warm Terracotta"></button>
           <button class="swatch-btn" data-surface-pick="obsidian" aria-pressed="false" style="background:#141413" title="Obsidian Dark"></button>
+        </div>
+          </div>
         </div>
 
         <div class="popover-wrap">
@@ -76,29 +82,48 @@
               <button class="ds-btn ds-btn-primary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="editorial">Edit.</button>
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-pick="tactile">Tátil</button>
             </div>
+            <div class="ds-eyebrow" style="margin-bottom:8px;">Opacidade</div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <input id="grain-opacity-range" type="range" min="20" max="100" step="5" value="100" aria-label="Opacidade do grão" style="flex:1; accent-color:var(--ds-fg);" />
+              <span id="grain-opacity-value" class="ds-mono" style="min-width:3.2em; text-align:right; font-size:11px;">100%</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:12px;">
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-opacity-pick="40">40%</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-opacity-pick="70">70%</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-opacity-pick="85">85%</button>
+              <button class="ds-btn ds-btn-primary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-opacity-pick="100">100%</button>
+            </div>
             <div class="ds-eyebrow" style="margin-bottom:8px;">Tamanho do grão</div>
-            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:10px;">
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:12px;">
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="fine">Fino</button>
               <button class="ds-btn ds-btn-primary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="medium">Médio</button>
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="coarse">Grosso</button>
               <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" data-grain-size-pick="chunky">Grumo</button>
             </div>
+            <div class="ds-eyebrow" style="margin-bottom:8px;">Camadas</div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:10px;">
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-dust-pick aria-pressed="false">Dust</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-scratch-pick aria-pressed="false">Scratch</button>
+              <button class="ds-btn ds-btn-tertiary" style="padding:6px 4px; min-height:28px; font-size:11px;" type="button" data-grain-double-pick aria-pressed="false">Duplo</button>
+            </div>
             <div class="ds-mono" style="font-size:10.5px; color:var(--ds-fg-muted);">
-              Intensidade = opacidade · Tamanho = repaint (<code>data-grain-size</code>).
+              Intensidade + opacidade · Dust/Scratch opcionais.
             </div>
           </div>
         </div>
 
-        <button class="ds-btn ds-btn-tertiary" id="btn-cmdk" style="padding:7px 10px; min-height:34px;">
-          <span class="kbd-chip">⌘K</span>
-        </button>
-
-        <a href="./components.html" class="ds-btn ds-btn-pill ds-btn-tertiary" style="padding:7px 12px; min-height:34px; font-size:12px;">
-          Components
-        </a>
-        <a href="./index.html" class="ds-btn ds-btn-pill ds-btn-secondary" style="padding:7px 12px; min-height:34px; font-size:12px;">
-          ← Design System
-        </a>
+        <div class="menu-anchor align-end">
+          <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" data-i18n="nav.places">Ir</button>
+          <div class="header-menu" data-open="false" role="menu">
+            <button type="button" class="header-menu-item" id="btn-cmdk">Paleta ⌘K</button>
+            <a href="./index.html" role="menuitem" data-i18n="nav.system">Sistema</a>
+            <a href="./preview.html" role="menuitem" aria-current="page" data-i18n="nav.studio">Studio</a>
+            <a href="./components.html" role="menuitem" data-i18n="nav.lab">Lab</a>
+            <a href="./manifesto.html" role="menuitem" data-i18n="hero.manifesto">Manifesto</a>
+            <a href="./historia.html" role="menuitem" data-i18n="hero.farol">O Farol</a>
+            <a href="./gann.html" role="menuitem" data-i18n="hero.gann">Gann</a>
+          </div>
+        </div>
       </div>
       <div class="ds-scroll-progress" id="app-scroll-progress"></div>
     </header>

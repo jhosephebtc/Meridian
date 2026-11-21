@@ -4,6 +4,7 @@
  * diretamente os módulos nativos do Meridian Design System (sem frameworks pesados).
  */
 
+import './site-chrome';
 import {
   SURFACES,
   PAPER_SHADER,
@@ -12,7 +13,16 @@ import {
   type GrainPreset,
   type GrainSizeId,
 } from './tokens.ts';
-import { mountPaperGrain, setPaperGrainSize } from './paper-grain.ts';
+import {
+  mountPaperGrain,
+  setPaperGrainSize,
+  setPaperGrainOpacity,
+  setPaperGrainDust,
+  setPaperGrainScratch,
+  setPaperGrainDouble,
+  bootPaperGrainExtras,
+  getPaperGrainOpacity,
+} from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
 import { initI18n } from './i18n';
 import './i18n.css';
@@ -102,10 +112,28 @@ function syncClipTabs(container: HTMLElement | null, activeBtn: HTMLElement | nu
   const overlay = container.querySelector<HTMLElement>('.ds-cliptabs-overlay');
   if (!track || !overlay) return;
 
-  container.querySelectorAll<HTMLElement>('.ds-cliptabs-btn').forEach((b) => {
+  const peers = [...track.querySelectorAll<HTMLElement>('.ds-cliptabs-btn')];
+  peers.forEach((b) => {
     b.dataset.active = b === activeBtn ? 'true' : 'false';
   });
-  const tw = track.offsetWidth || 1;
+
+  const labels = [...overlay.children] as HTMLElement[];
+  peers.forEach((btn, i) => {
+    const label = labels[i];
+    if (!label) return;
+    const txt = (btn.textContent || '').replace(/\s+/g, ' ').trim();
+    if (label.textContent?.trim() !== txt) label.textContent = txt;
+  });
+  peers.forEach((btn, i) => {
+    const label = labels[i];
+    if (!label) return;
+    const w = Math.ceil(btn.getBoundingClientRect().width);
+    label.style.flex = `0 0 ${w}px`;
+    label.style.width = `${w}px`;
+    label.style.boxSizing = 'border-box';
+  });
+
+  const tw = track.scrollWidth || track.offsetWidth || 1;
   const leftPct = (activeBtn.offsetLeft / tw) * 100;
   const rightPct = 100 - ((activeBtn.offsetLeft + activeBtn.offsetWidth) / tw) * 100;
   overlay.style.clipPath = `inset(0 ${Math.max(0, rightPct).toFixed(2)}% 0 ${Math.max(0, leftPct).toFixed(2)}% round 9999px)`;
@@ -178,6 +206,34 @@ function setGrainSize(size: GrainSizeId): void {
     b.classList.toggle('ds-btn-tertiary', !active);
   });
   showToast(`Tamanho do grão: ${GRAIN_SIZES[size].label}`);
+}
+
+function syncGrainOpacityUi(opacity: number): void {
+  const pct = Math.round(opacity * 100);
+  const range = document.getElementById('grain-opacity-range') as HTMLInputElement | null;
+  const label = document.getElementById('grain-opacity-value');
+  if (range) range.value = String(pct);
+  if (label) label.textContent = `${pct}%`;
+  document.querySelectorAll<HTMLButtonElement>('[data-grain-opacity-pick]').forEach((b) => {
+    const active = Number(b.dataset.grainOpacityPick) === pct;
+    b.classList.toggle('ds-btn-primary', active);
+    b.classList.toggle('ds-btn-tertiary', !active);
+  });
+}
+
+function applyGrainOpacity(raw: number | string, announce = false): void {
+  const pct = Math.max(20, Math.min(100, Math.round(Number(raw))));
+  const opacity = setPaperGrainOpacity(pct / 100);
+  syncGrainOpacityUi(opacity);
+  if (announce) showToast(`Opacidade do grão: ${pct}%`);
+}
+
+function syncLayerToggle(sel: string, on: boolean): void {
+  document.querySelectorAll<HTMLButtonElement>(sel).forEach((b) => {
+    b.classList.toggle('ds-btn-primary', on);
+    b.classList.toggle('ds-btn-tertiary', !on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
 }
 
 /* ==========================================================================
@@ -558,9 +614,42 @@ function bootstrap(): void {
     const gr = target.closest<HTMLElement>('[data-grain-pick]');
     if (gr?.dataset.grainPick) { setGrain(gr.dataset.grainPick as GrainPreset); return; }
 
+    const grOpacity = target.closest<HTMLElement>('[data-grain-opacity-pick]');
+    if (grOpacity?.dataset.grainOpacityPick) {
+      applyGrainOpacity(grOpacity.dataset.grainOpacityPick, true);
+      return;
+    }
+
     const grSize = target.closest<HTMLElement>('[data-grain-size-pick]');
     if (grSize?.dataset.grainSizePick) {
       setGrainSize(grSize.dataset.grainSizePick as GrainSizeId);
+      return;
+    }
+
+    const dustBtn = target.closest<HTMLElement>('[data-grain-dust-pick]');
+    if (dustBtn) {
+      const next = dustBtn.getAttribute('aria-pressed') !== 'true';
+      setPaperGrainDust(next);
+      syncLayerToggle('[data-grain-dust-pick]', next);
+      showToast(`Dust: ${next ? 'ON' : 'OFF'}`);
+      return;
+    }
+
+    const scratchBtn = target.closest<HTMLElement>('[data-grain-scratch-pick]');
+    if (scratchBtn) {
+      const next = scratchBtn.getAttribute('aria-pressed') !== 'true';
+      setPaperGrainScratch(next);
+      syncLayerToggle('[data-grain-scratch-pick]', next);
+      showToast(`Scratch: ${next ? 'ON' : 'OFF'}`);
+      return;
+    }
+
+    const doubleBtn = target.closest<HTMLElement>('[data-grain-double-pick]');
+    if (doubleBtn) {
+      const next = doubleBtn.getAttribute('aria-pressed') !== 'true';
+      setPaperGrainDouble(next);
+      syncLayerToggle('[data-grain-double-pick]', next);
+      showToast(`Grão duplo: ${next ? 'ON' : 'OFF'}`);
       return;
     }
 
@@ -682,6 +771,18 @@ function bootstrap(): void {
 
   // Initial render
   initI18n();
+  bootPaperGrainExtras();
+  syncGrainOpacityUi(getPaperGrainOpacity());
+  syncLayerToggle('[data-grain-dust-pick]', document.documentElement.dataset.grainDust === 'on');
+  syncLayerToggle('[data-grain-scratch-pick]', document.documentElement.dataset.grainScratch === 'on');
+  syncLayerToggle('[data-grain-double-pick]', document.documentElement.dataset.grainDouble === 'on');
+  const grainOpacityRange = document.getElementById('grain-opacity-range') as HTMLInputElement | null;
+  grainOpacityRange?.addEventListener('input', (e) => {
+    applyGrainOpacity((e.target as HTMLInputElement).value);
+  });
+  grainOpacityRange?.addEventListener('change', (e) => {
+    applyGrainOpacity((e.target as HTMLInputElement).value, true);
+  });
   setSurface('ivory', false);
   setView('today');
   markPageReady();

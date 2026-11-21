@@ -2,6 +2,7 @@
  * MERIDIAN — WD Gann History Page
  * HalfTone (Paper Shaders) · Plotter D2 animations · Dual layout chrome
  */
+import './site-chrome';
 import {
   ShaderMount,
   halftoneDotsFragmentShader,
@@ -11,7 +12,7 @@ import {
   getShaderColorFromString,
 } from '@paper-design/shaders';
 import { HALFTONE, PAPER_SHADER } from './tokens';
-import { mountPaperGrain } from './paper-grain';
+import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n } from './i18n';
 import './i18n.css';
@@ -324,11 +325,11 @@ function init(): void {
   initI18n();
   mountPaperGrain({
     seed: 18780606,
-    speckleStrength: PAPER_SHADER.defaultSpeckle * 0.85,
+    speckleStrength: PAPER_SHADER.defaultSpeckle,
     fiberDensity: PAPER_SHADER.defaultFiber,
     size: PAPER_SHADER.defaultSize,
   });
-
+  bootPaperGrainExtras();
   const saved = (localStorage.getItem('meridian-gann-layout') as LayoutMode | null) ?? 'masthead';
   setLayout(saved === 'rail' ? 'rail' : 'masthead');
 

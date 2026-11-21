@@ -6,583 +6,235 @@ import type { Lang } from './i18n';
 const ESSAY: Record<Lang, string> = {
   pt: `
 <p class="historia-lead">Muito antes dos mapas ocuparem mesas de capitães e muito antes de instrumentos dizerem às pessoas exatamente onde estavam, atravessar o oceano era um exercício de convicção.</p>
-<p>Navegar significava escolher uma direção e acreditar nela.</p>
-<p>O mar não oferecia referências.</p>
-<p>O horizonte parecia igual em todas as direções.</p>
-<p>Durante o dia, céu e água se confundiam.</p>
-<p>Durante a noite, a escuridão apagava quase tudo.</p>
+<p>Navegar significava escolher uma direção e acreditar nela.<br>O mar não oferecia referências.<br>O horizonte parecia igual em todas as direções.<br>Durante o dia, céu e água se confundiam.<br>Durante a noite, a escuridão apagava quase tudo.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>Era nesse vazio que os navegadores descobriam uma verdade desconfortável:</p>
 <div class="historia-pull"><p>ninguém se perde de uma vez.</p></div>
-<p>Ninguém acorda numa manhã e decide abandonar sua rota.</p>
-<p>O desvio acontece em pequenas medidas.</p>
-<p class="historia-beat">Alguns graus hoje.</p>
-<p class="historia-beat">Outros amanhã.</p>
-<p class="historia-beat">Uma correção aparentemente inofensiva.</p>
-<p class="historia-beat">Uma concessão que parece razoável.</p>
-<p class="historia-beat">Uma decisão tomada apenas para facilitar a viagem.</p>
-<p>E então outra.</p>
-<p>E mais outra.</p>
-<p>Até que, semanas depois, a embarcação já não está indo para onde imaginava.</p>
+<p>Ninguém acorda numa manhã e decide abandonar sua rota.<br>O desvio acontece em pequenas medidas.</p>
+<p class="historia-beat">Alguns graus hoje.<br>Outros amanhã.<br>Uma correção aparentemente inofensiva.<br>Uma concessão que parece razoável.<br>Uma decisão tomada apenas para facilitar a viagem.</p>
+<p>E então outra.<br>E mais outra.<br>Até que, semanas depois, a embarcação já não está indo para onde imaginava.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p class="historia-beat">Acontece no mar.</p>
-<p class="historia-beat">Acontece com pessoas.</p>
-<p class="historia-beat">Acontece com empresas.</p>
-<p class="historia-beat">Acontece com qualquer coisa que precise escolher constantemente entre diferentes caminhos.</p>
+<p class="historia-beat">Acontece no mar.<br>Acontece com pessoas.<br>Acontece com empresas.<br>Acontece com qualquer coisa que precise escolher constantemente entre diferentes caminhos.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Por isso os antigos navegadores valorizavam uma ideia simples.</p>
-<p>Não bastava ter uma direção.</p>
-<p>Era preciso possuir uma referência.</p>
-<p class="historia-beat">Algo estável.</p>
-<p class="historia-beat">Algo que permanecesse igual quando tudo ao redor mudasse.</p>
+<p>Por isso os antigos navegadores valorizavam uma ideia simples.<br>Não bastava ter uma direção.<br>Era preciso possuir uma referência.</p>
+<p class="historia-beat">Algo estável.<br>Algo que permanecesse igual quando tudo ao redor mudasse.</p>
 <p>Foi assim que surgiram os meridianos.</p>
-<p class="historia-beat">Linhas invisíveis.</p>
-<p class="historia-beat">Impossíveis de tocar.</p>
-<p class="historia-beat">Inexistentes aos olhos.</p>
+<p class="historia-beat">Linhas invisíveis.<br>Impossíveis de tocar.<br>Inexistentes aos olhos.</p>
 <p>Mas capazes de orientar jornadas inteiras.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Curiosamente, ninguém admirava os meridianos.</p>
-<p>As pessoas admiravam os navios.</p>
-<p>Admiravam as grandes travessias.</p>
-<p>Admiravam os capitães.</p>
-<p>Quase ninguém falava sobre as linhas silenciosas que tornavam tudo aquilo possível.</p>
-<p>Até porque referências raramente recebem aplausos.</p>
-<p>Elas apenas cumprem seu papel.</p>
+<p>Curiosamente, ninguém admirava os meridianos.<br>As pessoas admiravam os navios.<br>Admiravam as grandes travessias.<br>Admiravam os capitães.<br>Quase ninguém falava sobre as linhas silenciosas que tornavam tudo aquilo possível.<br>Até porque referências raramente recebem aplausos.<br>Elas apenas cumprem seu papel.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p class="historia-lead">Em uma costa distante existia um velho farol construído sobre penhascos escuros.</p>
-<p>Ele também era uma referência.</p>
-<p>Mas, ao contrário dos meridianos, podia ser visto.</p>
-<p>Durante tempestades, sua luz atravessava a chuva.</p>
-<p>Durante neblinas densas, era a única forma reconhecível naquele trecho do oceano.</p>
-<p>Durante noites absolutamente escuras, quando céu e mar pareciam uma única coisa, ele permanecia aceso.</p>
+<p>Ele também era uma referência.<br>Mas, ao contrário dos meridianos, podia ser visto.<br>Durante tempestades, sua luz atravessava a chuva.<br>Durante neblinas densas, era a única forma reconhecível naquele trecho do oceano.<br>Durante noites absolutamente escuras, quando céu e mar pareciam uma única coisa, ele permanecia aceso.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>Curiosamente, o farol não era extraordinário.</p>
-<p class="historia-beat">Sua torre era simples.</p>
-<p class="historia-beat">Suas pedras eram comuns.</p>
-<p>Não possuía a luz mais potente nem a arquitetura mais impressionante.</p>
-<p>Outros faróis eram maiores.</p>
-<p>Outros eram mais modernos.</p>
-<p>Alguns até mais bonitos.</p>
+<p class="historia-beat">Sua torre era simples.<br>Suas pedras eram comuns.</p>
+<p>Não possuía a luz mais potente nem a arquitetura mais impressionante.<br>Outros faróis eram maiores.<br>Outros eram mais modernos.<br>Alguns até mais bonitos.</p>
 <div class="historia-pull"><p>Mas nenhum era tão confiável.</p></div>
-<p>Os navegadores diziam algo estranho sobre ele.</p>
-<p>Diziam que não confiavam em sua luz.</p>
-<p>Confiavam em suas decisões.</p>
-<p>A frase parecia sem sentido.</p>
-<p>Como um farol poderia tomar decisões?</p>
-<p>Mas a resposta estava escondida em sua história.</p>
+<p>Os navegadores diziam algo estranho sobre ele.<br>Diziam que não confiavam em sua luz.<br>Confiavam em suas decisões.<br>A frase parecia sem sentido.<br>Como um farol poderia tomar decisões?<br>Mas a resposta estava escondida em sua história.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Ao longo das décadas, inúmeros responsáveis passaram por aquela torre.</p>
-<p>Alguns queriam transformá-la em atração turística.</p>
-<p>Outros queriam torná-la mais lucrativa.</p>
-<p>Houve quem desejasse substituir sua função original por atividades mais rentáveis.</p>
-<p>Todas as propostas pareciam inteligentes.</p>
-<p>Todas possuíam argumentos convincentes.</p>
-<p>Todas prometiam alguma espécie de ganho.</p>
-<p>Mas havia uma pergunta gravada numa pequena placa de metal perto da sala das lâmpadas.</p>
-<p>Uma pergunta simples.</p>
+<p>Ao longo das décadas, inúmeros responsáveis passaram por aquela torre.<br>Alguns queriam transformá-la em atração turística.<br>Outros queriam torná-la mais lucrativa.<br>Houve quem desejasse substituir sua função original por atividades mais rentáveis.<br>Todas as propostas pareciam inteligentes.<br>Todas possuíam argumentos convincentes.<br>Todas prometiam alguma espécie de ganho.<br>Mas havia uma pergunta gravada numa pequena placa de metal perto da sala das lâmpadas.<br>Uma pergunta simples.</p>
 <aside class="historia-plaque" aria-label="Placa do farol">
   <div class="eyebrow">Placa de metal · sala das lâmpadas</div>
   <blockquote>“Isso ajuda os navegadores a encontrar seu caminho?”</blockquote>
 </aside>
-<p class="historia-beat">Nada além disso.</p>
-<p class="historia-beat">Toda decisão passava por ali.</p>
-<p class="historia-beat">Toda mudança.</p>
-<p class="historia-beat">Toda oportunidade.</p>
-<p class="historia-beat">Todo investimento.</p>
-<p class="historia-beat">Toda inovação.</p>
-<p class="historia-beat">Toda recusa.</p>
-<p>A pergunta nunca mudava.</p>
-<p>E, justamente por isso, o farol nunca se perdia.</p>
+<p class="historia-beat">Nada além disso.<br>Toda decisão passava por ali.<br>Toda mudança.<br>Toda oportunidade.<br>Todo investimento.<br>Toda inovação.<br>Toda recusa.</p>
+<p>A pergunta nunca mudava.<br>E, justamente por isso, o farol nunca se perdia.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Anos se transformaram em décadas.</p>
-<p>Décadas se transformaram em gerações.</p>
-<p>Enquanto outros buscavam atenção, o farol buscava alinhamento.</p>
-<p>Enquanto outros perguntavam:</p>
+<p>Anos se transformaram em décadas.<br>Décadas se transformaram em gerações.<br>Enquanto outros buscavam atenção, o farol buscava alinhamento.<br>Enquanto outros perguntavam:</p>
 <p class="historia-beat">“Como podemos crescer?”</p>
 <p>O farol perguntava:</p>
 <p class="historia-beat">“Como podemos continuar sendo úteis?”</p>
 <p>Enquanto outros perseguiam tendências, ele perseguia coerência.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Pouco a pouco, uma reputação começou a surgir.</p>
-<p>Não porque tivesse sido planejada.</p>
-<p>Mas porque havia sido merecida.</p>
-<p>Os navegadores passaram a confiar nele não por causa do que dizia.</p>
-<p>Mas por causa do padrão que repetia.</p>
-<p>Quando aparecia uma escolha difícil, ele escolhia a direção.</p>
-<p>Quando surgia uma distração atraente, ele escolhia a direção.</p>
-<p>Quando um atalho prometia vantagens imediatas, ele escolhia a direção.</p>
-<p class="historia-beat">Sempre a direção.</p>
-<p class="historia-beat">Sempre o propósito.</p>
-<p class="historia-beat">Sempre o caminho.</p>
+<p>Pouco a pouco, uma reputação começou a surgir.<br>Não porque tivesse sido planejada.<br>Mas porque havia sido merecida.<br>Os navegadores passaram a confiar nele não por causa do que dizia.<br>Mas por causa do padrão que repetia.<br>Quando aparecia uma escolha difícil, ele escolhia a direção.<br>Quando surgia uma distração atraente, ele escolhia a direção.<br>Quando um atalho prometia vantagens imediatas, ele escolhia a direção.</p>
+<p class="historia-beat">Sempre a direção.<br>Sempre o propósito.<br>Sempre o caminho.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Com o tempo, os marinheiros perceberam algo extraordinário.</p>
-<p>O verdadeiro valor daquele farol não estava na luz.</p>
-<p>A luz era apenas a manifestação visível de algo invisível.</p>
-<p>Assim como um navio seguia um meridiano que ninguém enxergava, o farol também seguia uma linha invisível.</p>
-<p class="historia-beat">Uma linha feita de princípios.</p>
-<p class="historia-beat">De critérios.</p>
-<p class="historia-beat">De escolhas repetidas.</p>
-<p class="historia-beat">De decisões tomadas quando ninguém estava observando.</p>
+<p>Com o tempo, os marinheiros perceberam algo extraordinário.<br>O verdadeiro valor daquele farol não estava na luz.<br>A luz era apenas a manifestação visível de algo invisível.<br>Assim como um navio seguia um meridiano que ninguém enxergava, o farol também seguia uma linha invisível.</p>
+<p class="historia-beat">Uma linha feita de princípios.<br>De critérios.<br>De escolhas repetidas.<br>De decisões tomadas quando ninguém estava observando.</p>
 <div class="historia-pull"><p>As coisas mais importantes quase nunca são visíveis.</p></div>
-<p class="historia-beat">A confiança não é visível.</p>
-<p class="historia-beat">A reputação não é visível.</p>
-<p class="historia-beat">A convicção não é visível.</p>
-<p class="historia-beat">A direção não é visível.</p>
-<p class="historia-beat">O meridiano não é visível.</p>
+<p class="historia-beat">A confiança não é visível.<br>A reputação não é visível.<br>A convicção não é visível.<br>A direção não é visível.<br>O meridiano não é visível.</p>
 <p>Mas é a existência dessas coisas que determina todo o resto.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Porque uma identidade não nasce quando alguém cria um símbolo.</p>
-<p>Nem quando alguém escreve uma missão.</p>
-<p>Nem quando alguém escolhe uma cor ou um slogan.</p>
-<p>Uma identidade nasce quando uma decisão encontra outra decisão.</p>
-<p>E depois outra.</p>
-<p>E outra.</p>
-<p>Até formar uma linha tão clara que ninguém mais consegue confundi-la.</p>
+<p>Porque uma identidade não nasce quando alguém cria um símbolo.<br>Nem quando alguém escreve uma missão.<br>Nem quando alguém escolhe uma cor ou um slogan.<br>Uma identidade nasce quando uma decisão encontra outra decisão.<br>E depois outra.<br>E outra.<br>Até formar uma linha tão clara que ninguém mais consegue confundi-la.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>No fim, o farol nunca foi lembrado por sua torre.</p>
-<p>Nunca foi lembrado por sua luz.</p>
-<p>Nunca foi lembrado por sua aparência.</p>
-<p>Foi lembrado porque permaneceu alinhado ao seu meridiano.</p>
-<p>Porque, quando tempestades chegavam, ele continuava sendo aquilo que havia decidido ser.</p>
+<p>No fim, o farol nunca foi lembrado por sua torre.<br>Nunca foi lembrado por sua luz.<br>Nunca foi lembrado por sua aparência.<br>Foi lembrado porque permaneceu alinhado ao seu meridiano.<br>Porque, quando tempestades chegavam, ele continuava sendo aquilo que havia decidido ser.</p>
 <div class="historia-pull"><p>E talvez essa seja a definição mais simples de uma grande marca.</p></div>
-<p>Não algo que chama atenção.</p>
-<p>Mas algo que mantém a direção.</p>
-<p>Por tempo suficiente para que os outros confiem nela.</p>
+<p>Não algo que chama atenção.<br>Mas algo que mantém a direção.<br>Por tempo suficiente para que os outros confiem nela.</p>
 `,
   en: `
 <p class="historia-lead">Long before maps covered captains’ tables and long before instruments told people exactly where they were, crossing the ocean was an exercise in conviction.</p>
-<p>To navigate meant choosing a direction and believing in it.</p>
-<p>The sea offered no references.</p>
-<p>The horizon looked the same in every direction.</p>
-<p>By day, sky and water blurred together.</p>
-<p>By night, darkness erased nearly everything.</p>
+<p>To navigate meant choosing a direction and believing in it.<br>The sea offered no references.<br>The horizon looked the same in every direction.<br>By day, sky and water blurred together.<br>By night, darkness erased nearly everything.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>It was in that emptiness that navigators discovered an uncomfortable truth:</p>
 <div class="historia-pull"><p>no one is lost all at once.</p></div>
-<p>No one wakes up one morning and decides to abandon their route.</p>
-<p>Drift happens in small measures.</p>
-<p class="historia-beat">A few degrees today.</p>
-<p class="historia-beat">More tomorrow.</p>
-<p class="historia-beat">A correction that seems harmless.</p>
-<p class="historia-beat">A concession that seems reasonable.</p>
-<p class="historia-beat">A decision made only to ease the voyage.</p>
-<p>And then another.</p>
-<p>And another.</p>
-<p>Until weeks later, the vessel is no longer going where it imagined.</p>
+<p>No one wakes up one morning and decides to abandon their route.<br>Drift happens in small measures.</p>
+<p class="historia-beat">A few degrees today.<br>More tomorrow.<br>A correction that seems harmless.<br>A concession that seems reasonable.<br>A decision made only to ease the voyage.</p>
+<p>And then another.<br>And another.<br>Until weeks later, the vessel is no longer going where it imagined.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p class="historia-beat">It happens at sea.</p>
-<p class="historia-beat">It happens with people.</p>
-<p class="historia-beat">It happens with companies.</p>
-<p class="historia-beat">It happens with anything that must constantly choose between different paths.</p>
+<p class="historia-beat">It happens at sea.<br>It happens with people.<br>It happens with companies.<br>It happens with anything that must constantly choose between different paths.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>That is why the old navigators valued a simple idea.</p>
-<p>Having a direction was not enough.</p>
-<p>You needed a reference.</p>
-<p class="historia-beat">Something stable.</p>
-<p class="historia-beat">Something that stayed the same when everything around it changed.</p>
+<p>That is why the old navigators valued a simple idea.<br>Having a direction was not enough.<br>You needed a reference.</p>
+<p class="historia-beat">Something stable.<br>Something that stayed the same when everything around it changed.</p>
 <p>That is how meridians came to be.</p>
-<p class="historia-beat">Invisible lines.</p>
-<p class="historia-beat">Impossible to touch.</p>
-<p class="historia-beat">Invisible to the eye.</p>
+<p class="historia-beat">Invisible lines.<br>Impossible to touch.<br>Invisible to the eye.</p>
 <p>Yet able to guide entire journeys.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Curiously, nobody admired the meridians.</p>
-<p>People admired the ships.</p>
-<p>They admired the great crossings.</p>
-<p>They admired the captains.</p>
-<p>Almost no one spoke of the quiet lines that made it all possible.</p>
-<p>References rarely receive applause.</p>
-<p>They simply do their job.</p>
+<p>Curiously, nobody admired the meridians.<br>People admired the ships.<br>They admired the great crossings.<br>They admired the captains.<br>Almost no one spoke of the quiet lines that made it all possible.<br>References rarely receive applause.<br>They simply do their job.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p class="historia-lead">On a distant coast stood an old lighthouse built on dark cliffs.</p>
-<p>It was a reference too.</p>
-<p>But unlike meridians, it could be seen.</p>
-<p>In storms, its light cut through the rain.</p>
-<p>In dense fog, it was the only recognizable form on that stretch of ocean.</p>
-<p>On utterly dark nights, when sky and sea seemed one, it stayed lit.</p>
+<p>It was a reference too.<br>But unlike meridians, it could be seen.<br>In storms, its light cut through the rain.<br>In dense fog, it was the only recognizable form on that stretch of ocean.<br>On utterly dark nights, when sky and sea seemed one, it stayed lit.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>Curiously, the lighthouse was not extraordinary.</p>
-<p class="historia-beat">Its tower was simple.</p>
-<p class="historia-beat">Its stones were ordinary.</p>
-<p>It did not have the strongest light or the most impressive architecture.</p>
-<p>Other lighthouses were taller.</p>
-<p>Others more modern.</p>
-<p>Some even prettier.</p>
+<p class="historia-beat">Its tower was simple.<br>Its stones were ordinary.</p>
+<p>It did not have the strongest light or the most impressive architecture.<br>Other lighthouses were taller.<br>Others more modern.<br>Some even prettier.</p>
 <div class="historia-pull"><p>But none was so reliable.</p></div>
-<p>Navigators said something strange about it.</p>
-<p>They said they did not trust its light.</p>
-<p>They trusted its decisions.</p>
-<p>The sentence seemed senseless.</p>
-<p>How could a lighthouse make decisions?</p>
-<p>But the answer was hidden in its history.</p>
+<p>Navigators said something strange about it.<br>They said they did not trust its light.<br>They trusted its decisions.<br>The sentence seemed senseless.<br>How could a lighthouse make decisions?<br>But the answer was hidden in its history.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Over the decades, countless keepers passed through that tower.</p>
-<p>Some wanted to turn it into a tourist attraction.</p>
-<p>Others wanted to make it more profitable.</p>
-<p>Some wished to replace its original purpose with more lucrative activities.</p>
-<p>Every proposal seemed smart.</p>
-<p>Every one had convincing arguments.</p>
-<p>Every one promised some kind of gain.</p>
-<p>But there was a question engraved on a small metal plaque near the lamp room.</p>
-<p>A simple question.</p>
+<p>Over the decades, countless keepers passed through that tower.<br>Some wanted to turn it into a tourist attraction.<br>Others wanted to make it more profitable.<br>Some wished to replace its original purpose with more lucrative activities.<br>Every proposal seemed smart.<br>Every one had convincing arguments.<br>Every one promised some kind of gain.<br>But there was a question engraved on a small metal plaque near the lamp room.<br>A simple question.</p>
 <aside class="historia-plaque" aria-label="Lighthouse plaque">
   <div class="eyebrow">Metal plaque · lamp room</div>
   <blockquote>“Does this help navigators find their way?”</blockquote>
 </aside>
-<p class="historia-beat">Nothing more.</p>
-<p class="historia-beat">Every decision passed through it.</p>
-<p class="historia-beat">Every change.</p>
-<p class="historia-beat">Every opportunity.</p>
-<p class="historia-beat">Every investment.</p>
-<p class="historia-beat">Every innovation.</p>
-<p class="historia-beat">Every refusal.</p>
-<p>The question never changed.</p>
-<p>And precisely for that reason, the lighthouse never lost its way.</p>
+<p class="historia-beat">Nothing more.<br>Every decision passed through it.<br>Every change.<br>Every opportunity.<br>Every investment.<br>Every innovation.<br>Every refusal.</p>
+<p>The question never changed.<br>And precisely for that reason, the lighthouse never lost its way.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Years became decades.</p>
-<p>Decades became generations.</p>
-<p>While others sought attention, the lighthouse sought alignment.</p>
-<p>While others asked:</p>
+<p>Years became decades.<br>Decades became generations.<br>While others sought attention, the lighthouse sought alignment.<br>While others asked:</p>
 <p class="historia-beat">“How can we grow?”</p>
 <p>The lighthouse asked:</p>
 <p class="historia-beat">“How can we keep being useful?”</p>
 <p>While others chased trends, it chased coherence.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Little by little, a reputation began to form.</p>
-<p>Not because it had been planned.</p>
-<p>But because it had been earned.</p>
-<p>Navigators came to trust it not for what it said.</p>
-<p>But for the pattern it repeated.</p>
-<p>When a hard choice appeared, it chose the direction.</p>
-<p>When an attractive distraction arose, it chose the direction.</p>
-<p>When a shortcut promised immediate gains, it chose the direction.</p>
-<p class="historia-beat">Always the direction.</p>
-<p class="historia-beat">Always the purpose.</p>
-<p class="historia-beat">Always the path.</p>
+<p>Little by little, a reputation began to form.<br>Not because it had been planned.<br>But because it had been earned.<br>Navigators came to trust it not for what it said.<br>But for the pattern it repeated.<br>When a hard choice appeared, it chose the direction.<br>When an attractive distraction arose, it chose the direction.<br>When a shortcut promised immediate gains, it chose the direction.</p>
+<p class="historia-beat">Always the direction.<br>Always the purpose.<br>Always the path.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>In time, sailors noticed something extraordinary.</p>
-<p>The true value of that lighthouse was not in the light.</p>
-<p>The light was only the visible manifestation of something invisible.</p>
-<p>Just as a ship followed a meridian no one could see, the lighthouse also followed an invisible line.</p>
-<p class="historia-beat">A line made of principles.</p>
-<p class="historia-beat">Of criteria.</p>
-<p class="historia-beat">Of repeated choices.</p>
-<p class="historia-beat">Of decisions made when no one was watching.</p>
+<p>In time, sailors noticed something extraordinary.<br>The true value of that lighthouse was not in the light.<br>The light was only the visible manifestation of something invisible.<br>Just as a ship followed a meridian no one could see, the lighthouse also followed an invisible line.</p>
+<p class="historia-beat">A line made of principles.<br>Of criteria.<br>Of repeated choices.<br>Of decisions made when no one was watching.</p>
 <div class="historia-pull"><p>The most important things are almost never visible.</p></div>
-<p class="historia-beat">Trust is not visible.</p>
-<p class="historia-beat">Reputation is not visible.</p>
-<p class="historia-beat">Conviction is not visible.</p>
-<p class="historia-beat">Direction is not visible.</p>
-<p class="historia-beat">The meridian is not visible.</p>
+<p class="historia-beat">Trust is not visible.<br>Reputation is not visible.<br>Conviction is not visible.<br>Direction is not visible.<br>The meridian is not visible.</p>
 <p>But it is the existence of these things that determines everything else.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Because an identity is not born when someone creates a symbol.</p>
-<p>Nor when someone writes a mission.</p>
-<p>Nor when someone picks a color or a slogan.</p>
-<p>An identity is born when one decision meets another.</p>
-<p>And then another.</p>
-<p>And another.</p>
-<p>Until it forms a line so clear that no one can mistake it.</p>
+<p>Because an identity is not born when someone creates a symbol.<br>Nor when someone writes a mission.<br>Nor when someone picks a color or a slogan.<br>An identity is born when one decision meets another.<br>And then another.<br>And another.<br>Until it forms a line so clear that no one can mistake it.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>In the end, the lighthouse was never remembered for its tower.</p>
-<p>Never for its light.</p>
-<p>Never for its appearance.</p>
-<p>It was remembered because it stayed aligned to its meridian.</p>
-<p>Because when storms came, it kept being what it had decided to be.</p>
+<p>In the end, the lighthouse was never remembered for its tower.<br>Never for its light.<br>Never for its appearance.<br>It was remembered because it stayed aligned to its meridian.<br>Because when storms came, it kept being what it had decided to be.</p>
 <div class="historia-pull"><p>And perhaps that is the simplest definition of a great brand.</p></div>
-<p>Not something that grabs attention.</p>
-<p>But something that keeps the direction.</p>
-<p>Long enough for others to trust it.</p>
+<p>Not something that grabs attention.<br>But something that keeps the direction.<br>Long enough for others to trust it.</p>
 `,
   es: `
 <p class="historia-lead">Mucho antes de que los mapas ocuparan las mesas de los capitanes y mucho antes de que los instrumentos dijeran a las personas exactamente dónde estaban, cruzar el océano era un ejercicio de convicción.</p>
-<p>Navegar significaba elegir una dirección y creer en ella.</p>
-<p>El mar no ofrecía referencias.</p>
-<p>El horizonte parecía igual en todas las direcciones.</p>
-<p>Durante el día, cielo y agua se confundían.</p>
-<p>Durante la noche, la oscuridad borraba casi todo.</p>
+<p>Navegar significaba elegir una dirección y creer en ella.<br>El mar no ofrecía referencias.<br>El horizonte parecía igual en todas las direcciones.<br>Durante el día, cielo y agua se confundían.<br>Durante la noche, la oscuridad borraba casi todo.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>Era en ese vacío donde los navegadores descubrían una verdad incómoda:</p>
 <div class="historia-pull"><p>nadie se pierde de una vez.</p></div>
-<p>Nadie se despierta una mañana y decide abandonar su ruta.</p>
-<p>El desvío ocurre en pequeñas medidas.</p>
-<p class="historia-beat">Algunos grados hoy.</p>
-<p class="historia-beat">Otros mañana.</p>
-<p class="historia-beat">Una corrección aparentemente inofensiva.</p>
-<p class="historia-beat">Una concesión que parece razonable.</p>
-<p class="historia-beat">Una decisión tomada solo para facilitar el viaje.</p>
-<p>Y luego otra.</p>
-<p>Y otra más.</p>
-<p>Hasta que, semanas después, la embarcación ya no va hacia donde imaginaba.</p>
+<p>Nadie se despierta una mañana y decide abandonar su ruta.<br>El desvío ocurre en pequeñas medidas.</p>
+<p class="historia-beat">Algunos grados hoy.<br>Otros mañana.<br>Una corrección aparentemente inofensiva.<br>Una concesión que parece razonable.<br>Una decisión tomada solo para facilitar el viaje.</p>
+<p>Y luego otra.<br>Y otra más.<br>Hasta que, semanas después, la embarcación ya no va hacia donde imaginaba.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p class="historia-beat">Sucede en el mar.</p>
-<p class="historia-beat">Sucede con personas.</p>
-<p class="historia-beat">Sucede con empresas.</p>
-<p class="historia-beat">Sucede con cualquier cosa que deba elegir constantemente entre distintos caminos.</p>
+<p class="historia-beat">Sucede en el mar.<br>Sucede con personas.<br>Sucede con empresas.<br>Sucede con cualquier cosa que deba elegir constantemente entre distintos caminos.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Por eso los antiguos navegadores valoraban una idea simple.</p>
-<p>No bastaba tener una dirección.</p>
-<p>Era preciso poseer una referencia.</p>
-<p class="historia-beat">Algo estable.</p>
-<p class="historia-beat">Algo que permaneciera igual cuando todo alrededor cambiara.</p>
+<p>Por eso los antiguos navegadores valoraban una idea simple.<br>No bastaba tener una dirección.<br>Era preciso poseer una referencia.</p>
+<p class="historia-beat">Algo estable.<br>Algo que permaneciera igual cuando todo alrededor cambiara.</p>
 <p>Así surgieron los meridianos.</p>
-<p class="historia-beat">Líneas invisibles.</p>
-<p class="historia-beat">Imposibles de tocar.</p>
-<p class="historia-beat">Inexistentes a la vista.</p>
+<p class="historia-beat">Líneas invisibles.<br>Imposibles de tocar.<br>Inexistentes a la vista.</p>
 <p>Pero capaces de orientar viajes enteros.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Curiosamente, nadie admiraba los meridianos.</p>
-<p>La gente admiraba los barcos.</p>
-<p>Admiraban las grandes travesías.</p>
-<p>Admiraban a los capitanes.</p>
-<p>Casi nadie hablaba de las líneas silenciosas que lo hacían posible.</p>
-<p>Porque las referencias rara vez reciben aplausos.</p>
-<p>Solo cumplen su papel.</p>
+<p>Curiosamente, nadie admiraba los meridianos.<br>La gente admiraba los barcos.<br>Admiraban las grandes travesías.<br>Admiraban a los capitanes.<br>Casi nadie hablaba de las líneas silenciosas que lo hacían posible.<br>Porque las referencias rara vez reciben aplausos.<br>Solo cumplen su papel.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p class="historia-lead">En una costa lejana existía un viejo faro construido sobre acantilados oscuros.</p>
-<p>También era una referencia.</p>
-<p>Pero, a diferencia de los meridianos, podía verse.</p>
-<p>Durante las tormentas, su luz atravesaba la lluvia.</p>
-<p>En neblinas densas, era la única forma reconocible en aquel tramo del océano.</p>
-<p>En noches absolutamente oscuras, cuando cielo y mar parecían una sola cosa, permanecía encendido.</p>
+<p>También era una referencia.<br>Pero, a diferencia de los meridianos, podía verse.<br>Durante las tormentas, su luz atravesaba la lluvia.<br>En neblinas densas, era la única forma reconocible en aquel tramo del océano.<br>En noches absolutamente oscuras, cuando cielo y mar parecían una sola cosa, permanecía encendido.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>Curiosamente, el faro no era extraordinario.</p>
-<p class="historia-beat">Su torre era simple.</p>
-<p class="historia-beat">Sus piedras eran comunes.</p>
-<p>No tenía la luz más potente ni la arquitectura más impresionante.</p>
-<p>Otros faros eran más grandes.</p>
-<p>Otros más modernos.</p>
-<p>Algunos incluso más bonitos.</p>
+<p class="historia-beat">Su torre era simple.<br>Sus piedras eran comunes.</p>
+<p>No tenía la luz más potente ni la arquitectura más impresionante.<br>Otros faros eran más grandes.<br>Otros más modernos.<br>Algunos incluso más bonitos.</p>
 <div class="historia-pull"><p>Pero ninguno era tan confiable.</p></div>
-<p>Los navegadores decían algo extraño sobre él.</p>
-<p>Decían que no confiaban en su luz.</p>
-<p>Confiaban en sus decisiones.</p>
-<p>La frase parecía sin sentido.</p>
-<p>¿Cómo podía un faro tomar decisiones?</p>
-<p>Pero la respuesta estaba escondida en su historia.</p>
+<p>Los navegadores decían algo extraño sobre él.<br>Decían que no confiaban en su luz.<br>Confiaban en sus decisiones.<br>La frase parecía sin sentido.<br>¿Cómo podía un faro tomar decisiones?<br>Pero la respuesta estaba escondida en su historia.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>A lo largo de las décadas, innumerables responsables pasaron por aquella torre.</p>
-<p>Algunos querían transformarla en atracción turística.</p>
-<p>Otros querían hacerla más lucrativa.</p>
-<p>Hubo quien deseaba sustituir su función original por actividades más rentables.</p>
-<p>Todas las propuestas parecían inteligentes.</p>
-<p>Todas tenían argumentos convincentes.</p>
-<p>Todas prometían alguna clase de ganancia.</p>
-<p>Pero había una pregunta grabada en una pequeña placa de metal cerca de la sala de las lámparas.</p>
-<p>Una pregunta simple.</p>
+<p>A lo largo de las décadas, innumerables responsables pasaron por aquella torre.<br>Algunos querían transformarla en atracción turística.<br>Otros querían hacerla más lucrativa.<br>Hubo quien deseaba sustituir su función original por actividades más rentables.<br>Todas las propuestas parecían inteligentes.<br>Todas tenían argumentos convincentes.<br>Todas prometían alguna clase de ganancia.<br>Pero había una pregunta grabada en una pequeña placa de metal cerca de la sala de las lámparas.<br>Una pregunta simple.</p>
 <aside class="historia-plaque" aria-label="Placa del faro">
   <div class="eyebrow">Placa de metal · sala de las lámparas</div>
   <blockquote>“¿Esto ayuda a los navegadores a encontrar su camino?”</blockquote>
 </aside>
-<p class="historia-beat">Nada más.</p>
-<p class="historia-beat">Toda decisión pasaba por ahí.</p>
-<p class="historia-beat">Todo cambio.</p>
-<p class="historia-beat">Toda oportunidad.</p>
-<p class="historia-beat">Toda inversión.</p>
-<p class="historia-beat">Toda innovación.</p>
-<p class="historia-beat">Toda negativa.</p>
-<p>La pregunta nunca cambiaba.</p>
-<p>Y, justamente por eso, el faro nunca se perdía.</p>
+<p class="historia-beat">Nada más.<br>Toda decisión pasaba por ahí.<br>Todo cambio.<br>Toda oportunidad.<br>Toda inversión.<br>Toda innovación.<br>Toda negativa.</p>
+<p>La pregunta nunca cambiaba.<br>Y, justamente por eso, el faro nunca se perdía.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Los años se volvieron décadas.</p>
-<p>Las décadas, generaciones.</p>
-<p>Mientras otros buscaban atención, el faro buscaba alineación.</p>
-<p>Mientras otros preguntaban:</p>
+<p>Los años se volvieron décadas.<br>Las décadas, generaciones.<br>Mientras otros buscaban atención, el faro buscaba alineación.<br>Mientras otros preguntaban:</p>
 <p class="historia-beat">“¿Cómo podemos crecer?”</p>
 <p>El faro preguntaba:</p>
 <p class="historia-beat">“¿Cómo podemos seguir siendo útiles?”</p>
 <p>Mientras otros perseguían tendencias, él perseguía coherencia.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Poco a poco, una reputación empezó a surgir.</p>
-<p>No porque hubiera sido planificada.</p>
-<p>Sino porque había sido merecida.</p>
-<p>Los navegadores pasaron a confiar en él no por lo que decía.</p>
-<p>Sino por el patrón que repetía.</p>
-<p>Cuando aparecía una elección difícil, elegía la dirección.</p>
-<p>Cuando surgía una distracción atractiva, elegía la dirección.</p>
-<p>Cuando un atajo prometía ventajas inmediatas, elegía la dirección.</p>
-<p class="historia-beat">Siempre la dirección.</p>
-<p class="historia-beat">Siempre el propósito.</p>
-<p class="historia-beat">Siempre el camino.</p>
+<p>Poco a poco, una reputación empezó a surgir.<br>No porque hubiera sido planificada.<br>Sino porque había sido merecida.<br>Los navegadores pasaron a confiar en él no por lo que decía.<br>Sino por el patrón que repetía.<br>Cuando aparecía una elección difícil, elegía la dirección.<br>Cuando surgía una distracción atractiva, elegía la dirección.<br>Cuando un atajo prometía ventajas inmediatas, elegía la dirección.</p>
+<p class="historia-beat">Siempre la dirección.<br>Siempre el propósito.<br>Siempre el camino.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Con el tiempo, los marineros percibieron algo extraordinario.</p>
-<p>El verdadero valor de aquel faro no estaba en la luz.</p>
-<p>La luz era solo la manifestación visible de algo invisible.</p>
-<p>Así como un barco seguía un meridiano que nadie veía, el faro también seguía una línea invisible.</p>
-<p class="historia-beat">Una línea hecha de principios.</p>
-<p class="historia-beat">De criterios.</p>
-<p class="historia-beat">De elecciones repetidas.</p>
-<p class="historia-beat">De decisiones tomadas cuando nadie observaba.</p>
+<p>Con el tiempo, los marineros percibieron algo extraordinario.<br>El verdadero valor de aquel faro no estaba en la luz.<br>La luz era solo la manifestación visible de algo invisible.<br>Así como un barco seguía un meridiano que nadie veía, el faro también seguía una línea invisible.</p>
+<p class="historia-beat">Una línea hecha de principios.<br>De criterios.<br>De elecciones repetidas.<br>De decisiones tomadas cuando nadie observaba.</p>
 <div class="historia-pull"><p>Las cosas más importantes casi nunca son visibles.</p></div>
-<p class="historia-beat">La confianza no es visible.</p>
-<p class="historia-beat">La reputación no es visible.</p>
-<p class="historia-beat">La convicción no es visible.</p>
-<p class="historia-beat">La dirección no es visible.</p>
-<p class="historia-beat">El meridiano no es visible.</p>
+<p class="historia-beat">La confianza no es visible.<br>La reputación no es visible.<br>La convicción no es visible.<br>La dirección no es visible.<br>El meridiano no es visible.</p>
 <p>Pero es la existencia de esas cosas lo que determina todo lo demás.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Porque una identidad no nace cuando alguien crea un símbolo.</p>
-<p>Ni cuando alguien escribe una misión.</p>
-<p>Ni cuando alguien elige un color o un eslogan.</p>
-<p>Una identidad nace cuando una decisión encuentra otra decisión.</p>
-<p>Y luego otra.</p>
-<p>Y otra.</p>
-<p>Hasta formar una línea tan clara que nadie puede confundirla.</p>
+<p>Porque una identidad no nace cuando alguien crea un símbolo.<br>Ni cuando alguien escribe una misión.<br>Ni cuando alguien elige un color o un eslogan.<br>Una identidad nace cuando una decisión encuentra otra decisión.<br>Y luego otra.<br>Y otra.<br>Hasta formar una línea tan clara que nadie puede confundirla.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Al final, el faro nunca fue recordado por su torre.</p>
-<p>Nunca por su luz.</p>
-<p>Nunca por su apariencia.</p>
-<p>Fue recordado porque permaneció alineado a su meridiano.</p>
-<p>Porque, cuando llegaban las tormentas, seguía siendo aquello que había decidido ser.</p>
+<p>Al final, el faro nunca fue recordado por su torre.<br>Nunca por su luz.<br>Nunca por su apariencia.<br>Fue recordado porque permaneció alineado a su meridiano.<br>Porque, cuando llegaban las tormentas, seguía siendo aquello que había decidido ser.</p>
 <div class="historia-pull"><p>Y tal vez esa sea la definición más simple de una gran marca.</p></div>
-<p>No algo que llama la atención.</p>
-<p>Sino algo que mantiene la dirección.</p>
-<p>El tiempo suficiente para que los demás confíen en ella.</p>
+<p>No algo que llama la atención.<br>Sino algo que mantiene la dirección.<br>El tiempo suficiente para que los demás confíen en ella.</p>
 `,
   fr: `
 <p class="historia-lead">Bien avant que les cartes n’occupent les tables des capitaines et bien avant que les instruments ne disent aux gens exactement où ils étaient, traverser l’océan était un exercice de conviction.</p>
-<p>Naviguer signifiait choisir une direction et y croire.</p>
-<p>La mer n’offrait aucune référence.</p>
-<p>L’horizon semblait identique dans toutes les directions.</p>
-<p>Le jour, ciel et eau se confondaient.</p>
-<p>La nuit, l’obscurité effaçait presque tout.</p>
+<p>Naviguer signifiait choisir une direction et y croire.<br>La mer n’offrait aucune référence.<br>L’horizon semblait identique dans toutes les directions.<br>Le jour, ciel et eau se confondaient.<br>La nuit, l’obscurité effaçait presque tout.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>C’est dans ce vide que les navigateurs découvraient une vérité inconfortable&nbsp;:</p>
 <div class="historia-pull"><p>personne ne se perd d’un seul coup.</p></div>
-<p>Personne ne se réveille un matin en décidant d’abandonner sa route.</p>
-<p>La dérive arrive par petites mesures.</p>
-<p class="historia-beat">Quelques degrés aujourd’hui.</p>
-<p class="historia-beat">D’autres demain.</p>
-<p class="historia-beat">Une correction apparemment inoffensive.</p>
-<p class="historia-beat">Une concession qui paraît raisonnable.</p>
-<p class="historia-beat">Une décision prise seulement pour faciliter le voyage.</p>
-<p>Puis une autre.</p>
-<p>Puis encore une.</p>
-<p>Jusqu’à ce que, des semaines plus tard, le navire n’aille plus là où il pensait.</p>
+<p>Personne ne se réveille un matin en décidant d’abandonner sa route.<br>La dérive arrive par petites mesures.</p>
+<p class="historia-beat">Quelques degrés aujourd’hui.<br>D’autres demain.<br>Une correction apparemment inoffensive.<br>Une concession qui paraît raisonnable.<br>Une décision prise seulement pour faciliter le voyage.</p>
+<p>Puis une autre.<br>Puis encore une.<br>Jusqu’à ce que, des semaines plus tard, le navire n’aille plus là où il pensait.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p class="historia-beat">Cela arrive en mer.</p>
-<p class="historia-beat">Cela arrive aux personnes.</p>
-<p class="historia-beat">Cela arrive aux entreprises.</p>
-<p class="historia-beat">Cela arrive à tout ce qui doit choisir sans cesse entre différents chemins.</p>
+<p class="historia-beat">Cela arrive en mer.<br>Cela arrive aux personnes.<br>Cela arrive aux entreprises.<br>Cela arrive à tout ce qui doit choisir sans cesse entre différents chemins.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>C’est pourquoi les anciens navigateurs prisaient une idée simple.</p>
-<p>Avoir une direction ne suffisait pas.</p>
-<p>Il fallait une référence.</p>
-<p class="historia-beat">Quelque chose de stable.</p>
-<p class="historia-beat">Quelque chose qui restait le même quand tout autour changeait.</p>
+<p>C’est pourquoi les anciens navigateurs prisaient une idée simple.<br>Avoir une direction ne suffisait pas.<br>Il fallait une référence.</p>
+<p class="historia-beat">Quelque chose de stable.<br>Quelque chose qui restait le même quand tout autour changeait.</p>
 <p>C’est ainsi qu’apparurent les méridiens.</p>
-<p class="historia-beat">Des lignes invisibles.</p>
-<p class="historia-beat">Impossibles à toucher.</p>
-<p class="historia-beat">Inexistantes à l’œil.</p>
+<p class="historia-beat">Des lignes invisibles.<br>Impossibles à toucher.<br>Inexistantes à l’œil.</p>
 <p>Mais capables d’orienter des traversées entières.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Curieusement, personne n’admirait les méridiens.</p>
-<p>On admirait les navires.</p>
-<p>On admirait les grandes traversées.</p>
-<p>On admirait les capitaines.</p>
-<p>Presque personne ne parlait des lignes silencieuses qui rendaient tout cela possible.</p>
-<p>Les références reçoivent rarement des applaudissements.</p>
-<p>Elles font simplement leur travail.</p>
+<p>Curieusement, personne n’admirait les méridiens.<br>On admirait les navires.<br>On admirait les grandes traversées.<br>On admirait les capitaines.<br>Presque personne ne parlait des lignes silencieuses qui rendaient tout cela possible.<br>Les références reçoivent rarement des applaudissements.<br>Elles font simplement leur travail.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p class="historia-lead">Sur une côte lointaine se dressait un vieux phare bâti sur des falaises sombres.</p>
-<p>Lui aussi était une référence.</p>
-<p>Mais, contrairement aux méridiens, on pouvait le voir.</p>
-<p>Pendant les tempêtes, sa lumière traversait la pluie.</p>
-<p>Dans les brouillards denses, c’était la seule forme reconnaissable sur ce trait d’océan.</p>
-<p>Les nuits absolument noires, quand ciel et mer ne faisaient qu’un, il restait allumé.</p>
+<p>Lui aussi était une référence.<br>Mais, contrairement aux méridiens, on pouvait le voir.<br>Pendant les tempêtes, sa lumière traversait la pluie.<br>Dans les brouillards denses, c’était la seule forme reconnaissable sur ce trait d’océan.<br>Les nuits absolument noires, quand ciel et mer ne faisaient qu’un, il restait allumé.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
 <p>Curieusement, le phare n’était pas extraordinaire.</p>
-<p class="historia-beat">Sa tour était simple.</p>
-<p class="historia-beat">Ses pierres étaient ordinaires.</p>
-<p>Il n’avait ni la lumière la plus puissante ni l’architecture la plus impressionnante.</p>
-<p>D’autres phares étaient plus grands.</p>
-<p>D’autres plus modernes.</p>
-<p>Certains même plus beaux.</p>
+<p class="historia-beat">Sa tour était simple.<br>Ses pierres étaient ordinaires.</p>
+<p>Il n’avait ni la lumière la plus puissante ni l’architecture la plus impressionnante.<br>D’autres phares étaient plus grands.<br>D’autres plus modernes.<br>Certains même plus beaux.</p>
 <div class="historia-pull"><p>Mais aucun n’était aussi fiable.</p></div>
-<p>Les navigateurs disaient quelque chose d’étrange à son sujet.</p>
-<p>Ils disaient qu’ils ne faisaient pas confiance à sa lumière.</p>
-<p>Ils faisaient confiance à ses décisions.</p>
-<p>La phrase semblait absurde.</p>
-<p>Comment un phare pourrait-il prendre des décisions&nbsp;?</p>
-<p>Mais la réponse était cachée dans son histoire.</p>
+<p>Les navigateurs disaient quelque chose d’étrange à son sujet.<br>Ils disaient qu’ils ne faisaient pas confiance à sa lumière.<br>Ils faisaient confiance à ses décisions.<br>La phrase semblait absurde.<br>Comment un phare pourrait-il prendre des décisions&nbsp;?<br>Mais la réponse était cachée dans son histoire.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Au fil des décennies, d’innombrables responsables passèrent par cette tour.</p>
-<p>Certains voulaient en faire une attraction touristique.</p>
-<p>D’autres voulaient la rendre plus lucrative.</p>
-<p>Il y en eut qui souhaitaient remplacer sa fonction d’origine par des activités plus rentables.</p>
-<p>Toutes les propositions semblaient intelligentes.</p>
-<p>Toutes avaient des arguments convaincants.</p>
-<p>Toutes promettaient un gain d’une sorte ou d’une autre.</p>
-<p>Mais il y avait une question gravée sur une petite plaque de métal près de la salle des lampes.</p>
-<p>Une question simple.</p>
+<p>Au fil des décennies, d’innombrables responsables passèrent par cette tour.<br>Certains voulaient en faire une attraction touristique.<br>D’autres voulaient la rendre plus lucrative.<br>Il y en eut qui souhaitaient remplacer sa fonction d’origine par des activités plus rentables.<br>Toutes les propositions semblaient intelligentes.<br>Toutes avaient des arguments convaincants.<br>Toutes promettaient un gain d’une sorte ou d’une autre.<br>Mais il y avait une question gravée sur une petite plaque de métal près de la salle des lampes.<br>Une question simple.</p>
 <aside class="historia-plaque" aria-label="Plaque du phare">
   <div class="eyebrow">Plaque de métal · salle des lampes</div>
-  <blockquote>« Cela aide-t-il les navigateurs à trouver leur chemin ? »</blockquote>
+  <blockquote>« Cela aide-t-il les navigateurs à trouver leur chemin ?<br>»</blockquote>
 </aside>
-<p class="historia-beat">Rien de plus.</p>
-<p class="historia-beat">Toute décision y passait.</p>
-<p class="historia-beat">Tout changement.</p>
-<p class="historia-beat">Toute opportunité.</p>
-<p class="historia-beat">Tout investissement.</p>
-<p class="historia-beat">Toute innovation.</p>
-<p class="historia-beat">Tout refus.</p>
-<p>La question ne changeait jamais.</p>
-<p>Et c’est précisément pour cela que le phare ne se perdait jamais.</p>
+<p class="historia-beat">Rien de plus.<br>Toute décision y passait.<br>Tout changement.<br>Toute opportunité.<br>Tout investissement.<br>Toute innovation.<br>Tout refus.</p>
+<p>La question ne changeait jamais.<br>Et c’est précisément pour cela que le phare ne se perdait jamais.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Les années devinrent des décennies.</p>
-<p>Les décennies, des générations.</p>
-<p>Tandis que d’autres cherchaient l’attention, le phare cherchait l’alignement.</p>
-<p>Tandis que d’autres demandaient&nbsp;:</p>
-<p class="historia-beat">« Comment grandir ? »</p>
+<p>Les années devinrent des décennies.<br>Les décennies, des générations.<br>Tandis que d’autres cherchaient l’attention, le phare cherchait l’alignement.<br>Tandis que d’autres demandaient&nbsp;:</p>
+<p class="historia-beat">« Comment grandir ?<br>»</p>
 <p>Le phare demandait&nbsp;:</p>
-<p class="historia-beat">« Comment rester utiles ? »</p>
+<p class="historia-beat">« Comment rester utiles ?<br>»</p>
 <p>Tandis que d’autres poursuivaient les tendances, il poursuivait la cohérence.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Peu à peu, une réputation commença à naître.</p>
-<p>Non parce qu’elle avait été planifiée.</p>
-<p>Mais parce qu’elle avait été méritée.</p>
-<p>Les navigateurs se mirent à lui faire confiance non pour ce qu’il disait.</p>
-<p>Mais pour le motif qu’il répétait.</p>
-<p>Quand un choix difficile apparaissait, il choisissait la direction.</p>
-<p>Quand une distraction séduisante surgissait, il choisissait la direction.</p>
-<p>Quand un raccourci promettait des avantages immédiats, il choisissait la direction.</p>
-<p class="historia-beat">Toujours la direction.</p>
-<p class="historia-beat">Toujours le but.</p>
-<p class="historia-beat">Toujours le chemin.</p>
+<p>Peu à peu, une réputation commença à naître.<br>Non parce qu’elle avait été planifiée.<br>Mais parce qu’elle avait été méritée.<br>Les navigateurs se mirent à lui faire confiance non pour ce qu’il disait.<br>Mais pour le motif qu’il répétait.<br>Quand un choix difficile apparaissait, il choisissait la direction.<br>Quand une distraction séduisante surgissait, il choisissait la direction.<br>Quand un raccourci promettait des avantages immédiats, il choisissait la direction.</p>
+<p class="historia-beat">Toujours la direction.<br>Toujours le but.<br>Toujours le chemin.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Avec le temps, les marins percèrent quelque chose d’extraordinaire.</p>
-<p>La vraie valeur de ce phare n’était pas dans la lumière.</p>
-<p>La lumière n’était que la manifestation visible de quelque chose d’invisible.</p>
-<p>Tout comme un navire suivait un méridien que personne ne voyait, le phare suivait aussi une ligne invisible.</p>
-<p class="historia-beat">Une ligne faite de principes.</p>
-<p class="historia-beat">De critères.</p>
-<p class="historia-beat">De choix répétés.</p>
-<p class="historia-beat">De décisions prises quand personne ne regardait.</p>
+<p>Avec le temps, les marins percèrent quelque chose d’extraordinaire.<br>La vraie valeur de ce phare n’était pas dans la lumière.<br>La lumière n’était que la manifestation visible de quelque chose d’invisible.<br>Tout comme un navire suivait un méridien que personne ne voyait, le phare suivait aussi une ligne invisible.</p>
+<p class="historia-beat">Une ligne faite de principes.<br>De critères.<br>De choix répétés.<br>De décisions prises quand personne ne regardait.</p>
 <div class="historia-pull"><p>Les choses les plus importantes ne sont presque jamais visibles.</p></div>
-<p class="historia-beat">La confiance n’est pas visible.</p>
-<p class="historia-beat">La réputation n’est pas visible.</p>
-<p class="historia-beat">La conviction n’est pas visible.</p>
-<p class="historia-beat">La direction n’est pas visible.</p>
-<p class="historia-beat">Le méridien n’est pas visible.</p>
+<p class="historia-beat">La confiance n’est pas visible.<br>La réputation n’est pas visible.<br>La conviction n’est pas visible.<br>La direction n’est pas visible.<br>Le méridien n’est pas visible.</p>
 <p>Mais c’est l’existence de ces choses qui détermine tout le reste.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>Parce qu’une identité ne naît pas quand quelqu’un crée un symbole.</p>
-<p>Ni quand quelqu’un écrit une mission.</p>
-<p>Ni quand quelqu’un choisit une couleur ou un slogan.</p>
-<p>Une identité naît quand une décision en rencontre une autre.</p>
-<p>Puis une autre.</p>
-<p>Puis encore une.</p>
-<p>Jusqu’à former une ligne si claire que plus personne ne peut s’y tromper.</p>
+<p>Parce qu’une identité ne naît pas quand quelqu’un crée un symbole.<br>Ni quand quelqu’un écrit une mission.<br>Ni quand quelqu’un choisit une couleur ou un slogan.<br>Une identité naît quand une décision en rencontre une autre.<br>Puis une autre.<br>Puis encore une.<br>Jusqu’à former une ligne si claire que plus personne ne peut s’y tromper.</p>
 <div class="historia-spacer" aria-hidden="true"></div>
-<p>À la fin, le phare ne fut jamais rappelé pour sa tour.</p>
-<p>Jamais pour sa lumière.</p>
-<p>Jamais pour son apparence.</p>
-<p>Il fut rappelé parce qu’il resta aligné sur son méridien.</p>
-<p>Parce que, quand les tempêtes arrivaient, il continuait d’être ce qu’il avait décidé d’être.</p>
+<p>À la fin, le phare ne fut jamais rappelé pour sa tour.<br>Jamais pour sa lumière.<br>Jamais pour son apparence.<br>Il fut rappelé parce qu’il resta aligné sur son méridien.<br>Parce que, quand les tempêtes arrivaient, il continuait d’être ce qu’il avait décidé d’être.</p>
 <div class="historia-pull"><p>Et peut-être est-ce la définition la plus simple d’une grande marque.</p></div>
-<p>Pas quelque chose qui attire l’attention.</p>
-<p>Mais quelque chose qui maintient la direction.</p>
-<p>Assez longtemps pour que les autres lui fassent confiance.</p>
+<p>Pas quelque chose qui attire l’attention.<br>Mais quelque chose qui maintient la direction.<br>Assez longtemps pour que les autres lui fassent confiance.</p>
 `,
 };
 
@@ -598,13 +250,86 @@ const HOME: Record<Lang, Dict> = {
     'home.cores.desc':
       'Clique em qualquer amostra para copiar o token/HEX. Bordas, divisórias hairline e fundos sutis são calculados automaticamente via color-mix() (CSS) e pré-resolvidos em tokens.ts (React Native).',
     'home.type.eyebrow': '02 · Hierarquia em 3 Vozes',
-    'home.type.title': 'Escala por Contraste de Forma, Não de Peso',
+    'home.type.title': 'Forma no serif. Peso no sans e no mono.',
     'home.type.desc':
-      'Família Geist em três vozes: Geist Serif no display; Geist na prosa; Geist Mono com tabular-nums.',
+      'Geist Serif permanece em 400. Geist cobre 300–700 na interface. Geist Mono usa 400–600 com tabular-nums. Abaixo, a escala, a rampa de pesos e os pares canônicos.',
+    'home.type.weights.eyebrow': 'Rampa de peso · variável real',
+    'home.type.weights.note': 'Sans e mono são fontes variáveis.<br>A rampa da interface vai de 300 a 700.<br>Não há negrito sintético.<br>O serif fica fora dessa rampa.',
+    'home.type.weight.sample': 'Meridiano',
+    'home.type.combo.eyebrow': 'Combinações canônicas',
+    'home.type.combo.ed.k': 'Editorial · serif 400 + sans 400',
+    'home.type.combo.ed.t': 'Janela segura de passeio',
+    'home.type.combo.ed.b': 'O título carrega a forma.<br>A prosa fica em 400.<br>A linha cabe em 65 caracteres.<br>Ela não compete com o display.',
+    'home.type.combo.metric.k': 'Métrica · serif tabular + mono',
+    'home.type.combo.metric.b': 'O número é serif 400.<br>Ele usa tabular-nums.<br>A unidade fica em mono.<br>A leitura não salta.',
+    'home.type.combo.ui.k': 'Interface · sans 500 + mono 400',
+    'home.type.combo.ui.b': 'O rótulo usa sans 500.<br>O token fica em mono 400.<br>O atalho também fica em mono.',
+    'home.tok.eyebrow': 'Atlas · CSS & tokens.ts',
+    'home.tok.title': 'Tokens em quatro famílias',
+    'home.tok.desc': 'Clique numa linha para copiar o valor resolvido. A mesma chave existe em tokens.css e em tokens.ts — cor, tipo, espaço e motion não divergem entre Web e React Native.',
+    'home.tok.ink': 'Tinta & superfície',
+    'home.tok.type': 'Tipo',
+    'home.tok.space': 'Espaço, raio & densidade',
+    'home.tok.motion': 'Motion & grão',
+    'home.tok.role.bg': 'Fundo de papel',
+    'home.tok.role.fg': 'Tinta única',
+    'home.tok.role.muted': 'Tinta secundária',
+    'home.tok.role.rule': 'Divisória · 1px',
+    'home.tok.role.border': 'Borda de placa · 1px',
+    'home.tok.role.hair': 'Espessura única',
+    'home.tok.role.tint': 'Preenchimento suave',
+    'home.tok.role.display': 'Serif · peso 400',
+    'home.tok.role.sans': 'Sans · 300–700',
+    'home.tok.role.mono': 'Mono · tabular',
+    'home.tok.role.h1': 'Display fluido',
+    'home.tok.role.body': 'Prosa · 65ch',
+    'home.tok.role.ui': 'UI · peso 500',
+    'home.tok.role.track': 'Tracking display',
+    'home.tok.role.tight': '6 · micro',
+    'home.tok.role.md': '16 · bloco',
+    'home.tok.role.loose': 'Folga de seção',
+    'home.tok.role.sq': '8 · ação',
+    'home.tok.role.card': '12 · placa',
+    'home.tok.role.pill': '9999 · nav',
+    'home.tok.role.density': '1 B2C · 0.82 técnico',
+    'home.tok.role.press': '120ms · scale 0.97',
+    'home.tok.role.base': '220ms · tabs / popover',
+    'home.tok.role.drawer': '380ms · sheet',
+    'home.tok.role.ease': 'Entrada de UI',
+    'home.tok.role.pscale': 'Nunca scale(0)',
+    'home.tok.role.grain': 'Intensidade do grão',
+    'home.tok.role.gop': 'Opacidade do grão',
     'home.motion.eyebrow': '03 · Navegação & Motion',
     'home.motion.title': 'Dual-Radius, Clip-Path Tabs & Física Tátil',
     'home.motion.desc':
-      'Pills para navegação e filtros; Squircles para ações utilitárias. Zero transition:all, zero ease-in, scale(0.97) no pointer-down.',
+      'Pills para navegação; squircles para ações. Nada de transition:all, nada de ease-in, nada de scale(0). O que se usa 100 vezes por dia não anima.',
+    'home.motion.doc.dur': 'Durações · MOTION.duration',
+    'home.motion.doc.d0': '0ms · ⌘K, atalho, troca de aba raiz',
+    'home.motion.doc.d1': '120ms · scale(0.97) no pointer-down',
+    'home.motion.doc.d2': '140ms · primeiro tooltip; irmãos em 0ms',
+    'home.motion.doc.d3': '160ms · cor, hover em ponteiro fino',
+    'home.motion.doc.d4': '220ms · clip-path, popover, select',
+    'home.motion.doc.d5': '380ms · sheet, curva de gaveta',
+    'home.motion.doc.d6': '560ms placa · 800ms dossiê 3D',
+    'home.motion.doc.curve': 'Curvas · sem ease-in',
+    'home.motion.doc.c1': 'entrada e feedback',
+    'home.motion.doc.c2': 'clip-path em tela',
+    'home.motion.doc.c3': 'sheet com inércia',
+    'home.motion.doc.c4': 'hover de placa',
+    'home.motion.doc.c5': 'abertura 3D',
+    'home.motion.doc.c6': 'mola 400ms · damping 1 · sem overshoot',
+    'home.motion.doc.c7': 'mola 300ms · damping 0.8 · herda o gesto',
+    'home.motion.doc.rules': 'Regras absolutas',
+    'home.motion.rule.k1': 'Teclado',
+    'home.motion.rule.v1': '⌘K, “/” e troca de aba de raiz: animação none. Frequência alta não ganha transição.',
+    'home.motion.rule.k2': 'Press',
+    'home.motion.rule.v2': 'Só scale(0.97), 120ms ease-out. Entrada mínima é 0.96 — nunca scale(0).',
+    'home.motion.rule.k3': 'Hover',
+    'home.motion.rule.v3': 'Cor e opacidade apenas com ponteiro fino. Toque não dispara hover.',
+    'home.motion.rule.k4': 'Hold',
+    'home.motion.rule.v4': '1.4s linear para confirmar; 180ms ease-out ao soltar. Háptico commit no frame em que o preenchimento fecha.',
+    'home.motion.rule.k5': 'Gesto',
+    'home.motion.rule.v5': 'Alvo mínimo 44pt. Rubberband 0.55 na borda. Momentum com desaceleração 0.998 — projeção, não keyframe dinâmico.',
     'home.editorial.eyebrow': '04 · Editorial',
     'home.editorial.title': 'Galeria Assimétrica & Leitor Enciclopédico',
     'home.footer.mission.h': 'Nossa missão',
@@ -718,6 +443,31 @@ const HOME: Record<Lang, Dict> = {
     'home.ll.shelf': "Estante Tátil de Relatórios",
     'home.svg.eyebrow': "06 · Gramática Plotter SVG (gramática plotter) & Globo 81k",
     'home.svg.title': "Blueprints Vetoriais Editáveis & Escala 1:1 Travada",
+    'home.svg.trace.eye': "Traço · gráfico de linhas",
+    'home.svg.trace.h3': "Rio de eventos",
+    'home.svg.tree.eye': "Árvore · decisão",
+    'home.svg.tree.h3': "Árvore de uma tinta",
+    'home.svg.branch.eye': "Ramificação · delta",
+    'home.svg.branch.h3': "O tronco se abre em ramos",
+    'home.svg.table.eye': "Tabela de dados · ledger",
+    'home.svg.table.h3': "O traço, linha a linha",
+    'home.svg.table.t': "Marca",
+    'home.svg.table.span': "Span",
+    'home.svg.table.bytes': "Bytes",
+    'home.svg.table.role': "Papel plotter",
+    'home.svg.table.primary': "primary · rota viva",
+    'home.svg.table.secondary': "secondary · detalhe",
+    'home.svg.table.transfer': "transfer · 4 6",
+    'home.svg.table.guide': "guide · alinhamento",
+    'home.svg.evo.eye': "Evolução · séries",
+    'home.svg.evo.h3': "Duas curvas, seis meses",
+    'home.svg.evo.cap': "Sólida · atenção. Tracejada · clima. O ponto percorre a série viva.",
+    'home.svg.fin.eye': "Financeiro · candles",
+    'home.svg.fin.h3': "Sessão e média",
+    'home.svg.fin.cap': "Corpo vazado cai. Corpo suave sobe. A média atravessa a sessão. Volume no rodapé.",
+    'home.svg.time.eye': "Tempo · faixas",
+    'home.svg.time.h3': "Janelas do dia",
+    'home.svg.time.cap': "Três faixas. O fio percorre o dia e marca a janela ativa.",
     'home.svg.desc': "Uma tinta (<code>currentColor</code>), uma espessura (<code>1u</code>), formas transparentes e hierarquia por opacidade + tracejado semântico (<code>data-plotter-role</code>) inspirados no <strong>Plotter</strong> e no globo de <em>globo pontilhado Meridian</em>.",
     'home.svg.globe.eye': "Globo Ortográfico 81k · plotter-svg.ts (Canvas Canônico 560×440)",
     'home.svg.globe.h3': "Globo Editorial Pontilhado em Gramática Plotter",
@@ -758,6 +508,7 @@ const HOME: Record<Lang, Dict> = {
     'home.footer.acc.shortcuts': "Atalhos",
     'home.footer.acc.commitments': "Compromissos",
     'home.footer.sys.surfaces': "Superfícies Single-Ink",
+    'home.footer.sys.tokens': "Atlas de tokens",
     'home.footer.sys.type': "Tipografia 3 vozes",
     'home.footer.sys.motion': "Motion & Frequency Gate",
     'home.footer.ed.reader': "Leitor 3 colunas",
@@ -776,6 +527,7 @@ const HOME: Record<Lang, Dict> = {
     'home.rail.meta': "Menu global · Components, Preview, Gann e seções. Esc ou backdrop fecha.",
     'home.rail.sec.historia': "01 · História",
     'home.rail.sec.cores': "02 · Superfícies",
+    'home.rail.sec.tokens': "Tokens",
     'home.rail.sec.tipografia': "03 · Tipografia",
     'home.rail.sec.interacoes': "04 · Motion",
     'home.rail.sec.editorial': "05 · Editorial",
@@ -785,15 +537,20 @@ const HOME: Record<Lang, Dict> = {
     'home.grain.intensity': "Intensidade",
     'home.grain.subtle': "Suave",
     'home.grain.tactile': "Tátil",
+    'home.grain.opacity': "Opacidade",
     'home.grain.size': "Tamanho do grão",
     'home.grain.fine': "Fino",
     'home.grain.medium': "Médio",
     'home.grain.coarse': "Grosso",
     'home.grain.chunky': "Grumo",
+    'home.grain.layers': "Camadas",
+    'home.grain.dust': "Dust",
+    'home.grain.scratch': "Scratch",
+    'home.grain.double': "Duplo",
     'home.grain.signals': "Estilo de Sinais",
     'home.grain.chromatic': "Cromático",
     'home.grain.mono': "Monocromo",
-    'home.grain.help': "Intensidade = opacidade · Tamanho = repaint do canvas.",
+    'home.grain.help': "Intensidade + opacidade · Dust/Scratch/Duplo.",
   },
   en: {
     'home.hist.kicker': '00 · History',
@@ -804,13 +561,86 @@ const HOME: Record<Lang, Dict> = {
     'home.cores.desc':
       'Click any swatch to copy the token/HEX. Borders, hairlines and soft fills are computed via color-mix() (CSS) and pre-resolved in tokens.ts (React Native).',
     'home.type.eyebrow': '02 · Hierarchy in 3 Voices',
-    'home.type.title': 'Scale by Shape Contrast, Not Weight',
+    'home.type.title': 'Shape in serif. Weight in sans and mono.',
     'home.type.desc':
-      'Geist in three voices: Geist Serif for display; Geist for prose; Geist Mono with tabular-nums.',
+      'Geist Serif stays at 400. Geist covers 300–700 in the interface. Geist Mono uses 400–600 with tabular-nums. Below: the scale, the weight ramp, and the canonical pairs.',
+    'home.type.weights.eyebrow': 'Weight ramp · real variable fonts',
+    'home.type.weights.note': 'Sans and mono are variable fonts.<br>The interface ramp runs from 300 to 700.<br>There is no synthetic bold.<br>Serif stays off this ramp.',
+    'home.type.weight.sample': 'Meridian',
+    'home.type.combo.eyebrow': 'Canonical pairings',
+    'home.type.combo.ed.k': 'Editorial · serif 400 + sans 400',
+    'home.type.combo.ed.t': 'A safe window for a walk',
+    'home.type.combo.ed.b': 'The title carries the shape.<br>Prose stays at 400.<br>A line holds 65 characters.<br>It does not compete with display.',
+    'home.type.combo.metric.k': 'Metric · tabular serif + mono',
+    'home.type.combo.metric.b': 'The figure is serif 400.<br>It uses tabular-nums.<br>The unit stays in mono.<br>The reading does not jump.',
+    'home.type.combo.ui.k': 'Interface · sans 500 + mono 400',
+    'home.type.combo.ui.b': 'The label uses sans 500.<br>The token stays in mono 400.<br>The shortcut stays in mono too.',
+    'home.tok.eyebrow': 'Atlas · CSS & tokens.ts',
+    'home.tok.title': 'Tokens in four families',
+    'home.tok.desc': 'Click a row to copy the resolved value. The same key lives in tokens.css and tokens.ts — color, type, space and motion do not diverge between Web and React Native.',
+    'home.tok.ink': 'Ink & surface',
+    'home.tok.type': 'Type',
+    'home.tok.space': 'Space, radius & density',
+    'home.tok.motion': 'Motion & grain',
+    'home.tok.role.bg': 'Paper ground',
+    'home.tok.role.fg': 'Single ink',
+    'home.tok.role.muted': 'Secondary ink',
+    'home.tok.role.rule': 'Divider · 1px',
+    'home.tok.role.border': 'Plate border · 1px',
+    'home.tok.role.hair': 'Single thickness',
+    'home.tok.role.tint': 'Soft fill',
+    'home.tok.role.display': 'Serif · weight 400',
+    'home.tok.role.sans': 'Sans · 300–700',
+    'home.tok.role.mono': 'Mono · tabular',
+    'home.tok.role.h1': 'Fluid display',
+    'home.tok.role.body': 'Prose · 65ch',
+    'home.tok.role.ui': 'UI · weight 500',
+    'home.tok.role.track': 'Display tracking',
+    'home.tok.role.tight': '6 · micro',
+    'home.tok.role.md': '16 · block',
+    'home.tok.role.loose': 'Section slack',
+    'home.tok.role.sq': '8 · action',
+    'home.tok.role.card': '12 · plate',
+    'home.tok.role.pill': '9999 · nav',
+    'home.tok.role.density': '1 B2C · 0.82 technical',
+    'home.tok.role.press': '120ms · scale 0.97',
+    'home.tok.role.base': '220ms · tabs / popover',
+    'home.tok.role.drawer': '380ms · sheet',
+    'home.tok.role.ease': 'UI entrance',
+    'home.tok.role.pscale': 'Never scale(0)',
+    'home.tok.role.grain': 'Grain intensity',
+    'home.tok.role.gop': 'Grain opacity',
     'home.motion.eyebrow': '03 · Navigation & Motion',
     'home.motion.title': 'Dual-Radius, Clip-Path Tabs & Tactile Physics',
     'home.motion.desc':
-      'Pills for navigation and filters; Squircles for utility actions. No transition:all, no ease-in, scale(0.97) on pointer-down.',
+      'Pills for navigation; squircles for actions. No transition:all, no ease-in, no scale(0). What is used 100 times a day does not animate.',
+    'home.motion.doc.dur': 'Durations · MOTION.duration',
+    'home.motion.doc.d0': '0ms · ⌘K, shortcut, root tab switch',
+    'home.motion.doc.d1': '120ms · scale(0.97) on pointer-down',
+    'home.motion.doc.d2': '140ms · first tooltip; siblings at 0ms',
+    'home.motion.doc.d3': '160ms · color, hover on a fine pointer',
+    'home.motion.doc.d4': '220ms · clip-path, popover, select',
+    'home.motion.doc.d5': '380ms · sheet, drawer curve',
+    'home.motion.doc.d6': '560ms plate · 800ms 3D dossier',
+    'home.motion.doc.curve': 'Curves · no ease-in',
+    'home.motion.doc.c1': 'entrance and feedback',
+    'home.motion.doc.c2': 'on-screen clip-path',
+    'home.motion.doc.c3': 'sheet with inertia',
+    'home.motion.doc.c4': 'plate hover',
+    'home.motion.doc.c5': '3D open',
+    'home.motion.doc.c6': 'spring 400ms · damping 1 · no overshoot',
+    'home.motion.doc.c7': 'spring 300ms · damping 0.8 · inherits the gesture',
+    'home.motion.doc.rules': 'Absolute rules',
+    'home.motion.rule.k1': 'Keyboard',
+    'home.motion.rule.v1': '⌘K, “/” and root tab switches: animation none. High frequency does not earn a transition.',
+    'home.motion.rule.k2': 'Press',
+    'home.motion.rule.v2': 'Only scale(0.97), 120ms ease-out. Minimum entrance is 0.96 — never scale(0).',
+    'home.motion.rule.k3': 'Hover',
+    'home.motion.rule.v3': 'Color and opacity only with a fine pointer. Touch does not fire hover.',
+    'home.motion.rule.k4': 'Hold',
+    'home.motion.rule.v4': '1.4s linear to confirm; 180ms ease-out on release. Commit haptic on the frame the fill closes.',
+    'home.motion.rule.k5': 'Gesture',
+    'home.motion.rule.v5': 'Minimum target 44pt. Rubberband 0.55 at the edge. Momentum deceleration 0.998 — projection, not a dynamic keyframe.',
     'home.editorial.eyebrow': '04 · Editorial',
     'home.editorial.title': 'Asymmetric Gallery & Encyclopedic Reader',
     'home.footer.mission.h': 'Our mission',
@@ -924,6 +754,31 @@ const HOME: Record<Lang, Dict> = {
     'home.ll.shelf': "Tactile Report Shelf",
     'home.svg.eyebrow': "06 · Plotter SVG Grammar (plotter grammar) & 81k Globe",
     'home.svg.title': "Editable Vector Blueprints & Locked 1:1 Scale",
+    'home.svg.trace.eye': "Trace · line graph",
+    'home.svg.trace.h3': "Event river",
+    'home.svg.tree.eye': "Tree · decision",
+    'home.svg.tree.h3': "A tree in one ink",
+    'home.svg.branch.eye': "Branching · delta",
+    'home.svg.branch.h3': "The trunk opens into branches",
+    'home.svg.table.eye': "Data table · ledger",
+    'home.svg.table.h3': "The trace, row by row",
+    'home.svg.table.t': "Mark",
+    'home.svg.table.span': "Span",
+    'home.svg.table.bytes': "Bytes",
+    'home.svg.table.role': "Plotter role",
+    'home.svg.table.primary': "primary · live route",
+    'home.svg.table.secondary': "secondary · detail",
+    'home.svg.table.transfer': "transfer · 4 6",
+    'home.svg.table.guide': "guide · alignment",
+    'home.svg.evo.eye': "Evolution · series",
+    'home.svg.evo.h3': "Two curves, six months",
+    'home.svg.evo.cap': "Solid · attention. Dashed · climate. The point travels the live series.",
+    'home.svg.fin.eye': "Financial · candles",
+    'home.svg.fin.h3': "Session and average",
+    'home.svg.fin.cap': "Open body falls. Soft body rises. The average crosses the session. Volume along the foot.",
+    'home.svg.time.eye': "Time · bands",
+    'home.svg.time.h3': "Windows of the day",
+    'home.svg.time.cap': "Three lanes. The hairline walks the day and marks the active window.",
     'home.svg.desc': "One ink (<code>currentColor</code>), one weight (<code>1u</code>), transparent shapes, and hierarchy by opacity plus semantic dashing (<code>data-plotter-role</code>), drawn from <strong>Plotter</strong> and the <em>Meridian dotted globe</em>.",
     'home.svg.globe.eye': "Orthographic Globe 81k · plotter-svg.ts (Canonical Canvas 560×440)",
     'home.svg.globe.h3': "Dotted Editorial Globe in Plotter Grammar",
@@ -964,6 +819,7 @@ const HOME: Record<Lang, Dict> = {
     'home.footer.acc.shortcuts': "Shortcuts",
     'home.footer.acc.commitments': "Commitments",
     'home.footer.sys.surfaces': "Single-Ink Surfaces",
+    'home.footer.sys.tokens': "Token atlas",
     'home.footer.sys.type': "3-voice typography",
     'home.footer.sys.motion': "Motion & Frequency Gate",
     'home.footer.ed.reader': "3-column reader",
@@ -982,6 +838,7 @@ const HOME: Record<Lang, Dict> = {
     'home.rail.meta': "Global menu · Components, Preview, Gann, and sections. Esc or the backdrop closes it.",
     'home.rail.sec.historia': "01 · History",
     'home.rail.sec.cores': "02 · Surfaces",
+    'home.rail.sec.tokens': "Tokens",
     'home.rail.sec.tipografia': "03 · Typography",
     'home.rail.sec.interacoes': "04 · Motion",
     'home.rail.sec.editorial': "05 · Editorial",
@@ -991,15 +848,20 @@ const HOME: Record<Lang, Dict> = {
     'home.grain.intensity': "Intensity",
     'home.grain.subtle': "Soft",
     'home.grain.tactile': "Tactile",
+    'home.grain.opacity': "Opacity",
     'home.grain.size': "Grain size",
     'home.grain.fine': "Fine",
     'home.grain.medium': "Medium",
     'home.grain.coarse': "Coarse",
     'home.grain.chunky': "Chunky",
+    'home.grain.layers': "Layers",
+    'home.grain.dust': "Dust",
+    'home.grain.scratch': "Scratch",
+    'home.grain.double': "Double",
     'home.grain.signals': "Signal style",
     'home.grain.chromatic': "Chromatic",
     'home.grain.mono': "Monochrome",
-    'home.grain.help': "Intensity = opacity · Size = canvas repaint.",
+    'home.grain.help': "Intensity + opacity · Dust/Scratch/Double.",
   },
   es: {
     'home.hist.kicker': '00 · Historia',
@@ -1010,13 +872,86 @@ const HOME: Record<Lang, Dict> = {
     'home.cores.desc':
       'Haz clic en cualquier muestra para copiar el token/HEX. Bordes, hairlines y fondos sutiles se calculan con color-mix() (CSS) y se pre-resuelven en tokens.ts (React Native).',
     'home.type.eyebrow': '02 · Jerarquía en 3 Voces',
-    'home.type.title': 'Escala por Contraste de Forma, No de Peso',
+    'home.type.title': 'Forma en serif. Peso en sans y en mono.',
     'home.type.desc':
-      'Familia Geist en tres voces: Geist Serif en display; Geist en prosa; Geist Mono con tabular-nums.',
+      'Geist Serif permanece en 400. Geist cubre 300–700 en la interfaz. Geist Mono usa 400–600 con tabular-nums. Abajo: la escala, la rampa de pesos y los pares canónicos.',
+    'home.type.weights.eyebrow': 'Rampa de peso · variable real',
+    'home.type.weights.note': 'Sans y mono son fuentes variables.<br>La rampa de la interfaz va de 300 a 700.<br>No hay negrita sintética.<br>El serif queda fuera de esa rampa.',
+    'home.type.weight.sample': 'Meridiano',
+    'home.type.combo.eyebrow': 'Combinaciones canónicas',
+    'home.type.combo.ed.k': 'Editorial · serif 400 + sans 400',
+    'home.type.combo.ed.t': 'Ventana segura de paseo',
+    'home.type.combo.ed.b': 'El título lleva la forma.<br>La prosa queda en 400.<br>La línea cabe en 65 caracteres.<br>No compite con el display.',
+    'home.type.combo.metric.k': 'Métrica · serif tabular + mono',
+    'home.type.combo.metric.b': 'El número es serif 400.<br>Usa tabular-nums.<br>La unidad queda en mono.<br>La lectura no salta.',
+    'home.type.combo.ui.k': 'Interfaz · sans 500 + mono 400',
+    'home.type.combo.ui.b': 'El rótulo usa sans 500.<br>El token queda en mono 400.<br>El atajo también queda en mono.',
+    'home.tok.eyebrow': 'Atlas · CSS & tokens.ts',
+    'home.tok.title': 'Tokens en cuatro familias',
+    'home.tok.desc': 'Haz clic en una fila para copiar el valor resuelto. La misma clave existe en tokens.css y en tokens.ts — color, tipo, espacio y motion no divergen entre Web y React Native.',
+    'home.tok.ink': 'Tinta y superficie',
+    'home.tok.type': 'Tipo',
+    'home.tok.space': 'Espacio, radio y densidad',
+    'home.tok.motion': 'Motion y grano',
+    'home.tok.role.bg': 'Fondo de papel',
+    'home.tok.role.fg': 'Tinta única',
+    'home.tok.role.muted': 'Tinta secundaria',
+    'home.tok.role.rule': 'Divisoria · 1px',
+    'home.tok.role.border': 'Borde de placa · 1px',
+    'home.tok.role.hair': 'Espesor único',
+    'home.tok.role.tint': 'Relleno suave',
+    'home.tok.role.display': 'Serif · peso 400',
+    'home.tok.role.sans': 'Sans · 300–700',
+    'home.tok.role.mono': 'Mono · tabular',
+    'home.tok.role.h1': 'Display fluido',
+    'home.tok.role.body': 'Prosa · 65ch',
+    'home.tok.role.ui': 'UI · peso 500',
+    'home.tok.role.track': 'Tracking display',
+    'home.tok.role.tight': '6 · micro',
+    'home.tok.role.md': '16 · bloque',
+    'home.tok.role.loose': 'Holgura de sección',
+    'home.tok.role.sq': '8 · acción',
+    'home.tok.role.card': '12 · placa',
+    'home.tok.role.pill': '9999 · nav',
+    'home.tok.role.density': '1 B2C · 0.82 técnico',
+    'home.tok.role.press': '120ms · scale 0.97',
+    'home.tok.role.base': '220ms · tabs / popover',
+    'home.tok.role.drawer': '380ms · sheet',
+    'home.tok.role.ease': 'Entrada de UI',
+    'home.tok.role.pscale': 'Nunca scale(0)',
+    'home.tok.role.grain': 'Intensidad del grano',
+    'home.tok.role.gop': 'Opacidad del grano',
     'home.motion.eyebrow': '03 · Navegación & Motion',
     'home.motion.title': 'Dual-Radius, Clip-Path Tabs & Física Táctil',
     'home.motion.desc':
-      'Pills para navegación y filtros; Squircles para acciones utilitarias. Cero transition:all, cero ease-in, scale(0.97) en pointer-down.',
+      'Pills para navegación; squircles para acciones. Nada de transition:all, nada de ease-in, nada de scale(0). Lo que se usa 100 veces al día no se anima.',
+    'home.motion.doc.dur': 'Duraciones · MOTION.duration',
+    'home.motion.doc.d0': '0ms · ⌘K, atajo, cambio de pestaña raíz',
+    'home.motion.doc.d1': '120ms · scale(0.97) en pointer-down',
+    'home.motion.doc.d2': '140ms · primer tooltip; hermanos en 0ms',
+    'home.motion.doc.d3': '160ms · color, hover con puntero fino',
+    'home.motion.doc.d4': '220ms · clip-path, popover, select',
+    'home.motion.doc.d5': '380ms · sheet, curva de cajón',
+    'home.motion.doc.d6': '560ms placa · 800ms dosier 3D',
+    'home.motion.doc.curve': 'Curvas · sin ease-in',
+    'home.motion.doc.c1': 'entrada y feedback',
+    'home.motion.doc.c2': 'clip-path en pantalla',
+    'home.motion.doc.c3': 'sheet con inercia',
+    'home.motion.doc.c4': 'hover de placa',
+    'home.motion.doc.c5': 'apertura 3D',
+    'home.motion.doc.c6': 'muelle 400ms · damping 1 · sin overshoot',
+    'home.motion.doc.c7': 'muelle 300ms · damping 0.8 · hereda el gesto',
+    'home.motion.doc.rules': 'Reglas absolutas',
+    'home.motion.rule.k1': 'Teclado',
+    'home.motion.rule.v1': '⌘K, “/” y cambio de pestaña raíz: animación none. La alta frecuencia no gana transición.',
+    'home.motion.rule.k2': 'Press',
+    'home.motion.rule.v2': 'Solo scale(0.97), 120ms ease-out. La entrada mínima es 0.96 — nunca scale(0).',
+    'home.motion.rule.k3': 'Hover',
+    'home.motion.rule.v3': 'Color y opacidad solo con puntero fino. El toque no dispara hover.',
+    'home.motion.rule.k4': 'Hold',
+    'home.motion.rule.v4': '1.4s linear para confirmar; 180ms ease-out al soltar. Háptico commit en el frame en que el relleno cierra.',
+    'home.motion.rule.k5': 'Gesto',
+    'home.motion.rule.v5': 'Objetivo mínimo 44pt. Rubberband 0.55 en el borde. Momentum con desaceleración 0.998 — proyección, no keyframe dinámico.',
     'home.editorial.eyebrow': '04 · Editorial',
     'home.editorial.title': 'Galería Asimétrica & Lector Enciclopédico',
     'home.footer.mission.h': 'Nuestra misión',
@@ -1091,7 +1026,7 @@ const HOME: Record<Lang, Dict> = {
     'home.motion.inv.explore': "Explorar catálogo",
     'home.motion.inv.tokens': "Ver tokens.ts",
     'home.ed.tab.masonry': "Masonry asimétrico",
-    'home.ed.tab.reader': "Lector de 3 columnas",
+    'home.ed.tab.reader': "Lector 3 columnas",
     'home.ed.toc': "Contenido",
     'home.ed.sources': "Fuentes verificadas (haz clic en las frases de arriba para resaltar)",
     'home.ed.glance': "En resumen",
@@ -1130,6 +1065,31 @@ const HOME: Record<Lang, Dict> = {
     'home.ll.shelf': "Estante táctil de informes",
     'home.svg.eyebrow': "06 · Gramática Plotter SVG (gramática plotter) y globo 81k",
     'home.svg.title': "Blueprints vectoriales editables y escala 1:1 bloqueada",
+    'home.svg.trace.eye': "Trazo · gráfico de líneas",
+    'home.svg.trace.h3': "Río de eventos",
+    'home.svg.tree.eye': "Árbol · decisión",
+    'home.svg.tree.h3': "Árbol de una tinta",
+    'home.svg.branch.eye': "Ramificación · delta",
+    'home.svg.branch.h3': "El tronco se abre en ramas",
+    'home.svg.table.eye': "Tabla de datos · ledger",
+    'home.svg.table.h3': "El trazo, línea a línea",
+    'home.svg.table.t': "Marca",
+    'home.svg.table.span': "Span",
+    'home.svg.table.bytes': "Bytes",
+    'home.svg.table.role': "Papel plotter",
+    'home.svg.table.primary': "primary · ruta viva",
+    'home.svg.table.secondary': "secondary · detalle",
+    'home.svg.table.transfer': "transfer · 4 6",
+    'home.svg.table.guide': "guide · alineación",
+    'home.svg.evo.eye': "Evolución · series",
+    'home.svg.evo.h3': "Dos curvas, seis meses",
+    'home.svg.evo.cap': "Sólida · atención. Discontinua · clima. El punto recorre la serie viva.",
+    'home.svg.fin.eye': "Financiero · velas",
+    'home.svg.fin.h3': "Sesión y media",
+    'home.svg.fin.cap': "Cuerpo vacío baja. Cuerpo suave sube. La media cruza la sesión. Volumen al pie.",
+    'home.svg.time.eye': "Tiempo · franjas",
+    'home.svg.time.h3': "Ventanas del día",
+    'home.svg.time.cap': "Tres franjas. El hilo recorre el día y marca la ventana activa.",
     'home.svg.desc': "Una tinta (<code>currentColor</code>), un grosor (<code>1u</code>), formas transparentes y jerarquía por opacidad y trazado semántico (<code>data-plotter-role</code>), inspirados en <strong>Plotter</strong> y en el <em>globo punteado Meridian</em>.",
     'home.svg.globe.eye': "Globo ortográfico 81k · plotter-svg.ts (lienzo canónico 560×440)",
     'home.svg.globe.h3': "Globo editorial punteado en gramática Plotter",
@@ -1170,6 +1130,7 @@ const HOME: Record<Lang, Dict> = {
     'home.footer.acc.shortcuts': "Atajos",
     'home.footer.acc.commitments': "Compromisos",
     'home.footer.sys.surfaces': "Superficies Single-Ink",
+    'home.footer.sys.tokens': "Atlas de tokens",
     'home.footer.sys.type': "Tipografía en 3 voces",
     'home.footer.sys.motion': "Motion y Frequency Gate",
     'home.footer.ed.reader': "Lector de 3 columnas",
@@ -1188,6 +1149,7 @@ const HOME: Record<Lang, Dict> = {
     'home.rail.meta': "Menú global · Components, Preview, Gann y secciones. Esc o el fondo lo cierra.",
     'home.rail.sec.historia': "01 · Historia",
     'home.rail.sec.cores': "02 · Superficies",
+    'home.rail.sec.tokens': "Tokens",
     'home.rail.sec.tipografia': "03 · Tipografía",
     'home.rail.sec.interacoes': "04 · Motion",
     'home.rail.sec.editorial': "05 · Editorial",
@@ -1197,15 +1159,20 @@ const HOME: Record<Lang, Dict> = {
     'home.grain.intensity': "Intensidad",
     'home.grain.subtle': "Suave",
     'home.grain.tactile': "Táctil",
+    'home.grain.opacity': "Opacidad",
     'home.grain.size': "Tamaño del grano",
     'home.grain.fine': "Fino",
     'home.grain.medium': "Medio",
     'home.grain.coarse': "Grueso",
     'home.grain.chunky': "Grumo",
+    'home.grain.layers': "Capas",
+    'home.grain.dust': "Dust",
+    'home.grain.scratch': "Scratch",
+    'home.grain.double': "Doble",
     'home.grain.signals': "Estilo de señales",
     'home.grain.chromatic': "Cromático",
     'home.grain.mono': "Monocromo",
-    'home.grain.help': "Intensidad = opacidad · Tamaño = repintado del canvas.",
+    'home.grain.help': "Intensidad + opacidad · Dust/Scratch/Doble.",
   },
   fr: {
     'home.hist.kicker': '00 · Histoire',
@@ -1216,13 +1183,86 @@ const HOME: Record<Lang, Dict> = {
     'home.cores.desc':
       'Cliquez sur un échantillon pour copier le token/HEX. Bordures, hairlines et fonds subtils sont calculés via color-mix() (CSS) et pré-résolus dans tokens.ts (React Native).',
     'home.type.eyebrow': '02 · Hiérarchie en 3 Voix',
-    'home.type.title': 'Échelle par Contraste de Forme, pas de Poids',
+    'home.type.title': 'La forme au serif. Le poids au sans et au mono.',
     'home.type.desc':
-      'Famille Geist en trois voix : Geist Serif en display ; Geist en prose ; Geist Mono avec tabular-nums.',
+      'Geist Serif reste à 400. Geist couvre 300–700 dans l’interface. Geist Mono utilise 400–600 avec tabular-nums. Ci-dessous : l’échelle, la rampe de graisses et les paires canoniques.',
+    'home.type.weights.eyebrow': 'Rampe de graisse · variable réelle',
+    'home.type.weights.note': 'Sans et mono sont des fontes variables.<br>La rampe de l’interface va de 300 à 700.<br>Il n’y a pas de gras synthétique.<br>Le serif reste hors de cette rampe.',
+    'home.type.weight.sample': 'Méridien',
+    'home.type.combo.eyebrow': 'Combinaisons canoniques',
+    'home.type.combo.ed.k': 'Éditorial · serif 400 + sans 400',
+    'home.type.combo.ed.t': 'Fenêtre sûre pour la promenade',
+    'home.type.combo.ed.b': 'Le titre porte la forme.<br>La prose reste à 400.<br>La ligne tient en 65 caractères.<br>Elle ne concurrence pas le display.',
+    'home.type.combo.metric.k': 'Métrique · serif tabulaire + mono',
+    'home.type.combo.metric.b': 'Le chiffre est serif 400.<br>Il utilise tabular-nums.<br>L’unité reste en mono.<br>La lecture ne saute pas.',
+    'home.type.combo.ui.k': 'Interface · sans 500 + mono 400',
+    'home.type.combo.ui.b': 'Le libellé utilise le sans 500.<br>Le token reste en mono 400.<br>Le raccourci reste en mono aussi.',
+    'home.tok.eyebrow': 'Atlas · CSS & tokens.ts',
+    'home.tok.title': 'Tokens en quatre familles',
+    'home.tok.desc': 'Cliquez une ligne pour copier la valeur résolue. La même clé existe dans tokens.css et tokens.ts — couleur, type, espace et motion ne divergent pas entre Web et React Native.',
+    'home.tok.ink': 'Encre & surface',
+    'home.tok.type': 'Type',
+    'home.tok.space': 'Espace, rayon & densité',
+    'home.tok.motion': 'Motion & grain',
+    'home.tok.role.bg': 'Fond papier',
+    'home.tok.role.fg': 'Encre unique',
+    'home.tok.role.muted': 'Encre secondaire',
+    'home.tok.role.rule': 'Filet · 1px',
+    'home.tok.role.border': 'Bord de plaque · 1px',
+    'home.tok.role.hair': 'Épaisseur unique',
+    'home.tok.role.tint': 'Remplissage doux',
+    'home.tok.role.display': 'Serif · graisse 400',
+    'home.tok.role.sans': 'Sans · 300–700',
+    'home.tok.role.mono': 'Mono · tabulaire',
+    'home.tok.role.h1': 'Display fluide',
+    'home.tok.role.body': 'Prose · 65ch',
+    'home.tok.role.ui': 'UI · graisse 500',
+    'home.tok.role.track': 'Tracking display',
+    'home.tok.role.tight': '6 · micro',
+    'home.tok.role.md': '16 · bloc',
+    'home.tok.role.loose': 'Respiration de section',
+    'home.tok.role.sq': '8 · action',
+    'home.tok.role.card': '12 · plaque',
+    'home.tok.role.pill': '9999 · nav',
+    'home.tok.role.density': '1 B2C · 0.82 technique',
+    'home.tok.role.press': '120ms · scale 0.97',
+    'home.tok.role.base': '220ms · tabs / popover',
+    'home.tok.role.drawer': '380ms · sheet',
+    'home.tok.role.ease': 'Entrée d’UI',
+    'home.tok.role.pscale': 'Jamais scale(0)',
+    'home.tok.role.grain': 'Intensité du grain',
+    'home.tok.role.gop': 'Opacité du grain',
     'home.motion.eyebrow': '03 · Navigation & Motion',
     'home.motion.title': 'Dual-Radius, Clip-Path Tabs & Physique Tactile',
     'home.motion.desc':
-      'Pills pour navigation et filtres ; Squircles pour actions utilitaires. Zéro transition:all, zéro ease-in, scale(0.97) au pointer-down.',
+      'Pills pour la navigation ; squircles pour les actions. Pas de transition:all, pas d’ease-in, pas de scale(0). Ce qui s’utilise 100 fois par jour ne s’anime pas.',
+    'home.motion.doc.dur': 'Durées · MOTION.duration',
+    'home.motion.doc.d0': '0ms · ⌘K, raccourci, onglet racine',
+    'home.motion.doc.d1': '120ms · scale(0.97) au pointer-down',
+    'home.motion.doc.d2': '140ms · premier tooltip ; les suivants en 0ms',
+    'home.motion.doc.d3': '160ms · couleur, hover au pointeur fin',
+    'home.motion.doc.d4': '220ms · clip-path, popover, select',
+    'home.motion.doc.d5': '380ms · sheet, courbe de tiroir',
+    'home.motion.doc.d6': '560ms plaque · 800ms dossier 3D',
+    'home.motion.doc.curve': 'Courbes · sans ease-in',
+    'home.motion.doc.c1': 'entrée et feedback',
+    'home.motion.doc.c2': 'clip-path à l’écran',
+    'home.motion.doc.c3': 'sheet avec inertie',
+    'home.motion.doc.c4': 'survol de plaque',
+    'home.motion.doc.c5': 'ouverture 3D',
+    'home.motion.doc.c6': 'ressort 400ms · damping 1 · sans overshoot',
+    'home.motion.doc.c7': 'ressort 300ms · damping 0.8 · hérite du geste',
+    'home.motion.doc.rules': 'Règles absolues',
+    'home.motion.rule.k1': 'Clavier',
+    'home.motion.rule.v1': '⌘K, « / » et changement d’onglet racine : animation none. La haute fréquence n’a pas de transition.',
+    'home.motion.rule.k2': 'Press',
+    'home.motion.rule.v2': 'Seulement scale(0.97), 120ms ease-out. Entrée minimale 0.96 — jamais scale(0).',
+    'home.motion.rule.k3': 'Hover',
+    'home.motion.rule.v3': 'Couleur et opacité seulement au pointeur fin. Le toucher ne déclenche pas le hover.',
+    'home.motion.rule.k4': 'Hold',
+    'home.motion.rule.v4': '1,4s linear pour confirmer ; 180ms ease-out au relâchement. Haptique commit à la frame où le remplissage se ferme.',
+    'home.motion.rule.k5': 'Geste',
+    'home.motion.rule.v5': 'Cible minimale 44pt. Rubberband 0.55 au bord. Momentum à décélération 0.998 — projection, pas de keyframe dynamique.',
     'home.editorial.eyebrow': '04 · Éditorial',
     'home.editorial.title': 'Galerie Asymétrique & Lecteur Encyclopédique',
     'home.footer.mission.h': 'Notre mission',
@@ -1336,6 +1376,31 @@ const HOME: Record<Lang, Dict> = {
     'home.ll.shelf': "Étagère tactile de rapports",
     'home.svg.eyebrow': "06 · Grammaire Plotter SVG (grammaire plotter) et globe 81k",
     'home.svg.title': "Blueprints vectoriels éditables et échelle 1:1 verrouillée",
+    'home.svg.trace.eye': "Trace · graphique de lignes",
+    'home.svg.trace.h3': "Fleuve d’événements",
+    'home.svg.tree.eye': "Arbre · décision",
+    'home.svg.tree.h3': "Un arbre d’une seule encre",
+    'home.svg.branch.eye': "Ramification · delta",
+    'home.svg.branch.h3': "Le tronc s’ouvre en branches",
+    'home.svg.table.eye': "Table de données · ledger",
+    'home.svg.table.h3': "La trace, ligne à ligne",
+    'home.svg.table.t': "Repère",
+    'home.svg.table.span': "Span",
+    'home.svg.table.bytes': "Octets",
+    'home.svg.table.role': "Rôle plotter",
+    'home.svg.table.primary': "primary · route vive",
+    'home.svg.table.secondary': "secondary · détail",
+    'home.svg.table.transfer': "transfer · 4 6",
+    'home.svg.table.guide': "guide · alignement",
+    'home.svg.evo.eye': "Évolution · séries",
+    'home.svg.evo.h3': "Deux courbes, six mois",
+    'home.svg.evo.cap': "Pleine · attention. Tiretée · climat. Le point parcourt la série vive.",
+    'home.svg.fin.eye': "Financier · bougies",
+    'home.svg.fin.h3': "Séance et moyenne",
+    'home.svg.fin.cap': "Corps vide baisse. Corps doux monte. La moyenne traverse la séance. Volume au pied.",
+    'home.svg.time.eye': "Temps · plages",
+    'home.svg.time.h3': "Fenêtres du jour",
+    'home.svg.time.cap': "Trois pistes. Le fil parcourt la journée et marque la fenêtre active.",
     'home.svg.desc': "Une encre (<code>currentColor</code>), une épaisseur (<code>1u</code>), des formes transparentes et une hiérarchie par opacité et pointillé sémantique (<code>data-plotter-role</code>), inspirés de <strong>Plotter</strong> et du <em>globe pointillé Meridian</em>.",
     'home.svg.globe.eye': "Globe orthographique 81k · plotter-svg.ts (canevas canonique 560×440)",
     'home.svg.globe.h3': "Globe éditorial pointillé en grammaire Plotter",
@@ -1376,6 +1441,7 @@ const HOME: Record<Lang, Dict> = {
     'home.footer.acc.shortcuts': "Raccourcis",
     'home.footer.acc.commitments': "Engagements",
     'home.footer.sys.surfaces': "Surfaces Single-Ink",
+    'home.footer.sys.tokens': "Atlas de tokens",
     'home.footer.sys.type': "Typographie en 3 voix",
     'home.footer.sys.motion': "Motion et Frequency Gate",
     'home.footer.ed.reader': "Lecteur 3 colonnes",
@@ -1394,6 +1460,7 @@ const HOME: Record<Lang, Dict> = {
     'home.rail.meta': "Menu global · Components, Preview, Gann et sections. Échap ou le fond le ferme.",
     'home.rail.sec.historia': "01 · Histoire",
     'home.rail.sec.cores': "02 · Surfaces",
+    'home.rail.sec.tokens': "Tokens",
     'home.rail.sec.tipografia': "03 · Typographie",
     'home.rail.sec.interacoes': "04 · Motion",
     'home.rail.sec.editorial': "05 · Éditorial",
@@ -1403,15 +1470,20 @@ const HOME: Record<Lang, Dict> = {
     'home.grain.intensity': "Intensité",
     'home.grain.subtle': "Doux",
     'home.grain.tactile': "Tactile",
+    'home.grain.opacity': "Opacité",
     'home.grain.size': "Taille du grain",
     'home.grain.fine': "Fin",
     'home.grain.medium': "Moyen",
     'home.grain.coarse': "Grossier",
     'home.grain.chunky': "Grumeau",
+    'home.grain.layers': "Couches",
+    'home.grain.dust': "Dust",
+    'home.grain.scratch': "Scratch",
+    'home.grain.double': "Double",
     'home.grain.signals': "Style des signaux",
     'home.grain.chromatic': "Chromatique",
     'home.grain.mono': "Monochrome",
-    'home.grain.help': "Intensité = opacité · Taille = repeint du canvas.",
+    'home.grain.help': "Intensité + opacité · Dust/Scratch/Double.",
   },
 };
 

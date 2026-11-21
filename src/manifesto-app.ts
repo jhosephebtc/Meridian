@@ -2,8 +2,9 @@
  * MERIDIAN — Manifesto
  * Plotter D2 plates · Dual layout chrome (padrão Gann / História)
  */
+import './site-chrome';
 import { PAPER_SHADER } from './tokens';
-import { mountPaperGrain } from './paper-grain';
+import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n } from './i18n';
 import './i18n.css';
@@ -310,11 +311,11 @@ function init(): void {
   initI18n();
   mountPaperGrain({
     seed: 20241121,
-    speckleStrength: PAPER_SHADER.defaultSpeckle * 0.9,
+    speckleStrength: PAPER_SHADER.defaultSpeckle,
     fiberDensity: PAPER_SHADER.defaultFiber,
     size: PAPER_SHADER.defaultSize,
   });
-
+  bootPaperGrainExtras();
   const saved = (localStorage.getItem('meridian-manifesto-layout') as LayoutMode | null) ?? 'masthead';
   setLayout(saved === 'rail' ? 'rail' : 'masthead');
 

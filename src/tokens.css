@@ -137,10 +137,9 @@
 
   /* Elevação Tátil (Sombras reservadas apenas para profundidade física) */
   --ds-shadow-plate-inset: 0 0 0 1px color-mix(in srgb, var(--ds-fg) 6%, transparent) inset;
-  --ds-shadow-focus: 0 0 0 2px var(--ds-bg), 0 0 0 4px var(--ds-fg);
-  --ds-shadow-popover:
-    0 8px 24px -6px rgba(17, 18, 22, 0.12),
-    0 2px 6px -1px rgba(17, 18, 22, 0.06);
+  --ds-shadow-focus: 0 0 0 1px var(--ds-bg), 0 0 0 2px color-mix(in srgb, var(--ds-fg) 38%, transparent);
+  --ds-shadow-selected: none;
+  --ds-shadow-popover: none;
   --ds-shadow-raised: none;
   --ds-shadow-spine-inset:
     1px 0 0 0 rgba(255, 255, 255, 0.08) inset,
@@ -171,6 +170,7 @@
   --ds-paper-filter: none;
   --ds-paper-opacity: 0.88;
   --ds-grain-multiplier: 1;
+  --ds-grain-opacity: 1;
 
   /* Scrollbar hairline */
   --ds-scrollbar-size: 2px;
@@ -223,7 +223,7 @@
   --ds-image-blend: multiply;
   --ds-paper-blend: multiply;
   --ds-paper-filter: none;
-  --ds-paper-opacity: calc(0.88 * var(--ds-grain-multiplier));
+  --ds-paper-opacity: calc(1 * var(--ds-grain-multiplier));
 }
 
 /* Soft Chromatic — pastéis do espectro (blush / butter / mist / lilac)
@@ -266,7 +266,7 @@
   --ds-image-blend: multiply;
   --ds-paper-blend: multiply;
   --ds-paper-filter: none;
-  --ds-paper-opacity: calc(0.62 * var(--ds-grain-multiplier));
+  --ds-paper-opacity: calc(1 * var(--ds-grain-multiplier));
 }
 
 /* SUPERFÍCIE 3: SIGNATURE AQUA — Linhagem Aqua (#A4CED0) */
@@ -393,10 +393,9 @@
   /* Obsidian Archive PaperGrain: screen + invert(1) para textura tátil sobre escuro */
   --ds-paper-blend: screen;
   --ds-paper-filter: invert(1);
-  --ds-paper-opacity: calc(0.58 * var(--ds-grain-multiplier));
+  --ds-paper-opacity: calc(1 * var(--ds-grain-multiplier));
 
-  --ds-shadow-popover:
-    0 12px 32px -8px rgba(0, 0, 0, 0.55);
+  --ds-shadow-popover: none;
   --ds-shadow-raised: none;
 }
 
@@ -623,7 +622,7 @@
   --ds-image-blend: multiply;
   --ds-paper-blend: multiply;
   --ds-paper-filter: none;
-  --ds-paper-opacity: calc(0.88 * var(--ds-grain-multiplier));
+  --ds-paper-opacity: calc(1 * var(--ds-grain-multiplier));
 }
 
 /* --------------------------------------------------------------------------
@@ -636,10 +635,10 @@
   --ds-bg-tint-active: color-mix(in srgb, var(--ds-fg) 12%, var(--ds-bg));
 
   /* Hairlines Arquival: 10% rule / 16% strong / 10% border — mais sutis que 11–26% */
-  --ds-rule: color-mix(in srgb, var(--ds-fg) 10%, transparent);
-  --ds-rule-strong: color-mix(in srgb, var(--ds-fg) 16%, transparent);
-  --ds-border: color-mix(in srgb, var(--ds-fg) 10%, transparent);
-  --ds-border-strong: color-mix(in srgb, var(--ds-fg) 18%, transparent);
+  --ds-rule: color-mix(in srgb, var(--ds-fg) 9%, transparent);
+  --ds-rule-strong: color-mix(in srgb, var(--ds-fg) 12%, transparent);
+  --ds-border: color-mix(in srgb, var(--ds-fg) 9%, transparent);
+  --ds-border-strong: color-mix(in srgb, var(--ds-fg) 12%, transparent);
 
   /* Superfícies translúcidas (chrome translúcido + papel tingido) */
   --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 82%, transparent);
@@ -671,9 +670,9 @@
    4. CONTROLES DE RUÍDO, SINAIS & DUAL-MODE
    -------------------------------------------------------------------------- */
 [data-grain="off"]       { --ds-grain-multiplier: 0; }
-[data-grain="subtle"]    { --ds-grain-multiplier: 0.55; }
-[data-grain="editorial"] { --ds-grain-multiplier: 1; }
-[data-grain="tactile"]   { --ds-grain-multiplier: 1.45; }
+[data-grain="subtle"]    { --ds-grain-multiplier: 0.42; }
+[data-grain="editorial"] { --ds-grain-multiplier: 0.78; }
+[data-grain="tactile"]   { --ds-grain-multiplier: 1.12; }
 
 /* Tamanho espacial — dataset; o canvas é repintado em JS (paper-grain.ts) */
 [data-grain-size="fine"]   { --ds-grain-size-label: "Fino"; }
@@ -693,14 +692,24 @@
   --ds-card-pad: 24px;
   --ds-section-pad: clamp(48px, 6.5vw, 88px);
   --ds-prose-size: var(--ds-text-body-lg);
+  --ds-stack-loose: 28px;
 }
 
 [data-mode="technical"] {
-  --ds-density: 0.88;
-  --ds-card-pad: 18px;
-  --ds-section-pad: clamp(36px, 4.8vw, 68px);
+  --ds-density: 0.82;
+  --ds-card-pad: 14px;
+  --ds-section-pad: clamp(28px, 3.2vw, 48px);
   --ds-prose-size: var(--ds-text-body-md);
+  --ds-stack-loose: 16px;
 }
+
+html[data-mode="technical"] .eyebrow {
+  font-family: var(--ds-font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+html[data-mode="technical"] [data-b2c-only] { display: none !important; }
+html[data-mode="invisible"] [data-tech-only] { display: none !important; }
 
 /* --------------------------------------------------------------------------
    5. PAPER SHADER OVERLAY GLOBAL (canvas · sem data-URL)
@@ -719,7 +728,7 @@ body::after {
   background-repeat: var(--ds-paper-repeat, no-repeat);
   mix-blend-mode: var(--ds-paper-blend);
   filter: var(--ds-paper-filter, none);
-  opacity: var(--ds-paper-opacity);
+  opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1));
   image-rendering: auto;
 }
 html[data-paper-shader="canvas"] body::after {
@@ -739,17 +748,16 @@ html[data-paper-shader="canvas"] body::after {
   z-index: 2147483640;
   display: block;
   mix-blend-mode: normal;
-  opacity: var(--ds-paper-opacity);
+  opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1));
   image-rendering: auto;
 }
 html[data-grain-size="coarse"] .ds-paper-grain-layer,
 html[data-grain-size="chunky"] .ds-paper-grain-layer {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  image-rendering: auto;
 }
 html[data-surface="obsidian"] .ds-paper-grain-layer {
   filter: invert(1);
-  opacity: calc(var(--ds-paper-opacity) * 0.85);
+  opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1) * 0.92);
 }
 
 /* --------------------------------------------------------------------------

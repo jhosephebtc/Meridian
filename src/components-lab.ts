@@ -1,4 +1,5 @@
-import { mountPaperGrain } from './paper-grain.ts';
+import './site-chrome';
+import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
 import {
   CATEGORY_LABELS,
@@ -1734,6 +1735,7 @@ function initChrome(): void {
 function init(): void {
   initI18n();
   mountPaperGrain({ seed: 20261120 });
+  bootPaperGrainExtras();
   markPageReady();
   ensureHosts();
   initChrome();

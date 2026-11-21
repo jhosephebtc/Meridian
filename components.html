@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/components-lab.css" />
   <link rel="stylesheet" href="./src/i18n.css" />
+  <link rel="stylesheet" href="./src/site-chrome.css" />
 </head>
 <body>
   <div class="ds-page-veil" aria-hidden="false"></div>
@@ -31,17 +32,29 @@
     </a>
     <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <div data-lang-slot></div>
-      <div class="swatch-pill-group" role="group" aria-label="Surface" style="display:flex;gap:4px">
-        <button type="button" class="swatch-btn" data-surface-pick="ivory" title="Ivory" style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ds-border);background:#FAF9F5;padding:0;cursor:pointer"></button>
-        <button type="button" class="swatch-btn" data-surface-pick="aqua" title="Aqua" style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ds-border);background:#A4CED0;padding:0;cursor:pointer"></button>
-        <button type="button" class="swatch-btn" data-surface-pick="terracotta" title="Terracotta" style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ds-border);background:#EDBB99;padding:0;cursor:pointer"></button>
-        <button type="button" class="swatch-btn" data-surface-pick="obsidian" title="Obsidian" style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ds-border);background:#0E0E0D;padding:0;cursor:pointer"></button>
+      <div class="menu-anchor align-end">
+        <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" data-i18n="nav.surface">Superfície</button>
+        <div class="header-menu" data-open="false" role="menu">
+          <div class="swatch-pill-group swatch-row" role="group" aria-label="Surface">
+            <button type="button" class="swatch-btn" data-surface-pick="ivory" title="Ivory" style="width:16px;height:16px;border-radius:50%;border:1px solid var(--ds-border);background:#FAF9F5;padding:0;cursor:pointer"></button>
+            <button type="button" class="swatch-btn" data-surface-pick="aqua" title="Aqua" style="width:16px;height:16px;border-radius:50%;border:1px solid var(--ds-border);background:#A4CED0;padding:0;cursor:pointer"></button>
+            <button type="button" class="swatch-btn" data-surface-pick="terracotta" title="Terracotta" style="width:16px;height:16px;border-radius:50%;border:1px solid var(--ds-border);background:#EDBB99;padding:0;cursor:pointer"></button>
+            <button type="button" class="swatch-btn" data-surface-pick="obsidian" title="Obsidian" style="width:16px;height:16px;border-radius:50%;border:1px solid var(--ds-border);background:#0E0E0D;padding:0;cursor:pointer"></button>
+          </div>
+        </div>
       </div>
-      <button type="button" class="ds-btn ds-btn-tertiary" id="lab-open-cmdk" style="min-height:34px;padding:7px 10px">
-        <span class="kbd-chip" style="font-family:var(--ds-font-mono);font-size:11px">⌘K</span>
-      </button>
-      <a href="./index.html" class="ds-btn ds-btn-pill ds-btn-secondary" style="min-height:34px;padding:7px 12px;font-size:12px;text-decoration:none" data-i18n="lab.ds">Design System</a>
-      <a href="./preview.html" class="ds-btn ds-btn-pill ds-btn-ghost" style="min-height:34px;padding:7px 12px;font-size:12px;text-decoration:none" data-i18n="lab.studio">Studio</a>
+      <div class="menu-anchor align-end">
+        <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" data-i18n="nav.places">Ir</button>
+        <div class="header-menu" data-open="false" role="menu">
+          <button type="button" class="header-menu-item" id="lab-open-cmdk">Paleta ⌘K</button>
+          <a href="./index.html" role="menuitem" data-i18n="nav.system">Sistema</a>
+          <a href="./preview.html" role="menuitem" data-i18n="nav.studio">Studio</a>
+          <a href="./components.html" role="menuitem" aria-current="page" data-i18n="nav.lab">Lab</a>
+          <a href="./manifesto.html" role="menuitem">Manifesto</a>
+          <a href="./historia.html" role="menuitem">O Farol</a>
+          <a href="./gann.html" role="menuitem">Gann</a>
+        </div>
+      </div>
     </div>
   </header>
 

@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./src/components.css" />
   <link rel="stylesheet" href="./src/gann.css" />
   <link rel="stylesheet" href="./src/i18n.css" />
+  <link rel="stylesheet" href="./src/site-chrome.css" />
 </head>
 <body class="gann-page">
   <div class="ds-page-veil" aria-hidden="false"></div>
@@ -36,6 +37,9 @@
         <a data-nav href="#juramento" data-i18n="man.nav.oath">Juramento</a>
       </nav>
 
+      <div class="menu-anchor align-end">
+        <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" data-i18n="nav.surface">Superfície</button>
+        <div class="header-menu" data-open="false" role="menu">
       <div class="gann-spectrum" role="group" aria-label="Atmosfera cromática suave">
         <button type="button" class="gann-spectrum-dot" data-chroma="obsidian" aria-pressed="true" title="Obsidian" style="--chroma:#141413"></button>
         <button type="button" class="gann-spectrum-dot" data-chroma="ivory" aria-pressed="false" title="Ivory" style="--chroma:#FAF9F5"></button>
@@ -46,12 +50,24 @@
         <button type="button" class="gann-spectrum-dot" data-chroma="terracotta" aria-pressed="false" title="Terracotta" style="--chroma:#EDBB99"></button>
         <button type="button" class="gann-spectrum-dot" data-chroma="lilac" aria-pressed="false" title="Lilac" style="--chroma:#C9C0D8"></button>
       </div>
+        </div>
+      </div>
       <div class="gann-layout-toggle" role="group" aria-label="Alternar diagramação">
         <button type="button" data-layout-pick="masthead" data-active="true" data-i18n="layout.header">Header</button>
         <button type="button" data-layout-pick="rail" data-i18n="layout.menu">Menu</button>
       </div>
       <div data-lang-slot></div>
-      <a class="gann-ds-link" href="./index.html" data-i18n="ds.link">Meridian DS ↗</a>
+      <div class="menu-anchor align-end">
+        <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" data-i18n="nav.places">Ir</button>
+        <div class="header-menu" data-open="false" role="menu">
+          <a href="./index.html" role="menuitem" data-i18n="nav.system">Sistema</a>
+          <a href="./preview.html" role="menuitem" data-i18n="nav.studio">Studio</a>
+          <a href="./components.html" role="menuitem" data-i18n="nav.lab">Lab</a>
+          <a href="./manifesto.html" role="menuitem" aria-current="page">Manifesto</a>
+          <a href="./historia.html" role="menuitem">O Farol</a>
+          <a href="./gann.html" role="menuitem">Gann</a>
+        </div>
+      </div>
     </div>
   </header>
 
