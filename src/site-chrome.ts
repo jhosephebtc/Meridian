@@ -70,11 +70,41 @@ function hydrateGitHubStars(): void {
 export function bindSiteChrome(): void {
   if (document.documentElement.dataset.siteChrome === 'on') return;
   document.documentElement.dataset.siteChrome = 'on';
+
+  try {
+    const savedSurface = localStorage.getItem('meridian-surface');
+    if (savedSurface) {
+      document.documentElement.setAttribute('data-surface', savedSurface);
+      document.querySelectorAll<HTMLElement>('[data-chroma]').forEach((btn) => {
+        btn.setAttribute('aria-pressed', btn.dataset.chroma === savedSurface ? 'true' : 'false');
+      });
+    }
+  } catch {
+    /* ignore storage errors */
+  }
+
   hydrateGitHubStars();
 
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null;
     if (!target) return;
+
+    const chromaBtn = target.closest<HTMLElement>('[data-chroma]');
+    if (chromaBtn?.dataset.chroma) {
+      try {
+        localStorage.setItem('meridian-surface', chromaBtn.dataset.chroma);
+      } catch {
+        /* ignore storage errors */
+      }
+    }
+    const surfaceBtn = target.closest<HTMLElement>('[data-set-surface]');
+    if (surfaceBtn?.dataset.setSurface) {
+      try {
+        localStorage.setItem('meridian-surface', surfaceBtn.dataset.setSurface);
+      } catch {
+        /* ignore storage errors */
+      }
+    }
 
     const toggle = target.closest<HTMLElement>('[data-menu-toggle]');
     if (toggle) {

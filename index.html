@@ -1836,7 +1836,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: clamp(24px, 4vw, 44px);
-      align-items: end;
+      align-items: start;
     }
     @media (min-width: 960px) {
       .hero-grid {
@@ -2469,6 +2469,54 @@
       padding-top: clamp(36px, 4.6vw, 64px);
       padding-bottom: clamp(40px, 5vw, 72px);
       overflow: clip;
+    }
+    .historia-ambient { display: none !important; }
+    #historia .historia-layout,
+    #historia .historia-essay {
+      max-width: none;
+      width: 100%;
+    }
+    #home-historia-prose {
+      column-count: 1;
+      margin-top: 20px;
+    }
+    @media (min-width: 640px) and (max-width: 959px) {
+      #home-historia-prose {
+        column-count: 2;
+        column-gap: 24px;
+        column-rule: var(--ds-hairline, 1px) solid var(--ds-rule);
+      }
+    }
+    @media (min-width: 960px) {
+      #home-historia-prose {
+        column-count: 3;
+        column-gap: clamp(22px, 2.5vw, 34px);
+        column-rule: var(--ds-hairline, 1px) solid var(--ds-rule);
+      }
+    }
+    #home-historia-prose p {
+      font-size: 13.5px;
+      line-height: 1.54;
+      margin: 0 0 0.85em;
+      break-inside: avoid-column;
+    }
+    #home-historia-prose .historia-lead {
+      font-size: 15px;
+      line-height: 1.48;
+    }
+    #home-historia-prose .historia-pull,
+    #home-historia-prose .historia-plaque {
+      break-inside: avoid-column;
+      margin: 12px 0;
+      padding: 10px 0 10px 12px;
+    }
+    #home-historia-prose .historia-pull p {
+      font-size: 16px;
+      line-height: 1.32;
+      margin: 0;
+    }
+    #home-historia-prose .historia-spacer {
+      height: 6px;
     }
     .historia-ambient {
       position: absolute;
@@ -5180,16 +5228,22 @@
             <p class="hero-lead" id="hero-lead-copy" data-i18n="hero.lead">
               Um meridiano visual entre o&nbsp;cotidiano calmo e&nbsp;o&nbsp;rigor técnico: papel tátil, uma só tinta, navegação sem latência — para React&nbsp;Native, Web em&nbsp;CSS puro e&nbsp;SVG&nbsp;1:1.
             </p>
+            <p style="font-size:13.5px; line-height:1.58; color:var(--ds-type-secondary); max-width:54ch; margin:-12px 0 20px;">
+              Construído sobre grade modular 12×8px, traço Hairline 0.65px, 21 atmosferas Single-Ink persistidas entre páginas e 90 componentes auditáveis.
+            </p>
             <div class="btn-row">
               <a href="./components.html" class="btn btn-primary" data-i18n="hero.lab">Abrir Components Lab ↗</a>
               <a href="./preview.html" class="btn btn-secondary btn-pill" data-i18n="hero.preview">Prévia de App ↗</a>
-              <a href="./manifesto.html" class="btn btn-secondary btn-pill" data-i18n="hero.manifesto">Manifesto ↗</a>
-              <a href="./historia.html" class="btn btn-secondary btn-pill" data-i18n="hero.farol">O Farol e o Meridiano ↗</a>
-              <a href="./gann.html" class="btn btn-secondary btn-pill" data-i18n="hero.gann">Dossiê W.D. Gann ↗</a>
-              <button class="btn btn-secondary btn-pill" id="hero-open-drawer" data-i18n="hero.tokens" data-tech-only>Inspecionar Tokens CSS &amp; TS</button>
               <button class="btn btn-tertiary btn-pill" id="hero-open-cmdk"><span data-i18n="hero.cmdk">Navegação Rápida</span><span class="kbd-hint">⌘K</span></button>
               <button class="btn btn-tertiary btn-pill" id="hero-cycle-surface" data-i18n="hero.cycle" data-b2c-only>Alternar Atmosfera →</button>
+              <button class="btn btn-secondary btn-pill" id="hero-open-drawer" data-i18n="hero.tokens" data-tech-only>Tokens CSS &amp; TS</button>
             </div>
+            <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-top:16px; padding-top:12px; border-top:1px solid var(--ds-rule);" aria-label="Leituras e dossiês">
+              <span class="eyebrow" style="margin:0;">Dossiês:</span>
+              <a href="./manifesto.html" class="topbar-link" data-i18n="hero.manifesto">Manifesto ↗</a>
+              <a href="./historia.html" class="topbar-link" data-i18n="hero.farol">O Farol e o Meridiano ↗</a>
+              <a href="./gann.html" class="topbar-link" data-i18n="hero.gann">Dossiê W.D. Gann ↗</a>
+            </nav>
             <div class="mode-banner" role="status" data-tech-only>
               <span>MODO TÉCNICO PRO · camadas auditáveis · cópia dual · densidade 0.82</span>
               <span class="tabular" id="mode-banner-meta">ledger · cycles · JSON</span>
@@ -7705,7 +7759,7 @@
       const GRAIN_LABELS = { off: 'Off', subtle: 'Suave', editorial: 'Editorial', tactile: 'Tátil' };
 
       const state = {
-        surface: 'ivory',
+        surface: (() => { try { return localStorage.getItem('meridian-surface') || 'ivory'; } catch { return 'ivory'; } })(),
         mode: 'invisible',
         grain: 'editorial',
         grainSize: 'medium',
@@ -7932,6 +7986,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       function applySurface(surfaceId, announce = true) {
         if (!SURFACE_META[surfaceId]) return;
         state.surface = surfaceId;
+        try { localStorage.setItem('meridian-surface', surfaceId); } catch {}
         document.documentElement.setAttribute('data-surface', surfaceId);
         document.querySelectorAll('[data-set-surface]').forEach(el => {
           el.setAttribute('aria-pressed', el.dataset.setSurface === surfaceId ? 'true' : 'false');
@@ -9069,9 +9124,8 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         // 1. Eixos ortogonais externos sólidos + fundo Hairline translúcido da esfera
         const ext = 26;
         const ringR = R + 16;
-        els.push(`<circle cx="${cx}" cy="${cy}" r="${ringR}" fill="var(--ds-surface-1)" fill-opacity="0.45" stroke="none"/>`);
-        els.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--ds-surface-2)" fill-opacity="0.62" stroke="none"/>`);
-        els.push(`<circle cx="${(cx - R * 0.14).toFixed(1)}" cy="${(cy - R * 0.14).toFixed(1)}" r="${(R * 0.76).toFixed(1)}" fill="var(--ds-bg)" fill-opacity="0.38" stroke="none"/>`);
+        els.push(`<circle cx="${cx}" cy="${cy}" r="${ringR}" fill="var(--ds-surface-1)" fill-opacity="0.32" stroke="none"/>`);
+        els.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--ds-surface-2)" fill-opacity="0.38" stroke="none"/>`);
 
         els.push(`<line x1="${cx - R - ext}" y1="${cy}" x2="${cx - R - 5}" y2="${cy}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
         els.push(`<line x1="${cx + R + 5}" y1="${cy}" x2="${cx + R + ext}" y2="${cy}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
@@ -10789,7 +10843,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       initScrollReveal();
 
       /* Initial Render */
-      applySurface('ivory', false);
+      applySurface(state.surface, false);
       renderLifeline();
       renderPlottedGlobe();
       restartAtelier(false);
@@ -10798,7 +10852,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
   </script>
   <script type="module" src="./src/i18n-boot.ts"></script>
   <script type="module" src="./src/painterly-studio.ts"></script>
-  <script type="module" src="./src/historia-ambient-svg.ts"></script>
+
   <script type="module">
     import { mountHairlineFigure } from './src/hairline-figure.ts';
     mountHairlineFigure(document.getElementById('hairline-iso-svg'), document.getElementById('hairline-iso-readout'), 'wave');

@@ -263,9 +263,8 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
   // 1. Eixos ortogonais externos sólidos + fundo Hairline translúcido da esfera
   const ext = 26;
   const ringR = R + 16;
-  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${ringR.toFixed(1)}" fill="var(--ds-surface-1)" fill-opacity="0.45" stroke="none"/>`);
-  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${R.toFixed(1)}" fill="var(--ds-surface-2)" fill-opacity="0.62" stroke="none"/>`);
-  els.push(`<circle cx="${(cx - R * 0.14).toFixed(1)}" cy="${(cy - R * 0.14).toFixed(1)}" r="${(R * 0.76).toFixed(1)}" fill="var(--ds-bg)" fill-opacity="0.38" stroke="none"/>`);
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${ringR.toFixed(1)}" fill="var(--ds-surface-1)" fill-opacity="0.32" stroke="none"/>`);
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${R.toFixed(1)}" fill="var(--ds-surface-2)" fill-opacity="0.38" stroke="none"/>`);
 
   els.push(`<line x1="${(cx - R - ext).toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(cx - R - 5).toFixed(1)}" y2="${cy.toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
   els.push(`<line x1="${(cx + R + 5).toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(cx + R + ext).toFixed(1)}" y2="${cy.toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
