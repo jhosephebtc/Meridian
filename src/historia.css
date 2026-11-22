@@ -250,54 +250,6 @@
 }
 
 .historia-page .gann-card.gann-prose {
-  max-width: none;
+  max-width: 62ch;
   width: 100%;
-}
-
-.historia-page [data-hist$=".body"],
-.historia-page article.gann-card.gann-prose[data-hist] {
-  column-count: 1;
-}
-
-@media (min-width: 640px) and (max-width: 959px) {
-  .historia-page [data-hist$=".body"],
-  .historia-page article.gann-card.gann-prose[data-hist] {
-    display: block;
-    column-count: 2;
-    column-gap: 24px;
-    column-rule: var(--ds-hairline, 1px) solid var(--ds-rule);
-  }
-}
-
-@media (min-width: 960px) {
-  .historia-page [data-hist$=".body"],
-  .historia-page article.gann-card.gann-prose[data-hist] {
-    display: block;
-    column-count: 3;
-    column-gap: clamp(20px, 2.2vw, 30px);
-    column-rule: var(--ds-hairline, 1px) solid var(--ds-rule);
-  }
-}
-
-.historia-page [data-hist$=".body"] p,
-.historia-page article.gann-card.gann-prose[data-hist] p {
-  font-size: 14.5px;
-  line-height: 1.56;
-  color: var(--ds-fg);
-  break-inside: avoid-column;
-}
-
-.historia-page [data-hist$=".body"] p + p,
-.historia-page article.gann-card.gann-prose[data-hist] p + p {
-  margin-top: 0.78em;
-}
-
-.historia-page [data-hist="oceano.body"] > p:first-child::first-letter {
-  font-family: var(--ds-font-display);
-  float: left;
-  font-size: 3.1em;
-  line-height: 0.86;
-  padding-right: 8px;
-  padding-top: 3px;
-  color: var(--ds-fg);
 }
