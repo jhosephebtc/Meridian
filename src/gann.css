@@ -878,6 +878,15 @@ html, body {
 [data-plotter] [data-plotter-role="hatch"] { stroke-width: 1; opacity: 0.16; }
 [data-plotter] [data-plotter-role="proposed"] { stroke-width: 1; opacity: 0.28; stroke-dasharray: 3 5; }
 [data-plotter] [fill="currentColor"] { fill: currentColor; }
+[data-plotter][data-hairline] :is(line, path, circle) {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+[data-plotter][data-hairline] [data-plotter-role="primary"] { stroke-width: 0.85; }
+[data-plotter][data-hairline] [data-plotter-role="secondary"] { stroke-width: 0.6; }
+[data-plotter][data-hairline] [data-plotter-role="secondary"][stroke-width="0.5"] { stroke-width: 0.5; }
+[data-plotter][data-hairline] [data-plotter-role="guide"] { stroke-width: 0.5; stroke-dasharray: 2 3; }
 
 .gann-plot-draw {
   stroke-dasharray: 1200;

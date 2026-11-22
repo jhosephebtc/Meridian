@@ -932,3 +932,22 @@ button, [role="button"], [role="tab"], .ds-chip, .ds-drag-handle {
 [data-plotter][data-plotter-isolate="guide"]      [data-plotter-role]:not([data-plotter-role="guide"])      { opacity: 0.04; }
 [data-plotter][data-plotter-isolate="leader"]     [data-plotter-role]:not([data-plotter-role="leader"]):not([data-plotter-role="dimension"]) { opacity: 0.04; }
 
+/* Subconjunto Hairline 2:1 (0.85px / 0.60px / 0.50px, cantos & pontas round) */
+[data-hairline] {
+  --plotter-stroke-primary: 0.85;
+  --plotter-stroke-secondary: 0.6;
+  --plotter-stroke-guide: 0.5;
+  --plotter-stroke-section: 0.85;
+}
+[data-hairline] :is(line, path, circle) {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+[data-plotter][data-hairline] [data-plotter-role="secondary"][stroke-width="0.5"] {
+  stroke-width: 0.5;
+}
+[data-plotter][data-hairline] [data-plotter-role="guide"] {
+  stroke-dasharray: 2 3;
+}
+

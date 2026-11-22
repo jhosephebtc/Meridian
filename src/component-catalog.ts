@@ -112,7 +112,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'radio-group', name: 'Radio Group', category: 'controls', blurb: 'Anéis SVG, seleção exclusiva e foco visível.', demo: 'radio', install: 'radio-group', interactive: true },
   { id: 'tactile-key', name: 'Tactile Key', category: 'controls', blurb: 'Tecla isolada com depressão.', demo: 'tactile-key', install: 'tactile-key', interactive: true },
   { id: 'tactile-keypad', name: 'Tactile Keypad', category: 'controls', blurb: 'Grade 3×4 + readout tabular.', demo: 'tactile-keypad', install: 'tactile-keypad', interactive: true },
-  { id: 'tactile-console', name: 'Tactile Console', category: 'controls', blurb: 'Chaves + LEDs plotter em linha.', demo: 'tactile-console', install: 'tactile-console', interactive: true },
+  { id: 'tactile-console', name: 'Tactile Console', category: 'controls', blurb: 'Matriz 3×2 Hairline 2:1 com depressão tátil e mola k100/c18.', demo: 'tactile-console', install: 'tactile-console', interactive: true },
   { id: 'camera-wheel', name: 'Camera Wheel', category: 'controls', blurb: 'Roda óptica com ticks e arraste.', demo: 'dial', install: 'camera-wheel', interactive: true },
   { id: 'camera-dial', name: 'Camera Dial', category: 'controls', blurb: 'Dial vernier de abertura/velocidade.', demo: 'dial', install: 'camera-dial', interactive: true },
   { id: 'spectrum-control', name: 'Spectrum Control', category: 'controls', blurb: 'Canal espectral single-ink.', demo: 'slider', install: 'spectrum-control', interactive: true },
@@ -195,24 +195,24 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'financial-chart', name: 'Financial Chart', category: 'charts', blurb: 'Combo candles + volume.', demo: 'chart-candles', install: 'financial-chart', interactive: true },
 
   // Instruments
-  { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Barras plotter com roles de opacidade.', demo: 'svg-instrument', install: 'instrument', interactive: true },
+  { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Barras harmônicas 2:1 em sólidos Hairline × Plotter (0.85/0.60px).', demo: 'svg-instrument', install: 'instrument', interactive: true },
   { id: 'image-inspector', name: 'Image Inspector', category: 'instruments', blurb: 'Crosshair, coords e zoom de moldura.', demo: 'image-inspector', install: 'image-inspector', interactive: true },
   { id: 'compass', name: 'Compass', category: 'instruments', blurb: 'Rosa com anel 1.15, guias 0.7 e agulha 1.5.', demo: 'compass', install: 'compass', interactive: true },
   { id: 'audio-meter', name: 'Audio Meter', category: 'instruments', blurb: 'VU em colunas SVG.', demo: 'audio-meter', install: 'audio-meter', interactive: true },
-  { id: 'weather-instrument', name: 'Weather Instrument', category: 'instruments', blurb: 'AQI / temp em bússola editorial.', demo: 'compass', install: 'weather-instrument', interactive: true },
-  { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial em linhas.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
-  { id: 'navigation-instrument', name: 'Nav Instrument', category: 'instruments', blurb: 'Bearing tabular + rosa.', demo: 'compass', install: 'navigation-instrument', interactive: true },
+  { id: 'weather-instrument', name: 'Weather Instrument', category: 'instruments', blurb: 'Palheta direcional 2:1 isométrica (Hairline × Plotter).', demo: 'compass', install: 'weather-instrument', interactive: true },
+  { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial em planos Hairline 2:1 com mola.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
+  { id: 'navigation-instrument', name: 'Nav Instrument', category: 'instruments', blurb: 'Quadrantes cardeais 2:1 + núcleo bárico Hairline.', demo: 'compass', install: 'navigation-instrument', interactive: true },
   { id: 'race-telemetry', name: 'Race Telemetry', category: 'instruments', blurb: 'Telemetria com sparkline.', demo: 'chart-spark', install: 'race-telemetry', interactive: true },
-  { id: 'hairline-isometric', name: 'Hairline Isometric', category: 'instruments', blurb: 'Figura isométrica 2:1 em sólidos arredondados com hit em repouso (Hairline × Plotter).', demo: 'hairline-iso', install: 'hairline-isometric', interactive: true },
+  { id: 'hairline-isometric', name: 'Hairline Isometric', category: 'instruments', blurb: 'Malha 4×4 isométrica 2:1 com traço fino 0.85/0.60px e hit em repouso.', demo: 'hairline-iso', install: 'hairline-isometric', interactive: true },
 
   // Astronomy
-  { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Arcos solares plotter.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },
-  { id: 'astrology-wheel', name: 'Astrology Wheel', category: 'astronomy', blurb: 'Roda de casas em traço.', demo: 'compass', install: 'astrology-wheel', interactive: true },
-  { id: 'lunar-ephemeris', name: 'Moon Ephemeris', category: 'astronomy', blurb: 'Fases e elongação.', demo: 'svg-instrument', install: 'lunar-ephemeris', interactive: true },
+  { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Anéis concêntricos solares 2:1 em traço Hairline × Plotter.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },
+  { id: 'astrology-wheel', name: 'Astrology Wheel', category: 'astronomy', blurb: 'Órbita elíptica 2:1 com 5 nós sagrados Hairline.', demo: 'compass', install: 'astrology-wheel', interactive: true },
+  { id: 'lunar-ephemeris', name: 'Moon Ephemeris', category: 'astronomy', blurb: 'Fases lunares 2:1 em órbita isométrica interativa.', demo: 'svg-instrument', install: 'lunar-ephemeris', interactive: true },
 
   // Weather
   { id: 'weather-conditions', name: 'Weather Conditions', category: 'weather', blurb: 'Condições + métricas line.', demo: 'metric', install: 'weather-conditions', interactive: true },
-  { id: 'wind-instrument', name: 'Wind Vector', category: 'weather', blurb: 'Direção e velocidade SVG.', demo: 'compass', install: 'wind-instrument', interactive: true },
+  { id: 'wind-instrument', name: 'Wind Vector', category: 'weather', blurb: 'Vetor cardinal 2:1 com placas de pressão Hairline.', demo: 'compass', install: 'wind-instrument', interactive: true },
   { id: 'tide-instrument', name: 'Tide Curve', category: 'weather', blurb: 'Curva de maré contínua.', demo: 'chart-area', install: 'tide-instrument', interactive: true },
 ] as const;
 

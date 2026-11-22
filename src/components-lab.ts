@@ -2,7 +2,7 @@ import './site-chrome';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
 import { createTimeline } from './timeline.ts';
-import { mountHairlineFigure } from './hairline-figure.ts';
+import { mountHairlineFigure, type HairlinePreset } from './hairline-figure.ts';
 import {
   CATEGORY_LABELS,
   COMPONENT_CATALOG,
@@ -692,31 +692,31 @@ function demoAudioMeter(): HTMLElement {
   return svg as unknown as HTMLElement;
 }
 
-function demoHairlineIso(): HTMLElement {
+function demoHairlineIso(preset: HairlinePreset = 'wave'): HTMLElement {
   const wrap = document.createElement('div');
-  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:250px;';
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:264px;';
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 400 320');
   svg.setAttribute('data-plotter', '');
+  svg.setAttribute('data-hairline', '');
   svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   svg.style.cssText = 'width:100%;height:auto;aspect-ratio:400/320;touch-action:none;color:var(--ds-fg);';
   const readout = document.createElement('div');
   readout.className = 'ds-mono';
   readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
-  mountHairlineFigure(svg, readout, 'wave');
+  mountHairlineFigure(svg, readout, preset);
   wrap.append(svg, readout);
   return wrap;
 }
 
-function demoSvgInstrument(_kind: string): HTMLElement {
-  const el = document.createElement('div');
-  el.innerHTML = `
-    <svg class="ml-svg" viewBox="0 0 200 100" aria-hidden="true">
-      <path class="ml-primary ml-draw" pathLength="1" d="M8 72 C40 72 36 28 70 40 S110 88 140 52 S170 20 192 36" fill="none" stroke="currentColor"/>
-      <line class="ml-guide" x1="8" y1="88" x2="192" y2="88" stroke="currentColor" stroke-opacity="0.85"/>
-      <text x="8" y="14">TRAÇO · 1.5</text>
-    </svg>`;
-  return el.firstElementChild as HTMLElement;
+function demoSvgInstrument(kind: string): HTMLElement {
+  const map: Record<string, HairlinePreset> = {
+    instrument: 'octaves',
+    'attitude-indicator': 'attitude',
+    'astronomy-instrument': 'beacon',
+    'lunar-ephemeris': 'ephemeris',
+  };
+  return demoHairlineIso(map[kind] ?? 'strata');
 }
 
 function seriesPoints(values: number[], w: number, h: number, pad = 8): Array<readonly [number, number]> {
@@ -1386,22 +1386,7 @@ function demoKpiStrip(): HTMLElement {
 }
 
 function demoConsole(): HTMLElement {
-  const el = document.createElement('div');
-  el.className = 'ml-console';
-  el.innerHTML = Array.from({ length: 6 }, (_, i) => {
-    const on = i % 2 === 0;
-    return `<button type="button" class="ml-console-key" data-on="${on}" aria-pressed="${on}">
-      <span class="ml-console-led"></span><span class="ds-mono">CH${i + 1}</span>
-    </button>`;
-  }).join('');
-  el.querySelectorAll('button').forEach((b) =>
-    b.addEventListener('click', () => {
-      const next = b.getAttribute('aria-pressed') !== 'true';
-      b.setAttribute('aria-pressed', String(next));
-      b.dataset.on = String(next);
-    }),
-  );
-  return el;
+  return demoHairlineIso('switches');
 }
 
 function demoPlate(item: CatalogItem): HTMLElement {
@@ -1483,6 +1468,10 @@ function buildDemo(item: CatalogItem): HTMLElement {
     case 'calendar':
       return demoCalendar();
     case 'compass':
+      if (item.id === 'astrology-wheel') return demoHairlineIso('ephemeris');
+      if (item.id === 'weather-instrument' || item.id === 'navigation-instrument' || item.id === 'wind-instrument') {
+        return demoHairlineIso('telemetry');
+      }
       return demoCompass();
     case 'audio-meter':
       return demoAudioMeter();
