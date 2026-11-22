@@ -271,6 +271,10 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
 
     const existingLang = rightContainer.querySelector('[data-lang-slot]');
     const oldSurfaceBtnWrap = rightContainer.querySelector('.menu-anchor');
+    // Oculta seletores legados redundantes ("Superfície" / "Ir") substituídos pelo header unificado
+    rightContainer.querySelectorAll<HTMLElement>('.menu-anchor').forEach((wrap) => {
+      if (wrap !== surfAnchor && wrap !== typeAnchor) wrap.style.display = 'none';
+    });
     if (existingLang) {
       rightContainer.insertBefore(typeAnchor, existingLang);
       rightContainer.insertBefore(surfAnchor, typeAnchor);
@@ -369,4 +373,12 @@ export function bindSiteChrome(): void {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeHeaderMenus();
   });
+}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindSiteChrome, { once: true });
+  } else {
+    bindSiteChrome();
+  }
 }
