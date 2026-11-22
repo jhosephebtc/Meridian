@@ -5019,6 +5019,33 @@
         transform: none !important;
       }
     }
+
+    /* Aa Tipo: Header, Lifeline e Botões respeitam as cores tipográficas selecionadas */
+    .topbar-link,
+    .brand-ver,
+    .ll-time,
+    .ll-body,
+    #ll-detail-text {
+      color: var(--ds-type-secondary);
+    }
+    .topbar-link[data-active="true"],
+    .topbar-link[aria-current="page"],
+    .topbar-link-strong,
+    .brand-name,
+    .site-gh-star,
+    .ll-title,
+    #lifeline-heading,
+    .btn-secondary,
+    .btn-tertiary,
+    .btn-ghost {
+      color: var(--ds-type-primary);
+    }
+    .btn-primary,
+    .cliptabs-overlay {
+      background-color: var(--ds-type-primary, var(--ds-accent));
+      border-color: var(--ds-type-primary, var(--ds-accent));
+      color: var(--ds-bg);
+    }
   </style>
 </head>
 <body>
