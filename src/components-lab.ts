@@ -2,6 +2,7 @@ import './site-chrome';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
 import { createTimeline } from './timeline.ts';
+import { mountHairlineFigure } from './hairline-figure.ts';
 import {
   CATEGORY_LABELS,
   COMPONENT_CATALOG,
@@ -689,6 +690,22 @@ function demoAudioMeter(): HTMLElement {
   });
   io.observe(svg);
   return svg as unknown as HTMLElement;
+}
+
+function demoHairlineIso(): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:250px;';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 400 320');
+  svg.setAttribute('data-plotter', '');
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  svg.style.cssText = 'width:100%;height:auto;aspect-ratio:400/320;touch-action:none;color:var(--ds-fg);';
+  const readout = document.createElement('div');
+  readout.className = 'ds-mono';
+  readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
+  mountHairlineFigure(svg, readout, 'wave');
+  wrap.append(svg, readout);
+  return wrap;
 }
 
 function demoSvgInstrument(_kind: string): HTMLElement {
@@ -1511,6 +1528,8 @@ function buildDemo(item: CatalogItem): HTMLElement {
       return demoChartHisto();
     case 'svg-instrument':
       return demoSvgInstrument(item.id);
+    case 'hairline-iso':
+      return demoHairlineIso();
     default:
       return demoPlate(item);
   }
@@ -1692,10 +1711,10 @@ const LAB_TEXT: Record<
     collapse: 'Recolher',
     copyCli: 'Copiar CLI',
     heroPrompt: 'Copiar prompt do sistema',
-    heroEyebrow: 'Components Lab · v1.5 · 89 componentes',
+    heroEyebrow: 'Components Lab · v1.5 · 90 componentes',
     heroTitle: 'Componentes em linha tátil para sentir — e instalar',
     heroDesc:
-      'Catálogo expandido do Meridian: 89 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único com prompt individual de instalação para IA e registry shadcn.',
+      'Catálogo expandido do Meridian: 90 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único com prompt individual de instalação para IA e registry shadcn.',
     searchPlaceholder: 'Buscar componentes…',
   },
   en: {
@@ -1707,10 +1726,10 @@ const LAB_TEXT: Record<
     collapse: 'Collapse',
     copyCli: 'Copy CLI',
     heroPrompt: 'Copy system prompt',
-    heroEyebrow: 'Components Lab · v1.5 · 89 components',
+    heroEyebrow: 'Components Lab · v1.5 · 90 components',
     heroTitle: 'Line components you can feel — and install',
     heroDesc:
-      'Expanded Meridian catalog: 89 tactile controls, menus, modals, sheets, drawers, pickers, tables, charts, and instruments in single-ink SVG grammar with per-component AI install prompts and shadcn registry.',
+      'Expanded Meridian catalog: 90 tactile controls, menus, modals, sheets, drawers, pickers, tables, charts, and instruments in single-ink SVG grammar with per-component AI install prompts and shadcn registry.',
     searchPlaceholder: 'Search components…',
   },
   es: {
@@ -1722,10 +1741,10 @@ const LAB_TEXT: Record<
     collapse: 'Contraer',
     copyCli: 'Copiar CLI',
     heroPrompt: 'Copiar prompt del sistema',
-    heroEyebrow: 'Components Lab · v1.5 · 89 componentes',
+    heroEyebrow: 'Components Lab · v1.5 · 90 componentes',
     heroTitle: 'Componentes en línea táctil para sentir — e instalar',
     heroDesc:
-      'Catálogo expandido de Meridian: 89 controles, menús, modales, sheets, drawers, pickers, tablas, gráficos e instrumentos en trazo único con prompt de instalación por componente y registry shadcn.',
+      'Catálogo expandido de Meridian: 90 controles, menús, modales, sheets, drawers, pickers, tablas, gráficos e instrumentos en trazo único con prompt de instalación por componente y registry shadcn.',
     searchPlaceholder: 'Buscar componentes…',
   },
   fr: {
@@ -1737,10 +1756,10 @@ const LAB_TEXT: Record<
     collapse: 'Réduire',
     copyCli: 'Copier CLI',
     heroPrompt: 'Copier le prompt système',
-    heroEyebrow: 'Components Lab · v1.5 · 89 composants',
+    heroEyebrow: 'Components Lab · v1.5 · 90 composants',
     heroTitle: 'Des composants ligne tactiles — à ressentir et installer',
     heroDesc:
-      'Catalogue Meridian étendu : 89 contrôles, menus, modales, sheets, tiroirs, sélecteurs, tableaux, graphiques et instruments en encre unique avec prompt d’installation par composant et registry shadcn.',
+      'Catalogue Meridian étendu : 90 contrôles, menus, modales, sheets, tiroirs, sélecteurs, tableaux, graphiques et instruments en encre unique avec prompt d’installation par composant et registry shadcn.',
     searchPlaceholder: 'Rechercher un composant…',
   },
 };

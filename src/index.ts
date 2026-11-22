@@ -7,5 +7,6 @@ export * from './tokens.ts';
 export * from './paper-grain.ts';
 export * from './page-enter.ts';
 export * from './plotter-svg.ts';
+export * from './hairline-figure.ts';
 export * from './atelier-engine.ts';
 export * from './timeline.ts';

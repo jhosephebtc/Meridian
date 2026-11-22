@@ -7,6 +7,7 @@ import { PAPER_SHADER } from './tokens';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n } from './i18n';
+import { mountHairlineFigure } from './hairline-figure';
 import './i18n.css';
 
 type LayoutMode = 'masthead' | 'rail';
@@ -344,6 +345,11 @@ function init(): void {
   window.addEventListener('scroll', syncCurrentNav, { passive: true });
   syncCurrentNav();
   mountPlots();
+  mountHairlineFigure(
+    document.getElementById('aside-hairline-beacon') as SVGSVGElement | null,
+    document.getElementById('aside-hairline-readout'),
+    'beacon',
+  );
   markPageReady();
 }
 

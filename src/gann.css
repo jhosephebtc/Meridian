@@ -223,7 +223,7 @@ html, body {
   color: var(--ds-fg-muted);
   font-size: 13px;
   cursor: pointer;
-  padding: 6px 2px;
+  padding: 6px 12px;
 }
 .gann-rail-close:hover { color: var(--ds-fg); }
 
@@ -283,6 +283,9 @@ html, body {
 
 .gann-reader-toc {
   display: none;
+}
+.gann-reader-toc > .gann-eyebrow {
+  padding-inline: 10px;
 }
 
 .gann-reader-main {
@@ -370,7 +373,7 @@ html, body {
   background: transparent;
   border: 0;
   border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule);
-  padding: 12px 2px;
+  padding: 12px 0;
   color: var(--ds-fg);
   cursor: pointer;
   display: flex;

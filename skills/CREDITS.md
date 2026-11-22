@@ -1,6 +1,6 @@
 # Credits, External Skills & Design References (`Meridian v1.5.0`)
 
-Meridian synthesizes original engineering (`atelier-engine.ts`, 13-surface token architecture, 4-language i18n, 89-component SVG-line lab) with publicly shared skills, open-source tooling, and canonical design references from external creators. Every external influence implemented on the site and encoded in [`skills/`](./) is credited below.
+Meridian synthesizes original engineering (`atelier-engine.ts`, 13-surface token architecture, 4-language i18n, 90-component SVG-line lab) with publicly shared skills, open-source tooling, and canonical design references from external creators. Every external influence implemented on the site and encoded in [`skills/`](./) is credited below.
 
 ---
 
@@ -10,7 +10,7 @@ Meridian synthesizes original engineering (`atelier-engine.ts`, 13-surface token
 | :--- | :--- | :--- | :--- |
 | **Evil Rabbit — Deimos / Design Zeitgeist** | [deimos.evilrabbit.com](https://deimos.evilrabbit.com/) | **Single-Ink** `color-mix()` archival engine across Paper White, Signature Aqua, Warm Terracotta, and Obsidian Dark; cotton-paper surface materiality; 3-column encyclopedic reader (`152px` TOC · `65ch` prose · `264px` aside plate) with clickable claim citations and Tier A–C provenance; horizontal `Lifeline` chronology; tactile `preserve-3d` dossier shelf; monochrome geometric signal mode; and **Geist / Geist Serif / Geist Mono** typography. | `src/tokens.css`, `src/tokens.ts`, `src/fonts.css`, `src/components.css`, `src/gann.css`, `gann.html`, `historia.html`, `manifesto.html`, `preview.html`, `index.html` |
 | **Anthropic Research, Economic Scenarios & 81k Interviews** | [anthropic.com/research](https://www.anthropic.com/research) · [econ-scenarios](https://www.anthropic.com/institute/econ-scenarios) · [81k-interviews](https://www.anthropic.com/features/81k-interviews) | Warm `ivory` (`#FAF9F5`) reading ground; dual-radius grammar (`pill` + `squircle`); 12-column asymmetric masonry gallery with sibling dim; 3-column `<details>` accordion footer; earthy contained organic palette (`olive`, `sky`, `coral`, `ochre`, `slate`); orthographic dotted globe aesthetic; and filled watercolor scenario blocks + fan trajectories. | `src/tokens.ts`, `src/plotter-svg.ts`, `src/atelier-engine.ts`, `index.html` |
-| **Jhosephe UI (`jhosephebtc`)** | [jhosephe.vercel.app](https://jhosephe.vercel.app/) | Tactile gesture physics (`--ml-press-x/y` local pointer press ripple, `-135°→135°` absolute-angle dial capture, 1:1 bar slider scrub, console LED toggles) and the 64-component foundation re-expressed in Meridian Single-Ink SVG line grammar and expanded to **89 components**. | `components.html`, `src/component-catalog.ts`, `src/components-lab.ts`, `src/components-lab.css`, `registry/meridian/*` |
+| **Jhosephe UI (`jhosephebtc`)** | [jhosephe.vercel.app](https://jhosephe.vercel.app/) | Tactile gesture physics (`--ml-press-x/y` local pointer press ripple, `-135°→135°` absolute-angle dial capture, 1:1 bar slider scrub, console LED toggles) and the 64-component foundation re-expressed in Meridian Single-Ink SVG line grammar and expanded to **90 components**. | `components.html`, `src/component-catalog.ts`, `src/components-lab.ts`, `src/components-lab.css`, `registry/meridian/*` |
 
 ---
 

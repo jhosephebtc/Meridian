@@ -3,6 +3,7 @@
  * HalfTone (Paper Shaders) · Plotter D2 animations · Dual layout chrome
  */
 import './site-chrome';
+import { mountHairlineFigure } from './hairline-figure';
 import {
   ShaderMount,
   halftoneDotsFragmentShader,
@@ -362,6 +363,11 @@ function init(): void {
   const square = document.getElementById('gann-square-stage');
   if (fan) renderGannFan(fan);
   if (square) renderSquareOfNine(square);
+  mountHairlineFigure(
+    document.getElementById('aside-hairline-octaves') as SVGSVGElement | null,
+    document.getElementById('aside-hairline-readout'),
+    'octaves',
+  );
 
   void remountHalftones();
   markPageReady();

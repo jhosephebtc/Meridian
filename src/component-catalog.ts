@@ -74,6 +74,7 @@ export type DemoKind =
   | 'chart-radar'
   | 'chart-histo'
   | 'svg-instrument'
+  | 'hairline-iso'
   | 'plate';
 
 export interface CatalogItem {
@@ -202,6 +203,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial em linhas.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
   { id: 'navigation-instrument', name: 'Nav Instrument', category: 'instruments', blurb: 'Bearing tabular + rosa.', demo: 'compass', install: 'navigation-instrument', interactive: true },
   { id: 'race-telemetry', name: 'Race Telemetry', category: 'instruments', blurb: 'Telemetria com sparkline.', demo: 'chart-spark', install: 'race-telemetry', interactive: true },
+  { id: 'hairline-isometric', name: 'Hairline Isometric', category: 'instruments', blurb: 'Figura isométrica 2:1 em sólidos arredondados com hit em repouso (Hairline × Plotter).', demo: 'hairline-iso', install: 'hairline-isometric', interactive: true },
 
   // Astronomy
   { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Arcos solares plotter.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },

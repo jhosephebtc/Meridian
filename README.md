@@ -1,6 +1,6 @@
 # MERIDIAN Design System (`v1.5.0`)
 
-**Single-Ink Multi-Surface Editorial System** — **PaperGrain** via native HTML5 `<canvas>`, **HalfTone** WebGL dots via `@paper-design/shaders`, asymmetric motion governance (**Frequency Gate**), flat editable **Plotter SVG** blueprints (`data-plotter-role`) paired with interactive **Hairline 2:1 isometric solids**, container **Gridlines** ink-edge alignment auditing (`probe.js`), an orthographic **81k Globe**, **89 tactile line components** with copyable AI install prompts (`public/r/registry.json`), **10 modular agent skills** (including **`meridian-taste`**), and a **100% TypeScript generative watercolor, graphite, wax-crayon & sumi-e engine** (zero `p5.js`).
+**Single-Ink Multi-Surface Editorial System** — **PaperGrain** via native HTML5 `<canvas>`, **HalfTone** WebGL dots via `@paper-design/shaders`, asymmetric motion governance (**Frequency Gate**), flat editable **Plotter SVG** blueprints (`data-plotter-role`) paired with interactive **Hairline 2:1 isometric solids**, container **Gridlines** ink-edge alignment auditing (`probe.js`), an orthographic **81k Globe**, **90 tactile line components** with copyable AI install prompts (`public/r/registry.json`), **10 modular agent skills** (including **`meridian-taste`**), and a **100% TypeScript generative watercolor, graphite, wax-crayon & sumi-e engine** (zero `p5.js`).
 
 > ⭐ **Like Meridian?** [**Star `jhosephebtc/Meridian` on GitHub**](https://github.com/jhosephebtc/Meridian) — every page header includes a live GitHub Star CTA.
 
@@ -9,7 +9,7 @@
 ## Live Applications (Vercel Production)
 
 - **Design System & Showcase:** [`https://meridian-olive-phi.vercel.app/index.html`](https://meridian-olive-phi.vercel.app/index.html)
-- **Components Lab (89 Components + AI Install Prompts):** [`https://meridian-olive-phi.vercel.app/components.html`](https://meridian-olive-phi.vercel.app/components.html)
+- **Components Lab (90 Components + AI Install Prompts):** [`https://meridian-olive-phi.vercel.app/components.html`](https://meridian-olive-phi.vercel.app/components.html)
 - **Meridian Studio (Interactive 3-View Workspace Preview):** [`https://meridian-olive-phi.vercel.app/preview.html`](https://meridian-olive-phi.vercel.app/preview.html)
 - **Editorial Manifesto:** [`https://meridian-olive-phi.vercel.app/manifesto.html`](https://meridian-olive-phi.vercel.app/manifesto.html)
 - **O Farol e o Meridiano (Archival Essay & PaperGrain):** [`https://meridian-olive-phi.vercel.app/historia.html`](https://meridian-olive-phi.vercel.app/historia.html)
@@ -40,13 +40,13 @@ npx skills add jhosephebtc/Meridian --skill meridian-taste
 | [`meridian-gridlines`](./skills/meridian-gridlines/SKILL.md) | Container ink-edge & center-line alignment pass via [`probe.js`](./skills/meridian-gridlines/probe.js) at `1440px` and `390px` | `skills/meridian-gridlines/SKILL.md`, `skills/meridian-gridlines/probe.js` |
 | [`meridian-atelier`](./skills/meridian-atelier/SKILL.md) | Zero-`p5.js` strict TypeScript watercolor wash, graphite `2H/4B`, wax crayon & sumi-e engine (`< 0.7ms/frame`) | `src/atelier-engine.ts` |
 | [`meridian-editorial-archival`](./skills/meridian-editorial-archival/SKILL.md) | 3-column archival reader (`152px` TOC · `65ch` prose · `264px` aside), clickable claims, `Lifeline` / `Timeline`, `preserve-3d` shelf, dual chrome | `src/components.css`, `src/gann.css`, `gann.html`, `historia.html`, `manifesto.html` |
-| [`meridian-components`](./skills/meridian-components/SKILL.md) | 89 tactile SVG-line components, `public/r/` shadcn registry manifests, interactive demos & per-component AI install prompts | `src/component-catalog.ts`, `src/components-lab.ts`, `registry/meridian/`, `scripts/build-registry.mjs` |
+| [`meridian-components`](./skills/meridian-components/SKILL.md) | 90 tactile SVG-line components, `public/r/` shadcn registry manifests, interactive demos & per-component AI install prompts | `src/component-catalog.ts`, `src/components-lab.ts`, `registry/meridian/`, `scripts/build-registry.mjs` |
 
 ---
 
-## Components Lab & Per-Component Install Prompts (89 Components)
+## Components Lab & Per-Component Install Prompts (90 Components)
 
-[`components.html`](https://meridian-olive-phi.vercel.app/components.html) documents all **89 components** across 11 categories (`controls`, `inputs`, `overlays`, `charts`, `surfaces`, `navigation`, `instruments`, `tables`, `feedback`, `astronomy`, `weather`) with live Single-Ink demos across all 13 surfaces.
+[`components.html`](https://meridian-olive-phi.vercel.app/components.html) documents all **90 components** across 11 categories (`controls`, `inputs`, `overlays`, `charts`, `surfaces`, `navigation`, `instruments`, `tables`, `feedback`, `astronomy`, `weather`) with live Single-Ink demos across all 13 surfaces.
 
 Every component card includes:
 - **Live Interactive Demo** (including the interactive **`timeline`** component powered by `createTimeline` from `src/timeline.ts`).
@@ -102,7 +102,7 @@ Meridian is built with explicit respect and gratitude toward the creators whose 
 npm install
 npm run dev        # Vite dev server
 npm run typecheck  # Strict TypeScript check (tsc --noEmit)
-npm run registry   # Rebuild public/r/ (89 items + registry.json)
+npm run registry   # Rebuild public/r/ (90 items + registry.json)
 npm run build      # registry + tsc --noEmit + Vite production bundle (6 HTML pages → dist/)
 npm run preview    # Serve dist/ locally
 ```

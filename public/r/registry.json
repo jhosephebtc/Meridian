@@ -419,6 +419,11 @@
       "title": "Meridian race-telemetry"
     },
     {
+      "name": "hairline-isometric",
+      "type": "registry:ui",
+      "title": "Meridian hairline-isometric"
+    },
+    {
       "name": "astronomy-instrument",
       "type": "registry:ui",
       "title": "Meridian astronomy-instrument"

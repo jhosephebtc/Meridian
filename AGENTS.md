@@ -15,13 +15,13 @@
 | Ink-edge alignment audit (`probe.js`, `1440px` / `390px`, container edges & centers) | [`skills/meridian-gridlines/SKILL.md`](./skills/meridian-gridlines/SKILL.md) | `skills/meridian-gridlines/probe.js`, `src/tokens.css`, `src/site-chrome.css` |
 | 100% TypeScript generative watercolor, pencil, wax crayon & sumi-e engine | [`skills/meridian-atelier/SKILL.md`](./skills/meridian-atelier/SKILL.md) | `src/atelier-engine.ts` |
 | 3-column archival reader, claims, Lifeline, 3D dossier shelf, dual chrome | [`skills/meridian-editorial-archival/SKILL.md`](./skills/meridian-editorial-archival/SKILL.md) | `src/components.css`, `src/gann.css`, `gann.html`, `historia.html`, `manifesto.html` |
-| 89 tactile line components, shadcn registry, per-component install prompts | [`skills/meridian-components/SKILL.md`](./skills/meridian-components/SKILL.md) | `src/component-catalog.ts`, `src/components-lab.ts`, `registry/meridian/`, `scripts/build-registry.mjs` |
+| 90 tactile line components, shadcn registry, per-component install prompts | [`skills/meridian-components/SKILL.md`](./skills/meridian-components/SKILL.md) | `src/component-catalog.ts`, `src/components-lab.ts`, `registry/meridian/`, `scripts/build-registry.mjs` |
 
 ## Verification Commands
 
 ```sh
 npm run typecheck   # tsc --noEmit (strict mode, must pass with 0 errors)
-npm run registry    # rebuilds public/r/*.json and public/r/registry.json (89 items)
+npm run registry    # rebuilds public/r/*.json and public/r/registry.json (90 items)
 npm run build       # registry + tsc --noEmit + vite build (6 HTML entrypoints → dist/)
 ```
 

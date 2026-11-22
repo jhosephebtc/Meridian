@@ -263,6 +263,7 @@
 .lab-card-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   margin-top: auto;
   padding-top: 12px;
@@ -273,7 +274,10 @@
   font-size: 10.5px;
   letter-spacing: var(--ds-tracking-mono);
   color: var(--ds-fg-secondary);
-  padding: 4px 8px;
+  padding: 0 10px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
   border-radius: var(--ds-radius-squircle);
   background: var(--ds-surface-1);
   border: var(--ds-hairline) solid var(--ds-rule);
@@ -281,6 +285,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+#lab-rail .ds-eyebrow {
+  padding-inline: 18px;
 }
 
 /* ---------- Line Button ---------- */

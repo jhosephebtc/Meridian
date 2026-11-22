@@ -345,7 +345,7 @@
   background: transparent;
   border: 0;
   border-bottom: 1px solid var(--ds-rule);
-  padding: 12px 2px;
+  padding: 12px 0;
   color: var(--ds-fg);
   cursor: pointer;
   display: flex;

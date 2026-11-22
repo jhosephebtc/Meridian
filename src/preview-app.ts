@@ -31,6 +31,7 @@ import {
   renderPlottedGlobeSvg,
   type PlotterRole,
 } from './plotter-svg.ts';
+import { mountHairlineFigure } from './hairline-figure.ts';
 import {
   MeridianAtelier,
   createCanvasBackend,
@@ -71,6 +72,7 @@ const appState = {
 let heroSketchCtrl: SketchController | null = null;
 let obsSketchCtrl: SketchController | null = null;
 let freehandAtelier: MeridianAtelier | null = null;
+let hairlineDispose: (() => void) | null = null;
 
 /* ==========================================================================
    1. PAPER SHADER (página inteira) & TOASTS SONNER
@@ -207,6 +209,13 @@ function setView(view: WorkspaceView): void {
   if (view === 'observatory') {
     renderGlobe();
     mountObservatorySketch();
+    if (!hairlineDispose) {
+      hairlineDispose = mountHairlineFigure(
+        document.getElementById('preview-hairline-svg') as SVGSVGElement | null,
+        document.getElementById('preview-hairline-readout'),
+        'strata',
+      );
+    }
   }
   syncStatusBar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -600,7 +609,7 @@ function bootstrap(): void {
       hint: idx < 9 ? String(idx + 1) : idx === 9 ? '0' : '·',
       run: () => setSurface(s),
     })),
-    { label: 'Ir para Components Lab (89 componentes)', hint: '↗', run: () => { window.location.href = './components.html'; } },
+    { label: 'Ir para Components Lab (90 componentes)', hint: '↗', run: () => { window.location.href = './components.html'; } },
     { label: 'Ir para Showcase completo do Design System', hint: '↗', run: () => { window.location.href = './index.html'; } },
   ];
 

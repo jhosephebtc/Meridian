@@ -1,8 +1,8 @@
 # MERIDIAN Design System — Complete Technical Specification (`v1.5.0`)
 
-**Architectural Philosophy:** *Single-Ink Multi-Surface Editorial* — PaperGrain via HTML5 `<canvas>`, HalfTone WebGL dots via `@paper-design/shaders`, asymmetric motion governed by the **Frequency Gate**, flat editable **Plotter SVG** blueprints (`data-plotter-role`), an orthographic **81k Globe**, **89 tactile line components** with copyable AI install prompts, and a **100% TypeScript generative watercolor, graphite, wax-crayon & sumi-e engine** (zero `p5.js`).
+**Architectural Philosophy:** *Single-Ink Multi-Surface Editorial* — PaperGrain via HTML5 `<canvas>`, HalfTone WebGL dots via `@paper-design/shaders`, asymmetric motion governed by the **Frequency Gate**, flat editable **Plotter SVG** blueprints (`data-plotter-role`) paired with interactive **Hairline 2:1 isometric solids**, an orthographic **81k Globe**, **90 tactile line components** with copyable AI install prompts, and a **100% TypeScript generative watercolor, graphite, wax-crayon & sumi-e engine** (zero `p5.js`).
 
-> Governance files: [`DESIGN.md`](./DESIGN.md) (taste & engineering invariants) · [`AGENTS.md`](./AGENTS.md) (agent skill routing) · [`skills/`](./skills/) (8 domain skills including [`meridian-taste`](./skills/meridian-taste/SKILL.md)) · [`skills/CREDITS.md`](./skills/CREDITS.md) (full external attribution).
+> Governance files: [`DESIGN.md`](./DESIGN.md) (taste & engineering invariants) · [`AGENTS.md`](./AGENTS.md) (agent skill routing) · [`skills/`](./skills/) (10 domain skills including [`meridian-taste`](./skills/meridian-taste/SKILL.md), [`meridian-hairline-figure`](./skills/meridian-hairline-figure/SKILL.md), and [`meridian-gridlines`](./skills/meridian-gridlines/SKILL.md)) · [`skills/CREDITS.md`](./skills/CREDITS.md) (full external attribution).
 
 ---
 
@@ -100,11 +100,11 @@ Key interaction mechanics:
 
 ---
 
-## 7. Archival 3-Col Reader, Components Lab (89) & Prompts
+## 7. Archival 3-Col Reader, Components Lab (90) & Prompts
 
 - **Dual Mode (`data-mode`)**: `invisible` (calm B2C cards & plain prose) vs. `technical` (dense tabular ledger, Tier A/B/C badges, degree offsets).
 - **3-Column Reader**: `152px` sticky TOC | `65ch` prose with clickable dotted `.ds-claim` citations | `264px` aside plate + *At a glance* card + interactive `Timeline` (`src/timeline.ts`) + `preserve-3d` dossier shelf.
-- **Components Lab (`components.html`, `src/component-catalog.ts`, `src/components-lab.ts`)**: **89 components** across 11 categories, live interactive demos (including `timeline`), shadcn JSON manifests in [`public/r/`](./public/r/registry.json) built by `scripts/build-registry.mjs`, and **per-component AI Install Prompts** (`buildInstallPrompt` / `buildSystemInstallPrompt`, localized in PT/EN/ES/FR) copyable right from every component card.
+- **Components Lab (`components.html`, `src/component-catalog.ts`, `src/components-lab.ts`)**: **90 components** across 11 categories, live interactive demos (including `timeline` & `hairline-isometric`), shadcn JSON manifests in [`public/r/`](./public/r/registry.json) built by `scripts/build-registry.mjs`, and **per-component AI Install Prompts** (`buildInstallPrompt` / `buildSystemInstallPrompt`, localized in PT/EN/ES/FR) copyable right from every component card.
 
 ---
 
