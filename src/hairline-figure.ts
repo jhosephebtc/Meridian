@@ -17,7 +17,7 @@
  *  10. quiet    — Wordless SVG canvas; concise external Geist Mono telemetry only
  */
 
-export type HairlinePreset = 'wave' | 'strata' | 'beacon' | 'octaves' | 'switches';
+export type HairlinePreset = 'wave' | 'strata' | 'beacon' | 'octaves' | 'switches' | 'riffle' | 'phosphor';
 
 interface RingSample {
   u: number;
@@ -41,15 +41,19 @@ interface IsoSolid {
   restY: number;
   outerRing: RingSample[];
   innerRing: RingSample[];
+  coreRing?: RingSample[];
+  thickness?: number;
   code?: string;
 }
 
 const PRESET_LABEL: Record<HairlinePreset, string> = {
-  wave: 'crest 4×4',
-  strata: 'strata 5×1',
+  wave: 'terrain 7×7',
+  strata: 'strata 7×1',
   beacon: 'beacon 2:1',
-  octaves: 'octaves h8',
+  octaves: 'octaves h7',
   switches: 'buttons 3×2',
+  riffle: 'riffle 8×1',
+  phosphor: 'phosphor 7×7',
 };
 
 const SWITCH_TAGS = ['tokens', 'grain', 'motion', 'plotter', 'hairline', 'gridlines'] as const;
@@ -157,17 +161,52 @@ function prismMarkup(
   baseY: number,
   strokeW: string,
   creaseOp = '0.26',
+  coreRing?: RingSample[],
 ): string {
   const topPts = ringAt(outerRing, z1, scale, baseY);
   const botPts = ringAt(outerRing, z0, scale, baseY);
   const sil = pathClosed(hull2d(topPts.concat(botPts)));
   const creasePts = ringAt(frontRun(innerRing), z1, scale, baseY);
   const crease = pathOpen(creasePts);
+  const core = coreRing ? pathClosed(ringAt(coreRing, z1, scale, baseY)) : '';
   return (
     `<path data-plotter-role="primary" d="${sil}" fill="var(--ds-bg)" stroke="currentColor" stroke-width="${strokeW}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>` +
     (crease
       ? `<path data-plotter-role="secondary" d="${crease}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="${creaseOp}"/>`
+      : '') +
+    (core
+      ? `<path data-plotter-role="secondary" d="${core}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="${creaseOp}"/>`
       : '')
+  );
+}
+
+function buildSteppedPlinth(
+  uHalf: number,
+  vHalf: number,
+  rad: number,
+  zStep1: number,
+  zStep2: number,
+  scale: number,
+  baseY: number,
+  extraInnerMarkup = '',
+): string {
+  const outer1 = rrectRing(-uHalf, -vHalf, uHalf, vHalf, rad, 5);
+  const inner1 = rrectRing(-(uHalf - 0.14), -(vHalf - 0.14), uHalf - 0.14, vHalf - 0.14, Math.max(0.08, rad - 0.06), 4);
+  const u2 = uHalf - 0.22;
+  const v2 = vHalf - 0.22;
+  const r2 = Math.max(0.1, rad - 0.08);
+  const outer2 = rrectRing(-u2, -v2, u2, v2, r2, 5);
+  const inner2 = rrectRing(-(u2 - 0.12), -(v2 - 0.12), u2 - 0.12, v2 - 0.12, Math.max(0.06, r2 - 0.05), 4);
+  const well = pathClosed(ringAt(inner2, zStep2, scale, baseY));
+  return (
+    `<g opacity="0.34">` +
+    prismMarkup(outer1, inner1, 0, zStep1, scale, baseY, '0.45', '0.22') +
+    `</g>` +
+    `<g opacity="0.42">` +
+    prismMarkup(outer2, inner2, zStep1, zStep2, scale, baseY, '0.45', '0.24') +
+    `<path data-plotter-role="secondary" d="${well}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" opacity="0.18"/>` +
+    extraInnerMarkup +
+    `</g>`
   );
 }
 
@@ -183,164 +222,321 @@ function buildPresetSolids(preset: HairlinePreset): {
   const solids: IsoSolid[] = [];
 
   if (preset === 'wave') {
-    const scale = 32;
-    const baseY = 178;
-    for (let r = 0; r < 4; r++) {
-      for (let c = 0; c < 4; c++) {
-        const cx = c - 1.5;
-        const cy = r - 1.5;
-        const zRest =
-          0.32 +
-          0.42 * Math.exp(-((cx + 0.45) ** 2 + (cy + 0.35) ** 2) / 2.2) +
-          0.12 * Math.cos(cx * 0.85 - cy * 0.7);
+    // 7x7 (49-pillar) 3D Terrain dune field standing inside a 2-tier stepped 3D architectural plinth
+    const N = 7;
+    const step = 0.56;
+    const scale = 31;
+    const baseY = 186;
+    const plinthZ = 0.28;
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        const cx = (c - (N - 1) / 2) * step;
+        const cy = (r - (N - 1) / 2) * step;
+        const ridge = Math.exp(-((cx + 0.35) ** 2 + (cy + 0.25) ** 2) / 1.65);
+        const ripple = Math.cos(cx * 1.35 - cy * 1.15) * 0.16;
+        const zRest = plinthZ + 0.18 + 0.68 * ridge + ripple;
         const rc = isoProj(cx, cy, zRest, scale, baseY);
         solids.push({
-          r, c, cx, cy, order: r + c, z0: 0, zRest, z: zRest, v: 0, target: zRest,
-          restX: rc[0], restY: rc[1],
-          outerRing: rrectRing(cx - 0.41, cy - 0.41, cx + 0.41, cy + 0.41, 0.14, 4),
-          innerRing: rrectRing(cx - 0.31, cy - 0.31, cx + 0.31, cy + 0.31, 0.08, 3),
+          r,
+          c,
+          cx,
+          cy,
+          order: r + c,
+          z0: plinthZ,
+          zRest,
+          z: zRest,
+          v: 0,
+          target: zRest,
+          restX: rc[0],
+          restY: rc[1],
+          outerRing: rrectRing(cx - 0.22, cy - 0.22, cx + 0.22, cy + 0.22, 0.085, 3),
+          innerRing: rrectRing(cx - 0.15, cy - 0.15, cx + 0.15, cy + 0.15, 0.05, 2),
         });
       }
     }
-    const baseCorners = [
-      isoProj(-2.05, -2.05, 0, scale, baseY),
-      isoProj(2.05, -2.05, 0, scale, baseY),
-      isoProj(2.05, 2.05, 0, scale, baseY),
-      isoProj(-2.05, 2.05, 0, scale, baseY),
-    ];
-    const axisH = [isoProj(-2.25, 0, 0, scale, baseY), isoProj(2.25, 0, 0, scale, baseY)];
-    const axisV = [isoProj(0, -2.25, 0, scale, baseY), isoProj(0, 2.25, 0, scale, baseY)];
+    const trayMarkup = buildSteppedPlinth(2.34, 2.34, 0.34, 0.15, plinthZ, scale, baseY);
+    const axisH = [isoProj(-2.65, 0, 0, scale, baseY), isoProj(2.65, 0, 0, scale, baseY)];
+    const axisV = [isoProj(0, -2.65, 0, scale, baseY), isoProj(0, 2.65, 0, scale, baseY)];
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathClosed(baseCorners)}"/>` +
       `<line x1="${axisH[0][0].toFixed(1)}" y1="${axisH[0][1].toFixed(1)}" x2="${axisH[1][0].toFixed(1)}" y2="${axisH[1][1].toFixed(1)}"/>` +
       `<line x1="${axisV[0][0].toFixed(1)}" y1="${axisV[0][1].toFixed(1)}" x2="${axisV[1][0].toFixed(1)}" y2="${axisV[1][1].toFixed(1)}"/>` +
       `</g>`;
-    return { solids, restLead: 5, maxReach: 1.85, scale, baseY, guideMarkup };
+    return { solids, restLead: 16, maxReach: 2.15, scale, baseY, guideMarkup, trayMarkup };
   }
 
   if (preset === 'strata') {
+    // 7 terraced architectural plates with concentric core wells over a 3D stepped plinth
     const scale = 30;
-    const baseY = 212;
-    for (let i = 0; i < 5; i++) {
-      const zRest = 0.26 + i * 0.46;
-      const half = 1.65 - i * 0.18;
+    const baseY = 216;
+    const plinthZ = 0.24;
+    for (let i = 0; i < 7; i++) {
+      const zRest = plinthZ + 0.22 + i * 0.34;
+      const half = 1.72 - i * 0.14;
+      const rad = half * 0.24;
       const rc = isoProj(0, 0, zRest, scale, baseY);
       solids.push({
-        r: i, c: 0, cx: 0, cy: 0, order: i, z0: Math.max(0, zRest - 0.22), zRest, z: zRest, v: 0, target: zRest,
-        restX: rc[0], restY: rc[1],
-        outerRing: rrectRing(-half, -half, half, half, half * 0.24, 4),
-        innerRing: rrectRing(-(half - 0.14), -(half - 0.14), half - 0.14, half - 0.14, Math.max(0.06, half * 0.24 - 0.08), 3),
+        r: i,
+        c: 0,
+        cx: 0,
+        cy: 0,
+        order: i,
+        z0: Math.max(plinthZ, zRest - 0.19),
+        zRest,
+        z: zRest,
+        v: 0,
+        target: zRest,
+        restX: rc[0],
+        restY: rc[1],
+        thickness: 0.19,
+        outerRing: rrectRing(-half, -half, half, half, rad, 4),
+        innerRing: rrectRing(-(half - 0.13), -(half - 0.13), half - 0.13, half - 0.13, Math.max(0.06, rad - 0.06), 3),
+        coreRing: circRing(0, 0, Math.max(0.2, half * 0.36), 32),
       });
     }
-    const base = [
-      isoProj(-2.1, -2.1, 0, scale, baseY),
-      isoProj(2.1, -2.1, 0, scale, baseY),
-      isoProj(2.1, 2.1, 0, scale, baseY),
-      isoProj(-2.1, 2.1, 0, scale, baseY),
-    ];
+    const trayMarkup = buildSteppedPlinth(2.22, 2.22, 0.32, 0.12, plinthZ, scale, baseY);
+    const axisH = [isoProj(-2.55, 0, 0, scale, baseY), isoProj(2.55, 0, 0, scale, baseY)];
+    const axisV = [isoProj(0, -2.55, 0, scale, baseY), isoProj(0, 2.55, 0, scale, baseY)];
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathClosed(base)}"/>` +
-      `<line x1="200" y1="68" x2="200" y2="254"/>` +
+      `<line x1="${axisH[0][0].toFixed(1)}" y1="${axisH[0][1].toFixed(1)}" x2="${axisH[1][0].toFixed(1)}" y2="${axisH[1][1].toFixed(1)}"/>` +
+      `<line x1="${axisV[0][0].toFixed(1)}" y1="${axisV[0][1].toFixed(1)}" x2="${axisV[1][0].toFixed(1)}" y2="${axisV[1][1].toFixed(1)}"/>` +
+      `<line x1="200" y1="54" x2="200" y2="262"/>` +
       `</g>`;
-    return { solids, restLead: 2, maxReach: 2.9, scale, baseY, guideMarkup };
+    return { solids, restLead: 4, maxReach: 3.35, scale, baseY, guideMarkup, trayMarkup };
   }
 
   if (preset === 'beacon') {
-    // True circular 3D cylindrical tower tiers (circRing) tapering upward
-    const scale = 31;
-    const baseY = 204;
-    const tiers: Array<[number, number]> = [
-      [0.36, 1.62],
-      [0.88, 1.18],
-      [1.42, 0.78],
-      [1.98, 0.44],
+    // 3D plinth deck + 16 radial encoder ticks + 5 concentric 3D cylindrical tower tiers (circRing)
+    const scale = 30;
+    const baseY = 208;
+    const plinthZ = 0.24;
+    const tiers: Array<[number, number, number]> = [
+      [0.54, 1.56, 0.26],
+      [0.96, 1.22, 0.25],
+      [1.38, 0.9, 0.24],
+      [1.8, 0.6, 0.24],
+      [2.24, 0.32, 0.26],
     ];
-    tiers.forEach(([zRest, rad], i) => {
+    tiers.forEach(([zRest, rad, th], i) => {
       const rc = isoProj(0, 0, zRest, scale, baseY);
       solids.push({
-        r: i, c: 0, cx: 0, cy: 0, order: i, z0: Math.max(0, zRest - 0.34), zRest, z: zRest, v: 0, target: zRest,
-        restX: rc[0], restY: rc[1],
+        r: i,
+        c: 0,
+        cx: 0,
+        cy: 0,
+        order: i,
+        z0: Math.max(plinthZ, zRest - th),
+        zRest,
+        z: zRest,
+        v: 0,
+        target: zRest,
+        restX: rc[0],
+        restY: rc[1],
+        thickness: th,
         outerRing: circRing(0, 0, rad, 56),
-        innerRing: circRing(0, 0, Math.max(0.18, rad - 0.13), 48),
+        innerRing: circRing(0, 0, Math.max(0.14, rad - 0.11), 48),
+        coreRing: i < 4 ? circRing(0, 0, Math.max(0.12, rad - 0.26), 36) : undefined,
       });
     });
-    const baseOrbit = ringAt(circRing(0, 0, 2.05, 56), 0, scale, baseY);
-    const r0 = isoProj(-2.2, -2.2, 0, scale, baseY);
-    const r1 = isoProj(2.2, 2.2, 0, scale, baseY);
-    const l0 = isoProj(-2.2, 2.2, 0, scale, baseY);
-    const l1 = isoProj(2.2, -2.2, 0, scale, baseY);
+    const dialTicks = Array.from({ length: 16 }, (_, k) => {
+      const a = (k / 16) * Math.PI * 2;
+      const p0 = isoProj(Math.cos(a) * 1.66, Math.sin(a) * 1.66, plinthZ, scale, baseY);
+      const p1 = isoProj(Math.cos(a) * 1.84, Math.sin(a) * 1.84, plinthZ, scale, baseY);
+      return `<line data-plotter-role="secondary" x1="${p0[0].toFixed(1)}" y1="${p0[1].toFixed(1)}" x2="${p1[0].toFixed(1)}" y2="${p1[1].toFixed(1)}" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" opacity="0.28"/>`;
+    }).join('');
+    const trayMarkup = buildSteppedPlinth(2.22, 2.22, 0.36, 0.12, plinthZ, scale, baseY, dialTicks);
+    const r0 = isoProj(-2.55, -2.55, 0, scale, baseY);
+    const r1 = isoProj(2.55, 2.55, 0, scale, baseY);
+    const l0 = isoProj(-2.55, 2.55, 0, scale, baseY);
+    const l1 = isoProj(2.55, -2.55, 0, scale, baseY);
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathClosed(baseOrbit)}"/>` +
       `<line x1="${r0[0].toFixed(1)}" y1="${r0[1].toFixed(1)}" x2="${r1[0].toFixed(1)}" y2="${r1[1].toFixed(1)}"/>` +
       `<line x1="${l0[0].toFixed(1)}" y1="${l0[1].toFixed(1)}" x2="${l1[0].toFixed(1)}" y2="${l1[1].toFixed(1)}"/>` +
-      `<line x1="200" y1="62" x2="200" y2="262"/>` +
+      `<line x1="200" y1="54" x2="200" y2="264"/>` +
       `</g>`;
-    return { solids, restLead: 3, maxReach: 2.95, scale, baseY, guideMarkup };
+    return { solids, restLead: 4, maxReach: 3.25, scale, baseY, guideMarkup, trayMarkup };
   }
 
   if (preset === 'switches') {
-    // 3D hardware deck tray + 6 ROUND cylindrical tactile buttons (circRing)
+    // 2-tier 3D hardware deck + 6 3D cylindrical socket collars + 6 round 3D cylindrical buttons
     const scale = 33;
-    const baseY = 186;
-    const trayZ = 0.28;
+    const baseY = 188;
+    const trayZ = 0.32;
+    const collarZ = 0.42;
     let idx = 0;
+    const collars: string[] = [];
     for (let r = 0; r < 2; r++) {
       for (let c = 0; c < 3; c++) {
         const cx = (c - 1) * 1.14;
         const cy = (r - 0.5) * 1.16;
-        // Rest pose: button 3 sits latched deeper, others stand proud as cylindrical plungers
-        const zRest = idx === 2 ? 0.48 : 0.72 + ((r + c) % 2) * 0.08;
+        // 3D cylindrical socket collar surrounding each button well
+        collars.push(
+          prismMarkup(
+            circRing(cx, cy, 0.49, 40),
+            circRing(cx, cy, 0.44, 36),
+            trayZ,
+            collarZ,
+            scale,
+            baseY,
+            '0.45',
+            '0.22',
+          ),
+        );
+        const zRest = idx === 2 ? 0.56 : 0.84 + ((r + c) % 2) * 0.08;
         const rc = isoProj(cx, cy, zRest, scale, baseY);
         solids.push({
-          r, c, cx, cy, order: r * 3 + c, z0: trayZ, zRest, z: zRest, v: 0, target: zRest,
-          restX: rc[0], restY: rc[1],
-          outerRing: circRing(cx, cy, 0.42, 48),
-          innerRing: circRing(cx, cy, 0.31, 40),
+          r,
+          c,
+          cx,
+          cy,
+          order: r * 3 + c,
+          z0: collarZ,
+          zRest,
+          z: zRest,
+          v: 0,
+          target: zRest,
+          restX: rc[0],
+          restY: rc[1],
+          outerRing: circRing(cx, cy, 0.4, 48),
+          innerRing: circRing(cx, cy, 0.3, 40),
+          coreRing: circRing(cx, cy, 0.14, 24),
           code: SWITCH_TAGS[idx],
         });
         idx++;
       }
     }
-    const trayOuter = rrectRing(-1.82, -1.24, 1.82, 1.24, 0.28, 5);
-    const trayInner = rrectRing(-1.68, -1.1, 1.68, 1.1, 0.2, 4);
-    const trayMarkup =
-      `<g opacity="0.38">` +
-      prismMarkup(trayOuter, trayInner, 0, trayZ, scale, baseY, '0.45', '0.22') +
-      `</g>`;
-    const mid = [isoProj(-2.05, 0, 0, scale, baseY), isoProj(2.05, 0, 0, scale, baseY)];
+    const trayMarkup = buildSteppedPlinth(2.04, 1.48, 0.32, 0.16, trayZ, scale, baseY, collars.join(''));
+    const mid = [isoProj(-2.35, 0, 0, scale, baseY), isoProj(2.35, 0, 0, scale, baseY)];
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<line x1="${mid[0][0].toFixed(1)}" y1="${mid[0][1].toFixed(1)}" x2="${mid[1][0].toFixed(1)}" y2="${mid[1][1].toFixed(1)}"/>` +
       `</g>`;
-    return { solids, restLead: 2, maxReach: 1.45, scale, baseY, guideMarkup, trayMarkup };
+    return { solids, restLead: 2, maxReach: 1.55, scale, baseY, guideMarkup, trayMarkup };
   }
 
-  // 'octaves': stepped 5-octave Gann harmonic bars
+  if (preset === 'riffle') {
+    // 8 upright archival dossier cards standing in a slotted 3D plinth tray (Riffle)
+    const scale = 31;
+    const baseY = 194;
+    const plinthZ = 0.28;
+    const count = 8;
+    const slots: string[] = [];
+    for (let i = 0; i < count; i++) {
+      const cx = (i - (count - 1) / 2) * 0.48;
+      const cy = 0;
+      const slotPts = ringAt(rrectRing(cx - 0.14, -1.24, cx + 0.14, 1.24, 0.05, 2), plinthZ, scale, baseY);
+      slots.push(
+        `<path data-plotter-role="secondary" d="${pathClosed(slotPts)}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" opacity="0.2"/>`,
+      );
+      const zRest = plinthZ + 0.62 + (i === 3 ? 0.42 : Math.sin(i * 0.7) * 0.14);
+      const rc = isoProj(cx, cy, zRest, scale, baseY);
+      solids.push({
+        r: 0,
+        c: i,
+        cx,
+        cy,
+        order: i,
+        z0: plinthZ,
+        zRest,
+        z: zRest,
+        v: 0,
+        target: zRest,
+        restX: rc[0],
+        restY: rc[1],
+        outerRing: rrectRing(cx - 0.12, -1.16, cx + 0.12, 1.16, 0.06, 3),
+        innerRing: rrectRing(cx - 0.07, -1.04, cx + 0.07, 1.04, 0.03, 2),
+        code: `vol·0${i + 1}`,
+      });
+    }
+    const trayMarkup = buildSteppedPlinth(2.26, 1.66, 0.3, 0.14, plinthZ, scale, baseY, slots.join(''));
+    const axis = [isoProj(-2.55, 0, 0, scale, baseY), isoProj(2.55, 0, 0, scale, baseY)];
+    const guideMarkup =
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<line x1="${axis[0][0].toFixed(1)}" y1="${axis[0][1].toFixed(1)}" x2="${axis[1][0].toFixed(1)}" y2="${axis[1][1].toFixed(1)}"/>` +
+      `</g>`;
+    return { solids, restLead: 3, maxReach: 2.15, scale, baseY, guideMarkup, trayMarkup };
+  }
+
+  if (preset === 'phosphor') {
+    // 7x7 (49) 3D cylindrical CRT phosphor emitters seated in a 2-tier 3D screen bezel
+    const N = 7;
+    const step = 0.54;
+    const scale = 31;
+    const baseY = 186;
+    const plinthZ = 0.28;
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        const cx = (c - (N - 1) / 2) * step;
+        const cy = (r - (N - 1) / 2) * step;
+        const dist = Math.hypot(cx, cy);
+        const ringWave = Math.cos(dist * 2.1) * 0.22;
+        const zRest = plinthZ + 0.24 + Math.max(0, 0.42 - dist * 0.12) + ringWave;
+        const rc = isoProj(cx, cy, zRest, scale, baseY);
+        solids.push({
+          r,
+          c,
+          cx,
+          cy,
+          order: r + c,
+          z0: plinthZ,
+          zRest,
+          z: zRest,
+          v: 0,
+          target: zRest,
+          restX: rc[0],
+          restY: rc[1],
+          outerRing: circRing(cx, cy, 0.2, 28),
+          innerRing: circRing(cx, cy, 0.13, 20),
+          code: `px ${r + 1}·${c + 1}`,
+        });
+      }
+    }
+    const trayMarkup = buildSteppedPlinth(2.28, 2.28, 0.36, 0.14, plinthZ, scale, baseY);
+    const d0 = isoProj(-2.55, -2.55, 0, scale, baseY);
+    const d1 = isoProj(2.55, 2.55, 0, scale, baseY);
+    const guideMarkup =
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<line x1="${d0[0].toFixed(1)}" y1="${d0[1].toFixed(1)}" x2="${d1[0].toFixed(1)}" y2="${d1[1].toFixed(1)}"/>` +
+      `</g>`;
+    return { solids, restLead: 24, maxReach: 1.95, scale, baseY, guideMarkup, trayMarkup };
+  }
+
+  // 'octaves': stepped 7-octave Gann harmonic resonator bars on a 3D stepped plinth
   const scale = 30;
-  const baseY = 188;
-  for (let i = 0; i < 5; i++) {
-    const cx = (i - 2) * 0.66;
-    const cy = -(i - 2) * 0.28;
-    const zRest = 0.34 + Math.abs(Math.sin((i + 1) * 0.72)) * 0.96;
+  const baseY = 192;
+  const plinthZ = 0.26;
+  for (let i = 0; i < 7; i++) {
+    const cx = (i - 3) * 0.52;
+    const cy = 0;
+    const zRest = plinthZ + 0.28 + Math.abs(Math.sin((i + 1) * 0.68)) * 0.92;
     const rc = isoProj(cx, cy, zRest, scale, baseY);
     solids.push({
-      r: 0, c: i, cx, cy, order: 10 + i, z0: 0, zRest, z: zRest, v: 0, target: zRest,
-      restX: rc[0], restY: rc[1],
-      outerRing: rrectRing(cx - 0.3, cy - 0.9, cx + 0.3, cy + 0.9, 0.12, 4),
-      innerRing: rrectRing(cx - 0.21, cy - 0.78, cx + 0.21, cy + 0.78, 0.06, 3),
+      r: 0,
+      c: i,
+      cx,
+      cy,
+      order: 10 + i,
+      z0: plinthZ,
+      zRest,
+      z: zRest,
+      v: 0,
+      target: zRest,
+      restX: rc[0],
+      restY: rc[1],
+      outerRing: rrectRing(cx - 0.21, -1.1, cx + 0.21, 1.1, 0.09, 4),
+      innerRing: rrectRing(cx - 0.14, -0.96, cx + 0.14, 0.96, 0.05, 3),
     });
   }
-  const d0 = isoProj(-2.05, 1.35, 0, scale, baseY);
-  const d1 = isoProj(2.05, -1.35, 0, scale, baseY);
+  const trayMarkup = buildSteppedPlinth(2.24, 1.56, 0.28, 0.13, plinthZ, scale, baseY);
+  const d0 = isoProj(-2.45, 0, 0, scale, baseY);
+  const d1 = isoProj(2.45, 0, 0, scale, baseY);
   const guideMarkup =
     `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
     `<line x1="${d0[0].toFixed(1)}" y1="${d0[1].toFixed(1)}" x2="${d1[0].toFixed(1)}" y2="${d1[1].toFixed(1)}"/>` +
-    `<line x1="48" y1="188" x2="352" y2="188"/>` +
     `</g>`;
-  return { solids, restLead: 2, maxReach: 2.35, scale, baseY, guideMarkup };
+  return { solids, restLead: 3, maxReach: 2.35, scale, baseY, guideMarkup, trayMarkup };
 }
 
 export function mountHairlineFigure(
@@ -370,13 +566,13 @@ export function mountHairlineFigure(
     for (const idx of drawOrder) {
       const s = solids[idx];
       const isActive = idx === lead;
-      const zBot = preset === 'strata' || preset === 'beacon' ? Math.max(0, s.z - 0.26) : s.z0;
+      const zBot = s.thickness != null ? Math.max(0.24, s.z - s.thickness) : s.z0;
       const pip = isoProj(s.cx, s.cy, s.z, scale, baseY);
-      const gOp = isActive ? '0.92' : '0.32';
+      const gOp = isActive ? '0.92' : '0.34';
       const primaryW = isActive ? '0.65' : '0.45';
 
       html += `<g opacity="${gOp}">`;
-      html += prismMarkup(s.outerRing, s.innerRing, zBot, s.z, scale, baseY, primaryW, isActive ? '0.32' : '0.22');
+      html += prismMarkup(s.outerRing, s.innerRing, zBot, s.z, scale, baseY, primaryW, isActive ? '0.32' : '0.22', s.coreRing);
       if (isActive) {
         html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="1.15" fill="currentColor" stroke="none"/>`;
       }
@@ -393,11 +589,13 @@ export function mountHairlineFigure(
     }
     const ft = solids[focusIdx];
     const idLabel =
-      preset === 'wave'
+      preset === 'wave' || preset === 'phosphor'
         ? `cell ${ft.r + 1}·${ft.c + 1}`
-        : ft.code
-          ? `key 0${focusIdx + 1} · ${ft.code}`
-          : `tier 0${focusIdx + 1}`;
+        : preset === 'switches'
+          ? `key 0${focusIdx + 1} · ${ft.code ?? ''}`
+          : ft.code
+            ? `${ft.code}`
+            : `tier 0${focusIdx + 1}`;
     readout.textContent = `${idLabel} · z +${ft.target.toFixed(2)}`;
   }
 
@@ -410,10 +608,13 @@ export function mountHairlineFigure(
         t.target = t.zRest;
       } else if (preset === 'switches') {
         const d = Math.hypot(t.c - ft.c, t.r - ft.r);
-        t.target = i === focusIdx ? 0.36 : Math.min(maxReach, 0.72 + 0.14 / (1 + d * 0.9));
+        t.target = i === focusIdx ? 0.48 : Math.min(maxReach, 0.84 + 0.16 / (1 + d * 0.9));
       } else {
-        const d = preset === 'wave' ? Math.hypot(t.c - ft.c, t.r - ft.r) : Math.abs(i - focusIdx);
-        const lift = Math.min(0.92, 0.92 / (1 + d * d * 0.72));
+        const d =
+          preset === 'wave' || preset === 'phosphor'
+            ? Math.hypot(t.c - ft.c, t.r - ft.r)
+            : Math.abs(i - focusIdx);
+        const lift = Math.min(0.94, 0.94 / (1 + d * d * 0.68));
         t.target = Math.min(maxReach, t.zRest + lift);
       }
       if (reduced) {
@@ -466,7 +667,7 @@ export function mountHairlineFigure(
     const vx = clientX * inv.a + clientY * inv.c + inv.e;
     const vy = clientX * inv.b + clientY * inv.d + inv.f;
     let best = -1;
-    let bestD = preset === 'wave' ? 32 : preset === 'switches' ? 38 : 44;
+    let bestD = 54;
     for (let i = 0; i < solids.length; i++) {
       const d = Math.hypot(vx - solids[i].restX, vy - solids[i].restY);
       if (d < bestD) {

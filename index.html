@@ -4596,7 +4596,7 @@
                 <span class="blur-morph" id="mode-label" data-i18n="top.mode">B2C Invisível</span>
               </button>
               <button class="header-menu-item" id="btn-grain-popover" type="button" aria-expanded="false" aria-controls="grain-popover" data-i18n="top.grain">Grain</button>
-              <button class="header-menu-item" id="btn-open-cmdk" type="button">Paleta <span class="kbd-hint">⌘K</span></button>
+              <button class="header-menu-item" id="btn-open-cmdk" type="button"><span data-home="top.cmdk">Paleta</span> <span class="kbd-hint">⌘K</span></button>
               <button class="header-menu-item" id="btn-open-drawer" type="button" data-i18n="top.tokens">Tokens</button>
             </div>
             <div class="popover" id="grain-popover" data-open="false" aria-hidden="true" role="dialog" aria-label="Controles de textura e sinais">
@@ -5442,21 +5442,21 @@
           <div class="reader-grid">
             <aside class="reader-toc" aria-label="Sumário do dossiê">
               <div class="eyebrow" data-home="ed.toc" style="padding:0 10px 8px;">Conteúdo</div>
-              <button class="toc-item" aria-current="true" data-toc-jump="rd-overview">Visão geral</button>
-              <button class="toc-item" aria-current="false" data-toc-jump="rd-method">Verificação &amp; Fontes</button>
-              <button class="toc-item" aria-current="false" data-toc-jump="rd-sources">Referências (Tier A–C)</button>
+              <button class="toc-item" aria-current="true" data-toc-jump="rd-overview" data-home="ed.toc.1">Visão geral</button>
+              <button class="toc-item" aria-current="false" data-toc-jump="rd-method" data-home="ed.toc.2">Verificação &amp; Fontes</button>
+              <button class="toc-item" aria-current="false" data-toc-jump="rd-sources" data-home="ed.toc.3">Referências (Tier A–C)</button>
             </aside>
 
             <div class="reader-main-col">
               <article class="reader-article">
                 <div class="reader-section" id="rd-overview">
-                  <h3 class="serif" style="font-size:30px; margin:0 0 var(--ds-stack-snug); letter-spacing:var(--ds-tracking-heading); line-height:var(--ds-lh-heading);">Dossiê Auditável: Corredor Paulista &amp; Microclima</h3>
+                  <h3 class="serif" data-home="ed.reader.h3" style="font-size:30px; margin:0 0 var(--ds-stack-snug); letter-spacing:var(--ds-tracking-heading); line-height:var(--ds-lh-heading);">Dossiê Auditável: Corredor Paulista &amp; Microclima</h3>
                   <p style="font-size:16.5px; line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body); margin:0 0 var(--ds-block-gap);">
-                    <span class="claim" data-cite="1">A medição contínua de material particulado (PM2.5) indica variação de até 38% entre vias arteriais arborizadas e eixos de tráfego pesado no mesmo raio de 600 metros.<sup class="sup-cite">1</sup></span>
-                    <span class="claim" data-cite="2"> Dados de cobertura vegetal em resolução de 10 metros confirmam correlação direta entre dossel arbóreo e redução de 2,4 °C na ilha de calor vespertina.<sup class="sup-cite">2</sup></span>
+                    <span class="claim" data-cite="1" data-home-html="ed.claim.1">A medição contínua de material particulado (PM2.5) indica variação de até 38% entre vias arteriais arborizadas e eixos de tráfego pesado no mesmo raio de 600 metros.<sup class="sup-cite">1</sup></span>
+                    <span class="claim" data-cite="2" data-home-html="ed.claim.2"> Dados de cobertura vegetal em resolução de 10 metros confirmam correlação direta entre dossel arbóreo e redução de 2,4 °C na ilha de calor vespertina.<sup class="sup-cite">2</sup></span>
                   </p>
                   <p style="font-size:16.5px; line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body); margin:0;">
-                    <span class="claim" data-cite="3">No modo técnico auditável, cada afirmação gerada pelo assistente exige vínculo determinístico com o payload JSON do conector de dados correspondente, exibindo grau de confiança e classificação de fonte.<sup class="sup-cite">3</sup></span>
+                    <span class="claim" data-cite="3" data-home-html="ed.claim.3">No modo técnico auditável, cada afirmação gerada pelo assistente exige vínculo determinístico com o payload JSON do conector de dados correspondente, exibindo grau de confiança e classificação de fonte.<sup class="sup-cite">3</sup></span>
                   </p>
                 </div>
 
@@ -5576,10 +5576,10 @@
         <div style="margin-top:40px;">
           <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px;">
             <div>
-              <div class="eyebrow">Biblioteca de Dossiês PDF · CSS preserve-3d &amp; Páginas Caneladas</div>
+              <div class="eyebrow" data-home="ll.shelf.eye">Biblioteca de Dossiês PDF · CSS preserve-3d &amp; Páginas Caneladas</div>
               <h3 class="serif" data-home="ll.shelf" style="font-size:26px; margin:4px 0 0;">Estante Tátil de Relatórios</h3>
             </div>
-            <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">Passe o mouse ou clique para abrir o volume (800ms volume curve)</span>
+            <span class="mono" data-home="ll.shelf.hint" style="font-size:11px; color:var(--ds-fg-muted);">Passe o mouse ou clique para abrir o volume (800ms volume curve)</span>
           </div>
 
           <div class="shelf-viewport" id="dossier-shelf">
@@ -5983,68 +5983,102 @@
           <div class="svg-instrument-card" id="hairline-iso-card">
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Hairline × Plotter · Isometria 2:1 (<a href="https://hairline.lucasmarkes.com/skills" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">lucasmarkes/hairline</a>)</div>
-                <h3 class="serif" style="font-size:22px; margin:3px 0 0;">Sólidos Arredondados em Malha 2:1</h3>
+                <div class="eyebrow" data-home-html="svg.hl1.eye">Hairline × Plotter · Terrain 2:1 (<a href="https://hairline.lucasmarkes.com/skills" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">lucasmarkes/hairline</a>)</div>
+                <h3 class="serif" data-home="svg.hl1.h3" style="font-size:22px; margin:3px 0 0;">Duna Isométrica de 49 Pilares</h3>
               </div>
-              <span class="tier-badge">400 × 320 · 4×4</span>
+              <span class="tier-badge">400 × 320 · 7×7</span>
             </div>
             <div class="svg-frame" style="width:100%; aspect-ratio:400 / 320;">
-              <svg id="hairline-iso-svg" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Malha isométrica 4x4 interativa seguindo as 10 regras da Hairline combinadas à gramática Plotter" style="touch-action:none;"></svg>
+              <svg id="hairline-iso-svg" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Malha isométrica 7x7 interativa sobre plinto 3D seguindo as 10 regras da Hairline combinadas à gramática Plotter" style="touch-action:none;"></svg>
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
-              <span class="mono tabular" id="hairline-iso-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · crest 4×4</span>
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">0.65px / 0.45px · mola k100/c18</span>
+              <span class="mono tabular" id="hairline-iso-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · terrain 7×7</span>
+              <span class="mono" data-home="svg.hl1.meta" style="font-size:11px; color:var(--ds-fg-muted);">0.65px / 0.45px · mola k100/c18</span>
             </div>
           </div>
 
           <div class="svg-instrument-card" id="hairline-iso-strata-card">
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Hairline × Plotter · Superfícies</div>
-                <h3 class="serif" style="font-size:22px; margin:3px 0 0;">Estratos Empilhados Single-Ink</h3>
+                <div class="eyebrow" data-home="svg.hl2.eye">Hairline × Plotter · Superfícies</div>
+                <h3 class="serif" data-home="svg.hl2.h3" style="font-size:22px; margin:3px 0 0;">Estratos Empilhados Single-Ink</h3>
               </div>
-              <span class="tier-badge">400 × 320 · 5×1</span>
+              <span class="tier-badge">400 × 320 · 7×1</span>
             </div>
             <div class="svg-frame" style="width:100%; aspect-ratio:400 / 320;">
-              <svg id="hairline-iso-strata" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cinco camadas isométricas 2:1 com oclusão opaca e traço fino Hairline" style="touch-action:none;"></svg>
+              <svg id="hairline-iso-strata" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Sete camadas isométricas 2:1 com poço central, oclusão opaca e traço fino Hairline" style="touch-action:none;"></svg>
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
-              <span class="mono tabular" id="hairline-iso-strata-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · strata 5×1</span>
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">oclusão opaca · planos por valor</span>
+              <span class="mono tabular" id="hairline-iso-strata-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · strata 7×1</span>
+              <span class="mono" data-home="svg.hl2.meta" style="font-size:11px; color:var(--ds-fg-muted);">oclusão opaca · planos por valor</span>
             </div>
           </div>
 
           <div class="svg-instrument-card" id="hairline-iso-switches-card">
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Hairline × Plotter · Matriz Tátil</div>
-                <h3 class="serif" style="font-size:22px; margin:3px 0 0;">Micro-Teclas Táteis de Tokens</h3>
+                <div class="eyebrow" data-home="svg.hl3.eye">Hairline × Plotter · Matriz Tátil</div>
+                <h3 class="serif" data-home="svg.hl3.h3" style="font-size:22px; margin:3px 0 0;">Console Cilíndrico de Tokens</h3>
               </div>
               <span class="tier-badge">400 × 320 · 3×2</span>
             </div>
             <div class="svg-frame" style="width:100%; aspect-ratio:400 / 320;">
-              <svg id="hairline-iso-switches" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Matriz tátil 3x2 isométrica com depressão em mola e ondulação vizinha" style="touch-action:none;"></svg>
+              <svg id="hairline-iso-switches" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Matriz tátil 3x2 isométrica com botões cilíndricos em colares 3D e depressão em mola" style="touch-action:none;"></svg>
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
-              <span class="mono tabular" id="hairline-iso-switches-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · switches 3×2</span>
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">tokens · grain · motion · plotter · hairline · gridlines</span>
+              <span class="mono tabular" id="hairline-iso-switches-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · buttons 3×2</span>
+              <span class="mono" data-home="svg.hl3.meta" style="font-size:11px; color:var(--ds-fg-muted);">tokens · grain · motion · plotter · hairline · gridlines</span>
             </div>
           </div>
 
           <div class="svg-instrument-card" id="hairline-iso-beacon-card">
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
               <div>
-                <div class="eyebrow">Hairline × Plotter · Instrumento Radial</div>
-                <h3 class="serif" style="font-size:22px; margin:3px 0 0;">Farol Orbital de Planos Radiais</h3>
+                <div class="eyebrow" data-home="svg.hl4.eye">Hairline × Plotter · Instrumento Radial</div>
+                <h3 class="serif" data-home="svg.hl4.h3" style="font-size:22px; margin:3px 0 0;">Farol Orbital de Planos Radiais</h3>
               </div>
               <span class="tier-badge">400 × 320 · 2:1</span>
             </div>
             <div class="svg-frame" style="width:100%; aspect-ratio:400 / 320;">
-              <svg id="hairline-iso-beacon" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Farol radial isométrico com anéis em mola assimétrica" style="touch-action:none;"></svg>
+              <svg id="hairline-iso-beacon" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Farol radial isométrico com cinco tambores cilíndricos e escala azimutal em plinto 3D" style="touch-action:none;"></svg>
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-beacon-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · beacon 2:1</span>
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">ataque rápido · retorno suave · traço 0.40px</span>
+              <span class="mono" data-home="svg.hl4.meta" style="font-size:11px; color:var(--ds-fg-muted);">ataque rápido · retorno suave · traço 0.40px</span>
+            </div>
+          </div>
+
+          <div class="svg-instrument-card" id="hairline-iso-riffle-card">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
+              <div>
+                <div class="eyebrow" data-home="svg.hl5.eye">Hairline × Plotter · Arquivo Riffle</div>
+                <h3 class="serif" data-home="svg.hl5.h3" style="font-size:22px; margin:3px 0 0;">Fichário Arquivístico de 8 Lâminas</h3>
+              </div>
+              <span class="tier-badge">400 × 320 · 8×1</span>
+            </div>
+            <div class="svg-frame" style="width:100%; aspect-ratio:400 / 320;">
+              <svg id="hairline-iso-riffle" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bandeja isométrica com oito cartões verticais que se erguem sob o cursor" style="touch-action:none;"></svg>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+              <span class="mono tabular" id="hairline-iso-riffle-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · riffle 8×1</span>
+              <span class="mono" data-home="svg.hl5.meta" style="font-size:11px; color:var(--ds-fg-muted);">8 dossiês · seleção em repouso · 0.65px</span>
+            </div>
+          </div>
+
+          <div class="svg-instrument-card" id="hairline-iso-phosphor-card">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
+              <div>
+                <div class="eyebrow" data-home="svg.hl6.eye">Hairline × Plotter · Matriz CRT</div>
+                <h3 class="serif" data-home="svg.hl6.h3" style="font-size:22px; margin:3px 0 0;">Matriz Fósforo de 49 Cilindros</h3>
+              </div>
+              <span class="tier-badge">400 × 320 · 7×7</span>
+            </div>
+            <div class="svg-frame" style="width:100%; aspect-ratio:400 / 320;">
+              <svg id="hairline-iso-phosphor" data-plotter data-hairline viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Matriz 7x7 de cilindros isométricos reativos ao cursor sobre moldura 3D" style="touch-action:none;"></svg>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+              <span class="mono tabular" id="hairline-iso-phosphor-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · phosphor 7×7</span>
+              <span class="mono" data-home="svg.hl6.meta" style="font-size:11px; color:var(--ds-fg-muted);">49 células cilíndricas · onda radial</span>
             </div>
           </div>
         </div>
@@ -6292,10 +6326,10 @@
               <span class="skill-card-name">meridian-taste</span>
               <span class="skill-card-tag">Taste Core</span>
             </div>
-            <p class="skill-card-desc">10 pilares de discernimento, critério do Farol, revisão em tabela Before/After/Why, checklist anti-slop e captura contínua via learn-taste.</p>
+            <p class="skill-card-desc" data-home="skills.desc.taste">10 pilares de discernimento, critério do Farol, revisão em tabela Before/After/Why, checklist anti-slop e captura contínua via learn-taste.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-taste/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-taste">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-taste" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6304,10 +6338,10 @@
               <span class="skill-card-name">meridian-design-system</span>
               <span class="skill-card-tag">Tokens · 13</span>
             </div>
-            <p class="skill-card-desc">Engine Single-Ink com color-mix(), 13 superfícies, tokens semânticos CSS/TS, tipografia Geist em 3 vozes e i18n em 4 idiomas.</p>
+            <p class="skill-card-desc" data-home="skills.desc.ds">Engine Single-Ink com color-mix(), 13 superfícies, tokens semânticos CSS/TS, tipografia Geist em 3 vozes e i18n em 4 idiomas.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-design-system/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-design-system">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-design-system" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6316,10 +6350,10 @@
               <span class="skill-card-name">meridian-paper-shaders</span>
               <span class="skill-card-tag">Canvas · GL</span>
             </div>
-            <p class="skill-card-desc">PaperGrain em canvas nativo (sem data-URL), HalfTone hex finíssimo (&lt;0.18), scrollbars hairline em Chromium e véu de entrada.</p>
+            <p class="skill-card-desc" data-home="skills.desc.shaders">PaperGrain em canvas nativo (sem data-URL), HalfTone hex finíssimo (&lt;0.18), scrollbars hairline em Chromium e véu de entrada.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-paper-shaders/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-paper-shaders">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-paper-shaders" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6328,10 +6362,10 @@
               <span class="skill-card-name">meridian-motion</span>
               <span class="skill-card-tag">Emil Gate</span>
             </div>
-            <p class="skill-card-desc">Frequency Gate (0ms em ⌘K), 6 curvas bezier sem ease-in, abas clip-path, hold-to-confirm 1.4s/180ms, drag 1:1 e paridade RN Skia.</p>
+            <p class="skill-card-desc" data-home="skills.desc.motion">Frequency Gate (0ms em ⌘K), 6 curvas bezier sem ease-in, abas clip-path, hold-to-confirm 1.4s/180ms, drag 1:1 e paridade RN Skia.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-motion/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-motion">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-motion" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6340,10 +6374,10 @@
               <span class="skill-card-name">meridian-plotter-svg</span>
               <span class="skill-card-tag">13 Roles</span>
             </div>
-            <p class="skill-card-desc">Blueprints vetoriais editáveis em 13 roles semânticas, globo ortográfico 81k pontilhado e mostradores Gann 1:1 travados.</p>
+            <p class="skill-card-desc" data-home="skills.desc.plotter">Blueprints vetoriais editáveis em 13 roles semânticas, globo ortográfico 81k pontilhado e mostradores Gann 1:1 travados.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-plotter-svg/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-plotter-svg">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-plotter-svg" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6352,10 +6386,10 @@
               <span class="skill-card-name">meridian-atelier</span>
               <span class="skill-card-tag">Zero p5.js</span>
             </div>
-            <p class="skill-card-desc">Motor generativo 100% TypeScript (&lt;0.7ms/frame) com aquarela wet-on-wet, lápis grafite 2H/4B, giz de cera e pincel sumi-e.</p>
+            <p class="skill-card-desc" data-home="skills.desc.atelier">Motor generativo 100% TypeScript (&lt;0.7ms/frame) com aquarela wet-on-wet, lápis grafite 2H/4B, giz de cera e pincel sumi-e.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-atelier/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-atelier">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-atelier" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6364,10 +6398,10 @@
               <span class="skill-card-name">meridian-editorial-archival</span>
               <span class="skill-card-tag">3-Col · B2B</span>
             </div>
-            <p class="skill-card-desc">Leitor 3 colunas (152px · 65ch · 264px), citações Tier A–C interativas, Timeline, estante 3D preserve-3d e chrome dual.</p>
+            <p class="skill-card-desc" data-home="skills.desc.archival">Leitor 3 colunas (152px · 65ch · 264px), citações Tier A–C interativas, Timeline, estante 3D preserve-3d e chrome dual.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-editorial-archival/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-editorial-archival">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-editorial-archival" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6376,10 +6410,10 @@
               <span class="skill-card-name">meridian-components</span>
               <span class="skill-card-tag">90 Items</span>
             </div>
-            <p class="skill-card-desc">Catálogo de 90 componentes táteis em linha SVG, manifestos shadcn em public/r/ e prompts individuais de instalação.</p>
+            <p class="skill-card-desc" data-home="skills.desc.components">Catálogo de 90 componentes táteis em linha SVG, manifestos shadcn em public/r/ e prompts individuais de instalação.</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-components/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-components">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-components" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6388,10 +6422,10 @@
               <span class="skill-card-name">meridian-hairline-figure</span>
               <span class="skill-card-tag">Plotter · 2:1</span>
             </div>
-            <p class="skill-card-desc">Conjunto para a Plotter: figuras isométricas 2:1 em sólidos arredondados com hit em repouso, oclusão opaca, dupla mola/ease e adoção SVG (lucasmarkes/hairline).</p>
+            <p class="skill-card-desc" data-home="skills.desc.hairline">Conjunto para a Plotter: figuras isométricas 2:1 em sólidos arredondados com hit em repouso, oclusão opaca, dupla mola/ease e adoção SVG (lucasmarkes/hairline).</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-hairline-figure/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-hairline-figure">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-hairline-figure" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
 
@@ -6400,10 +6434,10 @@
               <span class="skill-card-name">meridian-gridlines</span>
               <span class="skill-card-tag">Align · Probe</span>
             </div>
-            <p class="skill-card-desc">Auditoria de alinhamento por borda de tinta via probe.js (1440px e 390px), alinhando sidebars, toolbars, menus e tabelas (pritamux/gridlines).</p>
+            <p class="skill-card-desc" data-home="skills.desc.gridlines">Auditoria de alinhamento por borda de tinta via probe.js (1440px e 390px), alinhando sidebars, toolbars, menus e tabelas (pritamux/gridlines).</p>
             <div class="skill-card-foot">
               <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-gridlines/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
-              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-gridlines">Copiar CLI</button>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-gridlines" data-home="skills.copyCli">Copiar CLI</button>
             </div>
           </article>
         </div>
@@ -6413,68 +6447,68 @@
             <div class="eyebrow" style="margin-bottom:4px;" data-home="skills.creditsEye">Atribuição &amp; Referências Externas</div>
             <h3 class="h3" style="margin:0; font-size:24px;" data-home="skills.creditsTitle">Construído sobre craft aberto — nunca sem crédito.</h3>
           </div>
-          <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/CREDITS.md" target="_blank" rel="noopener noreferrer" style="font-family:var(--ds-font-mono); font-size:12px;">Inventário completo em CREDITS.md ↗</a>
+          <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/CREDITS.md" target="_blank" rel="noopener noreferrer" style="font-family:var(--ds-font-mono); font-size:12px;" data-home="skills.creditsLink">Inventário completo em CREDITS.md ↗</a>
         </div>
 
         <div class="credits-grid">
           <a class="credit-card" href="https://deimos.evilrabbit.com/" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Design Reference · Zeitgeist &amp; Geist</span>
             <span class="credit-card-title">Evil Rabbit — Deimos</span>
-            <span class="credit-card-note">Single-Ink em color-mix(), superfícies archival (Paper, Aqua, Terracotta, Obsidian), leitor 3 colunas, estante 3D e família Geist.</span>
+            <span class="credit-card-note" data-home="skills.credit.deimos">Single-Ink em color-mix(), superfícies archival (Paper, Aqua, Terracotta, Obsidian), leitor 3 colunas, estante 3D e família Geist.</span>
           </a>
 
           <a class="credit-card" href="https://github.com/emilkowalski/skills" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Agent Skills · Motion &amp; Taste</span>
             <span class="credit-card-title">Emil Kowalski (skills)</span>
-            <span class="credit-card-note">Frequency Gate (0ms ⌘K), curvas bezier, abas clip-path, hold-to-confirm, Vaul/Sonner, gestos 1:1, mobile-native e metodologia learn-taste.</span>
+            <span class="credit-card-note" data-home="skills.credit.emil">Frequency Gate (0ms ⌘K), curvas bezier, abas clip-path, hold-to-confirm, Vaul/Sonner, gestos 1:1, mobile-native e metodologia learn-taste.</span>
           </a>
 
           <a class="credit-card" href="https://github.com/pasqualevitiello/plotter" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Agent Skill · SVG Blueprint</span>
             <span class="credit-card-title">Pasquale Vitiello — Plotter</span>
-            <span class="credit-card-note">13 roles semânticas SVG (data-plotter-role), uma tinta currentColor, cotas abertas e isolamento didático data-plotter-isolate.</span>
+            <span class="credit-card-note" data-home="skills.credit.plotter">13 roles semânticas SVG (data-plotter-role), uma tinta currentColor, cotas abertas e isolamento didático data-plotter-isolate.</span>
           </a>
 
           <a class="credit-card" href="https://hairline.lucasmarkes.com/skills" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Agent Skills · 2:1 Isometric &amp; Plotter</span>
             <span class="credit-card-title">Lucas Marques — Hairline</span>
-            <span class="credit-card-note">hairline-create e hairline-adopt (MIT): 10 regras para figuras isométricas 2:1, hit em repouso, oclusão opaca e dupla mola/ease junto à Plotter.</span>
+            <span class="credit-card-note" data-home="skills.credit.hairline">hairline-create e hairline-adopt (MIT): 10 regras para figuras isométricas 2:1, hit em repouso, oclusão opaca e dupla mola/ease junto à Plotter.</span>
           </a>
 
           <a class="credit-card" href="https://github.com/pritamux/gridlines" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Agent Skill · Alignment Probe</span>
             <span class="credit-card-title">Pritam — Gridlines</span>
-            <span class="credit-card-note">Auditoria de alinhamento via probe.js nas bordas de tinta (Karri Saarinen &amp; Apple HIG) em sidebars, topbars, menus e painéis.</span>
+            <span class="credit-card-note" data-home="skills.credit.gridlines">Auditoria de alinhamento via probe.js nas bordas de tinta (Karri Saarinen &amp; Apple HIG) em sidebars, topbars, menus e painéis.</span>
           </a>
 
           <a class="credit-card" href="https://shaders.paper.design/" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">WebGL Shader · Materiality</span>
             <span class="credit-card-title">Paper Design Shaders</span>
-            <span class="credit-card-note">@paper-design/shaders halftoneDotsFragmentShader aplicado em malha hexagonal fina nas chapas archivals e Dossiê Gann.</span>
+            <span class="credit-card-note" data-home="skills.credit.paper">@paper-design/shaders halftoneDotsFragmentShader aplicado em malha hexagonal fina nas chapas archivals e Dossiê Gann.</span>
           </a>
 
           <a class="credit-card" href="https://jhosephe.vercel.app/" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Skills · Tactile Lab</span>
             <span class="credit-card-title">Jhosephe UI</span>
-            <span class="credit-card-note">Física tátil (--ml-press-x/y, captura angular 270°, ledger consoles) e base do catálogo de 64→90 componentes Single-Ink.</span>
+            <span class="credit-card-note" data-home="skills.credit.jhosephe">Física tátil (--ml-press-x/y, captura angular 270°, ledger consoles) e base do catálogo de 64→90 componentes Single-Ink.</span>
           </a>
 
           <a class="credit-card" href="https://www.anthropic.com/research" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Editorial · Scenarios &amp; 81k</span>
             <span class="credit-card-title">Anthropic Research</span>
-            <span class="credit-card-note">Ground marfim #FAF9F5, dual-radius, masonry 12 colunas com dim, footer em acordeões e estética globo 81k + blocos em aquarela.</span>
+            <span class="credit-card-note" data-home="skills.credit.anthropic">Ground marfim #FAF9F5, dual-radius, masonry 12 colunas com dim, footer em acordeões e estética globo 81k + blocos em aquarela.</span>
           </a>
 
           <a class="credit-card" href="https://github.com/acamposuribe/p5.brush" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Generative Research</span>
             <span class="credit-card-title">Tyler Hobbs &amp; p5.brush</span>
-            <span class="credit-card-note">Subdivisão gaussiana recursiva, borda úmida de pigmento e pincéis secos portados para TypeScript puro sem dependências.</span>
+            <span class="credit-card-note" data-home="skills.credit.hobbs">Subdivisão gaussiana recursiva, borda úmida de pigmento e pincéis secos portados para TypeScript puro sem dependências.</span>
           </a>
 
           <a class="credit-card" href="https://ui.shadcn.com/" target="_blank" rel="noopener noreferrer">
             <span class="credit-card-role">Registry Spec</span>
             <span class="credit-card-title">shadcn/ui Registry</span>
-            <span class="credit-card-note">Esquema de distribuição JSON (public/r/registry.json) para instalação via CLI e prompts individuais nos 90 componentes.</span>
+            <span class="credit-card-note" data-home="skills.credit.shadcn">Esquema de distribuição JSON (public/r/registry.json) para instalação via CLI e prompts individuais nos 90 componentes.</span>
           </a>
         </div>
       </div>
@@ -9116,6 +9150,8 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
     mountHairlineFigure(document.getElementById('hairline-iso-strata'), document.getElementById('hairline-iso-strata-readout'), 'strata');
     mountHairlineFigure(document.getElementById('hairline-iso-switches'), document.getElementById('hairline-iso-switches-readout'), 'switches');
     mountHairlineFigure(document.getElementById('hairline-iso-beacon'), document.getElementById('hairline-iso-beacon-readout'), 'beacon');
+    mountHairlineFigure(document.getElementById('hairline-iso-riffle'), document.getElementById('hairline-iso-riffle-readout'), 'riffle');
+    mountHairlineFigure(document.getElementById('hairline-iso-phosphor'), document.getElementById('hairline-iso-phosphor-readout'), 'phosphor');
   </script>
 </body>
 </html>

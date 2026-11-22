@@ -244,12 +244,19 @@ function demoDial(kind = 'dial'): HTMLElement {
         <svg class="ml-svg" data-plotter data-hairline viewBox="0 0 120 120" aria-hidden="true">
           <circle data-plotter-role="guide" cx="60" cy="58" r="53" fill="none" stroke="currentColor"/>
           ${ticks}
-          <!-- Subtle 1.5px lower contact rim (no heavy block shadow) -->
-          <path data-plotter-role="secondary" d="M 29.5 59.8 A 30.5 30.5 0 0 0 90.5 59.8" fill="none" stroke="currentColor" opacity="0.22"/>
-          <!-- Main Circular Platter -->
-          <circle data-plotter-role="primary" cx="60" cy="58" r="30.5" fill="var(--ds-bg)" stroke="currentColor"/>
+          <!-- 3D Cylindrical Platter Skirt + Knurled Vertical Ribs -->
+          <path data-plotter-role="secondary" d="M 29.5 56 L 29.5 61 A 30.5 30.5 0 0 0 90.5 61 L 90.5 56 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.65"/>
+          ${Array.from({ length: 13 }, (_, i) => {
+            const a = (Math.PI * (i + 1)) / 14;
+            const x = 60 - Math.cos(a) * 30.5;
+            const yTop = 56 + Math.sin(a) * 30.5;
+            const yBot = 61 + Math.sin(a) * 30.5;
+            return `<line data-plotter-role="secondary" x1="${x.toFixed(1)}" y1="${yTop.toFixed(1)}" x2="${x.toFixed(1)}" y2="${yBot.toFixed(1)}" stroke="currentColor" opacity="0.28"/>`;
+          }).join('')}
+          <!-- Main 3D Circular Platter -->
+          <circle data-plotter-role="primary" cx="60" cy="56" r="30.5" fill="var(--ds-bg)" stroke="currentColor"/>
           <!-- Open Front Chamfer Crease -->
-          <path data-plotter-role="secondary" d="M 34 58 A 26 26 0 0 0 86 58" fill="none" stroke="currentColor" opacity="0.24"/>
+          <path data-plotter-role="secondary" d="M 34 56 A 26 26 0 0 0 86 56" fill="none" stroke="currentColor" opacity="0.32"/>
           ${kind === 'camera-dial' || kind === 'camera-wheel' ? '<circle data-plotter-role="guide" cx="60" cy="58" r="17" fill="none" stroke="currentColor"/>' : ''}
           <g class="ml-dial-knob">
             <line data-plotter-role="primary" x1="60" y1="45" x2="60" y2="31" stroke="currentColor"/>
@@ -564,78 +571,231 @@ function demoAccordion(): HTMLElement {
   return el;
 }
 
-function demoColorPicker(): HTMLElement {
-  const swatches = [
-    { name: 'Olive', hex: '#5E6E47', l: 0.48, c: 0.06, h: 125 },
-    { name: 'Sky', hex: '#477085', l: 0.5, c: 0.06, h: 230 },
-    { name: 'Coral', hex: '#B55A42', l: 0.55, c: 0.1, h: 35 },
-    { name: 'Ochre', hex: '#9A7134', l: 0.55, c: 0.09, h: 75 },
-    { name: 'Slate', hex: '#56606E', l: 0.45, c: 0.02, h: 250 },
-    { name: 'Ink', hex: '#141413', l: 0.18, c: 0.005, h: 90 },
-    { name: 'Ivory', hex: '#FAF9F5', l: 0.97, c: 0.008, h: 95 },
-    { name: 'Aqua', hex: '#A4CED0', l: 0.8, c: 0.04, h: 200 },
-    { name: 'Terra', hex: '#EDBB99', l: 0.82, c: 0.06, h: 55 },
-    { name: 'Blush', hex: '#E8C4C0', l: 0.84, c: 0.04, h: 20 },
-    { name: 'Mist', hex: '#C5D4CE', l: 0.84, c: 0.02, h: 160 },
-    { name: 'Lilac', hex: '#C9C0D8', l: 0.82, c: 0.04, h: 300 },
-  ];
-  let L = 0.55;
-  let C = 0.08;
-  let H = 55;
-  const el = document.createElement('div');
-  el.className = 'ml-color';
-  el.innerHTML = `
-    <div class="ml-color-preview" style="--ml-swatch:${swatches[8]!.hex}"></div>
-    <div class="ml-color-meta"><span class="ml-color-name">Terra</span><span class="ml-color-oklch">oklch(0.82 0.06 55)</span></div>
-    <div class="ml-color-grid">${swatches
-      .map(
-        (s, i) =>
-          `<button type="button" class="ml-color-swatch" data-i="${i}" data-active="${i === 8}" style="--swatch:${s.hex}" title="${s.name}" aria-label="${s.name}"></button>`,
-      )
-      .join('')}</div>
-    <div class="ml-color-sliders">
-      <label class="ml-color-row">L<input type="range" min="0" max="100" value="82" data-axis="l"/><span data-read="l">0.82</span></label>
-      <label class="ml-color-row">C<input type="range" min="0" max="20" value="6" data-axis="c"/><span data-read="c">0.06</span></label>
-      <label class="ml-color-row">H<input type="range" min="0" max="360" value="55" data-axis="h"/><span data-read="h">55</span></label>
-    </div>`;
-  const preview = qs<HTMLElement>(el, '.ml-color-preview');
-  const nameEl = qs<HTMLElement>(el, '.ml-color-name');
-  const oklchEl = qs<HTMLElement>(el, '.ml-color-oklch');
-  const paint = (label?: string) => {
-    const css = `oklch(${L.toFixed(2)} ${C.toFixed(2)} ${Math.round(H)})`;
-    preview.style.setProperty('--ml-swatch', css);
-    preview.style.background = css;
-    oklchEl.textContent = css;
-    if (label) nameEl.textContent = label;
-    qs<HTMLElement>(el, '[data-read="l"]').textContent = L.toFixed(2);
-    qs<HTMLElement>(el, '[data-read="c"]').textContent = C.toFixed(2);
-    qs<HTMLElement>(el, '[data-read="h"]').textContent = String(Math.round(H));
-  };
-  el.querySelectorAll<HTMLButtonElement>('.ml-color-swatch').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const s = swatches[Number(btn.dataset.i)]!;
-      L = s.l;
-      C = s.c;
-      H = s.h;
-      el.querySelectorAll('.ml-color-swatch').forEach((b) => delete (b as HTMLElement).dataset.active);
+function hslToHexHelper(h: number, s: number, l: number): string {
+  const sn = clamp(s, 0, 100) / 100;
+  const ln = clamp(l, 0, 100) / 100;
+  const k = (n: number) => (n + h / 30) % 12;
+  const a = sn * Math.min(ln, 1 - ln);
+  const f = (n: number) => Math.round((ln - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))) * 255);
+  return `#${[f(0), f(8), f(4)].map((v) => v.toString(16).padStart(2, '0')).join('').toUpperCase()}`;
+}
+
+function demoColorPicker(kind = 'color-picker'): HTMLElement {
+  const hues = [
+    ['Red', 18],
+    ['Coral', 36],
+    ['Amber', 58],
+    ['Ochre', 82],
+    ['Lime', 118],
+    ['Green', 148],
+    ['Teal', 176],
+    ['Cyan', 198],
+    ['Blue', 228],
+    ['Indigo', 258],
+    ['Violet', 292],
+    ['Rose', 338],
+  ] as const;
+
+  if (kind === 'oklch-palette') {
+    const tones = [
+      { label: 'Deep', l: 44, c: 0.16, hslL: 36, hslS: 68 },
+      { label: 'Mid', l: 56, c: 0.18, hslL: 48, hslS: 74 },
+      { label: 'Clear', l: 68, c: 0.15, hslL: 60, hslS: 72 },
+      { label: 'Light', l: 78, c: 0.11, hslL: 74, hslS: 64 },
+      { label: 'Pastel', l: 88, c: 0.06, hslL: 85, hslS: 54 },
+    ] as const;
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'OKLCH HONEYCOMB · 60 SWATCHES',
+      'oklch(78% 0.11 198)',
+      ['Tone', 'Lightness', 'Chroma', 'Hue'],
+    );
+    const comb = document.createElement('div');
+    comb.className = 'ml-oklch-honeycomb';
+    const allBtns: HTMLButtonElement[] = [];
+
+    const selectSwatch = (tIdx: number, hIdx: number, btn: HTMLButtonElement) => {
+      allBtns.forEach((b) => delete b.dataset.active);
       btn.dataset.active = 'true';
-      qs<HTMLInputElement>(el, '[data-axis="l"]').value = String(Math.round(L * 100));
-      qs<HTMLInputElement>(el, '[data-axis="c"]').value = String(Math.round(C * 100));
-      qs<HTMLInputElement>(el, '[data-axis="h"]').value = String(Math.round(H));
-      paint(s.name);
+      const tone = tones[tIdx]!;
+      const [hName, hDeg] = hues[hIdx]!;
+      setPill(`oklch(${tone.l}% ${tone.c} ${hDeg})`);
+      setCells([`${hName} ${tone.label}`, `${tone.l}%`, String(tone.c), `${hDeg}°`]);
+    };
+
+    tones.forEach((tone, tIdx) => {
+      const row = document.createElement('div');
+      row.className = 'ml-oklch-row';
+      hues.forEach(([hName, hDeg], hIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ml-cp-swatch';
+        const hex = hslToHexHelper(hDeg, tone.hslS, tone.hslL);
+        btn.style.background = hex;
+        btn.title = `${hName} · ${tone.label}`;
+        btn.setAttribute('aria-label', `${hName} ${tone.label}`);
+        if (tIdx === 3 && hIdx === 7) btn.dataset.active = 'true';
+        btn.addEventListener('pointerenter', () => selectSwatch(tIdx, hIdx, btn));
+        btn.addEventListener('click', () => selectSwatch(tIdx, hIdx, btn));
+        allBtns.push(btn);
+        row.append(btn);
+      });
+      comb.append(row);
+    });
+    stage.append(comb);
+    setCells(['Cyan Light', '78%', '0.11', '198°']);
+    return panel;
+  }
+
+  // Full Jhosephe Color Picker Studio (2D Saturation/Lightness Plane + 3D Hue Bar + 12 Swatches + OKLCH/RGB/HSL Modes)
+  let H = 198;
+  let S = 68;
+  let L = 62;
+  let mode: 'oklch' | 'rgb' | 'hsl' = 'oklch';
+
+  const panel = document.createElement('div');
+  panel.className = 'ml-inst-panel';
+  panel.innerHTML = `
+    <div class="ml-inst-head">
+      <span class="ml-inst-pill"><i class="ml-inst-pill-dot" data-cp-dot></i><output data-cp-out>oklch(74% 0.12 198)</output></span>
+      <div class="ml-cp-modes" role="tablist" aria-label="Color space">
+        <button type="button" class="ml-cp-mode-btn" data-cp-mode="oklch" aria-selected="true">OKLCH</button>
+        <button type="button" class="ml-cp-mode-btn" data-cp-mode="rgb" aria-selected="false">RGB</button>
+        <button type="button" class="ml-cp-mode-btn" data-cp-mode="hsl" aria-selected="false">HSL</button>
+      </div>
+    </div>
+    <div class="ml-cp-studio">
+      <div class="ml-cp-pad" data-cp-pad style="--cp-hue:198">
+        <span class="ml-cp-reticle" data-cp-reticle></span>
+      </div>
+      <div class="ml-cp-hue-bar" data-cp-hue>
+        <span class="ml-cp-hue-thumb" data-cp-hue-thumb></span>
+      </div>
+      <div class="ml-cp-swatches" data-cp-swatches></div>
+    </div>
+    <div class="ml-inst-legend">
+      <div class="ml-inst-cell"><span data-cp-l0>L%</span><strong data-cp-v0>74%</strong></div>
+      <div class="ml-inst-cell"><span data-cp-l1>Chroma</span><strong data-cp-v1>0.120</strong></div>
+      <div class="ml-inst-cell"><span data-cp-l2>Hue</span><strong data-cp-v2>198°</strong></div>
+      <div class="ml-inst-cell"><span>Hex</span><strong data-cp-hex>#5CC2DF</strong></div>
+    </div>`;
+
+  const dotEl = qs<HTMLElement>(panel, '[data-cp-dot]');
+  const outEl = qs<HTMLElement>(panel, '[data-cp-out]');
+  const padEl = qs<HTMLElement>(panel, '[data-cp-pad]');
+  const reticleEl = qs<HTMLElement>(panel, '[data-cp-reticle]');
+  const hueBarEl = qs<HTMLElement>(panel, '[data-cp-hue]');
+  const hueThumbEl = qs<HTMLElement>(panel, '[data-cp-hue-thumb]');
+  const swatchesWrap = qs<HTMLElement>(panel, '[data-cp-swatches]');
+  const l0 = qs<HTMLElement>(panel, '[data-cp-l0]');
+  const l1 = qs<HTMLElement>(panel, '[data-cp-l1]');
+  const l2 = qs<HTMLElement>(panel, '[data-cp-l2]');
+  const v0 = qs<HTMLElement>(panel, '[data-cp-v0]');
+  const v1 = qs<HTMLElement>(panel, '[data-cp-v1]');
+  const v2 = qs<HTMLElement>(panel, '[data-cp-v2]');
+  const hexEl = qs<HTMLElement>(panel, '[data-cp-hex]');
+
+  const swatchBtns: HTMLButtonElement[] = [];
+  hues.forEach(([hName, hDeg], idx) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ml-cp-swatch';
+    b.style.background = hslToHexHelper(hDeg, 68, 62);
+    b.title = hName;
+    b.setAttribute('aria-label', hName);
+    if (idx === 7) b.dataset.active = 'true';
+    b.addEventListener('click', () => {
+      H = hDeg;
+      S = 68;
+      L = 62;
+      swatchBtns.forEach((x) => delete x.dataset.active);
+      b.dataset.active = 'true';
+      paint();
+    });
+    swatchBtns.push(b);
+    swatchesWrap.append(b);
+  });
+
+  const paint = () => {
+    const hex = hslToHexHelper(H, S, L);
+    const okL = clamp(Math.round(L * 0.92 + 12), 12, 96);
+    const okC = ((S / 100) * (1 - Math.abs(2 * (L / 100) - 1)) * 0.22).toFixed(3);
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+
+    dotEl.style.background = hex;
+    padEl.style.setProperty('--cp-hue', String(Math.round(H)));
+    reticleEl.style.left = `${S}%`;
+    reticleEl.style.top = `${100 - L}%`;
+    reticleEl.style.background = hex;
+    hueThumbEl.style.left = `${(H / 360) * 100}%`;
+    hueThumbEl.style.background = `hsl(${Math.round(H)} 88% 56%)`;
+    hexEl.textContent = hex;
+
+    if (mode === 'oklch') {
+      outEl.textContent = `oklch(${okL}% ${okC} ${Math.round(H)})`;
+      l0.textContent = 'L%';
+      l1.textContent = 'Chroma';
+      l2.textContent = 'Hue';
+      v0.textContent = `${okL}%`;
+      v1.textContent = okC;
+      v2.textContent = `${Math.round(H)}°`;
+    } else if (mode === 'rgb') {
+      outEl.textContent = `rgb(${r} ${g} ${b})`;
+      l0.textContent = 'Red';
+      l1.textContent = 'Green';
+      l2.textContent = 'Blue';
+      v0.textContent = String(r);
+      v1.textContent = String(g);
+      v2.textContent = String(b);
+    } else {
+      outEl.textContent = `hsl(${Math.round(H)} ${Math.round(S)}% ${Math.round(L)}%)`;
+      l0.textContent = 'Hue';
+      l1.textContent = 'Sat';
+      l2.textContent = 'Light';
+      v0.textContent = `${Math.round(H)}°`;
+      v1.textContent = `${Math.round(S)}%`;
+      v2.textContent = `${Math.round(L)}%`;
+    }
+  };
+
+  panel.querySelectorAll<HTMLButtonElement>('[data-cp-mode]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      mode = (btn.dataset.cpMode as 'oklch' | 'rgb' | 'hsl') || 'oklch';
+      panel.querySelectorAll('[data-cp-mode]').forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+      paint();
     });
   });
-  el.querySelectorAll<HTMLInputElement>('.ml-color-sliders input').forEach((input) => {
-    input.addEventListener('input', () => {
-      if (input.dataset.axis === 'l') L = Number(input.value) / 100;
-      if (input.dataset.axis === 'c') C = Number(input.value) / 100;
-      if (input.dataset.axis === 'h') H = Number(input.value);
-      el.querySelectorAll('.ml-color-swatch').forEach((b) => delete (b as HTMLElement).dataset.active);
-      paint('Custom');
-    });
+
+  const updatePad = (clientX: number, clientY: number) => {
+    const r = padEl.getBoundingClientRect();
+    S = clamp(((clientX - r.left) / r.width) * 100, 4, 98);
+    L = clamp((1 - (clientY - r.top) / r.height) * 84 + 10, 12, 92);
+    paint();
+  };
+  padEl.addEventListener('pointerdown', (e) => {
+    padEl.setPointerCapture(e.pointerId);
+    updatePad(e.clientX, e.clientY);
   });
-  paint('Terra');
-  return el;
+  padEl.addEventListener('pointermove', (e) => {
+    if (e.buttons === 1 || e.pointerType === 'mouse') updatePad(e.clientX, e.clientY);
+  });
+
+  const updateHue = (clientX: number) => {
+    const r = hueBarEl.getBoundingClientRect();
+    H = clamp(((clientX - r.left) / r.width) * 360, 0, 360);
+    paint();
+  };
+  hueBarEl.addEventListener('pointerdown', (e) => {
+    hueBarEl.setPointerCapture(e.pointerId);
+    updateHue(e.clientX);
+  });
+  hueBarEl.addEventListener('pointermove', (e) => {
+    if (e.buttons === 1 || e.pointerType === 'mouse') updateHue(e.clientX);
+  });
+
+  paint();
+  return panel;
 }
 
 function demoInput(search = false): HTMLElement {
@@ -778,12 +938,13 @@ function demoCompass(kind = 'compass'): HTMLElement {
     return `<line data-plotter-role="${role}" x1="${(80 + Math.cos(a) * inner).toFixed(1)}" y1="${(80 + Math.sin(a) * inner).toFixed(1)}" x2="${(80 + Math.cos(a) * 61.5).toFixed(1)}" y2="${(80 + Math.sin(a) * 61.5).toFixed(1)}" stroke="currentColor"/>`;
   }).join('');
 
-  // Whisper-thin concentric Hairline bezel (no heavy dark block skirt)
+  // 3D Cylindrical Hairline Bezel (extruded lower cylinder wall + top plate + open front chamfer crease)
   const bezelHairline = `
-    <circle data-plotter-role="guide" cx="80" cy="80" r="69" fill="none" stroke="currentColor"/>
-    <path data-plotter-role="secondary" d="M 14 81.5 A 66 66 0 0 0 146 81.5" fill="none" stroke="currentColor" opacity="0.2"/>
-    <circle data-plotter-role="primary" cx="80" cy="80" r="65.5" fill="var(--ds-bg)" stroke="currentColor"/>
-    <circle data-plotter-role="secondary" cx="80" cy="80" r="61.5" fill="none" stroke="currentColor" opacity="0.28"/>
+    <circle data-plotter-role="guide" cx="80" cy="78" r="69" fill="none" stroke="currentColor"/>
+    <path data-plotter-role="primary" d="M 14.5 78 L 14.5 83 A 65.5 65.5 0 0 0 145.5 83 L 145.5 78 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.72"/>
+    <circle data-plotter-role="primary" cx="80" cy="78" r="65.5" fill="var(--ds-bg)" stroke="currentColor"/>
+    <path data-plotter-role="secondary" d="M 18.5 78 A 61.5 61.5 0 0 0 141.5 78" fill="none" stroke="currentColor" opacity="0.32"/>
+    <circle data-plotter-role="secondary" cx="80" cy="78" r="61.5" fill="none" stroke="currentColor" opacity="0.26"/>
   `;
 
   if (kind === 'weather-instrument') {
@@ -1235,31 +1396,34 @@ function demoSvgInstrument(kind: string): HTMLElement {
       const dir = Math.abs(pDeg) < 1.5 ? 'LEVEL' : pDeg > 0 ? 'CLIMB' : 'DESC';
       svg.innerHTML = `
         <defs>
-          <clipPath id="att-clip"><circle cx="110" cy="68" r="45"/></clipPath>
+          <clipPath id="att-clip"><circle cx="110" cy="67" r="45"/></clipPath>
         </defs>
-        <circle data-plotter-role="guide" cx="110" cy="68" r="59" fill="none" stroke="currentColor"/>
-        <path data-plotter-role="secondary" d="M 54 69.5 A 56 56 0 0 0 166 69.5" fill="none" stroke="currentColor" opacity="0.2"/>
-        <circle data-plotter-role="primary" cx="110" cy="68" r="55.5" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="secondary" cx="110" cy="68" r="45" fill="none" stroke="currentColor" opacity="0.34"/>
+        <circle data-plotter-role="guide" cx="110" cy="67" r="59" fill="none" stroke="currentColor"/>
+        <!-- 3D Cylindrical Bezel Wall -->
+        <path data-plotter-role="primary" d="M 54.5 67 L 54.5 72 A 55.5 55.5 0 0 0 165.5 72 L 165.5 67 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.72"/>
+        <circle data-plotter-role="primary" cx="110" cy="67" r="55.5" fill="var(--ds-bg)" stroke="currentColor"/>
+        <path data-plotter-role="secondary" d="M 59 67 A 51 51 0 0 0 161 67" fill="none" stroke="currentColor" opacity="0.3"/>
+        <circle data-plotter-role="secondary" cx="110" cy="67" r="45" fill="none" stroke="currentColor" opacity="0.36"/>
         ${bankTicks}
         <g clip-path="url(#att-clip)">
-          <g transform="rotate(${(-rDeg).toFixed(1)} 110 68) translate(0 ${py.toFixed(1)})">
-            <line data-plotter-role="primary" x1="54" y1="68" x2="166" y2="68" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="94" y1="54" x2="126" y2="54" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="100" y1="42" x2="120" y2="42" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="94" y1="82" x2="126" y2="82" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="100" y1="94" x2="120" y2="94" stroke="currentColor"/>
-            <text x="89" y="56.5" text-anchor="end" style="font-size:7px">10</text>
-            <text x="131" y="56.5" text-anchor="start" style="font-size:7px">10</text>
-            <text x="89" y="84.5" text-anchor="end" style="font-size:7px">10</text>
-            <text x="131" y="84.5" text-anchor="start" style="font-size:7px">10</text>
+          <g transform="rotate(${(-rDeg).toFixed(1)} 110 67) translate(0 ${py.toFixed(1)})">
+            <line data-plotter-role="primary" x1="54" y1="67" x2="166" y2="67" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="94" y1="53" x2="126" y2="53" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="100" y1="41" x2="120" y2="41" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="94" y1="81" x2="126" y2="81" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="100" y1="93" x2="120" y2="93" stroke="currentColor"/>
+            <text x="89" y="55.5" text-anchor="end" style="font-size:7px">10</text>
+            <text x="131" y="55.5" text-anchor="start" style="font-size:7px">10</text>
+            <text x="89" y="83.5" text-anchor="end" style="font-size:7px">10</text>
+            <text x="131" y="83.5" text-anchor="start" style="font-size:7px">10</text>
           </g>
         </g>
-        <g transform="rotate(${(-rDeg).toFixed(1)} 110 68)">
-          <path data-plotter-role="primary" d="M 110 16 L 107 21.5 L 113 21.5 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <g transform="rotate(${(-rDeg).toFixed(1)} 110 67)">
+          <path data-plotter-role="primary" d="M 110 15 L 107 20.5 L 113 20.5 Z" fill="var(--ds-bg)" stroke="currentColor"/>
         </g>
-        <path data-plotter-role="primary" d="M 80 68 L 98 68 L 103 73 M 140 68 L 122 68 L 117 73" fill="none" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="110" cy="68" r="2" fill="var(--ds-bg)" stroke="currentColor"/>
+        <path data-plotter-role="primary" d="M 80 67 L 98 67 L 103 72 M 140 67 L 122 67 L 117 72" fill="none" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="110" cy="68.5" r="2.4" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="110" cy="67" r="2.4" fill="var(--ds-bg)" stroke="currentColor"/>
       `;
       setPill(`${rp > 0 ? `+${rp}` : rp}° / ${rr > 0 ? `+${rr}` : rr}°`);
       setCells([`${rp > 0 ? `+${rp}` : rp}°`, `${rr > 0 ? `+${rr}` : rr}°`, `${Number(slip) > 0 ? `+${slip}` : slip}°`, dir]);
@@ -1278,39 +1442,55 @@ function demoSvgInstrument(kind: string): HTMLElement {
 
   if (kind === 'astronomy-instrument') {
     const { panel, stage, setPill, setCells } = createInstrumentPanel(
-      'SOLAR EPHEMERIS · FORTALEZA',
+      'SOLAR EPHEMERIS · 3D DOME',
       '14:20 · +54°',
       ['Sunrise', 'Noon', 'Sunset', 'Alt / Az'],
     );
     stage.append(svg);
-    const ticks25 = Array.from({ length: 25 }, (_, i) => {
-      const x = 18 + i * 7.66;
-      const h = i % 4 === 0 ? 7 : 3.5;
-      return `<line data-plotter-role="${i % 4 === 0 ? 'secondary' : 'guide'}" x1="${x.toFixed(1)}" y1="98" x2="${x.toFixed(1)}" y2="${(98 + h).toFixed(1)}" stroke="currentColor"/>`;
-    }).join('');
     let progress = 0.62;
     const renderSolar = (p: number) => {
-      const x = 18 + p * 184;
-      const y = (1 - p) * (1 - p) * 96 + 2 * (1 - p) * p * -26 + p * p * 96;
-      const qx = 18 + p * (110 - 18);
-      const qy = 96 + p * (-26 - 96);
+      const ang = Math.PI * (1 - p);
+      const sx = 110 - Math.cos(ang) * 74;
+      const sy = 94 - Math.sin(ang) * 58;
+      const gy = 94 + Math.sin(ang) * 11;
       const totalMin = Math.round(338 + p * 734);
       const hh = String(Math.floor(totalMin / 60)).padStart(2, '0');
       const mm = String(totalMin % 60).padStart(2, '0');
-      const alt = Math.round(Math.sin(p * Math.PI) * 68);
+      const alt = Math.round(Math.sin(ang) * 68);
       const az = Math.round(74 + p * 212);
+      const rimTicks = Array.from({ length: 13 }, (_, i) => {
+        const a = (Math.PI * i) / 12;
+        const tx0 = 110 - Math.cos(a) * 80;
+        const ty0 = 94 + Math.sin(a) * 18.5;
+        const tx1 = 110 - Math.cos(a) * 86;
+        const ty1 = 94 + Math.sin(a) * 21;
+        return `<line data-plotter-role="secondary" x1="${tx0.toFixed(1)}" y1="${ty0.toFixed(1)}" x2="${tx1.toFixed(1)}" y2="${ty1.toFixed(1)}" stroke="currentColor" opacity="0.45"/>`;
+      }).join('');
       svg.innerHTML = `
-        <path data-plotter-role="guide" d="M 18 96 Q 110 -26 202 96" fill="none" stroke="currentColor"/>
-        <path data-plotter-role="primary" d="M 18 96 Q ${qx.toFixed(1)} ${qy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}" fill="none" stroke="currentColor"/>
-        <line data-plotter-role="secondary" x1="12" y1="96" x2="208" y2="96" stroke="currentColor"/>
-        ${ticks25}
-        <line data-plotter-role="guide" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="96" stroke="currentColor"/>
-        <circle data-plotter-role="secondary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9.5" fill="none" stroke="currentColor" opacity="0.32"/>
-        <circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.8" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.3" fill="currentColor" stroke="none"/>
-        <text x="16" y="121">EAST</text>
-        <text x="110" y="121" text-anchor="middle">SOUTH</text>
-        <text x="204" y="121" text-anchor="end">WEST</text>
+        <!-- 3D Horizon Disc with Extruded Front Cylinder Rim -->
+        <path data-plotter-role="primary" d="M 24 94 L 24 99.5 A 86 21 0 0 0 196 99.5 L 196 94 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <ellipse data-plotter-role="primary" cx="110" cy="94" rx="86" ry="21" fill="var(--ds-bg)" stroke="currentColor"/>
+        <path data-plotter-role="secondary" d="M 30 94 A 80 18 0 0 0 190 94" fill="none" stroke="currentColor" opacity="0.32"/>
+        ${rimTicks}
+        <line data-plotter-role="guide" x1="24" y1="94" x2="196" y2="94" stroke="currentColor"/>
+        <line data-plotter-role="guide" x1="110" y1="73" x2="110" y2="115" stroke="currentColor"/>
+        <!-- 3D Winter & Summer Solstice Dome Arcs -->
+        <path data-plotter-role="guide" d="M 48 94 A 62 40 0 0 1 172 94" fill="none" stroke="currentColor"/>
+        <path data-plotter-role="guide" d="M 28 94 A 82 66 0 0 1 192 94" fill="none" stroke="currentColor"/>
+        <!-- Main 3D Solar Ecliptic Dome Arc -->
+        <path data-plotter-role="secondary" d="M 36 94 A 74 58 0 0 1 184 94" fill="none" stroke="currentColor"/>
+        <!-- 3D Altitude Plumb Line & Elliptical Ground Shadow Projection -->
+        <line data-plotter-role="guide" x1="${sx.toFixed(1)}" y1="${sy.toFixed(1)}" x2="${sx.toFixed(1)}" y2="${gy.toFixed(1)}" stroke="currentColor"/>
+        <ellipse data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${gy.toFixed(1)}" rx="4" ry="1.6" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${gy.toFixed(1)}" r="1" fill="currentColor" stroke="none"/>
+        <!-- 3D Solar Orb + Corona Ring -->
+        <circle data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="10.5" fill="none" stroke="currentColor" opacity="0.35"/>
+        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${(sy + 1.2).toFixed(1)}" r="5.6" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
+        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="5.6" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="1.4" fill="currentColor" stroke="none"/>
+        <text x="16" y="124">E</text>
+        <text x="110" y="127" text-anchor="middle">SOUTH · 3D HORIZON</text>
+        <text x="204" y="124" text-anchor="end">W</text>
       `;
       setPill(`${hh}:${mm} · +${alt}°`);
       setCells(['05:38', '11:54', '17:52', `+${alt}° · ${az}°`]);
@@ -1318,7 +1498,7 @@ function demoSvgInstrument(kind: string): HTMLElement {
     renderSolar(progress);
     panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
-      progress = clamp((e.clientX - r.left) / r.width, 0.04, 0.96);
+      progress = clamp((e.clientX - r.left) / r.width, 0.06, 0.94);
       renderSolar(progress);
     });
     return panel;
@@ -1379,47 +1559,57 @@ function demoSvgInstrument(kind: string): HTMLElement {
     return panel;
   }
 
-  // Default: 'instrument' (Instrument Bars) — Jhosephe 33-Bar Precision Ruler with Top Hairline Brackets
+  // Default: 'instrument' (Instrument Bars) — 3D Extruded Vertical Capsule Rack + Top Hairline Brackets
   const { panel, stage, setPill, setCells } = createInstrumentPanel(
-    'HARMONIC RACK · 33 BARS',
-    '68% · BAR 22',
+    'HARMONIC RACK · 3D CAPSULES',
+    '72% · CH 08',
     ['Level', 'Active', 'Anchor', 'Gain'],
   );
-  svg.setAttribute('viewBox', '0 0 330 76');
+  svg.setAttribute('viewBox', '0 0 240 104');
   stage.append(svg);
-  const BAR_COUNT = 33;
-  let normValue = 68;
-  const renderBars33 = (val: number) => {
-    const activeLimit = Math.round((val / 100) * BAR_COUNT);
-    const barsMarkup = Array.from({ length: BAR_COUNT }, (_, i) => {
-      const isMajor = i % 4 === 0;
-      const h = isMajor ? 28 : 16;
-      const x = 4 + i * 9.8;
-      const y = 60 - h;
-      const isActive = i < activeLimit;
-      const isLead = i === Math.max(0, activeLimit - 1);
-      const role = isLead || (isActive && isMajor) ? 'primary' : isActive ? 'secondary' : 'guide';
-      const op = isLead ? '1' : isActive ? '0.78' : '0.22';
-      return (
-        `<rect data-plotter-role="${role}" x="${x.toFixed(1)}" y="${y}" width="3" height="${h}" rx="1.5" fill="${isActive ? 'currentColor' : 'none'}" fill-opacity="${isLead ? '0.88' : '0.28'}" stroke="currentColor" opacity="${op}"/>` +
-        (isLead ? `<circle data-plotter-role="primary" cx="${(x + 1.5).toFixed(1)}" cy="${y - 5}" r="1.5" fill="currentColor" stroke="none"/>` : '')
-      );
-    }).join('');
+  const baseLevels = [0.36, 0.52, 0.44, 0.68, 0.58, 0.78, 0.64, 0.88, 0.72, 0.56, 0.66, 0.48];
+  let focusIdx = 7;
+  const renderBars3D = (activeCol: number) => {
+    const cols = baseLevels
+      .map((lv, i) => {
+        const x = 14 + i * 18;
+        const h = Math.round(18 + lv * 58);
+        const yTop = 86 - h;
+        const isHi = i === activeCol;
+        const isMajor = i % 3 === 0;
+        const role = isHi ? 'primary' : 'secondary';
+        return `
+          <!-- Recessed 3D Slot -->
+          <rect data-plotter-role="guide" x="${x}" y="18" width="10" height="72" rx="5" fill="none" stroke="currentColor"/>
+          <!-- 3D Extruded Lower Cylinder Skirt -->
+          <rect data-plotter-role="${role}" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '0.9' : '0.45'}"/>
+          <!-- 3D Raised Top Capsule Face -->
+          <rect data-plotter-role="${role}" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '1' : isMajor ? '0.78' : '0.58'}"/>
+          <!-- Front Chamfer Crease -->
+          <line data-plotter-role="secondary" x1="${x + 2.5}" y1="${yTop + 4}" x2="${x + 7.5}" y2="${yTop + 4}" stroke="currentColor" opacity="0.35"/>
+          ${isHi ? `<circle data-plotter-role="primary" cx="${x + 5}" cy="${yTop + 8.5}" r="1.3" fill="currentColor" stroke="none"/>` : ''}
+        `;
+      })
+      .join('');
     svg.innerHTML = `
-      <path data-plotter-role="secondary" d="M 4 12 H 72 M 258 12 H 326" fill="none" stroke="currentColor" opacity="0.45"/>
-      <line data-plotter-role="guide" x1="4" y1="64" x2="326" y2="64" stroke="currentColor"/>
-      ${barsMarkup}
+      <path data-plotter-role="secondary" d="M 12 10 H 64 M 176 10 H 228" fill="none" stroke="currentColor" opacity="0.45"/>
+      <!-- 3D Base Plinth -->
+      <path data-plotter-role="secondary" d="M 10 92 L 10 95.5 L 230 95.5 L 230 92 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
+      ${cols}
     `;
-    const db = ((val - 70) * 0.4).toFixed(1);
-    const anchor = Math.round(activeLimit / 4) * 4;
-    setPill(`${Math.round(val)}% · BAR ${String(activeLimit).padStart(2, '0')}`);
-    setCells([`${Math.round(val)}%`, `${activeLimit} / 33`, `Bar ${String(anchor).padStart(2, '0')}`, `${Number(db) >= 0 ? `+${db}` : db} dB`]);
+    const pct = Math.round(baseLevels[activeCol]! * 100);
+    const db = ((pct - 72) * 0.35).toFixed(1);
+    setPill(`${pct}% · CH ${String(activeCol + 1).padStart(2, '0')}`);
+    setCells([`${pct}%`, `CH ${String(activeCol + 1).padStart(2, '0')} / 12`, `Rack ${String(Math.floor(activeCol / 3) + 1).padStart(2, '0')}`, `${Number(db) >= 0 ? `+${db}` : db} dB`]);
   };
-  renderBars33(normValue);
+  renderBars3D(focusIdx);
   panel.addEventListener('pointermove', (e) => {
     const r = svg.getBoundingClientRect();
-    normValue = clamp(((e.clientX - r.left) / r.width) * 100, 3, 100);
-    renderBars33(normValue);
+    const tx = clamp((e.clientX - r.left) / r.width, 0, 0.999);
+    const ty = clamp(1 - (e.clientY - r.top) / r.height, 0.22, 0.96);
+    focusIdx = Math.floor(tx * baseLevels.length);
+    baseLevels[focusIdx] = ty;
+    renderBars3D(focusIdx);
   });
   return panel;
 }
@@ -1505,186 +1695,636 @@ function smoothPath(values: number[], w: number, h: number, pad = 8): string {
   return d;
 }
 
-function demoChartLine(area = false): HTMLElement {
-  const values = [22, 28, 25, 40, 36, 48, 44, 58, 52, 66, 61, 74];
-  const d = smoothPath(values, 220, 110);
-  const areaD = `${d} L${220 - 8} ${110 - 8} L8 ${110 - 8} Z`;
-  const marks = seriesPoints(values, 220, 110).filter((_, i) => i % 3 === 0);
-  const el = document.createElement('div');
-  el.className = 'ml-chart';
-  el.innerHTML = `
-    <svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Line chart">
-      <line class="ml-guide" x1="8" y1="102" x2="212" y2="102" stroke="currentColor" stroke-opacity="0.7"/>
-      <line class="ml-guide" x1="8" y1="28" x2="212" y2="28" stroke="currentColor" stroke-opacity="0.35"/>
-      <line class="ml-guide" x1="8" y1="64" x2="212" y2="64" stroke="currentColor" stroke-opacity="0.35"/>
-      ${area ? `<path d="${areaD}" fill="currentColor" fill-opacity="0.06" stroke="none"/>` : ''}
-      <path class="ml-primary ml-draw" pathLength="1" d="${d}" fill="none" stroke="currentColor"/>
-      ${marks.map(([x, y]) => `<circle class="ml-mark ml-fade-mark" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="currentColor"/>`).join('')}
-      <text x="12" y="16">SÉRIE · AQI</text>
-    </svg>
-    <div class="ml-chart-legend ds-mono">12 pts · hover scrub</div>`;
-  const svg = el.querySelector('svg')!;
-  svg.addEventListener('pointermove', (e) => {
-    const r = svg.getBoundingClientRect();
-    const t = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-    const i = Math.round(t * (values.length - 1));
-    qs<HTMLElement>(el, '.ml-chart-legend').textContent = `t=${String(i).padStart(2, '0')} · ${values[i]}`;
+function attachStagePointer(stage: HTMLElement, onPointer: (nx: number, ny: number) => void): void {
+  const handle = (e: PointerEvent) => {
+    const r = stage.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const nx = clamp((e.clientX - r.left) / r.width, 0, 1);
+    const ny = clamp((e.clientY - r.top) / r.height, 0, 1);
+    onPointer(nx, ny);
+  };
+  stage.addEventListener('pointerdown', (e) => {
+    stage.setPointerCapture(e.pointerId);
+    handle(e);
   });
-  return el;
+  stage.addEventListener('pointermove', (e) => {
+    if (e.buttons === 1 || e.pointerType === 'mouse') handle(e);
+  });
+}
+
+function demoChartLine(area = false, kind = 'chart-line'): HTMLElement {
+  const isTide = kind === 'tide-instrument';
+  const values = isTide
+    ? [30, 56, 76, 62, 26, 18, 44, 72, 82, 54, 24, 34]
+    : [22, 31, 26, 44, 38, 54, 48, 64, 57, 72, 66, 80];
+  const labels = ['00h', '02h', '04h', '06h', '08h', '10h', '12h', '14h', '16h', '18h', '20h', '22h'];
+  const pts = seriesPoints(values, 214, 96, 12);
+  const d = smoothPath(values, 214, 96, 12);
+  // 3D rear offset curve shifted by (+4, -3.5) for isometric ribbon depth
+  const dx = 4;
+  const dy = -3.5;
+  const ptsRear = pts.map(([x, y]) => [x + dx, y + dy] as [number, number]);
+  let dRear = `M ${ptsRear[0][0].toFixed(2)} ${ptsRear[0][1].toFixed(2)}`;
+  for (let i = 1; i < ptsRear.length; i++) {
+    const [x0, y0] = ptsRear[i - 1];
+    const [x1, y1] = ptsRear[i];
+    const cx = (x0 + x1) / 2;
+    dRear += ` C ${cx.toFixed(2)} ${y0.toFixed(2)}, ${cx.toFixed(2)} ${y1.toFixed(2)}, ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  }
+  const ribbonD = `${d} L ${ptsRear[ptsRear.length - 1][0].toFixed(2)} ${ptsRear[ptsRear.length - 1][1].toFixed(2)} ${ptsRear
+    .slice()
+    .reverse()
+    .map(([x, y]) => `L ${x.toFixed(2)} ${y.toFixed(2)}`)
+    .join(' ')} Z`;
+  const areaD = `${d} L ${pts[pts.length - 1][0].toFixed(2)} 88 L ${pts[0][0].toFixed(2)} 88 Z`;
+  const depthRibs = pts
+    .map(
+      ([x, y], i) =>
+        `<line class="ml-hl-inner" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${ptsRear[i][0].toFixed(1)}" y2="${ptsRear[i][1].toFixed(1)}" opacity="0.45"/>
+         <line class="ml-hl-guide" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="88" opacity="0.22"/>`,
+    )
+    .join('');
+
+  const peakVal = `${Math.max(...values)}`;
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    isTide ? 'TIDE HARMONIC · M2/S2' : area ? '3D AREA RIBBON · AQI' : '3D SPLINE RIBBON · AQI',
+    `${values[8]}${isTide ? ' cm' : ' pts'}`,
+    [isTide ? 'Tide' : 'Value', 'Delta', 'Peak', 'Sample'],
+  );
+  setCells([`${values[8]}${isTide ? ' cm' : '.0'}`, `+${values[8] - values[0]}`, peakVal, labels[8]]);
+
+  stage.innerHTML = `
+    <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 224 106" aria-label="3D Hairline Line Chart">
+      <!-- 3D Perspective Floor Plinth -->
+      <polygon class="ml-hl-fill" points="10,88 16,83.5 214,83.5 208,88"/>
+      <polygon class="ml-hl-secondary" points="10,88 16,83.5 214,83.5 208,88" opacity="0.5"/>
+      <path class="ml-hl-fill" d="M 10 88 L 208 88 L 208 92 L 10 92 Z"/>
+      <path class="ml-hl-secondary" d="M 10 88 L 208 88 L 208 92 L 10 92 Z" opacity="0.62"/>
+      <!-- Backplane elevation guides -->
+      <line class="ml-hl-guide" x1="16" y1="26" x2="214" y2="26"/>
+      <line class="ml-hl-guide" x1="16" y1="54" x2="214" y2="54"/>
+      <!-- 3D Extruded Ribbon Side Wall -->
+      <path d="${ribbonD}" fill="currentColor" fill-opacity="${area ? '0.08' : '0.045'}" stroke="none"/>
+      ${area ? `<path d="${areaD}" fill="currentColor" fill-opacity="0.045" stroke="none"/>` : ''}
+      <path class="ml-hl-secondary" d="${dRear}" opacity="0.48"/>
+      ${depthRibs}
+      <!-- Primary Front Hairline Spline -->
+      <path class="ml-hl-primary ml-draw" pathLength="1" d="${d}"/>
+      <!-- 3D Cylindrical Data Nodes -->
+      ${pts
+        .map(
+          ([x, y], i) =>
+            `<circle class="ml-hl-fill" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i % 2 === 0 ? '2.4' : '1.7'}"/>
+             <circle class="${i === 8 ? 'ml-hl-accent' : 'ml-hl-primary'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i % 2 === 0 ? '2.4' : '1.7'}"/>`,
+        )
+        .join('')}
+      <!-- Interactive 3D Scrubbing Slice Plane -->
+      <g class="ml-chart-cursor">
+        <polygon points="${pts[8][0].toFixed(1)},88 ${(pts[8][0] + dx).toFixed(1)},83.5 ${(pts[8][0] + dx).toFixed(1)},16 ${pts[8][0].toFixed(1)},20" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-width="0.4" stroke-dasharray="1.5 2"/>
+        <circle class="ml-hl-fill" cx="${pts[8][0].toFixed(1)}" cy="${pts[8][1].toFixed(1)}" r="3.6"/>
+        <circle class="ml-hl-accent" cx="${pts[8][0].toFixed(1)}" cy="${pts[8][1].toFixed(1)}" r="3.6"/>
+        <circle class="ml-hl-accent-dot" cx="${pts[8][0].toFixed(1)}" cy="${pts[8][1].toFixed(1)}" r="1.4"/>
+      </g>
+    </svg>`;
+
+  const cursorG = qs<SVGGElement>(stage, '.ml-chart-cursor');
+  attachStagePointer(stage, (nx) => {
+    const i = Math.max(0, Math.min(values.length - 1, Math.round(nx * (values.length - 1))));
+    const [x, y] = pts[i];
+    const delta = values[i] - values[0];
+    cursorG.innerHTML = `
+      <polygon points="${x.toFixed(1)},88 ${(x + dx).toFixed(1)},83.5 ${(x + dx).toFixed(1)},16 ${x.toFixed(1)},20" fill="currentColor" fill-opacity="0.045" stroke="currentColor" stroke-width="0.4" stroke-dasharray="1.5 2"/>
+      <circle class="ml-hl-fill" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.6"/>
+      <circle class="ml-hl-accent" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.6"/>
+      <circle class="ml-hl-accent-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.4"/>`;
+    setPill(`${values[i]}${isTide ? ' cm' : ' pts'}`);
+    setCells([`${values[i]}${isTide ? ' cm' : '.0'}`, `${delta >= 0 ? '+' : ''}${delta}`, peakVal, labels[i]]);
+  });
+  return panel;
 }
 
 function demoChartBar(horizontal = false): HTMLElement {
-  const vals = [42, 68, 35, 80, 55, 72];
-  const el = document.createElement('div');
-  el.className = 'ml-chart';
-  if (horizontal) {
-    el.innerHTML = `<div class="ml-hbar">${vals
-      .map(
-        (v, i) =>
-          `<div class="ml-hbar-row"><span class="ds-mono">${['A', 'B', 'C', 'D', 'E', 'F'][i]}</span><div class="ml-hbar-track"><div style="width:${v}%"></div></div><span class="ds-mono">${v}</span></div>`,
-      )
-      .join('')}</div>`;
-  } else {
-    el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Bar chart">
-      ${vals
+  const vals = [46, 72, 38, 86, 58, 76];
+  const labels = ['CH·01', 'CH·02', 'CH·03', 'CH·04', 'CH·05', 'CH·06'];
+  const total = vals.reduce((a, b) => a + b, 0);
+  const peakStr = `${Math.max(...vals)}%`;
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    horizontal ? '3D HORIZONTAL BARS' : '3D COLUMN MONOLITHS',
+    `${labels[3]} · ${vals[3]}%`,
+    ['Channel', 'Value', 'Share', 'Peak'],
+  );
+  setCells([labels[3], `${vals[3]}%`, `${((vals[3] / total) * 100).toFixed(1)}%`, peakStr]);
+
+  const renderBars = (activeIdx: number) => {
+    if (horizontal) {
+      const rows = vals
         .map((v, i) => {
-          const h = (v / 100) * 80;
-          const x = 20 + i * 32;
-          return `<rect class="ml-grow" x="${x}" y="${100 - h}" width="14" height="${h}" fill="none" stroke="currentColor" stroke-width="1.15"/>`;
+          const y = 13 + i * 14.5;
+          const w = (v / 100) * 138;
+          const active = i === activeIdx;
+          return `<g>
+            <text class="ml-hl-label" x="10" y="${y + 6.5}">${labels[i].slice(-2)}</text>
+            <!-- 3D Recessed Track Slot -->
+            <rect class="ml-hl-fill" x="26" y="${y}" width="144" height="8" rx="4"/>
+            <rect class="ml-hl-secondary" x="26" y="${y}" width="144" height="8" rx="4" opacity="0.45"/>
+            <!-- 3D Extruded Capsule Bottom Rim -->
+            <rect class="ml-hl-fill" x="26" y="${y + 1.6}" width="${w.toFixed(1)}" height="7.5" rx="3.75"/>
+            <rect class="ml-hl-secondary" x="26" y="${y + 1.6}" width="${w.toFixed(1)}" height="7.5" rx="3.75" opacity="0.62"/>
+            <!-- 3D Capsule Top Face -->
+            <rect class="ml-hl-fill" x="26" y="${y}" width="${w.toFixed(1)}" height="7.2" rx="3.6"/>
+            <rect class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" x="26" y="${y}" width="${w.toFixed(1)}" height="7.2" rx="3.6"/>
+            <line class="ml-hl-inner" x1="30" y1="${y + 2}" x2="${(26 + w - 4).toFixed(1)}" y2="${y + 2}"/>
+            <text class="ml-hl-label" x="176" y="${y + 6.5}">${v}%</text>
+          </g>`;
         })
-        .join('')}
-      <line class="ml-guide" x1="12" y1="100" x2="208" y2="100" stroke="currentColor" stroke-opacity="0.7"/>
-    </svg>`;
-  }
-  return el;
+        .join('');
+      stage.innerHTML = `<svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 210 104" aria-label="3D Horizontal Bar Chart">${rows}</svg>`;
+    } else {
+      const cols = vals
+        .map((v, i) => {
+          const h = (v / 100) * 66;
+          const x = 24 + i * 30;
+          const y = 88 - h;
+          const active = i === activeIdx;
+          const dx = 4;
+          const dy = -3.2;
+          return `<g>
+            <!-- 3D Floor Shadow Ellipse -->
+            <ellipse cx="${x + 8}" cy="90" rx="8" ry="2.1" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
+            <!-- 3D Isometric Right Side Extrusion Face -->
+            <polygon class="ml-hl-fill" points="${x + 15},${y + 2} ${x + 15 + dx},${y + 2 + dy} ${x + 15 + dx},${88 + dy} ${x + 15},88"/>
+            <polygon class="ml-hl-secondary" points="${x + 15},${y + 2} ${x + 15 + dx},${y + 2 + dy} ${x + 15 + dx},${88 + dy} ${x + 15},88" opacity="0.58"/>
+            <!-- 3D Isometric Top Cap Extrusion Face -->
+            <polygon class="ml-hl-fill" points="${x},${y + 2} ${x + dx},${y + 2 + dy} ${x + 15 + dx},${y + 2 + dy} ${x + 15},${y + 2}"/>
+            <polygon class="ml-hl-secondary" points="${x},${y + 2} ${x + dx},${y + 2 + dy} ${x + 15 + dx},${y + 2 + dy} ${x + 15},${y + 2}" opacity="0.58"/>
+            <!-- Front Monolith Face -->
+            <rect class="ml-hl-fill" x="${x}" y="${y + 2}" width="15" height="${h - 2}" rx="1.5"/>
+            <rect class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" x="${x}" y="${y + 2}" width="15" height="${h - 2}" rx="1.5"/>
+            <line class="ml-hl-inner" x1="${x + 2.5}" y1="${y + 4.5}" x2="${x + 12.5}" y2="${y + 4.5}"/>
+            <line class="ml-hl-inner" x1="${x + 3}" y1="${y + 7}" x2="${x + 3}" y2="85" opacity="0.45"/>
+            ${active ? `<circle class="ml-hl-accent-dot" cx="${x + 7.5}" cy="${y - 4}" r="1.5"/>` : ''}
+          </g>`;
+        })
+        .join('');
+      stage.innerHTML = `
+        <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 104" aria-label="3D Column Bar Chart">
+          <!-- 3D Base Plinth -->
+          <polygon class="ml-hl-fill" points="12,88 18,83.5 208,83.5 202,88"/>
+          <polygon class="ml-hl-secondary" points="12,88 18,83.5 208,83.5 202,88" opacity="0.48"/>
+          <rect class="ml-hl-fill" x="12" y="88" width="190" height="3.8" rx="1"/>
+          <rect class="ml-hl-secondary" x="12" y="88" width="190" height="3.8" rx="1" opacity="0.62"/>
+          <line class="ml-hl-guide" x1="16" y1="32" x2="206" y2="32"/>
+          <line class="ml-hl-guide" x1="16" y1="60" x2="206" y2="60"/>
+          ${cols}
+        </svg>`;
+    }
+  };
+
+  renderBars(3);
+  attachStagePointer(stage, (nx, ny) => {
+    const idx = horizontal
+      ? Math.max(0, Math.min(vals.length - 1, Math.floor(ny * vals.length)))
+      : Math.max(0, Math.min(vals.length - 1, Math.floor(nx * vals.length)));
+    renderBars(idx);
+    setPill(`${labels[idx]} · ${vals[idx]}%`);
+    setCells([labels[idx], `${vals[idx]}%`, `${((vals[idx] / total) * 100).toFixed(1)}%`, peakStr]);
+  });
+  return panel;
 }
 
-function demoChartCandles(): HTMLElement {
+function demoChartCandles(kind = 'chart-candles'): HTMLElement {
   const candles = [
-    [40, 70, 35, 60],
-    [60, 78, 55, 72],
-    [72, 80, 50, 54],
-    [54, 68, 48, 66],
-    [66, 84, 62, 78],
-    [78, 90, 70, 74],
-    [74, 82, 60, 64],
+    [42, 70, 34, 60, 38],
+    [60, 78, 52, 72, 54],
+    [72, 82, 48, 54, 62],
+    [54, 69, 46, 66, 44],
+    [66, 86, 60, 79, 76],
+    [79, 92, 68, 73, 58],
+    [73, 84, 58, 81, 68],
+    [81, 94, 72, 88, 84],
   ];
-  const el = document.createElement('div');
-  el.className = 'ml-chart';
-  el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 220 110" aria-label="Candlestick">
-    ${candles
-      .map(([o, h, l, c], i) => {
-        const x = 22 + i * 28;
-        const yO = 100 - o;
-        const yC = 100 - c;
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    kind === 'financial-chart' ? '3D OHLC TERMINAL · M15' : '3D CANDLESTICK · OHLC',
+    'C 81.0 · +11.0%',
+    ['Open', 'High', 'Low', 'Close'],
+  );
+  setCells(['73.0', '84.0', '58.0', '81.0']);
+
+  const renderCandles = (activeIdx: number) => {
+    const dx = 3;
+    const dy = -2.4;
+    const items = candles
+      .map(([o, h, l, c, vol], i) => {
+        const x = 22 + i * 24;
+        const yO = 90 - o * 0.78;
+        const yC = 90 - c * 0.78;
+        const yH = 90 - h * 0.78;
+        const yL = 90 - l * 0.78;
         const top = Math.min(yO, yC);
-        const body = Math.abs(yO - yC) || 2;
+        const body = Math.max(3, Math.abs(yO - yC));
         const up = c >= o;
-        return `<line class="ml-secondary" x1="${x}" y1="${100 - h}" x2="${x}" y2="${100 - l}" stroke="currentColor"/>
-          <rect x="${x - 5}" y="${top}" width="10" height="${body}" fill="${up ? 'currentColor' : 'none'}" fill-opacity="0.12" stroke="currentColor" stroke-width="1.15"/>`;
+        const active = i === activeIdx;
+        const vH = (vol / 100) * 14;
+        return `<g>
+          <!-- 3D Floor Volume Prism -->
+          <rect x="${x - 4}" y="${95 - vH}" width="8" height="${vH}" fill="currentColor" fill-opacity="${active ? '0.18' : '0.07'}" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+          <!-- Upper & Lower Wicks -->
+          <line class="${active ? 'ml-hl-accent' : 'ml-hl-secondary'}" x1="${x}" y1="${yH.toFixed(1)}" x2="${x}" y2="${top.toFixed(1)}"/>
+          <line class="${active ? 'ml-hl-accent' : 'ml-hl-secondary'}" x1="${x}" y1="${(top + body).toFixed(1)}" x2="${x}" y2="${yL.toFixed(1)}"/>
+          <!-- 3D Extruded Candle Side & Top Faces -->
+          <polygon class="ml-hl-fill" points="${x + 5},${top.toFixed(1)} ${x + 5 + dx},${(top + dy).toFixed(1)} ${x + 5 + dx},${(top + body + dy).toFixed(1)} ${x + 5},${(top + body).toFixed(1)}"/>
+          <polygon class="ml-hl-secondary" points="${x + 5},${top.toFixed(1)} ${x + 5 + dx},${(top + dy).toFixed(1)} ${x + 5 + dx},${(top + body + dy).toFixed(1)} ${x + 5},${(top + body).toFixed(1)}" opacity="0.55"/>
+          <polygon class="ml-hl-fill" points="${x - 5},${top.toFixed(1)} ${x - 5 + dx},${(top + dy).toFixed(1)} ${x + 5 + dx},${(top + dy).toFixed(1)} ${x + 5},${top.toFixed(1)}"/>
+          <polygon class="ml-hl-secondary" points="${x - 5},${top.toFixed(1)} ${x - 5 + dx},${(top + dy).toFixed(1)} ${x + 5 + dx},${(top + dy).toFixed(1)} ${x + 5},${top.toFixed(1)}" opacity="0.55"/>
+          <!-- Front Candle Body -->
+          <rect class="ml-hl-fill" x="${x - 5}" y="${top.toFixed(1)}" width="10" height="${body.toFixed(1)}" rx="1"/>
+          ${!up ? `<rect x="${x - 5}" y="${top.toFixed(1)}" width="10" height="${body.toFixed(1)}" rx="1" fill="currentColor" fill-opacity="0.12"/>` : ''}
+          <rect class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" x="${x - 5}" y="${top.toFixed(1)}" width="10" height="${body.toFixed(1)}" rx="1"/>
+          <line class="ml-hl-inner" x1="${x - 3}" y1="${(top + 1.8).toFixed(1)}" x2="${x + 3}" y2="${(top + 1.8).toFixed(1)}"/>
+        </g>`;
       })
-      .join('')}
-    <text x="12" y="16">OHLC · 1.15</text>
-  </svg>`;
-  return el;
+      .join('');
+
+    const ax = 22 + activeIdx * 24;
+    const ay = 90 - candles[activeIdx][3] * 0.78;
+    stage.innerHTML = `
+      <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 104" aria-label="3D Candlestick Chart">
+        <polygon class="ml-hl-fill" points="10,95 15,91.5 212,91.5 207,95"/>
+        <polygon class="ml-hl-secondary" points="10,95 15,91.5 212,91.5 207,95" opacity="0.45"/>
+        <line class="ml-hl-guide" x1="12" y1="28" x2="210" y2="28"/>
+        <line class="ml-hl-guide" x1="12" y1="56" x2="210" y2="56"/>
+        <line class="ml-hl-guide" x1="${ax}" y1="12" x2="${ax}" y2="95" opacity="0.55"/>
+        <line class="ml-hl-guide" x1="12" y1="${ay.toFixed(1)}" x2="210" y2="${ay.toFixed(1)}" opacity="0.48"/>
+        ${items}
+      </svg>`;
+  };
+
+  renderCandles(6);
+  attachStagePointer(stage, (nx) => {
+    const idx = Math.max(0, Math.min(candles.length - 1, Math.floor(nx * candles.length)));
+    const [o, h, l, c] = candles[idx];
+    const pct = (((c - o) / o) * 100).toFixed(1);
+    renderCandles(idx);
+    setPill(`C ${c}.0 · ${c >= o ? '+' : ''}${pct}%`);
+    setCells([`${o}.0`, `${h}.0`, `${l}.0`, `${c}.0`]);
+  });
+  return panel;
 }
 
 function demoChartDonut(): HTMLElement {
-  const parts = [0.35, 0.25, 0.2, 0.2];
-  let a0 = -Math.PI / 2;
-  const arcs = parts.map((p, i) => {
-    const a1 = a0 + p * Math.PI * 2;
-    const x0 = 60 + Math.cos(a0) * 42;
-    const y0 = 60 + Math.sin(a0) * 42;
-    const x1 = 60 + Math.cos(a1) * 42;
-    const y1 = 60 + Math.sin(a1) * 42;
-    const large = p > 0.5 ? 1 : 0;
-    const d = `M ${x0} ${y0} A 42 42 0 ${large} 1 ${x1} ${y1}`;
-    a0 = a1;
-    return `<path class="ml-donut" d="${d}" stroke="currentColor" stroke-opacity="${0.28 + i * 0.18}"/>`;
+  const segments = [
+    { name: 'COMPUTE', share: 0.36, val: '36.0%' },
+    { name: 'STORAGE', share: 0.26, val: '26.0%' },
+    { name: 'NETWORK', share: 0.21, val: '21.0%' },
+    { name: 'CACHE', share: 0.17, val: '17.0%' },
+  ];
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    '3D STEPPED TORUS · RING',
+    'COMPUTE · 36%',
+    ['Segment', 'Share', 'Angle', 'Total'],
+  );
+  setCells(['COMPUTE', '36.0%', '130°', '100%']);
+
+  const sectorPath = (cx: number, cy: number, rOut: number, rIn: number, a0: number, a1: number) => {
+    const gap = 0.045;
+    const s = a0 + gap;
+    const e = a1 - gap;
+    const x0o = cx + Math.cos(s) * rOut;
+    const y0o = cy + Math.sin(s) * rOut;
+    const x1o = cx + Math.cos(e) * rOut;
+    const y1o = cy + Math.sin(e) * rOut;
+    const x1i = cx + Math.cos(e) * rIn;
+    const y1i = cy + Math.sin(e) * rIn;
+    const x0i = cx + Math.cos(s) * rIn;
+    const y0i = cy + Math.sin(s) * rIn;
+    const large = e - s > Math.PI ? 1 : 0;
+    return `M ${x0o.toFixed(2)} ${y0o.toFixed(2)} A ${rOut} ${rOut} 0 ${large} 1 ${x1o.toFixed(2)} ${y1o.toFixed(2)} L ${x1i.toFixed(2)} ${y1i.toFixed(2)} A ${rIn} ${rIn} 0 ${large} 0 ${x0i.toFixed(2)} ${y0i.toFixed(2)} Z`;
+  };
+
+  const renderDonut = (activeIdx: number) => {
+    let a0 = -Math.PI / 2;
+    const lowerRings: string[] = [];
+    const upperRings: string[] = [];
+    segments.forEach((seg, i) => {
+      const a1 = a0 + seg.share * Math.PI * 2;
+      const active = i === activeIdx;
+      const rOut = active ? 42.5 : 40.5;
+      const rIn = 23.5;
+      // 3D extruded lower torus plate shifted down by +4.5px
+      const dLow = sectorPath(110, 56.5, rOut, rIn, a0, a1);
+      const dTop = sectorPath(110, 52, rOut, rIn, a0, a1);
+      lowerRings.push(`<path class="ml-hl-fill" d="${dLow}"/><path class="ml-hl-secondary" d="${dLow}" opacity="0.58"/>`);
+      upperRings.push(
+        `<path class="ml-hl-fill" d="${dTop}"/>
+         <path d="${dTop}" fill="currentColor" fill-opacity="${0.03 + i * 0.035}" stroke="none"/>
+         <path class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" d="${dTop}"/>`,
+      );
+      a0 = a1;
+    });
+
+    stage.innerHTML = `
+      <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 108" aria-label="3D Stepped Donut Chart">
+        <!-- Outer 3D Bezel Plinth -->
+        <ellipse cx="110" cy="56.5" rx="46" ry="46" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.25"/>
+        ${lowerRings.join('')}
+        ${upperRings.join('')}
+        <!-- Inner 3D Recessed Hub -->
+        <circle class="ml-hl-fill" cx="110" cy="52" r="18"/>
+        <circle class="ml-hl-secondary" cx="110" cy="52" r="18" opacity="0.55"/>
+        <text class="ml-hl-readout" x="110" y="51" text-anchor="middle">${Math.round(segments[activeIdx].share * 100)}%</text>
+        <text class="ml-hl-label" x="110" y="60" text-anchor="middle">${segments[activeIdx].name}</text>
+      </svg>`;
+  };
+
+  renderDonut(0);
+  attachStagePointer(stage, (nx, ny) => {
+    const ang = Math.atan2(ny - 0.5, nx - 0.5);
+    const norm = ((ang + Math.PI / 2 + Math.PI * 2) % (Math.PI * 2)) / (Math.PI * 2);
+    let acc = 0;
+    let idx = 0;
+    for (let i = 0; i < segments.length; i++) {
+      acc += segments[i].share;
+      if (norm <= acc) {
+        idx = i;
+        break;
+      }
+    }
+    const seg = segments[idx];
+    renderDonut(idx);
+    setPill(`${seg.name} · ${Math.round(seg.share * 100)}%`);
+    setCells([seg.name, seg.val, `${Math.round(seg.share * 360)}°`, '100%']);
   });
-  const el = document.createElement('div');
-  el.className = 'ml-chart';
-  el.innerHTML = `<svg class="ml-svg" viewBox="0 0 120 120" aria-label="Donut">
-    ${arcs.join('')}
-    <text class="ml-readout" x="60" y="64" text-anchor="middle">100</text>
-    <text x="60" y="74" text-anchor="middle">TOTAL</text>
-  </svg>`;
-  return el;
+  return panel;
 }
 
 function demoChartSpark(): HTMLElement {
-  const values = [12, 18, 14, 22, 19, 28, 24, 31, 27, 36];
-  const d = smoothPath(values, 160, 40, 4);
-  const el = document.createElement('div');
-  el.className = 'ml-metric';
-  el.innerHTML = `<div class="ml-metric-value" style="font-size:1.6rem">+12.4%</div>
-    <svg class="ml-svg" width="160" height="40" viewBox="0 0 160 40" aria-hidden="true"><path class="ml-primary" d="${d}" fill="none" stroke="currentColor"/></svg>
-    <div class="ml-metric-label">Sparkline · 7d</div>`;
-  return el;
+  const values = [14, 21, 17, 26, 22, 33, 29, 39, 34, 46];
+  const pts = seriesPoints(values, 210, 68, 12);
+  const d = smoothPath(values, 210, 68, 12);
+  const ptsRear = pts.map(([x, y]) => [x + 3.5, y - 3] as [number, number]);
+  let dRear = `M ${ptsRear[0][0].toFixed(1)} ${ptsRear[0][1].toFixed(1)}`;
+  for (let i = 1; i < ptsRear.length; i++) {
+    const [x0, y0] = ptsRear[i - 1];
+    const [x1, y1] = ptsRear[i];
+    const cx = (x0 + x1) / 2;
+    dRear += ` C ${cx.toFixed(1)} ${y0.toFixed(1)}, ${cx.toFixed(1)} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+  }
+
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    '3D MICRO-RIBBON · 7D',
+    '+12.4%',
+    ['Current', '7d Low', '7d High'],
+  );
+  panel.style.setProperty('--ml-cols', '3');
+  setCells(['46.0', '14.0', '46.0']);
+
+  stage.innerHTML = `
+    <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 76" aria-label="3D Sparkline">
+      <polygon class="ml-hl-fill" points="10,62 14,58.5 208,58.5 204,62"/>
+      <polygon class="ml-hl-secondary" points="10,62 14,58.5 208,58.5 204,62" opacity="0.45"/>
+      <path class="ml-hl-secondary" d="${dRear}" opacity="0.45"/>
+      ${pts.map(([x, y], i) => `<line class="ml-hl-inner" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${ptsRear[i][0].toFixed(1)}" y2="${ptsRear[i][1].toFixed(1)}" opacity="0.42"/>`).join('')}
+      <path class="ml-hl-primary" d="${d}"/>
+      <g class="ml-spark-node">
+        <circle class="ml-hl-fill" cx="${pts[9][0].toFixed(1)}" cy="${pts[9][1].toFixed(1)}" r="3.4"/>
+        <circle class="ml-hl-accent" cx="${pts[9][0].toFixed(1)}" cy="${pts[9][1].toFixed(1)}" r="3.4"/>
+        <circle class="ml-hl-accent-dot" cx="${pts[9][0].toFixed(1)}" cy="${pts[9][1].toFixed(1)}" r="1.3"/>
+      </g>
+    </svg>`;
+
+  const nodeG = qs<SVGGElement>(stage, '.ml-spark-node');
+  attachStagePointer(stage, (nx) => {
+    const i = Math.max(0, Math.min(values.length - 1, Math.round(nx * (values.length - 1))));
+    const [x, y] = pts[i];
+    const pct = (((values[i] - values[0]) / values[0]) * 100).toFixed(1);
+    nodeG.innerHTML = `
+      <line class="ml-hl-guide" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="62"/>
+      <circle class="ml-hl-fill" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4"/>
+      <circle class="ml-hl-accent" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4"/>
+      <circle class="ml-hl-accent-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.3"/>`;
+    setPill(`${values[i] >= values[0] ? '+' : ''}${pct}%`);
+    setCells([`${values[i]}.0`, '14.0', '46.0']);
+  });
+  return panel;
 }
 
 function demoChartScatter(): HTMLElement {
-  const pts = [
-    [20, 70],
-    [35, 55],
-    [48, 62],
-    [60, 40],
-    [75, 48],
-    [90, 30],
-    [110, 36],
-    [130, 22],
-    [150, 28],
-    [170, 18],
+  const pts: [number, number][] = [
+    [28, 74],
+    [42, 60],
+    [56, 66],
+    [72, 46],
+    [88, 52],
+    [104, 36],
+    [124, 42],
+    [144, 28],
+    [164, 33],
+    [186, 22],
   ];
-  const el = document.createElement('div');
-  el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 200 100" aria-label="Scatter">
-    <line class="ml-guide" x1="12" y1="88" x2="188" y2="88" stroke="currentColor" stroke-opacity="0.7"/>
-    <line class="ml-guide" x1="12" y1="12" x2="12" y2="88" stroke="currentColor" stroke-opacity="0.7"/>
-    ${pts.map(([x, y]) => `<circle class="ml-mark" cx="${x}" cy="${y}" r="2" fill="currentColor"/>`).join('')}
-  </svg>`;
-  return el.firstElementChild as HTMLElement;
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    '3D SPATIAL SCATTER · R²',
+    'R² 0.91 · N=10',
+    ['Node', 'X · Y', 'Residual', 'Fit R²'],
+  );
+  setCells(['P·08', '144 · 72', '+1.0σ', '0.914']);
+
+  const renderScatter = (activeIdx: number) => {
+    const nodes = pts
+      .map(([x, y], i) => {
+        const active = i === activeIdx;
+        const r = active ? 4.2 : 2.9;
+        return `<g>
+          <!-- Vertical Plumb Line to 3D Floor Shadow -->
+          <line class="ml-hl-guide" x1="${x}" y1="${y}" x2="${x}" y2="86" opacity="${active ? '0.65' : '0.32'}"/>
+          <ellipse cx="${x}" cy="86" rx="${active ? '4.5' : '2.8'}" ry="1.1" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.38"/>
+          <!-- 3D Orb Lower Rim & Primary Sphere -->
+          <circle class="ml-hl-fill" cx="${x}" cy="${y + 1.1}" r="${r}"/>
+          <circle class="ml-hl-secondary" cx="${x}" cy="${y + 1.1}" r="${r}" opacity="0.6"/>
+          <circle class="ml-hl-fill" cx="${x}" cy="${y}" r="${r}"/>
+          <circle class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" cx="${x}" cy="${y}" r="${r}"/>
+          ${active ? `<circle class="ml-hl-accent-dot" cx="${x}" cy="${y}" r="1.4"/>` : ''}
+        </g>`;
+      })
+      .join('');
+
+    stage.innerHTML = `
+      <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 102" aria-label="3D Scatter Plot">
+        <!-- 3D Isometric Coordinate Floor Plane -->
+        <polygon class="ml-hl-fill" points="16,88 26,80 206,80 196,88"/>
+        <polygon class="ml-hl-secondary" points="16,88 26,80 206,80 196,88" opacity="0.48"/>
+        <line class="ml-hl-secondary" x1="16" y1="14" x2="16" y2="88" opacity="0.55"/>
+        <!-- Linear Regression Corridor -->
+        <line class="ml-hl-guide" x1="22" y1="74" x2="194" y2="18"/>
+        <line class="ml-hl-secondary" x1="22" y1="78" x2="194" y2="22" opacity="0.38"/>
+        ${nodes}
+      </svg>`;
+  };
+
+  renderScatter(7);
+  attachStagePointer(stage, (nx) => {
+    const idx = Math.max(0, Math.min(pts.length - 1, Math.round(nx * (pts.length - 1))));
+    const [x, y] = pts[idx];
+    const res = ((idx % 3) - 1) * 0.6 + 0.4;
+    renderScatter(idx);
+    setPill(`P·0${idx + 1} · (${x}, ${100 - y})`);
+    setCells([`P·0${idx + 1}`, `${x} · ${100 - y}`, `${res >= 0 ? '+' : ''}${res.toFixed(1)}σ`, '0.914']);
+  });
+  return panel;
 }
 
 function demoChartRadar(): HTMLElement {
-  const vals = [0.8, 0.55, 0.7, 0.4, 0.9, 0.6];
+  const axes = ['GAIN', 'Q-FAC', 'PHASE', 'DEPTH', 'DRIFT', 'SN-R'];
+  const vals = [0.84, 0.62, 0.76, 0.54, 0.9, 0.68];
   const n = vals.length;
-  const poly = vals
-    .map((v, i) => {
+  const cx = 110;
+  const cy = 53;
+  const R = 41;
+
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    '3D HEXAGONAL POLYHEDRON',
+    'DRIFT · 90%',
+    ['Axis', 'Score', 'Mean'],
+  );
+  panel.style.setProperty('--ml-cols', '3');
+  setCells(['DRIFT', '90.0%', '72.3%']);
+
+  const hexPts = (cyOff: number, scale: number) =>
+    Array.from({ length: n }, (_, i) => {
       const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
-      return `${60 + Math.cos(a) * 42 * v},${60 + Math.sin(a) * 42 * v}`;
-    })
-    .join(' ');
-  const rings = [0.33, 0.66, 1]
-    .map(
-      (s) =>
-        `<polygon points="${Array.from({ length: n }, (_, i) => {
-          const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
-          return `${60 + Math.cos(a) * 42 * s},${60 + Math.sin(a) * 42 * s}`;
-        }).join(' ')}" class="ml-guide" fill="none" stroke="currentColor" stroke-opacity="0.55"/>`,
-    )
-    .join('');
-  const el = document.createElement('div');
-  el.innerHTML = `<svg class="ml-svg" viewBox="0 0 120 120" aria-label="Radar">${rings}
-    <polygon class="ml-primary" points="${poly}" fill="currentColor" fill-opacity="0.06" stroke="currentColor"/>
-  </svg>`;
-  return el.firstElementChild as HTMLElement;
+      return `${(cx + Math.cos(a) * R * scale).toFixed(1)},${(cy + cyOff + Math.sin(a) * R * scale).toFixed(1)}`;
+    }).join(' ');
+
+  const renderRadar = (activeIdx: number) => {
+    const polyLow = vals
+      .map((v, i) => {
+        const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+        return `${(cx + Math.cos(a) * R * v).toFixed(1)},${(cy + 4 + Math.sin(a) * R * v).toFixed(1)}`;
+      })
+      .join(' ');
+    const polyTop = vals
+      .map((v, i) => {
+        const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+        return `${(cx + Math.cos(a) * R * v).toFixed(1)},${(cy + Math.sin(a) * R * v).toFixed(1)}`;
+      })
+      .join(' ');
+
+    const spokes = axes
+      .map((label, i) => {
+        const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+        const x1 = cx + Math.cos(a) * R;
+        const y1 = cy + Math.sin(a) * R;
+        const vx = cx + Math.cos(a) * R * vals[i];
+        const vy = cy + Math.sin(a) * R * vals[i];
+        const lx = cx + Math.cos(a) * (R + 13);
+        const ly = cy + Math.sin(a) * (R + 10) + 2;
+        const active = i === activeIdx;
+        return `<g>
+          <line class="ml-hl-guide" x1="${cx}" y1="${cy}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}"/>
+          <line class="ml-hl-inner" x1="${vx.toFixed(1)}" y1="${vy.toFixed(1)}" x2="${vx.toFixed(1)}" y2="${(vy + 4).toFixed(1)}"/>
+          <circle class="ml-hl-fill" cx="${vx.toFixed(1)}" cy="${vy.toFixed(1)}" r="${active ? '3.2' : '2.2'}"/>
+          <circle class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" cx="${vx.toFixed(1)}" cy="${vy.toFixed(1)}" r="${active ? '3.2' : '2.2'}"/>
+          <text class="ml-hl-label" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${label}</text>
+        </g>`;
+      })
+      .join('');
+
+    stage.innerHTML = `
+      <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 112" aria-label="3D Radar Polyhedron">
+        <!-- 3D Lower Extruded Hexagonal Plate -->
+        <polygon class="ml-hl-fill" points="${hexPts(4.5, 1)}"/>
+        <polygon class="ml-hl-secondary" points="${hexPts(4.5, 1)}" opacity="0.52"/>
+        <!-- Upper Hexagonal Web Rings -->
+        <polygon class="ml-hl-fill" points="${hexPts(0, 1)}"/>
+        <polygon class="ml-hl-secondary" points="${hexPts(0, 1)}" opacity="0.62"/>
+        <polygon class="ml-hl-guide" points="${hexPts(0, 0.66)}"/>
+        <polygon class="ml-hl-guide" points="${hexPts(0, 0.33)}"/>
+        <!-- 3D Extruded Lower Data Polygon -->
+        <polygon class="ml-hl-secondary" points="${polyLow}" opacity="0.45"/>
+        <!-- 3D Primary Data Polygon -->
+        <polygon points="${polyTop}" fill="currentColor" fill-opacity="0.065" stroke="none"/>
+        <polygon class="ml-hl-primary" points="${polyTop}"/>
+        ${spokes}
+      </svg>`;
+  };
+
+  renderRadar(4);
+  attachStagePointer(stage, (nx, ny) => {
+    const ang = Math.atan2(ny - 0.5, nx - 0.5);
+    const norm = ((ang + Math.PI / 2 + Math.PI * 2) % (Math.PI * 2)) / (Math.PI * 2);
+    const idx = Math.round(norm * n) % n;
+    renderRadar(idx);
+    setPill(`${axes[idx]} · ${Math.round(vals[idx] * 100)}%`);
+    setCells([axes[idx], `${(vals[idx] * 100).toFixed(1)}%`, '72.3%']);
+  });
+  return panel;
 }
 
 function demoChartHisto(): HTMLElement {
-  const bins = [8, 14, 22, 30, 26, 18, 12, 7, 4];
+  const bins = [7, 13, 22, 31, 27, 19, 12, 7, 4];
+  const zScores = ['-2.0σ', '-1.5σ', '-1.0σ', '-0.5σ', '0.0σ', '+0.5σ', '+1.0σ', '+1.5σ', '+2.0σ'];
   const max = Math.max(...bins);
-  const el = document.createElement('div');
-  el.innerHTML = `<svg class="ml-svg ml-chart-svg" viewBox="0 0 220 100" aria-label="Histogram">
-    ${bins
+  const total = bins.reduce((a, b) => a + b, 0);
+
+  const { panel, stage, setCells, setPill } = createInstrumentPanel(
+    '3D GAUSSIAN HISTOGRAM · σ',
+    'BIN 04 · 31',
+    ['Bin Z', 'Count', 'Density', 'Total N'],
+  );
+  setCells(['-0.5σ', '31', '21.8%', `${total}`]);
+
+  const renderHisto = (activeIdx: number) => {
+    const dx = 3.2;
+    const dy = -2.6;
+    const bars = bins
       .map((b, i) => {
-        const h = (b / max) * 72;
-        return `<rect class="ml-grow" x="${18 + i * 22}" y="${88 - h}" width="12" height="${h}" fill="none" stroke="currentColor" stroke-width="1.15"/>`;
+        const h = (b / max) * 62;
+        const x = 18 + i * 20;
+        const y = 88 - h;
+        const active = i === activeIdx;
+        return `<g>
+          <!-- 3D Isometric Top & Right Extrusion Faces -->
+          <polygon class="ml-hl-fill" points="${x + 17},${y} ${x + 17 + dx},${y + dy} ${x + 17 + dx},${88 + dy} ${x + 17},88"/>
+          <polygon class="ml-hl-secondary" points="${x + 17},${y} ${x + 17 + dx},${y + dy} ${x + 17 + dx},${88 + dy} ${x + 17},88" opacity="0.55"/>
+          <polygon class="ml-hl-fill" points="${x},${y} ${x + dx},${y + dy} ${x + 17 + dx},${y + dy} ${x + 17},${y}"/>
+          <polygon class="ml-hl-secondary" points="${x},${y} ${x + dx},${y + dy} ${x + 17 + dx},${y + dy} ${x + 17},${y}" opacity="0.55"/>
+          <!-- Front Bin Column -->
+          <rect class="ml-hl-fill" x="${x}" y="${y}" width="17" height="${h}" rx="1"/>
+          ${active ? `<rect x="${x}" y="${y}" width="17" height="${h}" rx="1" fill="currentColor" fill-opacity="0.09"/>` : ''}
+          <rect class="${active ? 'ml-hl-accent' : 'ml-hl-primary'}" x="${x}" y="${y}" width="17" height="${h}" rx="1"/>
+          <line class="ml-hl-inner" x1="${x + 2.5}" y1="${y + 2.2}" x2="${x + 14.5}" y2="${y + 2.2}"/>
+        </g>`;
       })
-      .join('')}
-    <line class="ml-guide" x1="12" y1="88" x2="208" y2="88" stroke="currentColor" stroke-opacity="0.7"/>
-  </svg>`;
-  return el.firstElementChild as HTMLElement;
+      .join('');
+
+    const bellPts = bins.map((b, i) => [26.5 + i * 20, 88 - (b / max) * 62] as [number, number]);
+    let bellD = `M ${bellPts[0][0].toFixed(1)} ${bellPts[0][1].toFixed(1)}`;
+    for (let i = 1; i < bellPts.length; i++) {
+      const [x0, y0] = bellPts[i - 1];
+      const [x1, y1] = bellPts[i];
+      const cx = (x0 + x1) / 2;
+      bellD += ` C ${cx.toFixed(1)} ${y0.toFixed(1)}, ${cx.toFixed(1)} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+    }
+
+    stage.innerHTML = `
+      <svg class="ml-svg ml-chart-svg" data-hairline viewBox="0 0 220 102" aria-label="3D Gaussian Histogram">
+        <polygon class="ml-hl-fill" points="12,88 17,84 206,84 201,88"/>
+        <polygon class="ml-hl-secondary" points="12,88 17,84 206,84 201,88" opacity="0.48"/>
+        <line class="ml-hl-guide" x1="14" y1="36" x2="204" y2="36"/>
+        <line class="ml-hl-guide" x1="14" y1="62" x2="204" y2="62"/>
+        ${bars}
+        <!-- Smooth Gaussian Kernel Overlay -->
+        <path class="ml-hl-accent" d="${bellD}" opacity="0.72"/>
+      </svg>`;
+  };
+
+  renderHisto(3);
+  attachStagePointer(stage, (nx) => {
+    const idx = Math.max(0, Math.min(bins.length - 1, Math.floor(nx * bins.length)));
+    renderHisto(idx);
+    setPill(`BIN 0${idx + 1} · ${bins[idx]}`);
+    setCells([zScores[idx], `${bins[idx]}`, `${((bins[idx] / total) * 100).toFixed(1)}%`, `${total}`]);
+  });
+  return panel;
 }
 
 function demoMenu(): HTMLElement {
@@ -2239,7 +2879,7 @@ function buildDemo(item: CatalogItem): HTMLElement {
     case 'picker':
       return demoPicker(item.id);
     case 'color-picker':
-      return demoColorPicker();
+      return demoColorPicker(item.id);
     case 'combobox':
       return demoCombobox();
     case 'date-picker':
@@ -2279,15 +2919,15 @@ function buildDemo(item: CatalogItem): HTMLElement {
     case 'kpi-strip':
       return demoKpiStrip();
     case 'chart-line':
-      return demoChartLine(false);
+      return demoChartLine(false, item.id);
     case 'chart-area':
-      return demoChartLine(true);
+      return demoChartLine(true, item.id);
     case 'chart-bar':
       return demoChartBar(false);
     case 'chart-hbar':
       return demoChartBar(true);
     case 'chart-candles':
-      return demoChartCandles();
+      return demoChartCandles(item.id);
     case 'chart-donut':
       return demoChartDonut();
     case 'chart-spark':
