@@ -1838,12 +1838,7 @@
       gap: clamp(24px, 4vw, 44px);
       align-items: start;
     }
-    @media (min-width: 960px) {
-      .hero-grid {
-        grid-template-columns: minmax(0, 1.24fr) minmax(300px, 0.78fr);
-        gap: clamp(32px, 4.5vw, 60px);
-      }
-    }
+    
     .hero-grid > :first-child {
       max-width: 42rem;
     }
@@ -2473,8 +2468,9 @@
     .historia-ambient { display: none !important; }
     #historia .historia-layout,
     #historia .historia-essay {
-      max-width: none;
-      width: 100%;
+      display: block !important;
+      max-width: none !important;
+      width: 100% !important;
     }
     #home-historia-prose {
       column-count: 1;
@@ -5249,46 +5245,6 @@
               <span class="tabular" id="mode-banner-meta">ledger · cycles · JSON</span>
             </div>
           </div>
-
-          <aside class="hero-specimen-card" aria-label="Specimen e telemetria ativa">
-            <div class="hero-specimen-head">
-              <span class="eyebrow" style="margin:0;">SPECIMEN · MERIDIAN v1.5</span>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary);">12-COL · 8PX</span>
-                <button type="button" class="btn btn-sm btn-tertiary" id="btn-toggle-mb-grid" style="padding:2px 8px; font-size:10.5px;" title="Alternar Grade Modular 12×8px (tecla G)">Grid [G]</button>
-              </div>
-            </div>
-            <svg class="hero-specimen-svg" viewBox="0 0 320 96" fill="none" aria-hidden="true">
-              <line x1="12" y1="48" x2="308" y2="48" stroke="currentColor" stroke-opacity="0.16" stroke-width="0.6" vector-effect="non-scaling-stroke"/>
-              <line x1="160" y1="6" x2="160" y2="90" stroke="currentColor" stroke-opacity="0.16" stroke-width="0.6" vector-effect="non-scaling-stroke"/>
-              <circle cx="160" cy="48" r="36" fill="var(--ds-surface-2)" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.46" stroke-width="0.65" vector-effect="non-scaling-stroke"/>
-              <circle cx="160" cy="48" r="22" fill="var(--ds-bg)" fill-opacity="0.65" stroke="currentColor" stroke-opacity="0.24" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-              <circle cx="160" cy="48" r="3.2" fill="currentColor" fill-opacity="0.72"/>
-              <path d="M56 72 C108 18, 212 78, 264 24" stroke="var(--ds-organic-sky)" stroke-opacity="0.7" stroke-width="0.9" vector-effect="non-scaling-stroke"/>
-              <circle cx="106" cy="42" r="2.2" fill="currentColor" fill-opacity="0.62"/>
-              <circle cx="214" cy="54" r="2.2" fill="var(--ds-organic-coral)" fill-opacity="0.85"/>
-              <text x="16" y="18" fill="currentColor" fill-opacity="0.48" font-family="Geist Mono, ui-monospace, monospace" font-size="9">MERIDIAN AXIS · 23.55°S</text>
-              <text x="304" y="84" text-anchor="end" fill="currentColor" fill-opacity="0.48" font-family="Geist Mono, ui-monospace, monospace" font-size="9">SINGLE-INK · 1:1</text>
-            </svg>
-            <div class="hero-telemetry">
-              <div class="telemetry-cell">
-                <span class="eyebrow" data-i18n="tel.surface">Superfície Ativa</span>
-                <span class="telemetry-val" id="tel-surface">Ivory Editorial</span>
-              </div>
-              <div class="telemetry-cell">
-                <span class="eyebrow" data-i18n="tel.ground">Ground / Ink</span>
-                <span class="telemetry-val tabular" id="tel-hex">#FAF9F5 · #141413</span>
-              </div>
-              <div class="telemetry-cell">
-                <span class="eyebrow" data-i18n="tel.contrast">Contraste WCAG</span>
-                <span class="telemetry-val tabular" id="tel-contrast">17.6:1 (AAA)</span>
-              </div>
-              <div class="telemetry-cell">
-                <span class="eyebrow" data-i18n="tel.grain">PaperGrain &amp; Modo</span>
-                <span class="telemetry-val tabular" id="tel-grain">Editorial · B2C Invisível</span>
-              </div>
-            </div>
-          </aside>
         </div>
 
         <!-- 5 Edition Plates: Click any to transform the entire living page -->
@@ -7958,16 +7914,16 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       function updateTelemetry() {
         const m = SURFACE_META[state.surface];
-        document.getElementById('tel-surface').textContent = m.name;
-        document.getElementById('tel-hex').textContent = `${m.bg} · ${m.fg}`;
-        document.getElementById('tel-contrast').textContent = m.contrast;
+        const _tsurface = document.getElementById('tel-surface'); if (_tsurface) _tsurface.textContent = m.name;
+        const _thex = document.getElementById('tel-hex'); if (_thex) _thex.textContent = `${m.bg} · ${m.fg}`;
+        const _tcontrast = document.getElementById('tel-contrast'); if (_tcontrast) _tcontrast.textContent = m.contrast;
         const opacityPct = Math.round(state.grainOpacity * 100);
         const extras = [
           state.grainDust ? 'dust' : null,
           state.grainScratch ? 'scratch' : null,
           state.grainDouble ? 'duplo' : null,
         ].filter(Boolean).join('+') || 'clean';
-        document.getElementById('tel-grain').textContent =
+        const _tgrain = document.getElementById('tel-grain'); if (_tgrain) _tgrain.textContent =
           `${GRAIN_LABELS[state.grain]} · ${opacityPct}% · ${GRAIN_SIZE_LABELS[state.grainSize] || 'Médio'} · ${extras}`;
         document.getElementById('grain-blend-readout').textContent =
           `${GRAIN_LABELS[state.grain].toLowerCase()} · ${opacityPct}% · ${(GRAIN_SIZE_LABELS[state.grainSize] || 'Médio').toLowerCase()} · ${extras}`;
