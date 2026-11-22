@@ -259,3 +259,59 @@
     display: none;
   }
 }
+
+/* Navegação unificada entre todas as páginas + respeito às cores tipográficas Aa Tipo */
+.meridian-unified-nav {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  margin-left: 10px;
+}
+@media (min-width: 820px) {
+  .meridian-unified-nav { display: inline-flex; }
+}
+.meridian-nav-link {
+  font-family: var(--ds-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ds-type-secondary);
+  text-decoration: none;
+  padding: 4px 2px;
+  white-space: nowrap;
+}
+.meridian-nav-link[aria-current="page"] {
+  color: var(--ds-type-primary);
+  box-shadow: inset 0 -1px 0 var(--ds-type-primary);
+}
+@media (hover: hover) and (pointer: fine) {
+  .meridian-nav-link:hover { color: var(--ds-type-primary); }
+}
+
+.gann-page,
+.ds-topbar,
+.ds-card,
+.gann-prose p,
+.gann-card p,
+.gann-lead,
+.gann-nav-center a,
+.site-menu-btn,
+.gann-chrome .site-menu-btn,
+.ds-topbar .site-menu-btn {
+  color: var(--ds-type-secondary);
+}
+.gann-brand,
+.gann-title,
+.gann-card h3,
+.gann-section-head h2,
+.brand-title,
+.site-gh-star,
+.ds-btn-secondary,
+.ds-btn-tertiary,
+.ds-btn-ghost {
+  color: var(--ds-type-primary);
+}
+.ds-btn-primary,
+.ds-cliptabs-overlay {
+  background-color: var(--ds-type-primary, var(--ds-accent));
+  color: var(--ds-bg);
+}

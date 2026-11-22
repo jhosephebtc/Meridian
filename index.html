@@ -2770,14 +2770,12 @@
       overflow: visible;
     }
     @media (min-width: 1100px) {
-      .historia-layout {
-        grid-template-columns: minmax(0, 62ch);
-      }
+      .historia-layout { grid-template-columns: minmax(0, 1fr); }
     }
     .historia-essay {
       position: relative;
       z-index: 1;
-      max-width: min(58ch, 100%);
+      max-width: none; width: 100%;
       display: flex;
       flex-direction: column;
       gap: 0;
@@ -2808,12 +2806,7 @@
       text-wrap: balance;
       color: var(--ds-fg);
     }
-    #home-historia-prose {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 0;
-    }
+    #home-historia-prose { display: block; width: 100%; }
     .historia-essay p {
       margin: 0;
       font-family: var(--ds-font-display);
@@ -5046,6 +5039,91 @@
       border-color: var(--ds-type-primary, var(--ds-accent));
       color: var(--ds-bg);
     }
+
+    /* ---------------- 10. ARQUIVO ORBITAL NASA (DUST & SCRATCHES POR CIMA) ---------------- */
+    .nasa-controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 20px;
+      padding: 12px 16px;
+      margin-bottom: 22px;
+      border-radius: var(--ds-radius-squircle);
+      border: var(--ds-hairline, 1px) solid var(--ds-border);
+      background: var(--ds-bg-tint-subtle);
+    }
+    .nasa-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px 20px;
+    }
+    @media (max-width: 1020px) {
+      .nasa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .nasa-grid { grid-template-columns: 1fr; }
+    }
+    .nasa-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .nasa-frame {
+      position: relative;
+      margin: 0;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--ds-radius-squircle);
+      overflow: hidden;
+      border: var(--ds-hairline, 1px) solid var(--ds-border-strong);
+      background: #141413;
+    }
+    .nasa-frame img {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.06) sepia(0.14) saturate(0.86);
+    }
+    .nasa-dust-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.92;
+    }
+    .nasa-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--ds-rule);
+      font-family: var(--ds-font-mono);
+      font-size: 10.5px;
+      color: var(--ds-type-tertiary);
+    }
+    .nasa-card-title {
+      font-family: var(--ds-font-display);
+      font-size: 20px;
+      line-height: 1.24;
+      margin: 0;
+      color: var(--ds-type-primary);
+    }
+    .nasa-card-desc {
+      margin: 0;
+      font-size: 13.5px;
+      line-height: 1.54;
+      color: var(--ds-type-secondary);
+    }
+    main section[data-ds-hidden="true"] {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -5199,33 +5277,16 @@
         </button>
       </div>
 
-      <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Seções do Design System" data-i18n-attr="aria-label:nav.sections">
-        <div class="menu-anchor" data-nav-group="foundations">
-          <button type="button" class="topbar-link" data-menu-toggle aria-expanded="false" aria-haspopup="menu">
-            <span data-i18n="nav.foundations">Fundamentos</span>
-            <svg class="menu-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="header-menu" data-open="false" role="menu">
-            <button class="header-menu-item" type="button" data-nav-target="historia" data-active="true" data-i18n="nav.historia">História</button>
-            <button class="header-menu-item" type="button" data-nav-target="cores" data-i18n="nav.surfaces">Superfícies</button>
-            <button class="header-menu-item" type="button" data-nav-target="tokens" data-i18n="nav.tokens">Tokens</button>
-            <button class="header-menu-item" type="button" data-nav-target="tipografia" data-i18n="nav.type">Tipografia</button>
-          </div>
-        </div>
-        <button class="topbar-link" type="button" data-nav-target="interacoes" data-i18n="nav.motion">Motion</button>
-        <div class="menu-anchor" data-nav-group="workshops">
-          <button type="button" class="topbar-link" data-menu-toggle aria-expanded="false" aria-haspopup="menu">
-            <span data-i18n="nav.workshops">Oficinas</span>
-            <svg class="menu-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="header-menu" data-open="false" role="menu">
-            <button class="header-menu-item" type="button" data-nav-target="editorial" data-i18n="nav.editorial">Editorial</button>
-            <button class="header-menu-item" type="button" data-nav-target="cronologia" data-i18n="nav.lifeline">Lifeline</button>
-            <button class="header-menu-item" type="button" data-nav-target="svg-viz" data-i18n="nav.svg">SVG 1:1</button>
-            <button class="header-menu-item" type="button" data-nav-target="atelier" data-i18n="nav.atelier">Atelier TS</button>
-            <button class="header-menu-item" type="button" data-nav-target="habilidades" data-i18n="nav.skills">Habilidades</button>
-          </div>
-        </div>
+      <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Abas do Design System">
+        <button class="topbar-link" type="button" data-ds-tab="overview" data-active="true">Geral &amp; História</button>
+        <button class="topbar-link" type="button" data-ds-tab="foundations" data-i18n="nav.foundations">Fundamentos</button>
+        <button class="topbar-link" type="button" data-ds-tab="motion" data-i18n="nav.motion">Motion</button>
+        <button class="topbar-link" type="button" data-ds-tab="editorial">Editorial</button>
+        <button class="topbar-link" type="button" data-ds-tab="plotter">Plotter &amp; 81k</button>
+        <button class="topbar-link" type="button" data-ds-tab="atelier">Atelier &amp; GPU</button>
+        <button class="topbar-link" type="button" data-ds-tab="nasa">Arquivo NASA</button>
+        <button class="topbar-link" type="button" data-ds-tab="skills">Skills</button>
+        <button class="topbar-link" type="button" data-ds-tab="all">Ver Tudo</button>
       </nav>
     </div>
 
@@ -5242,7 +5303,7 @@
   </div>
   <!-- ================= HERO EDITORIAL ================= -->
   <main id="topo" class="ds-page-enter">
-    <section class="hero">
+    <section class="hero" data-tab-group="overview">
       <div class="container-wide">
         <div class="hero-grid">
           <div>
@@ -5316,7 +5377,7 @@
     </section>
 
     <!-- ================= 00. HISTÓRIA — O FAROL E O MERIDIANO ================= -->
-    <section class="section-block" id="historia">
+    <section class="section-block" id="historia" data-tab-group="overview">
       <div class="container-wide">
         <div class="historia-layout">
           <article class="historia-essay">
@@ -5399,7 +5460,7 @@
     </section>
 
     <!-- ================= 01. SUPERFÍCIES & MOTOR SINGLE-INK ================= -->
-    <section class="section-block" id="cores">
+    <section class="section-block" id="cores" data-tab-group="foundations">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -5448,7 +5509,7 @@
     </section>
 
     <!-- ================= TOKENS · ATLAS ================= -->
-    <section class="section-block" id="tokens">
+    <section class="section-block" id="tokens" data-tab-group="foundations">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -5517,7 +5578,7 @@
     </section>
 
     <!-- ================= 02. TIPOGRAFIA EM 3 VOZES ================= -->
-    <section class="section-block" id="tipografia">
+    <section class="section-block" id="tipografia" data-tab-group="foundations">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -5619,7 +5680,7 @@
     </section>
 
     <!-- ================= 03. NAVEGAÇÃO, DUAL-RADIUS & EMIL KOWALSKI LAB ================= -->
-    <section class="section-block" id="interacoes">
+    <section class="section-block" id="interacoes" data-tab-group="motion">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -5858,7 +5919,7 @@
     </section>
 
     <!-- ================= 04. ARQUITETURA EDITORIAL DUAL (Meridian) ================= -->
-    <section class="section-block" id="editorial">
+    <section class="section-block" id="editorial" data-tab-group="editorial">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6135,7 +6196,7 @@
     </section>
 
     <!-- ================= 05. LIFELINE ARRASTÁVEL 1:1 & ESTANTE 3D DE DOSSIÊS ================= -->
-    <section class="section-block" id="cronologia">
+    <section class="section-block" id="cronologia" data-tab-group="editorial">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6269,7 +6330,7 @@
     </section>
 
     <!-- ================= 06. GRAMÁTICA PLOTTER SVG, GLOBO 81K & INSTRUMENTOS 1:1 ================= -->
-    <section class="section-block" id="svg-viz">
+    <section class="section-block" id="svg-viz" data-tab-group="plotter">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6823,7 +6884,7 @@
     </section>
 
     <!-- ================= 07. ATELIER GENERATIVO 100% TYPESCRIPT (AQUARELA · LÁPIS · GIZ) ================= -->
-    <section class="section-block" id="atelier">
+    <section class="section-block" id="atelier" data-tab-group="atelier">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6938,7 +6999,7 @@
     </section>
 
     <!-- ================= 08. PAINTERLY SHADERS STUDIO (Anisotropic Kuwahara & Image Upload) ================= -->
-    <section class="section-block" id="painterly-studio">
+    <section class="section-block" id="painterly-studio" data-tab-group="atelier">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -7098,7 +7159,7 @@
       </div>
     </section>
     <!-- ================= 09. HABILIDADES AGÊNTICAS, TASTE & LINHAGEM ================= -->
-    <section class="section-block" id="habilidades">
+    <section class="section-block" id="habilidades" data-tab-group="skills">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -7319,6 +7380,97 @@
             <span class="credit-card-title">shadcn/ui Registry</span>
             <span class="credit-card-note" data-home="skills.credit.shadcn">Esquema de distribuição JSON (public/r/registry.json) para instalação via CLI e prompts individuais nos 90 componentes.</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 10. ARQUIVO ORBITAL · TERRA NASA PUBLIC DOMAIN ================= -->
+    <section class="section-block" id="nasa-orbital" data-tab-group="nasa">
+      <div class="container-wide">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">10 · Arquivo Orbital · NASA Public Domain</div>
+            <h2 class="section-title">Fotografias da Terra com Grão, Dust &amp; Scratches</h2>
+          </div>
+          <p class="section-desc">
+            Acervo histórico de observação terrestre da NASA (domínio público) sob camada física de grão, poeira e riscos de película analógica — controle a intensidade do envelhecimento em tempo real.
+          </p>
+        </div>
+
+        <div class="nasa-controls-bar">
+          <label style="display:inline-flex; align-items:center; gap:10px; flex:1 1 240px;">
+            <span class="eyebrow" style="margin:0; white-space:nowrap;">Dust &amp; Scratches:</span>
+            <input type="range" id="nasa-dust-slider" class="painterly-range" style="flex:1; max-width:220px;" min="0" max="100" step="5" value="55" aria-label="Intensidade de poeira e riscos" />
+            <output class="mono tabular" id="nasa-dust-out" style="font-size:11px; color:var(--ds-type-primary); min-width:38px;">55%</output>
+          </label>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-dust="15">Limpo 15%</button>
+            <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-dust="55">Arquivo 55%</button>
+            <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-dust="80">Vintage 80%</button>
+            <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-dust="100">16mm 100%</button>
+          </div>
+        </div>
+
+        <div class="nasa-grid">
+          <article class="nasa-card">
+            <figure class="nasa-frame">
+              <img src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~medium.jpg" alt="The Blue Marble — Terra fotografada pela Apollo 17" loading="lazy" crossorigin="anonymous" />
+              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+            </figure>
+            <div class="nasa-card-meta"><span>AS17-148-22727 · 07 DEZ 1972</span><span>NASA · PUBLIC DOMAIN</span></div>
+            <h3 class="nasa-card-title">Apollo 17 · The Blue Marble</h3>
+            <p class="nasa-card-desc">Capturada a cerca de 29.000 km a caminho da Lua, revela a África, a Península Arábica e a calota polar sul sob luz solar direta sem nuvens no eixo sul-leste.</p>
+          </article>
+
+          <article class="nasa-card">
+            <figure class="nasa-frame">
+              <img src="https://images-assets.nasa.gov/image/art002e009280b/art002e009280b~large.jpg" alt="Artemis Era Earthrise — Terra nascendo além do limbo lunar" loading="lazy" crossorigin="anonymous" />
+              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+            </figure>
+            <div class="nasa-card-meta"><span>ART002E009280B · PROGRAMA ARTEMIS</span><span>NASA · PUBLIC DOMAIN</span></div>
+            <h3 class="nasa-card-title">Artemis · Nascer da Terra</h3>
+            <p class="nasa-card-desc">O disco azulado emerge acima do horizonte cinzento da Lua, contrastando a fragilidade da atmosfera terrestre contra a escuridão absoluta do espaço profundo.</p>
+          </article>
+
+          <article class="nasa-card">
+            <figure class="nasa-frame">
+              <img src="https://images-assets.nasa.gov/image/iss035e017673/iss035e017673~medium.jpg" alt="Curvatura terrestre observada pela Estação Espacial Internacional" loading="lazy" crossorigin="anonymous" />
+              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+            </figure>
+            <div class="nasa-card-meta"><span>ISS035-E-017673 · EXPEDIÇÃO 35</span><span>NASA · PUBLIC DOMAIN</span></div>
+            <h3 class="nasa-card-title">Órbita Baixa · Limbo Atmosférico</h3>
+            <p class="nasa-card-desc">Registro oblíquo a partir de 400 km de altitude exibindo a camada fina da troposfera e o espalhamento de Rayleigh ao longo do terminador planetário.</p>
+          </article>
+
+          <article class="nasa-card">
+            <figure class="nasa-frame">
+              <img src="https://images-assets.nasa.gov/image/sts065-86-095/sts065-86-095~medium.jpg" alt="Olho do Furacão Emilia observado pelo ônibus espacial Columbia" loading="lazy" crossorigin="anonymous" />
+              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+            </figure>
+            <div class="nasa-card-meta"><span>STS065-86-095 · 18 JUL 1994</span><span>NASA · PUBLIC DOMAIN</span></div>
+            <h3 class="nasa-card-title">Columbia · Furacão Emilia</h3>
+            <p class="nasa-card-desc">Parede simétrica do olho ciclônico sobre o Pacífico Leste fotografada com teleobjetiva a bordo do Columbia, evidenciando bandas espirais de convecção.</p>
+          </article>
+
+          <article class="nasa-card">
+            <figure class="nasa-frame">
+              <img src="https://images-assets.nasa.gov/image/iss040e091208/iss040e091208~medium.jpg" alt="Observação de sistema de nuvens e oceano pela ISS Expedição 40" loading="lazy" crossorigin="anonymous" />
+              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+            </figure>
+            <div class="nasa-card-meta"><span>ISS040-E-091208 · 10 AGO 2014</span><span>NASA · PUBLIC DOMAIN</span></div>
+            <h3 class="nasa-card-title">Expedição 40 · Correntes &amp; Nuvens</h3>
+            <p class="nasa-card-desc">Estudo orbital de estratocúmulos e transição costeira usado no monitoramento de aerossóis, albedo superficial e padrões de vento em larga escala.</p>
+          </article>
+
+          <article class="nasa-card">
+            <figure class="nasa-frame">
+              <img src="https://images-assets.nasa.gov/image/art002e016299/art002e016299~large.jpg" alt="Earthrise capturado pela cápsula Orion" loading="lazy" crossorigin="anonymous" />
+              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+            </figure>
+            <div class="nasa-card-meta"><span>ART002E016299 · ORION CAM</span><span>NASA · PUBLIC DOMAIN</span></div>
+            <h3 class="nasa-card-title">Cápsula Orion · Horizonte Lunar</h3>
+            <p class="nasa-card-desc">Enquadramento de longa distância da Terra crescente atrás da câmera externa dos painéis solares, retomando a linhagem visual dos arquivos Apollo.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -8055,6 +8207,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           if (choice.opacity === 100) root.style.removeProperty(alphaProp);
           else root.style.setProperty(alphaProp, String(choice.opacity / 100));
         });
+        try { localStorage.setItem('meridian-type-config', JSON.stringify(typeState)); } catch {}
         syncTypeMenu();
       }
 
@@ -10826,6 +10979,127 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       initScrollReveal();
 
       /* Initial Render */
+
+      /* Design System Section Tabs + Hash Auto-Switch */
+      function selectDsTab(tabId, scrollTop = false) {
+        const sections = document.querySelectorAll('main#topo > section[data-tab-group]');
+        sections.forEach((sec) => {
+          const match = tabId === 'all' || sec.dataset.tabGroup === tabId;
+          if (match) {
+            sec.removeAttribute('data-ds-hidden');
+            sec.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-inview'));
+          } else {
+            sec.setAttribute('data-ds-hidden', 'true');
+          }
+        });
+        document.querySelectorAll('[data-ds-tab]').forEach((b) => {
+          b.setAttribute('data-active', b.dataset.dsTab === tabId ? 'true' : 'false');
+        });
+        if (typeof initAllClipTabs === 'function') setTimeout(initAllClipTabs, 40);
+        if (tabId === 'plotter' || tabId === 'all') renderPlottedGlobe();
+        if (tabId === 'atelier' || tabId === 'all') restartAtelier(false);
+        if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.addEventListener('click', (e) => {
+        const tabBtn = e.target.closest('[data-ds-tab]');
+        if (tabBtn?.dataset.dsTab) {
+          selectDsTab(tabBtn.dataset.dsTab, true);
+          return;
+        }
+        const anchor = e.target.closest('a[href^="#"]');
+        if (anchor) {
+          const id = anchor.getAttribute('href').slice(1);
+          const targetSec = document.getElementById(id)?.closest('section[data-tab-group]');
+          if (targetSec?.dataset.tabGroup) selectDsTab(targetSec.dataset.tabGroup, false);
+        }
+      });
+
+      /* NASA Archive Dust & Scratches Renderer */
+      function renderNasaDustAndScratches(pct = 55) {
+        const level = Math.max(0, Math.min(1, pct / 100));
+        document.querySelectorAll('.nasa-dust-canvas').forEach((cv, idx) => {
+          const ctx = cv.getContext('2d');
+          const W = cv.width, H = cv.height;
+          ctx.clearRect(0, 0, W, H);
+          if (level <= 0.01) return;
+
+          let seed = 918273 + idx * 7919;
+          const rnd = () => {
+            seed = (seed * 1664525 + 1013904223) >>> 0;
+            return seed / 4294967296;
+          };
+
+          // Grão de película analógica
+          const speckCount = Math.round(180 + level * 620);
+          for (let i = 0; i < speckCount; i++) {
+            const x = rnd() * W, y = rnd() * H;
+            const r = 0.4 + rnd() * (0.9 + level * 0.9);
+            ctx.fillStyle = rnd() > 0.35
+              ? `rgba(255,250,242,${(0.08 + rnd() * 0.24 * level).toFixed(3)})`
+              : `rgba(20,20,18,${(0.10 + rnd() * 0.25 * level).toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Fibras finas de poeira (dust)
+          const hairCount = Math.round(4 + level * 22);
+          ctx.lineCap = 'round';
+          for (let i = 0; i < hairCount; i++) {
+            const x = rnd() * W, y = rnd() * H;
+            const len = 6 + rnd() * 18;
+            const a = rnd() * Math.PI * 2;
+            ctx.strokeStyle = `rgba(255,248,236,${(0.18 + level * 0.32).toFixed(3)})`;
+            ctx.lineWidth = 0.5 + rnd() * 0.6;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.quadraticCurveTo(x + Math.cos(a + 0.5) * len * 0.5, y + Math.sin(a + 0.5) * len * 0.5, x + Math.cos(a) * len, y + Math.sin(a) * len);
+            ctx.stroke();
+          }
+
+          // Riscos verticais de película (scratches)
+          const scratchCount = Math.round(level * 12);
+          for (let i = 0; i < scratchCount; i++) {
+            const x = rnd() * W;
+            const y0 = rnd() * H * 0.4;
+            const y1 = y0 + H * (0.35 + rnd() * 0.6);
+            ctx.strokeStyle = rnd() > 0.25
+              ? `rgba(255,252,245,${(0.12 + level * 0.24).toFixed(3)})`
+              : `rgba(15,15,14,${(0.15 + level * 0.22).toFixed(3)})`;
+            ctx.lineWidth = 0.4 + rnd() * 0.7;
+            ctx.beginPath();
+            ctx.moveTo(x, y0);
+            ctx.lineTo(x + (rnd() - 0.5) * 4, y1);
+            ctx.stroke();
+          }
+        });
+      }
+
+      const nasaSlider = document.getElementById('nasa-dust-slider');
+      const nasaOut = document.getElementById('nasa-dust-out');
+      function updateNasaDust(val) {
+        const v = Math.max(0, Math.min(100, Number(val)));
+        if (nasaSlider) nasaSlider.value = String(v);
+        if (nasaOut) nasaOut.textContent = v + '%';
+        document.querySelectorAll('[data-nasa-dust]').forEach((b) => {
+          const on = Number(b.dataset.nasaDust) === v;
+          b.classList.toggle('btn-primary', on);
+          b.classList.toggle('btn-tertiary', !on);
+        });
+        renderNasaDustAndScratches(v);
+      }
+      if (nasaSlider) nasaSlider.addEventListener('input', () => updateNasaDust(nasaSlider.value));
+      document.addEventListener('click', (e) => {
+        const preset = e.target.closest('[data-nasa-dust]');
+        if (preset) updateNasaDust(preset.dataset.nasaDust);
+      });
+      renderNasaDustAndScratches(55);
+
+      const initialHash = window.location.hash.slice(1);
+      const hashTab = initialHash ? document.getElementById(initialHash)?.closest('section[data-tab-group]')?.dataset.tabGroup : null;
+      selectDsTab(hashTab || 'overview', false);
+
       applySurface(state.surface, false);
       renderLifeline();
       renderPlottedGlobe();
