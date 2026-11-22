@@ -83,7 +83,8 @@ function bindSlider(root: HTMLElement, initial = 42): void {
   const paint = (v: number) => {
     const pct = ((v - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
     root.style.setProperty('--ml-slider-pct', `${pct}%`);
-    readout.textContent = `${Math.round(v)}%`;
+    const db = ((pct - 75) * 0.36).toFixed(1);
+    readout.textContent = `${Math.round(v)}% · ${Number(db) >= 0 ? `+${db}` : db} dB`;
     input.value = String(v);
   };
 
@@ -104,8 +105,9 @@ function bindSlider(root: HTMLElement, initial = 42): void {
     fromPointer(e.clientX);
   };
   const onMove = (e: PointerEvent) => {
-    if (!dragging) return;
-    fromPointer(e.clientX);
+    if (dragging || e.pointerType === 'mouse') {
+      fromPointer(e.clientX);
+    }
   };
   const onUp = () => {
     dragging = false;
@@ -145,7 +147,10 @@ function demoSwitch(): HTMLElement {
   return btn;
 }
 
-function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
+function bindDial(
+  root: HTMLElement,
+  opts: { detent?: boolean; onUpdate?: (val: number, deg: number) => void } = {},
+): void {
   const input = qs<HTMLInputElement>(root, 'input');
   const min = 0;
   const max = 100;
@@ -153,10 +158,12 @@ function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
 
   const paint = (v: number) => {
     const f = (v - min) / (max - min);
-    root.style.setProperty('--ml-dial-turn', `${-135 + f * 270}deg`);
+    const deg = -135 + f * 270;
+    root.style.setProperty('--ml-dial-turn', `${deg}deg`);
     input.value = String(v);
     const out = root.querySelector('.ml-dial-out');
     if (out) out.textContent = `${Math.round(v)}`;
+    opts.onUpdate?.(v, deg);
   };
 
   const fromPointer = (e: PointerEvent) => {
@@ -164,7 +171,7 @@ function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
     const dx = e.clientX - (b.left + b.width / 2);
     const dy = e.clientY - (b.top + b.height / 2);
     if (Math.hypot(dx, dy) < 8) return;
-    const pointerAngle = (((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360);
+    const pointerAngle = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
     const turn =
       pointerAngle > 135 && pointerAngle < 225
         ? pointerAngle < 180
@@ -178,7 +185,7 @@ function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
     paint(clamp(raw, min, max));
   };
 
-  paint(35);
+  paint(42);
   input.addEventListener('input', () => paint(input.valueAsNumber));
   input.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
@@ -190,8 +197,9 @@ function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
     fromPointer(e);
   });
   input.addEventListener('pointermove', (e) => {
-    if (dragId !== e.pointerId) return;
-    fromPointer(e);
+    if (dragId === e.pointerId || e.pointerType === 'mouse') {
+      fromPointer(e);
+    }
   });
   const release = () => {
     dragId = null;
@@ -204,46 +212,77 @@ function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
 
 function demoDial(kind = 'dial'): HTMLElement {
   const detent = kind === 'detent-dial' || kind === 'camera-dial';
-  const knurlCount = kind === 'camera-wheel' ? 19 : 11;
-  const tickCount = kind === 'camera-dial' ? 13 : 21;
+  const tickCount = 40;
   const ticks = Array.from({ length: tickCount }, (_, i) => {
     const deg = -135 + (i / (tickCount - 1)) * 270;
     const a = ((deg - 90) * Math.PI) / 180;
-    const r0 = i % 2 === 0 ? 43 : 45.5;
-    const r1 = 49;
-    return `<line data-plotter-role="${i % 2 === 0 ? 'secondary' : 'guide'}" x1="${(60 + Math.cos(a) * r0).toFixed(1)}" y1="${(57 + Math.sin(a) * r0).toFixed(1)}" x2="${(60 + Math.cos(a) * r1).toFixed(1)}" y2="${(57 + Math.sin(a) * r1).toFixed(1)}" stroke="currentColor"/>`;
-  }).join('');
-  const knurls = Array.from({ length: knurlCount }, (_, i) => {
-    const a = (Math.PI * (i + 1)) / (knurlCount + 1);
-    const x = 60 - Math.cos(a) * 31;
-    const yTop = 57 + Math.sin(a) * 31;
-    const yBot = 63 + Math.sin(a) * 31;
-    return `<line data-plotter-role="secondary" x1="${x.toFixed(1)}" y1="${yTop.toFixed(1)}" x2="${x.toFixed(1)}" y2="${yBot.toFixed(1)}" stroke="currentColor" opacity="0.28"/>`;
+    const major = i % 4 === 0;
+    const r0 = major ? 42.5 : 45.5;
+    const r1 = 48.5;
+    return `<line data-plotter-role="${major ? 'secondary' : 'guide'}" x1="${(60 + Math.cos(a) * r0).toFixed(1)}" y1="${(58 + Math.sin(a) * r0).toFixed(1)}" x2="${(60 + Math.cos(a) * r1).toFixed(1)}" y2="${(58 + Math.sin(a) * r1).toFixed(1)}" stroke="currentColor"/>`;
   }).join('');
 
-  const el = document.createElement('div');
-  el.className = 'ml-dial';
-  el.innerHTML = `
-    <svg class="ml-svg" data-plotter data-hairline viewBox="0 0 120 120" aria-hidden="true">
-      <circle data-plotter-role="guide" cx="60" cy="60" r="54" fill="none" stroke="currentColor"/>
-      ${ticks}
-      <!-- 3D Cylindrical Skirt + Side Wall -->
-      <path data-plotter-role="primary" d="M 29 57 L 29 63 A 31 31 0 0 0 91 63 L 91 57 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-      ${knurls}
-      <!-- 3D Top Circular Platter -->
-      <circle data-plotter-role="primary" cx="60" cy="57" r="31" fill="var(--ds-bg)" stroke="currentColor"/>
-      <!-- Open Front-Facing Chamfer Crease -->
-      <path data-plotter-role="secondary" d="M 34.5 57 A 25.5 25.5 0 0 0 85.5 57" fill="none" stroke="currentColor" opacity="0.32"/>
-      ${kind === 'camera-dial' ? '<circle data-plotter-role="secondary" cx="60" cy="57" r="16" fill="none" stroke="currentColor" opacity="0.26"/>' : ''}
-      <g class="ml-dial-knob">
-        <line data-plotter-role="primary" x1="60" y1="45" x2="60" y2="30" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="60" cy="34" r="1.3" fill="currentColor" stroke="none"/>
-      </g>
-    </svg>
-    <input type="range" min="0" max="100" step="${detent ? 10 : 1}" aria-label="Dial" />
-    <div class="ml-slider-readout ml-dial-out" style="position:absolute;inset:auto 0 2px;pointer-events:none"></div>`;
-  bindDial(el, { detent });
-  return el;
+  const eyebrow =
+    kind === 'camera-dial'
+      ? 'VERNIER SHUTTER · ISO'
+      : kind === 'camera-wheel'
+        ? 'OPTICAL THUMB WHEEL'
+        : detent
+          ? 'STEPPED DETENT · 10'
+          : 'ROTARY ENCODER · 270°';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'ml-inst-panel';
+  wrap.style.setProperty('--ml-cols', '3');
+  wrap.innerHTML = `
+    <div class="ml-inst-head">
+      <span class="ml-inst-eyebrow">${eyebrow}</span>
+      <span class="ml-inst-pill"><i class="ml-inst-pill-dot"></i><output data-dial-pill>42%</output></span>
+    </div>
+    <div class="ml-inst-stage">
+      <div class="ml-dial">
+        <svg class="ml-svg" data-plotter data-hairline viewBox="0 0 120 120" aria-hidden="true">
+          <circle data-plotter-role="guide" cx="60" cy="58" r="53" fill="none" stroke="currentColor"/>
+          ${ticks}
+          <!-- Subtle 1.5px lower contact rim (no heavy block shadow) -->
+          <path data-plotter-role="secondary" d="M 29.5 59.8 A 30.5 30.5 0 0 0 90.5 59.8" fill="none" stroke="currentColor" opacity="0.22"/>
+          <!-- Main Circular Platter -->
+          <circle data-plotter-role="primary" cx="60" cy="58" r="30.5" fill="var(--ds-bg)" stroke="currentColor"/>
+          <!-- Open Front Chamfer Crease -->
+          <path data-plotter-role="secondary" d="M 34 58 A 26 26 0 0 0 86 58" fill="none" stroke="currentColor" opacity="0.24"/>
+          ${kind === 'camera-dial' || kind === 'camera-wheel' ? '<circle data-plotter-role="guide" cx="60" cy="58" r="17" fill="none" stroke="currentColor"/>' : ''}
+          <g class="ml-dial-knob">
+            <line data-plotter-role="primary" x1="60" y1="45" x2="60" y2="31" stroke="currentColor"/>
+            <circle data-plotter-role="primary" cx="60" cy="35" r="1.2" fill="currentColor" stroke="none"/>
+          </g>
+        </svg>
+        <input type="range" min="0" max="100" step="${detent ? 10 : 1}" aria-label="Dial" />
+      </div>
+    </div>
+    <div class="ml-inst-legend">
+      <div class="ml-inst-cell"><span>Angle</span><strong data-dial-deg>-22°</strong></div>
+      <div class="ml-inst-cell"><span>Level</span><strong data-dial-val>42%</strong></div>
+      <div class="ml-inst-cell"><span>${detent ? 'Detent' : 'Sweep'}</span><strong data-dial-step>${detent ? '04 / 10' : '270°'}</strong></div>
+    </div>`;
+
+  const dialEl = qs<HTMLElement>(wrap, '.ml-dial');
+  const pillEl = qs<HTMLElement>(wrap, '[data-dial-pill]');
+  const degEl = qs<HTMLElement>(wrap, '[data-dial-deg]');
+  const valEl = qs<HTMLElement>(wrap, '[data-dial-val]');
+  const stepEl = qs<HTMLElement>(wrap, '[data-dial-step]');
+
+  bindDial(dialEl, {
+    detent,
+    onUpdate: (v, deg) => {
+      const rv = Math.round(v);
+      const rdeg = Math.round(deg);
+      pillEl.textContent = kind === 'camera-dial' ? `1/${Math.round(60 + rv * 9.4)}s` : `${rv}%`;
+      degEl.textContent = `${rdeg > 0 ? '+' : ''}${rdeg}°`;
+      valEl.textContent = `${rv}%`;
+      stepEl.textContent = detent ? `${String(Math.round(rv / 10)).padStart(2, '0')} / 10` : `${Math.round(((deg + 135) / 270) * 40)} / 40`;
+    },
+  });
+  return wrap;
 }
 
 function demoBarSlider(): HTMLElement {
@@ -295,8 +334,9 @@ function demoBarSlider(): HTMLElement {
     setFromPointer(e.clientX);
   });
   el.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    setFromPointer(e.clientX);
+    if (dragging || e.pointerType === 'mouse') {
+      setFromPointer(e.clientX);
+    }
   });
   const release = () => {
     if (!dragging) return;
@@ -421,9 +461,10 @@ function demoLever(): HTMLElement {
     el.dataset.dragging = 'true';
     setFromY(e.clientY);
   });
-  handle.addEventListener('pointermove', (e) => {
-    if (dragId !== e.pointerId) return;
-    setFromY(e.clientY);
+  el.addEventListener('pointermove', (e) => {
+    if (dragId === e.pointerId || e.pointerType === 'mouse') {
+      setFromY(e.clientY);
+    }
   });
   const up = () => {
     dragId = null;
@@ -673,276 +714,472 @@ function demoCalendar(): HTMLElement {
   return el;
 }
 
+function createInstrumentPanel(
+  eyebrow: string,
+  pillInit: string,
+  labels: string[],
+): {
+  panel: HTMLElement;
+  stage: HTMLElement;
+  setPill: (text: string) => void;
+  setCells: (values: string[]) => void;
+} {
+  const panel = document.createElement('div');
+  panel.className = 'ml-inst-panel';
+  panel.style.setProperty('--ml-cols', String(labels.length));
+  panel.innerHTML = `
+    <div class="ml-inst-head">
+      <span class="ml-inst-eyebrow">${eyebrow}</span>
+      <span class="ml-inst-pill"><i class="ml-inst-pill-dot"></i><output data-inst-pill>${pillInit}</output></span>
+    </div>
+    <div class="ml-inst-stage" data-inst-stage></div>
+    <div class="ml-inst-legend">
+      ${labels.map((l) => `<div class="ml-inst-cell"><span>${l}</span><strong data-inst-val>—</strong></div>`).join('')}
+    </div>`;
+  const stage = qs<HTMLElement>(panel, '[data-inst-stage]');
+  const pillEl = qs<HTMLElement>(panel, '[data-inst-pill]');
+  const cellEls = Array.from(panel.querySelectorAll<HTMLElement>('[data-inst-val]'));
+  return {
+    panel,
+    stage,
+    setPill: (text: string) => {
+      pillEl.textContent = text;
+    },
+    setCells: (values: string[]) => {
+      values.forEach((v, i) => {
+        if (cellEls[i]) cellEls[i].textContent = v;
+      });
+    },
+  };
+}
+
+function clockwiseArc(cx: number, cy: number, r: number, deg: number): string {
+  const clamped = clamp(deg, 0.5, 359.5);
+  const a = ((clamped - 90) * Math.PI) / 180;
+  const x = cx + Math.cos(a) * r;
+  const y = cy + Math.sin(a) * r;
+  const large = clamped > 180 ? 1 : 0;
+  return `M ${cx} ${(cy - r).toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x.toFixed(1)} ${y.toFixed(1)}`;
+}
+
 function demoCompass(kind = 'compass'): HTMLElement {
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:210px;';
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'ml-svg');
   svg.setAttribute('data-plotter', '');
   svg.setAttribute('data-hairline', '');
-  svg.setAttribute('viewBox', '0 0 160 164');
-  svg.style.cssText = 'width:100%;max-width:176px;height:auto;touch-action:none;color:var(--ds-fg);';
-  const readout = document.createElement('div');
-  readout.className = 'ds-mono';
-  readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
+  svg.setAttribute('viewBox', '0 0 160 160');
+  svg.style.cssText = 'width:100%;max-width:168px;height:auto;touch-action:none;color:var(--ds-fg);';
 
   const ticks36 = Array.from({ length: 36 }, (_, i) => {
     const a = (i / 36) * Math.PI * 2;
-    const inner = i % 3 === 0 ? 55 : 58.5;
-    const role = i % 3 === 0 ? 'secondary' : 'guide';
-    return `<line data-plotter-role="${role}" x1="${(80 + Math.cos(a) * inner).toFixed(1)}" y1="${(78 + Math.sin(a) * inner).toFixed(1)}" x2="${(80 + Math.cos(a) * 62).toFixed(1)}" y2="${(78 + Math.sin(a) * 62).toFixed(1)}" stroke="currentColor"/>`;
+    const major = i % 3 === 0;
+    const inner = major ? 54 : 58;
+    const role = major ? 'secondary' : 'guide';
+    return `<line data-plotter-role="${role}" x1="${(80 + Math.cos(a) * inner).toFixed(1)}" y1="${(80 + Math.sin(a) * inner).toFixed(1)}" x2="${(80 + Math.cos(a) * 61.5).toFixed(1)}" y2="${(80 + Math.sin(a) * 61.5).toFixed(1)}" stroke="currentColor"/>`;
   }).join('');
 
-  // 3D Bezel base rim (cy=83 vs top plate cy=78)
-  const bezel3d = `
-    <path data-plotter-role="primary" d="M 14 78 L 14 83 A 66 66 0 0 0 146 83 L 146 78 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-    <circle data-plotter-role="primary" cx="80" cy="78" r="66" fill="var(--ds-bg)" stroke="currentColor"/>
-    <path data-plotter-role="secondary" d="M 19 78 A 61 61 0 0 0 141 78" fill="none" stroke="currentColor" opacity="0.28"/>
+  // Whisper-thin concentric Hairline bezel (no heavy dark block skirt)
+  const bezelHairline = `
+    <circle data-plotter-role="guide" cx="80" cy="80" r="69" fill="none" stroke="currentColor"/>
+    <path data-plotter-role="secondary" d="M 14 81.5 A 66 66 0 0 0 146 81.5" fill="none" stroke="currentColor" opacity="0.2"/>
+    <circle data-plotter-role="primary" cx="80" cy="80" r="65.5" fill="var(--ds-bg)" stroke="currentColor"/>
+    <circle data-plotter-role="secondary" cx="80" cy="80" r="61.5" fill="none" stroke="currentColor" opacity="0.28"/>
   `;
 
   if (kind === 'weather-instrument') {
-    // 3D Barometric & Hygro Annular Dial (980..1040 hPa + inner %RH sub-dial)
-    const scaleTicks = Array.from({ length: 25 }, (_, i) => {
-      const deg = -135 + (i / 24) * 270;
-      const a = ((deg - 90) * Math.PI) / 180;
-      const r0 = i % 4 === 0 ? 48 : 52;
-      return `<line data-plotter-role="${i % 4 === 0 ? 'secondary' : 'guide'}" x1="${(80 + Math.cos(a) * r0).toFixed(1)}" y1="${(78 + Math.sin(a) * r0).toFixed(1)}" x2="${(80 + Math.cos(a) * 56).toFixed(1)}" y2="${(78 + Math.sin(a) * 56).toFixed(1)}" stroke="currentColor"/>`;
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'ATMOSPHERIC SENSOR · BARO',
+      '22.4°C',
+      ['Wind', 'Humidity', 'Pressure', 'Dew pt'],
+    );
+    stage.append(svg);
+    const scaleTicks = Array.from({ length: 24 }, (_, i) => {
+      const a = (i / 24) * Math.PI * 2;
+      const r0 = i % 2 === 0 ? 52 : 55.5;
+      return `<line data-plotter-role="${i % 2 === 0 ? 'secondary' : 'guide'}" x1="${(80 + Math.cos(a) * r0).toFixed(1)}" y1="${(80 + Math.sin(a) * r0).toFixed(1)}" x2="${(80 + Math.cos(a) * 59).toFixed(1)}" y2="${(80 + Math.sin(a) * 59).toFixed(1)}" stroke="currentColor"/>`;
     }).join('');
-    let hpa = 1018;
-    const renderWeather = (val: number) => {
-      const norm = clamp((val - 980) / 60, 0, 1);
-      const deg = -135 + norm * 270;
-      const rh = Math.round(42 + (1 - norm) * 36);
+    let dirDeg = 238;
+    let hpa = 1015;
+    let rh = 56;
+    let windKmh = 14.2;
+    let tempC = 22.4;
+    const renderWeather = () => {
+      const dew = tempC - (100 - rh) / 5;
       svg.innerHTML = `
-        ${bezel3d}
+        ${bezelHairline}
         ${scaleTicks}
-        <path data-plotter-role="guide" d="M 38 112 A 54 54 0 1 1 122 112" fill="none" stroke="currentColor"/>
-        <!-- Inner 3D Hygro Sub-Dial -->
-        <circle data-plotter-role="secondary" cx="80" cy="101" r="15" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
-        <line data-plotter-role="secondary" x1="80" y1="101" x2="${(80 + Math.cos(((rh / 100) * Math.PI * 1.5 - Math.PI * 1.25)) * 11).toFixed(1)}" y2="${(101 + Math.sin(((rh / 100) * Math.PI * 1.5 - Math.PI * 1.25)) * 11).toFixed(1)}" stroke="currentColor"/>
-        <!-- Reference Set Hand (dashed) -->
-        <line data-plotter-role="guide" x1="80" y1="78" x2="98" y2="36" stroke="currentColor"/>
-        <!-- Main Barometer Needle + 3D Hub Cap -->
-        <g transform="rotate(${deg.toFixed(1)} 80 78)">
-          <path data-plotter-role="primary" d="M 80 26 L 82.2 78 L 80 90 L 77.8 78 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <path data-plotter-role="secondary" d="${clockwiseArc(80, 80, 59, dirDeg)}" fill="none" stroke="currentColor" opacity="0.65"/>
+        <circle data-plotter-role="guide" cx="80" cy="80" r="44" fill="none" stroke="currentColor"/>
+        <text x="80" y="32" text-anchor="middle">N</text>
+        <text x="128" y="83" text-anchor="middle">E</text>
+        <text x="80" y="134" text-anchor="middle">S</text>
+        <text x="32" y="83" text-anchor="middle">W</text>
+        <g transform="rotate(${dirDeg.toFixed(1)} 80 80)">
+          <path data-plotter-role="primary" d="M 80 34 L 84.5 76 L 80 71 L 75.5 76 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+          <line data-plotter-role="secondary" x1="80" y1="71" x2="80" y2="108" stroke="currentColor"/>
         </g>
-        <circle data-plotter-role="primary" cx="80" cy="79.5" r="5.5" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="80" cy="78" r="5.5" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="80" cy="78" r="1.3" fill="currentColor" stroke="none"/>
+        <circle data-plotter-role="primary" cx="80" cy="80" r="4.5" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="80" r="1.2" fill="currentColor" stroke="none"/>
       `;
-      readout.textContent = `${Math.round(val)} hPa · ${rh}% RH`;
+      setPill(`${tempC.toFixed(1)}°C · ${Math.round(hpa)} hPa`);
+      setCells([`${windKmh.toFixed(1)} km/h`, `${Math.round(rh)}%`, `${Math.round(hpa)} hPa`, `${dew.toFixed(1)}°C`]);
     };
-    renderWeather(hpa);
-    svg.addEventListener('pointermove', (e) => {
+    renderWeather();
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
-      const t = clamp((e.clientX - r.left) / r.width, 0, 1);
-      hpa = 985 + t * 50;
-      renderWeather(hpa);
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      const dist = clamp(Math.hypot(dx, dy) / (r.width * 0.48), 0.1, 1);
+      dirDeg = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
+      hpa = 992 + dist * 42;
+      rh = clamp(Math.round(78 - dist * 38), 28, 92);
+      windKmh = 6 + dist * 24;
+      tempC = 19.5 + (1 - dist) * 6.2;
+      renderWeather();
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
   if (kind === 'wind-instrument') {
-    // 3D Anemometer & Wind Vector Rose
-    let angleDeg = 285;
-    let speedKt = 18.4;
-    const renderWind = (deg: number, kt: number) => {
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'WIND TELEMETRY · ANEMOMETER',
+      '135° SE · BFT 4',
+      ['Sustained', 'Peak gust', 'Bearing', 'Beaufort'],
+    );
+    stage.append(svg);
+    let angleDeg = 135;
+    let speedKmh = 22.4;
+    const renderWind = () => {
       const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-      const dir = dirs[Math.round((((deg % 360) + 360) % 360) / 45) % 8];
+      const dir = dirs[Math.round((((angleDeg % 360) + 360) % 360) / 45) % 8];
+      const gustKmh = speedKmh * 1.42 + 2.2;
+      const bft = clamp(Math.floor(speedKmh / 6), 1, 12);
       svg.innerHTML = `
-        ${bezel3d}
+        ${bezelHairline}
         ${ticks36}
-        <circle data-plotter-role="guide" cx="80" cy="78" r="42" fill="none" stroke="currentColor"/>
-        <circle data-plotter-role="guide" cx="80" cy="78" r="24" fill="none" stroke="currentColor"/>
-        <line data-plotter-role="guide" x1="80" y1="18" x2="80" y2="138" stroke="currentColor"/>
-        <line data-plotter-role="guide" x1="20" y1="78" x2="140" y2="78" stroke="currentColor"/>
-        <g transform="rotate(${deg.toFixed(1)} 80 78)">
-          <!-- Aerodynamic Wind Vane with 3D Tail Fin -->
-          <path data-plotter-role="primary" d="M 80 24 L 83 40 L 80 37 L 77 40 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-          <line data-plotter-role="primary" x1="80" y1="37" x2="80" y2="116" stroke="currentColor"/>
-          <path data-plotter-role="primary" d="M 80 104 L 87 122 L 80 117 L 73 122 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="guide" cx="80" cy="80" r="46" fill="none" stroke="currentColor"/>
+        <path data-plotter-role="secondary" d="${clockwiseArc(80, 80, 46, (bft / 12) * 359)}" fill="none" stroke="currentColor" opacity="0.65"/>
+        <text x="80" y="33" text-anchor="middle">N</text>
+        <text x="127" y="83" text-anchor="middle">E</text>
+        <text x="80" y="133" text-anchor="middle">S</text>
+        <text x="33" y="83" text-anchor="middle">W</text>
+        <g transform="rotate(${angleDeg.toFixed(1)} 80 80)">
+          <path data-plotter-role="primary" d="M 80 30 L 84.5 48 L 80 44.5 L 75.5 48 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+          <line data-plotter-role="primary" x1="80" y1="44.5" x2="80" y2="116" stroke="currentColor"/>
+          <circle data-plotter-role="primary" cx="80" cy="116" r="2.2" fill="var(--ds-bg)" stroke="currentColor"/>
         </g>
-        <!-- 3D Central Spindle Cylinder -->
-        <circle data-plotter-role="primary" cx="80" cy="80" r="7" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="80" cy="78" r="7" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="80" cy="78" r="1.4" fill="currentColor" stroke="none"/>
+        <circle data-plotter-role="primary" cx="80" cy="80" r="19" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="secondary" cx="80" cy="80" r="16" fill="none" stroke="currentColor" opacity="0.24"/>
+        <text x="80" y="79" text-anchor="middle" style="font-size:10px;fill:currentColor">${Math.round(angleDeg)}°</text>
+        <text x="80" y="89" text-anchor="middle" style="font-size:8.5px">${dir}</text>
       `;
-      readout.textContent = `${String(Math.round(deg)).padStart(3, '0')}° ${dir} · ${kt.toFixed(1)} kt`;
+      setPill(`${Math.round(angleDeg)}° ${dir} · BFT ${bft}`);
+      setCells([`${speedKmh.toFixed(1)} km/h`, `${gustKmh.toFixed(1)} km/h`, `${Math.round(angleDeg)}° ${dir}`, `Force ${bft} / 12`]);
     };
-    renderWind(angleDeg, speedKt);
-    svg.addEventListener('pointermove', (e) => {
+    renderWind();
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width / 2);
       const dy = e.clientY - (r.top + r.height / 2);
       angleDeg = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
-      speedKt = clamp((Math.hypot(dx, dy) / (r.width * 0.45)) * 28, 4.2, 32.8);
-      renderWind(angleDeg, speedKt);
+      speedKmh = clamp((Math.hypot(dx, dy) / (r.width * 0.46)) * 54, 5.4, 68.0);
+      renderWind();
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
   if (kind === 'navigation-instrument') {
-    // 3D HSI Course Deviation Indicator (CDI + Rotating Azimuth Card)
-    let crs = 38;
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'NAVIGATION TELEMETRY · HSI',
+      'MARINE · 128°',
+      ['Heading', 'Speed', 'Depth', 'Track'],
+    );
+    stage.append(svg);
+    const ticks72 = Array.from({ length: 72 }, (_, i) => {
+      const a = (i / 72) * Math.PI * 2;
+      const major = i % 6 === 0;
+      const med = !major && i % 2 === 0;
+      const r0 = major ? 53.5 : med ? 56.5 : 58.5;
+      return `<line data-plotter-role="${major ? 'secondary' : 'guide'}" x1="${(80 + Math.cos(a) * r0).toFixed(1)}" y1="${(80 + Math.sin(a) * r0).toFixed(1)}" x2="${(80 + Math.cos(a) * 61.5).toFixed(1)}" y2="${(80 + Math.sin(a) * 61.5).toFixed(1)}" stroke="currentColor"/>`;
+    }).join('');
+    let crs = 128;
     let dev = 0.4;
-    const renderNav = (cDeg: number, dVal: number) => {
-      const cdiOffset = clamp(dVal * 14, -22, 22);
+    let spd = 18.4;
+    const renderNav = () => {
+      const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+      const dir = dirs[Math.round((((crs % 360) + 360) % 360) / 45) % 8];
+      const cdiOffset = clamp(dev * 12, -18, 18);
+      const hdgText = String(Math.round(crs)).padStart(3, '0');
       svg.innerHTML = `
-        ${bezel3d}
-        ${ticks36}
-        <!-- Top Lubber Triangle -->
-        <path data-plotter-role="primary" d="M 80 15 L 76.5 9.5 L 83.5 9.5 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="secondary" cx="80" cy="78" r="46" fill="none" stroke="currentColor" opacity="0.38"/>
-        <!-- Lateral Deviation Scale Dots -->
-        ${[-2, -1, 1, 2].map((d) => `<circle data-plotter-role="secondary" cx="${80 + d * 11}" cy="78" r="1.4" fill="none" stroke="currentColor"/>`).join('')}
-        <!-- Rotating Course Pointer & CDI Bar -->
-        <g transform="rotate(${cDeg.toFixed(1)} 80 78)">
-          <path data-plotter-role="primary" d="M 80 22 L 83.5 34 L 76.5 34 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-          <line data-plotter-role="primary" x1="80" y1="34" x2="80" y2="56" stroke="currentColor"/>
-          <line data-plotter-role="primary" x1="80" y1="100" x2="80" y2="132" stroke="currentColor"/>
-          <line data-plotter-role="primary" x1="${(80 + cdiOffset).toFixed(1)}" y1="58" x2="${(80 + cdiOffset).toFixed(1)}" y2="98" stroke="currentColor"/>
+        ${bezelHairline}
+        ${ticks72}
+        <path data-plotter-role="primary" d="M 80 17 L 76.8 11.5 L 83.2 11.5 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <text x="80" y="33" text-anchor="middle">N</text>
+        <text x="126" y="83" text-anchor="middle">E</text>
+        <text x="80" y="133" text-anchor="middle">S</text>
+        <text x="34" y="83" text-anchor="middle">W</text>
+        ${[-16, -8, 8, 16].map((dx) => `<circle data-plotter-role="secondary" cx="${80 + dx}" cy="80" r="1.2" fill="none" stroke="currentColor"/>`).join('')}
+        <g transform="rotate(${crs.toFixed(1)} 80 80)">
+          <path data-plotter-role="primary" d="M 80 34 L 84.5 76 L 80 71 L 75.5 76 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+          <path data-plotter-role="secondary" d="M 80 122 L 76.2 92 L 80 96 L 83.8 92 Z" fill="none" stroke="currentColor"/>
+          <line data-plotter-role="primary" x1="${(80 + cdiOffset).toFixed(1)}" y1="62" x2="${(80 + cdiOffset).toFixed(1)}" y2="98" stroke="currentColor"/>
         </g>
-        <!-- Fixed Central Aircraft Reference -->
-        <path data-plotter-role="secondary" d="M 80 71 L 80 86 M 71 77 L 89 77 M 75 84 L 85 84" fill="none" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="80" r="3.6" fill="var(--ds-bg)" stroke="currentColor"/>
       `;
-      readout.textContent = `CRS ${String(Math.round(cDeg)).padStart(3, '0')}° · DEV ${dVal >= 0 ? '+' : ''}${dVal.toFixed(1)}°`;
+      setPill(`MARINE · ${hdgText}°`);
+      setCells([`${hdgText}°`, `${spd.toFixed(1)} kn`, `${Math.round(380 + spd * 2.2)} m`, `${dir} · ${dev >= 0 ? '+' : ''}${dev.toFixed(1)}°`]);
     };
-    renderNav(crs, dev);
-    svg.addEventListener('pointermove', (e) => {
+    renderNav();
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width / 2);
       const dy = e.clientY - (r.top + r.height / 2);
       crs = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
-      dev = clamp((dx / (r.width * 0.4)) * 1.6, -1.6, 1.6);
-      renderNav(crs, dev);
+      dev = clamp((dx / (r.width * 0.42)) * 1.5, -1.5, 1.5);
+      spd = clamp(12 + (Math.hypot(dx, dy) / (r.width * 0.45)) * 14, 8.5, 28.4);
+      renderNav();
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
   if (kind === 'astrology-wheel') {
-    // 3D 12-House Astrolabe Wheel with Concentric Rings & Planetary Aspect Chords
-    let activeHouse = 8;
-    const houses = ['ARI', 'TAU', 'GEM', 'CAN', 'LEO', 'VIR', 'LIB', 'SCO', 'SAG', 'CAP', 'AQU', 'PIS'];
-    const renderAstro = (hIdx: number) => {
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'EPHEMERIS WHEEL · 12 HOUSES',
+      'ASC 142°',
+      ['Body', 'Longitude', 'House'],
+    );
+    panel.style.setProperty('--ml-cols', '3');
+    stage.append(svg);
+    const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+    const bodies = [
+      { name: 'Sun', base: 248.4 },
+      { name: 'Moon', base: 102.6 },
+      { name: 'Mercury', base: 264.1 },
+      { name: 'Venus', base: 212.8 },
+      { name: 'Mars', base: 158.2 },
+      { name: 'Jupiter', base: 34.5 },
+      { name: 'Saturn', base: 318.0 },
+    ];
+    let selIdx = 0;
+    let rotOffset = 0;
+    const renderAstro = () => {
       const spokes = Array.from({ length: 12 }, (_, i) => {
-        const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
-        const isHi = i === hIdx;
-        return `<line data-plotter-role="${isHi ? 'primary' : 'secondary'}" x1="${(80 + Math.cos(a) * 26).toFixed(1)}" y1="${(78 + Math.sin(a) * 26).toFixed(1)}" x2="${(80 + Math.cos(a) * 56).toFixed(1)}" y2="${(78 + Math.sin(a) * 56).toFixed(1)}" stroke="currentColor" opacity="${isHi ? '0.95' : '0.32'}"/>`;
+        const a = ((i * 30 - 90 + rotOffset) * Math.PI) / 180;
+        const ha = (((i * 30 + 15) - 90 + rotOffset) * Math.PI) / 180;
+        return (
+          `<line data-plotter-role="secondary" x1="${(80 + Math.cos(a) * 24).toFixed(1)}" y1="${(80 + Math.sin(a) * 24).toFixed(1)}" x2="${(80 + Math.cos(a) * 61.5).toFixed(1)}" y2="${(80 + Math.sin(a) * 61.5).toFixed(1)}" stroke="currentColor" opacity="0.32"/>` +
+          `<text x="${(80 + Math.cos(ha) * 53).toFixed(1)}" y="${(82.5 + Math.sin(ha) * 53).toFixed(1)}" text-anchor="middle" style="font-size:7.5px">${String(i + 1).padStart(2, '0')}</text>`
+        );
       }).join('');
-      const planetIdx = [0, 3, 5, 8, 10].map((p) => (p + hIdx) % 12);
-      const planetPts = planetIdx.map((idx) => {
-        const a = ((idx + 0.5) / 12) * Math.PI * 2 - Math.PI / 2;
-        return [80 + Math.cos(a) * 38, 78 + Math.sin(a) * 38] as const;
+      const pts = bodies.map((b, i) => {
+        const lon = (b.base + rotOffset + 360) % 360;
+        const a = ((lon - 90) * Math.PI) / 180;
+        const rad = i % 2 === 0 ? 37 : 31;
+        return { name: b.name, lon, x: 80 + Math.cos(a) * rad, y: 80 + Math.sin(a) * rad };
       });
+      const sel = pts[selIdx];
+      const signIdx = Math.floor(sel.lon / 30) % 12;
       svg.innerHTML = `
-        ${bezel3d}
+        ${bezelHairline}
         ${ticks36}
-        <circle data-plotter-role="secondary" cx="80" cy="78" r="56" fill="none" stroke="currentColor" opacity="0.45"/>
-        <!-- Stepped Inner 3D Ring -->
-        <circle data-plotter-role="primary" cx="80" cy="80" r="26" fill="var(--ds-bg)" stroke="currentColor" opacity="0.35"/>
-        <circle data-plotter-role="primary" cx="80" cy="78" r="26" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="secondary" cx="80" cy="80" r="46" fill="none" stroke="currentColor" opacity="0.38"/>
+        <circle data-plotter-role="secondary" cx="80" cy="80" r="24" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
+        <path data-plotter-role="primary" d="M 80 16 L 77 11 L 83 11 Z" fill="var(--ds-bg)" stroke="currentColor"/>
         ${spokes}
-        <!-- Aspect Chords -->
-        <path data-plotter-role="guide" d="M ${planetPts[0][0].toFixed(1)} ${planetPts[0][1].toFixed(1)} L ${planetPts[2][0].toFixed(1)} ${planetPts[2][1].toFixed(1)} L ${planetPts[4][0].toFixed(1)} ${planetPts[4][1].toFixed(1)} Z" fill="none" stroke="currentColor"/>
-        <line data-plotter-role="secondary" x1="${planetPts[1][0].toFixed(1)}" y1="${planetPts[1][1].toFixed(1)}" x2="${planetPts[3][0].toFixed(1)}" y2="${planetPts[3][1].toFixed(1)}" stroke="currentColor" opacity="0.45"/>
-        <!-- 3D Planetary Nodes -->
-        ${planetPts
+        <path data-plotter-role="guide" d="M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)} L ${pts[2].x.toFixed(1)} ${pts[2].y.toFixed(1)} L ${pts[4].x.toFixed(1)} ${pts[4].y.toFixed(1)} Z" fill="none" stroke="currentColor"/>
+        <line data-plotter-role="secondary" x1="${pts[1].x.toFixed(1)}" y1="${pts[1].y.toFixed(1)}" x2="${pts[5].x.toFixed(1)}" y2="${pts[5].y.toFixed(1)}" stroke="currentColor" opacity="0.35"/>
+        ${pts
           .map(
-            ([x, y], i) =>
-              `<circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i === 3 ? '3.4' : '2.4'}" fill="var(--ds-bg)" stroke="currentColor"/>` +
-              (i === 3 ? `<circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.1" fill="currentColor" stroke="none"/>` : ''),
+            (p, i) =>
+              `<circle data-plotter-role="${i === selIdx ? 'primary' : 'secondary'}" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${i === selIdx ? '4.2' : '2.6'}" fill="var(--ds-bg)" stroke="currentColor"/>` +
+              (i === selIdx ? `<circle data-plotter-role="primary" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="1.3" fill="currentColor" stroke="none"/>` : ''),
           )
           .join('')}
-        <circle data-plotter-role="primary" cx="80" cy="78" r="3" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="80" r="2.2" fill="var(--ds-bg)" stroke="currentColor"/>
       `;
-      readout.textContent = `CASA ${String(hIdx + 1).padStart(2, '0')} · ${houses[hIdx]} · ${hIdx * 30 + 15}°`;
+      setPill(`ASC ${Math.round((142 + rotOffset) % 360)}°`);
+      setCells([sel.name, `${sel.lon.toFixed(1)}° ${signs[signIdx].slice(0, 3).toUpperCase()}`, `Casa ${String(signIdx + 1).padStart(2, '0')} · ${(sel.lon % 30).toFixed(1)}°`]);
     };
-    renderAstro(activeHouse);
-    svg.addEventListener('pointermove', (e) => {
+    renderAstro();
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width / 2);
       const dy = e.clientY - (r.top + r.height / 2);
       const ang = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
-      activeHouse = Math.floor(ang / 30) % 12;
-      renderAstro(activeHouse);
+      selIdx = Math.floor((ang / 360) * bodies.length) % bodies.length;
+      rotOffset = ((e.clientX - r.left) / r.width - 0.5) * 36;
+      renderAstro();
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
-  // Default: 'compass' — 3D Marine Compass Rose
-  let brg = 18;
+  // Default: 'compass' — Magnetic Bearing Rose
+  const { panel, stage, setPill, setCells } = createInstrumentPanel(
+    'MAGNETIC BEARING · COMPASS',
+    'NE · 042°',
+    ['Bearing', 'Octant', 'Declin'],
+  );
+  panel.style.setProperty('--ml-cols', '3');
+  stage.append(svg);
+  let brg = 42;
   const renderCompass = (deg: number) => {
+    const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const dir = dirs[Math.round((((deg % 360) + 360) % 360) / 45) % 8];
+    const hdg = String(Math.round(deg)).padStart(3, '0');
     svg.innerHTML = `
-      ${bezel3d}
+      ${bezelHairline}
       ${ticks36}
-      <circle data-plotter-role="secondary" cx="80" cy="78" r="48" fill="none" stroke="currentColor" opacity="0.38"/>
-      <line data-plotter-role="guide" x1="80" y1="22" x2="80" y2="134" stroke="currentColor"/>
-      <line data-plotter-role="guide" x1="24" y1="78" x2="136" y2="78" stroke="currentColor"/>
-      <g transform="rotate(${deg.toFixed(1)} 80 78)">
-        <path data-plotter-role="primary" d="M 80 24 L 84 78 L 80 128 L 76 78 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="80" cy="34" r="1.3" fill="currentColor" stroke="none"/>
+      <path data-plotter-role="secondary" d="${clockwiseArc(80, 80, 61.5, deg)}" fill="none" stroke="currentColor" opacity="0.65"/>
+      <circle data-plotter-role="guide" cx="80" cy="80" r="46" fill="none" stroke="currentColor"/>
+      <line data-plotter-role="guide" x1="80" y1="22" x2="80" y2="138" stroke="currentColor"/>
+      <line data-plotter-role="guide" x1="22" y1="80" x2="138" y2="80" stroke="currentColor"/>
+      <text x="80" y="33" text-anchor="middle">N</text>
+      <text x="127" y="83" text-anchor="middle">E</text>
+      <text x="80" y="133" text-anchor="middle">S</text>
+      <text x="33" y="83" text-anchor="middle">W</text>
+      <g transform="rotate(${deg.toFixed(1)} 80 80)">
+        <path data-plotter-role="primary" d="M 80 26 L 84 80 L 80 128 L 76 80 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="35" r="1.2" fill="currentColor" stroke="none"/>
       </g>
-      <circle data-plotter-role="primary" cx="80" cy="80" r="6" fill="var(--ds-bg)" stroke="currentColor"/>
-      <circle data-plotter-role="primary" cx="80" cy="78" r="6" fill="var(--ds-bg)" stroke="currentColor"/>
-      <circle data-plotter-role="primary" cx="80" cy="78" r="1.3" fill="currentColor" stroke="none"/>
+      <circle data-plotter-role="primary" cx="80" cy="80" r="5" fill="var(--ds-bg)" stroke="currentColor"/>
+      <circle data-plotter-role="primary" cx="80" cy="80" r="1.2" fill="currentColor" stroke="none"/>
     `;
-    readout.textContent = `BRG ${String(Math.round(deg)).padStart(3, '0')}°`;
+    setPill(`${dir} · ${hdg}°`);
+    setCells([`${hdg}°`, dir, '−2.4° W']);
   };
   renderCompass(brg);
-  svg.addEventListener('pointermove', (e) => {
+  panel.addEventListener('pointermove', (e) => {
     const r = svg.getBoundingClientRect();
     const dx = e.clientX - (r.left + r.width / 2);
     const dy = e.clientY - (r.top + r.height / 2);
     brg = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
     renderCompass(brg);
   });
-  wrap.append(svg, readout);
-  return wrap;
+  return panel;
 }
 
 function demoAudioMeter(): HTMLElement {
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('class', 'ml-svg');
-  svg.setAttribute('viewBox', '0 0 160 80');
-  svg.setAttribute('aria-label', 'Audio meter');
-  const bars: SVGRectElement[] = [];
-  for (let i = 0; i < 16; i++) {
-    const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    r.setAttribute('x', String(8 + i * 9));
-    r.setAttribute('y', '40');
-    r.setAttribute('width', '5');
-    r.setAttribute('height', '20');
-    r.setAttribute('fill', 'currentColor');
-    r.setAttribute('fill-opacity', i < 10 ? '0.85' : '0.25');
-    svg.append(r);
-    bars.push(r);
+  const COLS = 20;
+  const ROWS = 10;
+  const { panel, stage, setPill, setCells } = createInstrumentPanel(
+    'AUDIO LEVEL · MATRIX 20×10',
+    '-11 dBFS',
+    ['RMS', 'Peak', 'Band', 'Crest'],
+  );
+  const matrix = document.createElement('div');
+  matrix.className = 'ml-audio-matrix';
+  matrix.setAttribute('role', 'img');
+  matrix.setAttribute('aria-label', 'Gridded 20 by 10 audio level matrix');
+
+  // Create 200 squared grid cells (row 0 = top row, row ROWS-1 = bottom row)
+  const gridCells: HTMLElement[][] = Array.from({ length: COLS }, () => []);
+  for (let row = 0; row < ROWS; row++) {
+    const levelFromBottom = ROWS - 1 - row;
+    const zone = levelFromBottom >= 8 ? 'hot' : levelFromBottom >= 6 ? 'mid' : 'low';
+    for (let col = 0; col < COLS; col++) {
+      const cell = document.createElement('span');
+      cell.className = 'ml-audio-cell';
+      cell.dataset.zone = zone;
+      matrix.append(cell);
+      gridCells[col][levelFromBottom] = cell;
+    }
   }
+  stage.append(matrix);
+
+  const levels = Array.from({ length: COLS }, (_, i) => 0.25 + 0.35 * Math.sin((i / COLS) * Math.PI));
+  const peaks = levels.slice();
+  let pointerBand = -1;
+  let pointerGain = 0.72;
   let raf = 0;
-  const tick = () => {
-    bars.forEach((r, i) => {
-      const h = 12 + Math.abs(Math.sin(Date.now() / 240 + i * 0.45)) * 48;
-      r.setAttribute('height', h.toFixed(1));
-      r.setAttribute('y', (72 - h).toFixed(1));
-    });
+  let lastUpdate = 0;
+
+  const paintMatrix = (now: number) => {
+    const phase = now / 250;
+    const pulse = Math.pow(Math.max(0, Math.sin(phase)), 5);
+    let sumSq = 0;
+    let maxLv = 0;
+    for (let c = 0; c < COLS; c++) {
+      let target: number;
+      if (pointerBand >= 0) {
+        const dist = Math.abs(c - pointerBand);
+        const bell = Math.exp(-(dist * dist) / 14);
+        const ripple = 0.08 * Math.sin(phase * 1.4 + c * 0.55);
+        target = clamp(0.12 + pointerGain * bell + ripple, 0.08, 1);
+      } else {
+        const ripple = Math.max(0, Math.sin(phase * 0.7 + c * 0.42));
+        const arch = 0.42 + 0.58 * Math.sin((c / (COLS - 1)) * Math.PI);
+        target = clamp(0.14 + arch * (0.16 + ripple * 0.28 + pulse * 0.52), 0.1, 0.98);
+      }
+      levels[c] = levels[c] * 0.55 + target * 0.45;
+      if (levels[c] >= peaks[c]) peaks[c] = levels[c];
+      else peaks[c] = Math.max(levels[c], peaks[c] - 0.025);
+
+      sumSq += levels[c] * levels[c];
+      if (peaks[c] > maxLv) maxLv = peaks[c];
+
+      const activeCount = clamp(Math.round(levels[c] * ROWS), 1, ROWS);
+      const peakRow = clamp(Math.round(peaks[c] * ROWS) - 1, 0, ROWS - 1);
+      for (let r = 0; r < ROWS; r++) {
+        const cell = gridCells[c][r];
+        const isActive = r < activeCount;
+        const isPeak = !isActive && r === peakRow && peakRow > 0;
+        if (isActive) cell.dataset.active = 'true';
+        else delete cell.dataset.active;
+        if (isPeak) cell.dataset.peak = 'true';
+        else delete cell.dataset.peak;
+      }
+    }
+    const rms = Math.max(0.01, Math.sqrt(sumSq / COLS));
+    const dbRms = clamp(Math.round(20 * Math.log10(rms)), -48, 0);
+    const dbPeak = clamp(Math.round(20 * Math.log10(Math.max(0.01, maxLv))), -42, 0);
+    const focusBand = pointerBand >= 0 ? pointerBand : 9;
+    const hz = Math.round(60 * Math.pow(240, focusBand / (COLS - 1)));
+    const freqStr = hz >= 1000 ? `${(hz / 1000).toFixed(1)} kHz` : `${hz} Hz`;
+    setPill(`${dbRms} dBFS`);
+    setCells([`${dbRms} dBFS`, `${dbPeak} dB`, freqStr, `${Math.max(1.5, dbPeak - dbRms).toFixed(1)} dB`]);
+  };
+
+  const tick = (now: number) => {
+    if (now - lastUpdate > 45) {
+      paintMatrix(now);
+      lastUpdate = now;
+    }
     raf = requestAnimationFrame(tick);
   };
+
+  panel.addEventListener('pointermove', (e) => {
+    const r = matrix.getBoundingClientRect();
+    const tx = clamp((e.clientX - r.left) / r.width, 0, 0.999);
+    const ty = clamp(1 - (e.clientY - r.top) / r.height, 0.15, 1);
+    pointerBand = Math.floor(tx * COLS);
+    pointerGain = ty;
+    paintMatrix(performance.now());
+  });
+  panel.addEventListener('pointerleave', () => {
+    pointerBand = -1;
+  });
+
+  paintMatrix(performance.now());
   const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) tick();
-      else cancelAnimationFrame(raf);
+    for (const en of entries) {
+      if (en.isIntersecting) {
+        if (!raf) raf = requestAnimationFrame(tick);
+      } else if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
     }
   });
-  io.observe(svg);
-  return svg as unknown as HTMLElement;
+  io.observe(panel);
+  return panel;
 }
 
 function demoHairlineIso(preset: HairlinePreset = 'wave'): HTMLElement {
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:264px;';
+  const { panel, stage, setPill, setCells } = createInstrumentPanel(
+    'ISOMETRIC FIELD · 2:1',
+    'CREST 4×4',
+    ['Pose', 'Grid', 'Spring', 'Stroke'],
+  );
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 400 320');
   svg.setAttribute('data-plotter', '');
@@ -950,198 +1187,293 @@ function demoHairlineIso(preset: HairlinePreset = 'wave'): HTMLElement {
   svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   svg.style.cssText = 'width:100%;height:auto;aspect-ratio:400/320;touch-action:none;color:var(--ds-fg);';
   const readout = document.createElement('div');
-  readout.className = 'ds-mono';
-  readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
   mountHairlineFigure(svg, readout, preset);
-  wrap.append(svg, readout);
-  return wrap;
+  stage.append(svg);
+  const syncIsoLegend = () => {
+    const txt = readout.textContent || 'rest · crest 4×4 · z +0.85';
+    const parts = txt.split(' · ');
+    setPill(parts[0]?.toUpperCase() || 'REST');
+    setCells([parts[0] || 'rest', parts[1] || '4×4', parts[2] || 'k100/c18', '0.65px']);
+  };
+  syncIsoLegend();
+  svg.addEventListener('pointermove', syncIsoLegend);
+  svg.addEventListener('pointerleave', syncIsoLegend);
+  svg.addEventListener('click', syncIsoLegend);
+  return panel;
 }
 
 function demoSvgInstrument(kind: string): HTMLElement {
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:240px;';
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'ml-svg');
   svg.setAttribute('data-plotter', '');
   svg.setAttribute('data-hairline', '');
-  svg.setAttribute('viewBox', '0 0 220 144');
-  svg.style.cssText = 'width:100%;max-width:220px;height:auto;touch-action:none;color:var(--ds-fg);';
-  const readout = document.createElement('div');
-  readout.className = 'ds-mono';
-  readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
+  svg.setAttribute('viewBox', '0 0 220 136');
+  svg.style.cssText = 'width:100%;max-width:236px;height:auto;touch-action:none;color:var(--ds-fg);';
 
   if (kind === 'attitude-indicator') {
-    // 3D Gyroscopic Artificial Horizon (Bezel + Bank Scale + Tilting Pitch Ladder + Fixed Gull-Wing)
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'FLIGHT DYNAMICS · ADI',
+      '+4° / +11°',
+      ['Pitch', 'Roll', 'Slip', 'Director'],
+    );
+    stage.append(svg);
     let roll = 11;
     let pitch = 4;
-    const bankTicks = [-60, -45, -30, -15, 0, 15, 30, 45, 60]
+    const bankTicks = [-60, -45, -30, -20, -10, 0, 10, 20, 30, 45, 60]
       .map((deg) => {
         const a = ((deg - 90) * Math.PI) / 180;
-        const r0 = deg % 30 === 0 ? 48 : 50.5;
-        return `<line data-plotter-role="secondary" x1="${(110 + Math.cos(a) * r0).toFixed(1)}" y1="${(70 + Math.sin(a) * r0).toFixed(1)}" x2="${(110 + Math.cos(a) * 54).toFixed(1)}" y2="${(70 + Math.sin(a) * 54).toFixed(1)}" stroke="currentColor"/>`;
+        const major = deg === 0 || Math.abs(deg) === 30 || Math.abs(deg) === 60;
+        const r0 = major ? 46.5 : 49.5;
+        return `<line data-plotter-role="${major ? 'secondary' : 'guide'}" x1="${(110 + Math.cos(a) * r0).toFixed(1)}" y1="${(68 + Math.sin(a) * r0).toFixed(1)}" x2="${(110 + Math.cos(a) * 52.5).toFixed(1)}" y2="${(68 + Math.sin(a) * 52.5).toFixed(1)}" stroke="currentColor"/>`;
       })
       .join('');
     const renderAttitude = (rDeg: number, pDeg: number) => {
-      const py = clamp(pDeg * 1.1, -16, 16);
+      const py = clamp(pDeg * 1.15, -18, 18);
+      const rp = Math.round(pDeg);
+      const rr = Math.round(rDeg);
+      const slip = (rDeg / 45).toFixed(1);
+      const dir = Math.abs(pDeg) < 1.5 ? 'LEVEL' : pDeg > 0 ? 'CLIMB' : 'DESC';
       svg.innerHTML = `
         <defs>
-          <clipPath id="att-clip"><circle cx="110" cy="70" r="46"/></clipPath>
+          <clipPath id="att-clip"><circle cx="110" cy="68" r="45"/></clipPath>
         </defs>
-        <!-- 3D Cylindrical Instrument Casing -->
-        <path data-plotter-role="primary" d="M 52 70 L 52 75 A 58 58 0 0 0 168 75 L 168 70 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="110" cy="70" r="58" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="secondary" cx="110" cy="70" r="46" fill="none" stroke="currentColor" opacity="0.4"/>
+        <circle data-plotter-role="guide" cx="110" cy="68" r="59" fill="none" stroke="currentColor"/>
+        <path data-plotter-role="secondary" d="M 54 69.5 A 56 56 0 0 0 166 69.5" fill="none" stroke="currentColor" opacity="0.2"/>
+        <circle data-plotter-role="primary" cx="110" cy="68" r="55.5" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="secondary" cx="110" cy="68" r="45" fill="none" stroke="currentColor" opacity="0.34"/>
         ${bankTicks}
-        <!-- Gimbal Horizon & Pitch Ladder -->
         <g clip-path="url(#att-clip)">
-          <g transform="rotate(${rDeg.toFixed(1)} 110 70) translate(0 ${py.toFixed(1)})">
-            <line data-plotter-role="primary" x1="56" y1="70" x2="164" y2="70" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="94" y1="56" x2="126" y2="56" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="100" y1="44" x2="120" y2="44" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="94" y1="84" x2="126" y2="84" stroke="currentColor"/>
-            <line data-plotter-role="secondary" x1="100" y1="96" x2="120" y2="96" stroke="currentColor"/>
+          <g transform="rotate(${(-rDeg).toFixed(1)} 110 68) translate(0 ${py.toFixed(1)})">
+            <line data-plotter-role="primary" x1="54" y1="68" x2="166" y2="68" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="94" y1="54" x2="126" y2="54" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="100" y1="42" x2="120" y2="42" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="94" y1="82" x2="126" y2="82" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="100" y1="94" x2="120" y2="94" stroke="currentColor"/>
+            <text x="89" y="56.5" text-anchor="end" style="font-size:7px">10</text>
+            <text x="131" y="56.5" text-anchor="start" style="font-size:7px">10</text>
+            <text x="89" y="84.5" text-anchor="end" style="font-size:7px">10</text>
+            <text x="131" y="84.5" text-anchor="start" style="font-size:7px">10</text>
           </g>
         </g>
-        <!-- Fixed 3D Aircraft Reference Gull-Wing -->
-        <path data-plotter-role="primary" d="M 80 70 L 98 70 L 103 75 M 140 70 L 122 70 L 117 75" fill="none" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="110" cy="70" r="2.2" fill="var(--ds-bg)" stroke="currentColor"/>
+        <g transform="rotate(${(-rDeg).toFixed(1)} 110 68)">
+          <path data-plotter-role="primary" d="M 110 16 L 107 21.5 L 113 21.5 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        </g>
+        <path data-plotter-role="primary" d="M 80 68 L 98 68 L 103 73 M 140 68 L 122 68 L 117 73" fill="none" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="110" cy="68" r="2" fill="var(--ds-bg)" stroke="currentColor"/>
       `;
-      readout.textContent = `ROLL ${rDeg >= 0 ? '+' : ''}${Math.round(rDeg)}° · PITCH ${pDeg >= 0 ? '+' : ''}${Math.round(pDeg)}°`;
+      setPill(`${rp > 0 ? `+${rp}` : rp}° / ${rr > 0 ? `+${rr}` : rr}°`);
+      setCells([`${rp > 0 ? `+${rp}` : rp}°`, `${rr > 0 ? `+${rr}` : rr}°`, `${Number(slip) > 0 ? `+${slip}` : slip}°`, dir]);
     };
     renderAttitude(roll, pitch);
-    svg.addEventListener('pointermove', (e) => {
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
       const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
       const ny = (0.5 - (e.clientY - r.top) / r.height) * 2;
-      roll = clamp(nx * 28, -28, 28);
-      pitch = clamp(ny * 15, -15, 15);
+      roll = clamp(nx * 35, -35, 35);
+      pitch = clamp(ny * 22, -22, 22);
       renderAttitude(roll, pitch);
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
   if (kind === 'astronomy-instrument') {
-    // 3D Solar Horizon Dome & Ecliptic Arc
-    let tNorm = 0.62;
-    const renderSolar = (t: number) => {
-      const ang = Math.PI * (1 - t);
-      const sx = 110 - Math.cos(ang) * 72;
-      const sy = 96 - Math.sin(ang) * 58;
-      const gy = 96 + Math.sin(ang) * 10;
-      const hour = 6 + Math.round(t * 12);
-      const alt = Math.round(Math.sin(ang) * 68);
-      const az = Math.round(90 + t * 180);
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'SOLAR EPHEMERIS · FORTALEZA',
+      '14:20 · +54°',
+      ['Sunrise', 'Noon', 'Sunset', 'Alt / Az'],
+    );
+    stage.append(svg);
+    const ticks25 = Array.from({ length: 25 }, (_, i) => {
+      const x = 18 + i * 7.66;
+      const h = i % 4 === 0 ? 7 : 3.5;
+      return `<line data-plotter-role="${i % 4 === 0 ? 'secondary' : 'guide'}" x1="${x.toFixed(1)}" y1="98" x2="${x.toFixed(1)}" y2="${(98 + h).toFixed(1)}" stroke="currentColor"/>`;
+    }).join('');
+    let progress = 0.62;
+    const renderSolar = (p: number) => {
+      const x = 18 + p * 184;
+      const y = (1 - p) * (1 - p) * 96 + 2 * (1 - p) * p * -26 + p * p * 96;
+      const qx = 18 + p * (110 - 18);
+      const qy = 96 + p * (-26 - 96);
+      const totalMin = Math.round(338 + p * 734);
+      const hh = String(Math.floor(totalMin / 60)).padStart(2, '0');
+      const mm = String(totalMin % 60).padStart(2, '0');
+      const alt = Math.round(Math.sin(p * Math.PI) * 68);
+      const az = Math.round(74 + p * 212);
       svg.innerHTML = `
-        <!-- 3D Horizon Disc with Extruded Front Rim -->
-        <path data-plotter-role="primary" d="M 26 96 L 26 101 A 84 22 0 0 0 194 101 L 194 96 Z" fill="var(--ds-bg)" stroke="currentColor"/>
-        <ellipse data-plotter-role="primary" cx="110" cy="96" rx="84" ry="22" fill="var(--ds-bg)" stroke="currentColor"/>
-        <line data-plotter-role="guide" x1="26" y1="96" x2="194" y2="96" stroke="currentColor"/>
-        <line data-plotter-role="guide" x1="110" y1="74" x2="110" y2="118" stroke="currentColor"/>
-        <!-- Winter / Summer Solstice Reference Arcs -->
-        <path data-plotter-role="guide" d="M 48 96 A 62 40 0 0 1 172 96" fill="none" stroke="currentColor"/>
-        <!-- Main Solar Ecliptic Arc -->
-        <path data-plotter-role="secondary" d="M 38 96 A 72 58 0 0 1 182 96" fill="none" stroke="currentColor"/>
-        <!-- Solar Altitude Plumb Line & Ground Projection -->
-        <line data-plotter-role="guide" x1="${sx.toFixed(1)}" y1="${sy.toFixed(1)}" x2="${sx.toFixed(1)}" y2="${gy.toFixed(1)}" stroke="currentColor"/>
-        <ellipse data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${gy.toFixed(1)}" rx="3.2" ry="1.4" fill="none" stroke="currentColor"/>
-        <!-- 3D Solar Orb + Corona Ring -->
-        <circle data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="10.5" fill="none" stroke="currentColor" opacity="0.34"/>
-        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="6" fill="var(--ds-bg)" stroke="currentColor"/>
-        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="1.4" fill="currentColor" stroke="none"/>
+        <path data-plotter-role="guide" d="M 18 96 Q 110 -26 202 96" fill="none" stroke="currentColor"/>
+        <path data-plotter-role="primary" d="M 18 96 Q ${qx.toFixed(1)} ${qy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}" fill="none" stroke="currentColor"/>
+        <line data-plotter-role="secondary" x1="12" y1="96" x2="208" y2="96" stroke="currentColor"/>
+        ${ticks25}
+        <line data-plotter-role="guide" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="96" stroke="currentColor"/>
+        <circle data-plotter-role="secondary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9.5" fill="none" stroke="currentColor" opacity="0.32"/>
+        <circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.8" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.3" fill="currentColor" stroke="none"/>
+        <text x="16" y="121">EAST</text>
+        <text x="110" y="121" text-anchor="middle">SOUTH</text>
+        <text x="204" y="121" text-anchor="end">WEST</text>
       `;
-      readout.textContent = `${String(hour).padStart(2, '0')}:00 · ALT +${alt}° · AZ ${az}°`;
+      setPill(`${hh}:${mm} · +${alt}°`);
+      setCells(['05:38', '11:54', '17:52', `+${alt}° · ${az}°`]);
     };
-    renderSolar(tNorm);
-    svg.addEventListener('pointermove', (e) => {
+    renderSolar(progress);
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
-      tNorm = clamp((e.clientX - r.left) / r.width, 0.08, 0.92);
-      renderSolar(tNorm);
+      progress = clamp((e.clientX - r.left) / r.width, 0.04, 0.96);
+      renderSolar(progress);
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
   if (kind === 'lunar-ephemeris') {
-    // 3D Lunar Phase Disc & 8-Phase Orbital Ring
-    let phase = 0.64;
-    const names = ['NOVA', 'CRESCENTE', 'QUARTO CRESC.', 'GIBOSA CRESC.', 'CHEIA', 'GIBOSA MING.', 'QUARTO MING.', 'MINGUANTE'];
+    const { panel, stage, setPill, setCells } = createInstrumentPanel(
+      'LUNAR EPHEMERIS · SYNODIC',
+      '74% LIT',
+      ['Illum', 'Phase', 'Age', 'Dist'],
+    );
+    stage.append(svg);
+    const synodicTicks = 28;
+    const names = ['New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous', 'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'];
+    let phaseNorm = 0.36;
     const renderLunar = (p: number) => {
+      const phaseAngle = p * 360;
+      const ageDays = p * 29.53;
+      const illum = 50 * (1 - Math.cos((phaseAngle * Math.PI) / 180));
+      const activeTickCount = Math.round(p * synodicTicks);
       const idx = Math.round(p * 7) % 8;
-      const kx = Math.cos(p * Math.PI * 2) * 26;
-      const orbitNodes = Array.from({ length: 8 }, (_, i) => {
-        const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
-        const ox = 110 + Math.cos(a) * 52;
-        const oy = 70 + Math.sin(a) * 44;
-        const isSel = i === idx;
-        return (
-          `<circle data-plotter-role="${isSel ? 'primary' : 'secondary'}" cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="${isSel ? '6.5' : '4.5'}" fill="var(--ds-bg)" stroke="currentColor" opacity="${isSel ? '1' : '0.42'}"/>` +
-          (isSel ? `<circle data-plotter-role="primary" cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="1.3" fill="currentColor" stroke="none"/>` : '')
-        );
+      const r = 31;
+      const cx = 110;
+      const cy = 68;
+      const rad = (phaseAngle * Math.PI) / 180;
+      const rx = Math.abs(Math.cos(rad)) * r;
+      const isWaxing = phaseAngle <= 180;
+      const outerSweep = isWaxing ? 1 : 0;
+      const isGibbous = phaseAngle > 90 && phaseAngle < 270;
+      const termSweep = isWaxing ? (isGibbous ? 1 : 0) : isGibbous ? 0 : 1;
+      const litPath = `M ${cx} ${cy - r} A ${r} ${r} 0 0 ${outerSweep} ${cx} ${cy + r} A ${rx.toFixed(2)} ${r} 0 0 ${termSweep} ${cx} ${cy - r} Z`;
+      const ticks = Array.from({ length: synodicTicks }, (_, i) => {
+        const a = (i / synodicTicks) * Math.PI * 2 - Math.PI / 2;
+        const major = i % 7 === 0;
+        const r0 = major ? 49 : 51.5;
+        const r1 = 55;
+        const active = i <= activeTickCount;
+        return `<line data-plotter-role="${active ? 'primary' : 'guide'}" x1="${(cx + Math.cos(a) * r0).toFixed(1)}" y1="${(cy + Math.sin(a) * r0).toFixed(1)}" x2="${(cx + Math.cos(a) * r1).toFixed(1)}" y2="${(cy + Math.sin(a) * r1).toFixed(1)}" stroke="currentColor" opacity="${active ? '0.85' : '0.22'}"/>`;
       }).join('');
+      const pipA = p * Math.PI * 2 - Math.PI / 2;
       svg.innerHTML = `
-        <ellipse data-plotter-role="guide" cx="110" cy="70" rx="52" ry="44" fill="none" stroke="currentColor"/>
-        ${orbitNodes}
-        <!-- Central 3D Moon Globe with Extruded Lower Rim -->
-        <circle data-plotter-role="primary" cx="110" cy="73" r="26" fill="var(--ds-bg)" stroke="currentColor" opacity="0.38"/>
-        <circle data-plotter-role="primary" cx="110" cy="70" r="26" fill="var(--ds-bg)" stroke="currentColor"/>
-        <!-- Dynamic Terminator Curve -->
-        <path data-plotter-role="primary" d="M 110 44 A ${Math.abs(kx).toFixed(1)} 26 0 0 ${kx >= 0 ? 1 : 0} 110 96" fill="none" stroke="currentColor"/>
-        <path data-plotter-role="secondary" d="M 88 70 A 22 22 0 0 0 132 70" fill="none" stroke="currentColor" opacity="0.28"/>
+        <circle data-plotter-role="guide" cx="${cx}" cy="${cy}" r="58" fill="none" stroke="currentColor"/>
+        ${ticks}
+        <circle data-plotter-role="secondary" cx="${cx}" cy="${cy}" r="43" fill="none" stroke="currentColor" opacity="0.3"/>
+        <circle data-plotter-role="primary" cx="${cx}" cy="${cy}" r="${r}" fill="var(--ds-bg)" stroke="currentColor"/>
+        <path data-plotter-role="primary" d="${litPath}" fill="currentColor" fill-opacity="0.12" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="${(cx + Math.cos(pipA) * 43).toFixed(1)}" cy="${(cy + Math.sin(pipA) * 43).toFixed(1)}" r="2" fill="var(--ds-bg)" stroke="currentColor"/>
       `;
-      readout.textContent = `${names[idx]} · ELONG ${Math.round(p * 360)}°`;
+      setPill(`${Math.round(illum)}% LIT · D${ageDays.toFixed(1)}`);
+      setCells([`${illum.toFixed(1)}%`, `${Math.round(phaseAngle)}° · ${names[idx].split(' ')[1] || names[idx]}`, `${ageDays.toFixed(1)} d`, `${Math.round(384400 - Math.cos(rad) * 14200).toLocaleString('en-US')} km`]);
     };
-    renderLunar(phase);
-    svg.addEventListener('pointermove', (e) => {
+    renderLunar(phaseNorm);
+    panel.addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect();
-      phase = clamp((e.clientX - r.left) / r.width, 0.02, 0.98);
-      renderLunar(phase);
+      phaseNorm = clamp((e.clientX - r.left) / r.width, 0.02, 0.98);
+      renderLunar(phaseNorm);
     });
-    wrap.append(svg, readout);
-    return wrap;
+    return panel;
   }
 
-  // Default: 'instrument' (Instrument Bars) — Front-Facing 3D 8-Column Harmonic Level Gauge
-  const levels = [0.42, 0.64, 0.54, 0.86, 0.72, 0.48, 0.68, 0.58];
-  let focusCol = 3;
-  const renderBars = (activeCol: number) => {
-    const cols = levels
-      .map((lv, i) => {
-        const x = 26 + i * 22;
-        const h = Math.round(24 + lv * 78);
-        const yTop = 116 - h;
-        const isHi = i === activeCol;
-        const role = isHi ? 'primary' : 'secondary';
-        return `
-          <!-- Recessed 3D Slot -->
-          <rect data-plotter-role="guide" x="${x}" y="20" width="12" height="100" rx="6" fill="none" stroke="currentColor"/>
-          <!-- 3D Extruded Column Base Skirt -->
-          <rect data-plotter-role="${role}" x="${x}" y="${yTop + 4}" width="12" height="${h}" rx="6" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '0.95' : '0.45'}"/>
-          <!-- 3D Raised Column Top Face -->
-          <rect data-plotter-role="${role}" x="${x}" y="${yTop}" width="12" height="${h}" rx="6" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '1' : '0.58'}"/>
-          <!-- Inner Chamfer Crease -->
-          <line data-plotter-role="secondary" x1="${x + 3}" y1="${yTop + 5}" x2="${x + 9}" y2="${yTop + 5}" stroke="currentColor" opacity="0.35"/>
-          ${isHi ? `<circle data-plotter-role="primary" cx="${x + 6}" cy="${yTop + 10}" r="1.3" fill="currentColor" stroke="none"/>` : ''}
-        `;
-      })
-      .join('');
+  // Default: 'instrument' (Instrument Bars) — Jhosephe 33-Bar Precision Ruler with Top Hairline Brackets
+  const { panel, stage, setPill, setCells } = createInstrumentPanel(
+    'HARMONIC RACK · 33 BARS',
+    '68% · BAR 22',
+    ['Level', 'Active', 'Anchor', 'Gain'],
+  );
+  svg.setAttribute('viewBox', '0 0 330 76');
+  stage.append(svg);
+  const BAR_COUNT = 33;
+  let normValue = 68;
+  const renderBars33 = (val: number) => {
+    const activeLimit = Math.round((val / 100) * BAR_COUNT);
+    const barsMarkup = Array.from({ length: BAR_COUNT }, (_, i) => {
+      const isMajor = i % 4 === 0;
+      const h = isMajor ? 28 : 16;
+      const x = 4 + i * 9.8;
+      const y = 60 - h;
+      const isActive = i < activeLimit;
+      const isLead = i === Math.max(0, activeLimit - 1);
+      const role = isLead || (isActive && isMajor) ? 'primary' : isActive ? 'secondary' : 'guide';
+      const op = isLead ? '1' : isActive ? '0.78' : '0.22';
+      return (
+        `<rect data-plotter-role="${role}" x="${x.toFixed(1)}" y="${y}" width="3" height="${h}" rx="1.5" fill="${isActive ? 'currentColor' : 'none'}" fill-opacity="${isLead ? '0.88' : '0.28'}" stroke="currentColor" opacity="${op}"/>` +
+        (isLead ? `<circle data-plotter-role="primary" cx="${(x + 1.5).toFixed(1)}" cy="${y - 5}" r="1.5" fill="currentColor" stroke="none"/>` : '')
+      );
+    }).join('');
     svg.innerHTML = `
-      <line data-plotter-role="guide" x1="16" y1="120" x2="204" y2="120" stroke="currentColor"/>
-      ${cols}
+      <path data-plotter-role="secondary" d="M 4 12 H 72 M 258 12 H 326" fill="none" stroke="currentColor" opacity="0.45"/>
+      <line data-plotter-role="guide" x1="4" y1="64" x2="326" y2="64" stroke="currentColor"/>
+      ${barsMarkup}
     `;
-    readout.textContent = `CH 0${activeCol + 1} · ${Math.round(levels[activeCol] * 100)} dB`;
+    const db = ((val - 70) * 0.4).toFixed(1);
+    const anchor = Math.round(activeLimit / 4) * 4;
+    setPill(`${Math.round(val)}% · BAR ${String(activeLimit).padStart(2, '0')}`);
+    setCells([`${Math.round(val)}%`, `${activeLimit} / 33`, `Bar ${String(anchor).padStart(2, '0')}`, `${Number(db) >= 0 ? `+${db}` : db} dB`]);
   };
-  renderBars(focusCol);
-  svg.addEventListener('pointermove', (e) => {
+  renderBars33(normValue);
+  panel.addEventListener('pointermove', (e) => {
     const r = svg.getBoundingClientRect();
-    const t = clamp((e.clientX - r.left) / r.width, 0, 0.99);
-    focusCol = Math.floor(t * levels.length);
-    const ny = clamp(1 - (e.clientY - r.top) / r.height, 0.18, 0.96);
-    levels[focusCol] = ny;
-    renderBars(focusCol);
+    normValue = clamp(((e.clientX - r.left) / r.width) * 100, 3, 100);
+    renderBars33(normValue);
   });
-  wrap.append(svg, readout);
-  return wrap;
+  return panel;
+}
+
+function demoRaceTelemetry(): HTMLElement {
+  const { panel, stage, setPill, setCells } = createInstrumentPanel(
+    'RACE TELEMETRY · CAR 16',
+    '286 km/h · G6',
+    ['Speed', 'Gear', 'RPM', 'Sector'],
+  );
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'ml-svg');
+  svg.setAttribute('data-plotter', '');
+  svg.setAttribute('data-hairline', '');
+  svg.setAttribute('viewBox', '0 0 240 96');
+  svg.style.cssText = 'width:100%;max-width:256px;height:auto;touch-action:none;color:var(--ds-fg);';
+  stage.append(svg);
+
+  const samples = Array.from({ length: 42 }, (_, i) => {
+    const ph = (i / 41) * Math.PI * 3.6;
+    return 44 + Math.sin(ph) * 22 + Math.cos(ph * 0.65) * 9;
+  });
+  const pts = samples.map((v, i) => [8 + (i / 41) * 224, 84 - v] as const);
+  const pathD = pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+  const areaD = `${pathD} L 232 84 L 8 84 Z`;
+  let cursorIdx = 32;
+
+  const renderRace = (idx: number) => {
+    const [cx, cy] = pts[idx];
+    const spd = Math.round(188 + samples[idx] * 2.1);
+    const gear = clamp(Math.floor((spd - 110) / 30), 2, 8);
+    const rpm = Math.round(spd * 38 + 3150);
+    const sec = idx < 14 ? 'S1 24.8s' : idx < 28 ? 'S2 31.4s' : 'S3 28.1s';
+    svg.innerHTML = `
+      <line data-plotter-role="guide" x1="8" y1="24" x2="232" y2="24" stroke="currentColor"/>
+      <line data-plotter-role="guide" x1="8" y1="54" x2="232" y2="54" stroke="currentColor"/>
+      <line data-plotter-role="secondary" x1="8" y1="84" x2="232" y2="84" stroke="currentColor"/>
+      <path d="${areaD}" fill="currentColor" fill-opacity="0.06" stroke="none"/>
+      <path data-plotter-role="primary" d="${pathD}" fill="none" stroke="currentColor"/>
+      <line data-plotter-role="guide" x1="${cx.toFixed(1)}" y1="12" x2="${cx.toFixed(1)}" y2="84" stroke="currentColor"/>
+      <circle data-plotter-role="primary" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="2.8" fill="var(--ds-bg)" stroke="currentColor"/>
+      <circle data-plotter-role="primary" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="1.1" fill="currentColor" stroke="none"/>
+    `;
+    setPill(`${spd} km/h · G${gear}`);
+    setCells([`${spd} km/h`, `Gear ${gear}`, rpm.toLocaleString('en-US'), sec]);
+  };
+  renderRace(cursorIdx);
+  panel.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect();
+    const t = clamp((e.clientX - r.left) / r.width, 0, 1);
+    cursorIdx = Math.round(t * (samples.length - 1));
+    renderRace(cursorIdx);
+  });
+  return panel;
 }
 
 function seriesPoints(values: number[], w: number, h: number, pad = 8): Array<readonly [number, number]> {
@@ -1959,6 +2291,7 @@ function buildDemo(item: CatalogItem): HTMLElement {
     case 'chart-donut':
       return demoChartDonut();
     case 'chart-spark':
+      if (item.id === 'race-telemetry') return demoRaceTelemetry();
       return demoChartSpark();
     case 'chart-scatter':
       return demoChartScatter();
