@@ -1180,6 +1180,7 @@
       cursor: pointer;
       padding: 6px 2px;
     }
+    .nav-rail-close { padding: 6px 12px; }
     .nav-rail-close:hover { color: var(--ds-fg); }
     .nav-rail-list {
       display: flex;
@@ -5962,6 +5963,24 @@
           </table>
         </div>
 
+        <!-- Interactive Hairline x Plotter 2:1 Isometric Figure -->
+        <div class="svg-instrument-card" id="hairline-iso-card">
+          <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:12px;">
+            <div>
+              <div class="eyebrow">Hairline × Plotter · Isometria 2:1 (<a href="https://hairline.lucasmarkes.com/skills" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">lucasmarkes/hairline</a>)</div>
+              <h3 class="serif" style="font-size:23px; margin:3px 0 0;">Sólidos Arredondados em Malha 2:1 (Regras 01–10)</h3>
+            </div>
+            <span class="tier-badge">400 × 320 · 2:1 ISO</span>
+          </div>
+          <div class="svg-frame" style="max-width:520px; width:100%; margin:0 auto; aspect-ratio:400 / 320;">
+            <svg id="hairline-iso-svg" data-plotter viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Figura isométrica 2:1 interativa seguindo as 10 regras da Hairline combinadas à gramática Plotter" style="touch-action:none;"></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+            <span class="mono tabular" id="hairline-iso-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · crest 4×4 · z +0.62</span>
+            <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">hit em repouso · oclusão opaca · mola k100/c18 · zero rótulo interno</span>
+          </div>
+        </div>
+
         <div class="chart-grid">
           <div class="svg-instrument-card">
             <div>
@@ -6182,7 +6201,7 @@
             <h2 class="section-title" data-home="skills.title">Habilidades Meridian &amp; Craft Aberto.</h2>
           </div>
           <p class="section-desc" data-home="skills.desc">
-            Regras verificáveis (DESIGN.md), roteamento (AGENTS.md), 8 skills modulares incluindo uma skill dedicada de gostos (meridian-taste) e atribuição direta às referências que moldam o sistema.
+            Regras verificáveis (DESIGN.md), roteamento (AGENTS.md), 10 skills modulares incluindo gostos (meridian-taste), figuras isométricas com a Plotter (meridian-hairline-figure) e auditoria de alinhamento (meridian-gridlines).
           </p>
         </div>
 
@@ -6295,6 +6314,30 @@
               <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-components">Copiar CLI</button>
             </div>
           </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-hairline-figure</span>
+              <span class="skill-card-tag">Plotter · 2:1</span>
+            </div>
+            <p class="skill-card-desc">Conjunto para a Plotter: figuras isométricas 2:1 em sólidos arredondados com hit em repouso, oclusão opaca, dupla mola/ease e adoção SVG (lucasmarkes/hairline).</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-hairline-figure/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-hairline-figure">Copiar CLI</button>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <span class="skill-card-name">meridian-gridlines</span>
+              <span class="skill-card-tag">Align · Probe</span>
+            </div>
+            <p class="skill-card-desc">Auditoria de alinhamento por borda de tinta via probe.js (1440px e 390px), alinhando sidebars, toolbars, menus e tabelas (pritamux/gridlines).</p>
+            <div class="skill-card-foot">
+              <a class="skill-card-link" href="https://github.com/jhosephebtc/Meridian/blob/main/skills/meridian-gridlines/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md ↗</a>
+              <button type="button" class="skill-copy-btn" data-copy-skill="npx skills add jhosephebtc/Meridian --skill meridian-gridlines">Copiar CLI</button>
+            </div>
+          </article>
         </div>
 
         <div class="credits-subhead">
@@ -6322,6 +6365,18 @@
             <span class="credit-card-role">Agent Skill · SVG Blueprint</span>
             <span class="credit-card-title">Pasquale Vitiello — Plotter</span>
             <span class="credit-card-note">13 roles semânticas SVG (data-plotter-role), uma tinta currentColor, cotas abertas e isolamento didático data-plotter-isolate.</span>
+          </a>
+
+          <a class="credit-card" href="https://hairline.lucasmarkes.com/skills" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Agent Skills · 2:1 Isometric &amp; Plotter</span>
+            <span class="credit-card-title">Lucas Marques — Hairline</span>
+            <span class="credit-card-note">hairline-create e hairline-adopt (MIT): 10 regras para figuras isométricas 2:1, hit em repouso, oclusão opaca e dupla mola/ease junto à Plotter.</span>
+          </a>
+
+          <a class="credit-card" href="https://github.com/pritamux/gridlines" target="_blank" rel="noopener noreferrer">
+            <span class="credit-card-role">Agent Skill · Alignment Probe</span>
+            <span class="credit-card-title">Pritam — Gridlines</span>
+            <span class="credit-card-note">Auditoria de alinhamento via probe.js nas bordas de tinta (Karri Saarinen &amp; Apple HIG) em sidebars, topbars, menus e painéis.</span>
           </a>
 
           <a class="credit-card" href="https://shaders.paper.design/" target="_blank" rel="noopener noreferrer">
@@ -6439,7 +6494,7 @@
     </div>
 
     <div class="footer-meta">
-      <span>Single-Ink · Soft Chromatic · PaperGrain canvas · HalfTone</span>
+      <span>Single-Ink · PaperGrain · HalfTone · Plotter × Hairline · Gridlines</span>
       <span>CSS puro · TypeScript · React Native / Skia · SVG 1:1</span>
     </div>
   </footer>
@@ -8150,6 +8205,234 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
          13. ATELIER GENERATIVO — MOTOR COMPILADO DE atelier-engine.ts (ZERO p5.js)
          Aquarelas, Blocos cenários aquarela, Lápis Grafite, Giz de Cera & Pincel Sumi-e
          ====================================================================== */
+      /* ======================================================================
+         12B. HAIRLINE × PLOTTER — FIGURA ISOMÉTRICA 2:1 INTERATIVA (REGRAS 01–10)
+         ====================================================================== */
+      function initHairlineIsoFigure() {
+        const svg = document.getElementById('hairline-iso-svg');
+        const readout = document.getElementById('hairline-iso-readout');
+        if (!svg) return;
+
+        const isoProj = (x, y, z) => [200 + (x - y) * 32, 178 + (x + y) * 16 - z * 22];
+        const roundedTile = (cx, cy, half, rad, steps = 4) => {
+          const pts = [];
+          const corners = [
+            [cx + half - rad, cy - half + rad, -Math.PI / 2, 0],
+            [cx + half - rad, cy + half - rad, 0, Math.PI / 2],
+            [cx - half + rad, cy + half - rad, Math.PI / 2, Math.PI],
+            [cx - half + rad, cy - half + rad, Math.PI, Math.PI * 1.5],
+          ];
+          for (const [ox, oy, a0, a1] of corners) {
+            for (let s = 0; s <= steps; s++) {
+              const a = a0 + ((a1 - a0) * s) / steps;
+              pts.push([ox + Math.cos(a) * rad, oy + Math.sin(a) * rad]);
+            }
+          }
+          return pts;
+        };
+        const hull2d = (pts) => {
+          const sorted = pts.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+          const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+          const low = [];
+          for (const p of sorted) {
+            while (low.length >= 2 && cross(low[low.length - 2], low[low.length - 1], p) <= 0) low.pop();
+            low.push(p);
+          }
+          const up = [];
+          for (let i = sorted.length - 1; i >= 0; i--) {
+            const p = sorted[i];
+            while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop();
+            up.push(p);
+          }
+          low.pop();
+          up.pop();
+          return low.concat(up);
+        };
+        const pathFromPts = (pts) =>
+          pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') + ' Z';
+
+        const tiles = [];
+        for (let r = 0; r < 4; r++) {
+          for (let c = 0; c < 4; c++) {
+            const cx = c - 1.5;
+            const cy = r - 1.5;
+            // Rest pose: curved harmonic crest (never flat, rule 05)
+            const zRest =
+              0.28 +
+              0.38 * Math.exp(-((cx + 0.45) * (cx + 0.45) + (cy + 0.35) * (cy + 0.35)) / 2.2) +
+              0.12 * Math.cos(cx * 0.85 - cy * 0.7);
+            const restCenter = isoProj(cx, cy, zRest);
+            tiles.push({
+              r,
+              c,
+              cx,
+              cy,
+              order: r + c,
+              zRest,
+              z: zRest,
+              v: 0,
+              target: zRest,
+              restX: restCenter[0],
+              restY: restCenter[1],
+              outerPts: roundedTile(cx, cy, 0.42, 0.13, 3),
+              innerPts: roundedTile(cx, cy, 0.28, 0.08, 2),
+            });
+          }
+        }
+        // Strict painter's order back-to-front (rule 06)
+        const drawOrder = tiles.map((_, i) => i).sort((a, b) => tiles[a].order - tiles[b].order || tiles[a].r - tiles[b].r);
+        const REST_LEAD = tiles.findIndex((t) => t.r === 1 && t.c === 1);
+        let activeIdx = -1;
+        let pinnedIdx = -1;
+        let raf = 0;
+        let visible = true;
+        let lastT = 0;
+
+        // Precompute static dashed base guide lines on z=0
+        const baseCorners = [isoProj(-2.05, -2.05, 0), isoProj(2.05, -2.05, 0), isoProj(2.05, 2.05, 0), isoProj(-2.05, 2.05, 0)];
+        const baseAxisH = [isoProj(-2.25, 0, 0), isoProj(2.25, 0, 0)];
+        const baseAxisV = [isoProj(0, -2.25, 0), isoProj(0, 2.25, 0)];
+        const guideMarkup = `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.9" stroke-dasharray="3 4" opacity="0.22">` +
+          `<path d="${pathFromPts(baseCorners)}"/>` +
+          `<line x1="${baseAxisH[0][0].toFixed(1)}" y1="${baseAxisH[0][1].toFixed(1)}" x2="${baseAxisH[1][0].toFixed(1)}" y2="${baseAxisH[1][1].toFixed(1)}"/>` +
+          `<line x1="${baseAxisV[0][0].toFixed(1)}" y1="${baseAxisV[0][1].toFixed(1)}" x2="${baseAxisV[1][0].toFixed(1)}" y2="${baseAxisV[1][1].toFixed(1)}"/>` +
+          `</g>`;
+
+        function renderIso() {
+          const lead = activeIdx >= 0 ? activeIdx : pinnedIdx >= 0 ? pinnedIdx : REST_LEAD;
+          let html = guideMarkup;
+          for (const idx of drawOrder) {
+            const tile = tiles[idx];
+            const isActive = idx === lead;
+            const botPts = tile.outerPts.map(([x, y]) => isoProj(x, y, 0));
+            const topPts = tile.outerPts.map(([x, y]) => isoProj(x, y, tile.z));
+            const hull = hull2d(topPts.concat(botPts));
+            const creasePts = tile.innerPts.map(([x, y]) => isoProj(x, y, tile.z));
+            const pip = isoProj(tile.cx, tile.cy + 0.14, tile.z);
+            const gOp = isActive ? '1' : '0.42';
+            html += `<g opacity="${gOp}">`;
+            html += `<path data-plotter-role="primary" d="${pathFromPts(hull)}" fill="var(--ds-bg)" stroke="currentColor" stroke-width="${isActive ? '1.35' : '1.05'}" stroke-linejoin="round"/>`;
+            html += `<path data-plotter-role="secondary" d="${pathFromPts(creasePts)}" fill="none" stroke="currentColor" stroke-width="0.9" opacity="0.45"/>`;
+            if (isActive) {
+              html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="2" fill="currentColor"/>`;
+            }
+            html += `</g>`;
+          }
+          svg.innerHTML = html;
+        }
+
+        function setTargets(focusIdx) {
+          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const ft = focusIdx >= 0 ? tiles[focusIdx] : null;
+          for (let i = 0; i < tiles.length; i++) {
+            const t = tiles[i];
+            if (!ft) {
+              t.target = t.zRest;
+            } else {
+              const d = Math.hypot(t.c - ft.c, t.r - ft.r);
+              // Rule 03 reach: clamped falloff lift
+              const lift = Math.min(0.95, 0.95 / (1 + d * d * 0.85));
+              t.target = Math.min(1.85, t.zRest + lift);
+            }
+            if (reduced) {
+              t.z = t.target;
+              t.v = 0;
+            }
+          }
+          if (readout) {
+            if (!ft) {
+              readout.textContent = `rest · crest 4×4 · z +${tiles[REST_LEAD].zRest.toFixed(2)}`;
+            } else {
+              readout.textContent = `cell ${ft.r + 1}·${ft.c + 1} · z +${ft.target.toFixed(2)}`;
+            }
+          }
+          if (reduced) {
+            renderIso();
+            return;
+          }
+          wake();
+        }
+
+        function tick(now) {
+          raf = 0;
+          if (!visible) return;
+          const dt = Math.min(0.025, lastT ? (now - lastT) / 1000 : 0.016);
+          lastT = now;
+          let moving = false;
+          // Rule 08 spring k=100 c=18 m=1
+          for (const t of tiles) {
+            const force = -100 * (t.z - t.target) - 18 * t.v;
+            t.v += force * dt;
+            t.z += t.v * dt;
+            if (Math.abs(t.z - t.target) > 0.002 || Math.abs(t.v) > 0.002) {
+              moving = true;
+            } else {
+              t.z = t.target;
+              t.v = 0;
+            }
+          }
+          renderIso();
+          if (moving) raf = requestAnimationFrame(tick);
+          else lastT = 0;
+        }
+
+        function wake() {
+          if (!raf && visible) {
+            lastT = 0;
+            raf = requestAnimationFrame(tick);
+          }
+        }
+
+        function pickRestTile(clientX, clientY) {
+          const ctm = svg.getScreenCTM();
+          if (!ctm) return -1;
+          const inv = ctm.inverse();
+          const vx = clientX * inv.a + clientY * inv.c + inv.e;
+          const vy = clientX * inv.b + clientY * inv.d + inv.f;
+          let best = -1;
+          let bestD = 30;
+          for (let i = 0; i < tiles.length; i++) {
+            const d = Math.hypot(vx - tiles[i].restX, vy - tiles[i].restY);
+            if (d < bestD) { bestD = d; best = i; }
+          }
+          return best;
+        }
+
+        svg.addEventListener('pointermove', (e) => {
+          if (e.pointerType === 'touch') return;
+          const next = pickRestTile(e.clientX, e.clientY);
+          if (next !== activeIdx) {
+            activeIdx = next;
+            setTargets(activeIdx >= 0 ? activeIdx : pinnedIdx);
+          }
+        });
+        svg.addEventListener('pointerleave', () => {
+          if (activeIdx !== -1) {
+            activeIdx = -1;
+            setTargets(pinnedIdx);
+          }
+        });
+        svg.addEventListener('click', (e) => {
+          const picked = pickRestTile(e.clientX, e.clientY);
+          if (picked < 0) return;
+          pinnedIdx = pinnedIdx === picked ? -1 : picked;
+          activeIdx = -1;
+          setTargets(pinnedIdx);
+        });
+
+        const io = new IntersectionObserver((entries) => {
+          visible = entries[0]?.isIntersecting ?? true;
+          if (!visible && raf) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+            lastT = 0;
+          }
+        }, { threshold: 0.05 });
+        io.observe(svg);
+        renderIso();
+      }
+      initHairlineIsoFigure();
+
       const atelierCanvas = document.getElementById('atelier-canvas');
       const atelierCtx = atelierCanvas.getContext('2d');
       const atelierState = {

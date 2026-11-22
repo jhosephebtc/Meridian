@@ -87,6 +87,11 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
   - Shapes stay transparent (`fill="none"`, except `0.055` named intersection highlight).
   - Radial / Gann / environmental dials lock `aspect-ratio: 1 / 1` (`viewBox="0 0 400 400"`) — never `preserveAspectRatio="none"`.
   - Canonical technical illustrations compose in `560 × 440`; support didactic isolation (`data-plotter-isolate`).
+- **Hairline Isometric Figures (`skills/meridian-hairline-figure/SKILL.md`):**
+  - Pair with Plotter for pointer-responsive **2:1 isometric rounded solids** (`400 × 320`, opaque `fill="var(--ds-bg)"` back-to-front painter occlusion, zero vertical box corners, 1 dim inner crease, hit testing strictly on rest pose, `700ms cubic-bezier(0.32, 0.72, 0, 1)` discrete / spring `k 100 · c 18` continuous, external Mono telemetry only).
+- **Gridlines Alignment Policy (`skills/meridian-gridlines/SKILL.md` & `probe.js`):**
+  - Audit headers, nav rails, menus, sidebars, toolbars, cards, and tables with `window.__gridlines()` at `1440px` and `390px`.
+  - Fix alignment outliers (`> 1px` off dominant ink line or vertical center) at container padding / shared CSS tokens — never with per-item `margin-left` hacks or by distorting approved hit areas (`>= 44px`).
 - **Generative Atelier (`src/atelier-engine.ts`):**
   - 100% strict TypeScript (`MeridianAtelier`, `AtelierDrawingBackend`), zero `p5.js`.
   - Paint incrementally (`< 0.7ms/frame`), pause offscreen via `IntersectionObserver`, and render static final frame immediately when `prefers-reduced-motion: reduce`.

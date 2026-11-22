@@ -50,8 +50,16 @@ Set `data-plotter-isolate="<role>"` on `[data-plotter]` to dim non-matching laye
 
 ---
 
-## 4. Attribution
+## 4. Pairing with `meridian-hairline-figure` & `meridian-gridlines`
+
+- **2:1 Isometric Companion ([`meridian-hairline-figure`](../meridian-hairline-figure/SKILL.md)):** Use Plotter (`560 × 440` or `400 × 400`) for orthographic blueprints, globes, and technical dials; use Hairline (`400 × 320`, 2:1 isometric rounded solids with opaque `var(--ds-bg)` back-to-front occlusion and rest-pose hit testing) when building interactive isometric objects. Tag Hairline silhouettes with `data-plotter-role="primary"` and creases with `data-plotter-role="secondary"` so `data-plotter-isolate` highlights both grammars uniformly.
+- **Alignment Audit ([`meridian-gridlines`](../meridian-gridlines/SKILL.md)):** After assembling headers, telemetry toolbars, and instrument cards around Plotter plates, verify horizontal edges and vertical row centers with `window.__gridlines()`.
+
+---
+
+## 5. Attribution
 
 - **Pasquale Vitiello** ([`pasqualevitiello/plotter`](https://github.com/pasqualevitiello/plotter)): 13 semantic roles, 1-ink stroke discipline, open 45° arrows, gap-cleared dimensions, and role isolation.
+- **Lucas Marques** ([`lucasmarkes/hairline`](https://github.com/lucasmarkes/hairline) · [skills](https://hairline.lucasmarkes.com/skills)): Interactive 2:1 isometric rounded-solid figure companion rules paired with Plotter.
 - **Anthropic** ([81k Interviews](https://www.anthropic.com/features/81k-interviews)): Dotted orthographic editorial globe style.
 - Full credits: [`../CREDITS.md`](../CREDITS.md).

@@ -92,6 +92,8 @@ Scan changed CSS/TS/HTML files for these Meridian taste violations:
 - [ ] Zero `HALFTONE.size >= 0.4`.
 - [ ] Zero `preserveAspectRatio="none"` on radial/Gann instruments.
 - [ ] Zero `⌘K` / keyboard shortcut open animations (`transition: none`).
+- [ ] Zero moving hit targets inside interactive SVG figures (`01 · hit` on rest pose only; opaque back-to-front occlusion).
+- [ ] Zero alignment misses `>= 2px` in `window.__gridlines()` across topbars, menus, sidebars, and toolbars (`1440px` & `390px`).
 
 ---
 

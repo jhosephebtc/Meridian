@@ -22,7 +22,38 @@
   padding-right: calc(var(--ds-stack-md) + 4px);
 }
 
-.lab-sidebar .ds-eyebrow { margin-bottom: var(--ds-stack-snug); }
+.lab-sidebar .ds-eyebrow {
+  margin-bottom: var(--ds-stack-snug);
+  padding-inline: 10px;
+}
+
+@media (max-width: 640px) {
+  #lab-topbar {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 6px;
+  }
+  #lab-topbar .brand-mark {
+    min-width: 0;
+    flex-shrink: 1;
+    gap: 6px;
+  }
+  #lab-topbar .brand-title {
+    font-size: 0.94rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #lab-topbar .lab-topbar-actions {
+    gap: 4px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+  #lab-topbar .site-menu-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
 
 .lab-cat {
   display: flex;
