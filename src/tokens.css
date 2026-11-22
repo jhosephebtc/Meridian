@@ -932,6 +932,10 @@ button, [role="button"], [role="tab"], .ds-chip, .ds-drag-handle {
 [data-plotter][data-plotter-isolate="guide"]      [data-plotter-role]:not([data-plotter-role="guide"])      { opacity: 0.04; }
 [data-plotter][data-plotter-isolate="leader"]     [data-plotter-role]:not([data-plotter-role="leader"]):not([data-plotter-role="dimension"]) { opacity: 0.04; }
 
+[hidden] {
+  display: none !important;
+}
+
 /* Subconjunto Hairline 2:1 (0.65px / 0.45px / 0.40px, cantos & pontas round) */
 [data-hairline] {
   --plotter-stroke-primary: 0.65;

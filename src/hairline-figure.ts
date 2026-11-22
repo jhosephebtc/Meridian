@@ -1,45 +1,46 @@
 /**
  * MERIDIAN HAIRLINE FIGURES — hairline-figure.ts
- * Interactive 2:1 isometric rounded-solid SVG figures built to work in concert
- * with Meridian's Plotter grammar (src/plotter-svg.ts) and Single-Ink surfaces.
+ * Interactive 2:1 rounded-solid SVG figures built on Lucas Marques's Hairline
+ * kernel geometry (github.com/lucasmarkes/hairline, MIT) paired with Meridian's
+ * Plotter Single-Ink grammar (src/plotter-svg.ts).
  *
- * Follows Lucas Marques's Hairline 10 rules (github.com/lucasmarkes/hairline, MIT):
+ * Implements the 10 Hairline rules:
  *  01. hit      — Hit testing strictly on static rest centers (zero hover flicker)
  *  02. order    — Distance-staggered wave settle outward from focus
- *  03. reach    — Clamped elevation within the 400x320 2:1 viewBox frame
+ *  03. reach    — Clamped elevation within the 400x320 viewBox frame
  *  04. accent   — Ultra-thin foreground stroke highlight (0.65 / 0.45 / 0.4 non-scaling-stroke)
  *  05. rest     — Designed asymmetric rest composition (never flat)
- *  06. honesty  — Back-to-front painter occlusion with opaque var(--ds-bg) plates
+ *  06. honesty  — Back-to-front painter occlusion with opaque var(--ds-bg) solids
  *  07. cost     — Sleeps idle / offscreen via IntersectionObserver + reduced-motion snap
  *  08. clock    — Spring k=100, c=18, m=1 for continuous pointer response
- *  09. radius   — Rounded ring hull without vertical box corners + 1 dim inner crease
+ *  09. radius   — Silhouette hull of top+base rings + open front-facing inner crease arc
  *  10. quiet    — Wordless SVG canvas; concise external Geist Mono telemetry only
  */
 
-export type HairlinePreset =
-  | 'wave'
-  | 'strata'
-  | 'beacon'
-  | 'octaves'
-  | 'switches'
-  | 'attitude'
-  | 'ephemeris'
-  | 'telemetry';
+export type HairlinePreset = 'wave' | 'strata' | 'beacon' | 'octaves' | 'switches';
 
-interface IsoTile {
+interface RingSample {
+  u: number;
+  v: number;
+  nu: number;
+  nv: number;
+}
+
+interface IsoSolid {
   r: number;
   c: number;
   cx: number;
   cy: number;
   order: number;
+  z0: number;
   zRest: number;
   z: number;
   v: number;
   target: number;
   restX: number;
   restY: number;
-  outerPts: Array<[number, number]>;
-  innerPts: Array<[number, number]>;
+  outerRing: RingSample[];
+  innerRing: RingSample[];
   code?: string;
 }
 
@@ -48,46 +49,69 @@ const PRESET_LABEL: Record<HairlinePreset, string> = {
   strata: 'strata 5×1',
   beacon: 'beacon 2:1',
   octaves: 'octaves h8',
-  switches: 'keys 3×2',
-  attitude: 'gimbal 3:1',
-  ephemeris: 'orbit 5:1',
-  telemetry: 'vane 5:1',
+  switches: 'buttons 3×2',
 };
 
 const SWITCH_TAGS = ['tokens', 'grain', 'motion', 'plotter', 'hairline', 'gridlines'] as const;
-const ATTITUDE_TAGS = ['datum', 'horizon', 'index'] as const;
-const EPHEMERIS_TAGS = ['new', 'wax', 'full', 'wan', 'node'] as const;
-const TELEMETRY_TAGS = ['N', 'W', 'CORE', 'E', 'S'] as const;
 
 function isoProj(x: number, y: number, z: number, scale = 32, baseY = 178): [number, number] {
   return [200 + (x - y) * scale, baseY + (x + y) * (scale * 0.5) - z * 22];
 }
 
-function isoRingPts(rx: number, ry: number, z: number, steps: number, scale: number, baseY: number): Array<[number, number]> {
-  const pts: Array<[number, number]> = [];
-  for (let i = 0; i < steps; i++) {
-    const a = (i / steps) * Math.PI * 2;
-    pts.push(isoProj(Math.cos(a) * rx, Math.sin(a) * ry, z, scale, baseY));
-  }
-  return pts;
-}
-
-function roundedTile(cx: number, cy: number, halfX: number, halfY: number, rad: number, steps = 3): Array<[number, number]> {
-  const r = Math.min(rad, halfX * 0.65, halfY * 0.65);
-  const pts: Array<[number, number]> = [];
-  const corners: Array<[number, number, number, number]> = [
-    [cx + halfX - r, cy - halfY + r, -Math.PI / 2, 0],
-    [cx + halfX - r, cy + halfY - r, 0, Math.PI / 2],
-    [cx - halfX + r, cy + halfY - r, Math.PI / 2, Math.PI],
-    [cx - halfX + r, cy - halfY + r, Math.PI, Math.PI * 1.5],
+/** Rounded rectangle ring with outward normals (nu, nv) for front-crease extraction. */
+function rrectRing(u0: number, v0: number, u1: number, v1: number, r: number, steps = 4): RingSample[] {
+  const rad = Math.max(0, Math.min(r, (u1 - u0) / 2, (v1 - v0) / 2));
+  const out: RingSample[] = [];
+  const corners: Array<[number, number, number]> = [
+    [u1 - rad, v1 - rad, 0],
+    [u0 + rad, v1 - rad, 90],
+    [u0 + rad, v0 + rad, 180],
+    [u1 - rad, v0 + rad, 270],
   ];
-  for (const [ox, oy, a0, a1] of corners) {
-    for (let s = 0; s <= steps; s++) {
-      const a = a0 + ((a1 - a0) * s) / steps;
-      pts.push([ox + Math.cos(a) * r, oy + Math.sin(a) * r]);
+  for (const [cu, cv, a0] of corners) {
+    for (let k = 0; k <= steps; k++) {
+      const a = ((a0 + (90 * k) / steps) * Math.PI) / 180;
+      const ca = Math.cos(a);
+      const sa = Math.sin(a);
+      out.push({ u: cu + rad * ca, v: cv + rad * sa, nu: ca, nv: sa });
     }
   }
-  return pts;
+  return out;
+}
+
+/** True circular ring with outward normals (nu, nv) — projects to a 3D cylinder under prism. */
+function circRing(cx: number, cy: number, R: number, steps = 48): RingSample[] {
+  const out: RingSample[] = [];
+  for (let k = 0; k < steps; k++) {
+    const a = (k / steps) * Math.PI * 2;
+    const ca = Math.cos(a);
+    const sa = Math.sin(a);
+    out.push({ u: cx + R * ca, v: cy + R * sa, nu: ca, nv: sa });
+  }
+  return out;
+}
+
+/** Whether a ring sample faces the viewer in the 2:1 camera (+u/+v toward bottom of screen). */
+function isFrontSample(q: RingSample): boolean {
+  return (q.nu + q.nv) * Math.SQRT1_2 >= -1e-5;
+}
+
+/** Contiguous cyclic run of samples facing the viewer (Rule 09 open front crease). */
+function frontRun(ring: RingSample[]): RingSample[] {
+  const n = ring.length;
+  let start = -1;
+  for (let i = 0; i < n; i++) {
+    if (isFrontSample(ring[i]) && !isFrontSample(ring[(i + n - 1) % n])) {
+      start = i;
+      break;
+    }
+  }
+  if (start < 0) return isFrontSample(ring[0]) ? ring.slice() : [];
+  const out: RingSample[] = [];
+  for (let k = 0; k < n && isFrontSample(ring[(start + k) % n]); k++) {
+    out.push(ring[(start + k) % n]);
+  }
+  return out;
 }
 
 function hull2d(pts: Array<[number, number]>): Array<[number, number]> {
@@ -110,19 +134,53 @@ function hull2d(pts: Array<[number, number]>): Array<[number, number]> {
   return low.concat(up);
 }
 
-function pathFromPts(pts: Array<[number, number]>): string {
+function pathClosed(pts: Array<[number, number]>): string {
+  if (!pts.length) return '';
   return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') + ' Z';
 }
 
-function buildPresetTiles(preset: HairlinePreset): {
-  tiles: IsoTile[];
+function pathOpen(pts: Array<[number, number]>): string {
+  if (pts.length < 2) return '';
+  return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+}
+
+function ringAt(ring: RingSample[], z: number, scale: number, baseY: number): Array<[number, number]> {
+  return ring.map((q) => isoProj(q.u, q.v, z, scale, baseY));
+}
+
+function prismMarkup(
+  outerRing: RingSample[],
+  innerRing: RingSample[],
+  z0: number,
+  z1: number,
+  scale: number,
+  baseY: number,
+  strokeW: string,
+  creaseOp = '0.26',
+): string {
+  const topPts = ringAt(outerRing, z1, scale, baseY);
+  const botPts = ringAt(outerRing, z0, scale, baseY);
+  const sil = pathClosed(hull2d(topPts.concat(botPts)));
+  const creasePts = ringAt(frontRun(innerRing), z1, scale, baseY);
+  const crease = pathOpen(creasePts);
+  return (
+    `<path data-plotter-role="primary" d="${sil}" fill="var(--ds-bg)" stroke="currentColor" stroke-width="${strokeW}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>` +
+    (crease
+      ? `<path data-plotter-role="secondary" d="${crease}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="${creaseOp}"/>`
+      : '')
+  );
+}
+
+function buildPresetSolids(preset: HairlinePreset): {
+  solids: IsoSolid[];
   restLead: number;
   maxReach: number;
   scale: number;
   baseY: number;
   guideMarkup: string;
+  trayMarkup?: string;
 } {
-  const tiles: IsoTile[] = [];
+  const solids: IsoSolid[] = [];
 
   if (preset === 'wave') {
     const scale = 32;
@@ -132,206 +190,132 @@ function buildPresetTiles(preset: HairlinePreset): {
         const cx = c - 1.5;
         const cy = r - 1.5;
         const zRest =
-          0.28 +
-          0.38 * Math.exp(-((cx + 0.45) ** 2 + (cy + 0.35) ** 2) / 2.2) +
+          0.32 +
+          0.42 * Math.exp(-((cx + 0.45) ** 2 + (cy + 0.35) ** 2) / 2.2) +
           0.12 * Math.cos(cx * 0.85 - cy * 0.7);
         const rc = isoProj(cx, cy, zRest, scale, baseY);
-        tiles.push({
-          r, c, cx, cy, order: r + c, zRest, z: zRest, v: 0, target: zRest,
+        solids.push({
+          r, c, cx, cy, order: r + c, z0: 0, zRest, z: zRest, v: 0, target: zRest,
           restX: rc[0], restY: rc[1],
-          outerPts: roundedTile(cx, cy, 0.42, 0.42, 0.13, 3),
-          innerPts: roundedTile(cx, cy, 0.28, 0.28, 0.08, 2),
+          outerRing: rrectRing(cx - 0.41, cy - 0.41, cx + 0.41, cy + 0.41, 0.14, 4),
+          innerRing: rrectRing(cx - 0.31, cy - 0.31, cx + 0.31, cy + 0.31, 0.08, 3),
         });
       }
     }
-    const baseCorners = [isoProj(-2.05, -2.05, 0, scale, baseY), isoProj(2.05, -2.05, 0, scale, baseY), isoProj(2.05, 2.05, 0, scale, baseY), isoProj(-2.05, 2.05, 0, scale, baseY)];
+    const baseCorners = [
+      isoProj(-2.05, -2.05, 0, scale, baseY),
+      isoProj(2.05, -2.05, 0, scale, baseY),
+      isoProj(2.05, 2.05, 0, scale, baseY),
+      isoProj(-2.05, 2.05, 0, scale, baseY),
+    ];
     const axisH = [isoProj(-2.25, 0, 0, scale, baseY), isoProj(2.25, 0, 0, scale, baseY)];
     const axisV = [isoProj(0, -2.25, 0, scale, baseY), isoProj(0, 2.25, 0, scale, baseY)];
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathFromPts(baseCorners)}"/>` +
+      `<path d="${pathClosed(baseCorners)}"/>` +
       `<line x1="${axisH[0][0].toFixed(1)}" y1="${axisH[0][1].toFixed(1)}" x2="${axisH[1][0].toFixed(1)}" y2="${axisH[1][1].toFixed(1)}"/>` +
       `<line x1="${axisV[0][0].toFixed(1)}" y1="${axisV[0][1].toFixed(1)}" x2="${axisV[1][0].toFixed(1)}" y2="${axisV[1][1].toFixed(1)}"/>` +
       `</g>`;
-    return { tiles, restLead: 5, maxReach: 1.85, scale, baseY, guideMarkup };
+    return { solids, restLead: 5, maxReach: 1.85, scale, baseY, guideMarkup };
   }
 
   if (preset === 'strata') {
     const scale = 30;
     const baseY = 212;
     for (let i = 0; i < 5; i++) {
-      const zRest = 0.24 + i * 0.46;
+      const zRest = 0.26 + i * 0.46;
       const half = 1.65 - i * 0.18;
       const rc = isoProj(0, 0, zRest, scale, baseY);
-      tiles.push({
-        r: i, c: 0, cx: 0, cy: 0, order: i, zRest, z: zRest, v: 0, target: zRest,
+      solids.push({
+        r: i, c: 0, cx: 0, cy: 0, order: i, z0: Math.max(0, zRest - 0.22), zRest, z: zRest, v: 0, target: zRest,
         restX: rc[0], restY: rc[1],
-        outerPts: roundedTile(0, 0, half, half, half * 0.24, 3),
-        innerPts: roundedTile(0, 0, half * 0.72, half * 0.72, half * 0.16, 2),
+        outerRing: rrectRing(-half, -half, half, half, half * 0.24, 4),
+        innerRing: rrectRing(-(half - 0.14), -(half - 0.14), half - 0.14, half - 0.14, Math.max(0.06, half * 0.24 - 0.08), 3),
       });
     }
-    const base = [isoProj(-2.1, -2.1, 0, scale, baseY), isoProj(2.1, -2.1, 0, scale, baseY), isoProj(2.1, 2.1, 0, scale, baseY), isoProj(-2.1, 2.1, 0, scale, baseY)];
+    const base = [
+      isoProj(-2.1, -2.1, 0, scale, baseY),
+      isoProj(2.1, -2.1, 0, scale, baseY),
+      isoProj(2.1, 2.1, 0, scale, baseY),
+      isoProj(-2.1, 2.1, 0, scale, baseY),
+    ];
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathFromPts(base)}"/>` +
+      `<path d="${pathClosed(base)}"/>` +
       `<line x1="200" y1="68" x2="200" y2="254"/>` +
       `</g>`;
-    return { tiles, restLead: 2, maxReach: 2.9, scale, baseY, guideMarkup };
+    return { solids, restLead: 2, maxReach: 2.9, scale, baseY, guideMarkup };
   }
 
   if (preset === 'beacon') {
+    // True circular 3D cylindrical tower tiers (circRing) tapering upward
     const scale = 31;
-    const baseY = 206;
-    const coords: Array<[number, number, number, number]> = [
-      [0, 0, 0.34, 1.55],
-      [0, 0, 0.88, 1.15],
-      [0, 0, 1.44, 0.76],
-      [0, 0, 2.02, 0.42],
+    const baseY = 204;
+    const tiers: Array<[number, number]> = [
+      [0.36, 1.62],
+      [0.88, 1.18],
+      [1.42, 0.78],
+      [1.98, 0.44],
     ];
-    coords.forEach(([cx, cy, zRest, half], i) => {
-      const rc = isoProj(cx, cy, zRest, scale, baseY);
-      tiles.push({
-        r: i, c: 0, cx, cy, order: i, zRest, z: zRest, v: 0, target: zRest,
+    tiers.forEach(([zRest, rad], i) => {
+      const rc = isoProj(0, 0, zRest, scale, baseY);
+      solids.push({
+        r: i, c: 0, cx: 0, cy: 0, order: i, z0: Math.max(0, zRest - 0.34), zRest, z: zRest, v: 0, target: zRest,
         restX: rc[0], restY: rc[1],
-        outerPts: roundedTile(cx, cy, half, half, half * 0.34, 4),
-        innerPts: roundedTile(cx, cy, half * 0.68, half * 0.68, half * 0.22, 3),
+        outerRing: circRing(0, 0, rad, 56),
+        innerRing: circRing(0, 0, Math.max(0.18, rad - 0.13), 48),
       });
     });
+    const baseOrbit = ringAt(circRing(0, 0, 2.05, 56), 0, scale, baseY);
     const r0 = isoProj(-2.2, -2.2, 0, scale, baseY);
     const r1 = isoProj(2.2, 2.2, 0, scale, baseY);
     const l0 = isoProj(-2.2, 2.2, 0, scale, baseY);
     const l1 = isoProj(2.2, -2.2, 0, scale, baseY);
-    const axisX0 = isoProj(-2.25, 0, 0, scale, baseY);
-    const axisX1 = isoProj(2.25, 0, 0, scale, baseY);
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<path d="${pathClosed(baseOrbit)}"/>` +
       `<line x1="${r0[0].toFixed(1)}" y1="${r0[1].toFixed(1)}" x2="${r1[0].toFixed(1)}" y2="${r1[1].toFixed(1)}"/>` +
       `<line x1="${l0[0].toFixed(1)}" y1="${l0[1].toFixed(1)}" x2="${l1[0].toFixed(1)}" y2="${l1[1].toFixed(1)}"/>` +
-      `<line x1="${axisX0[0].toFixed(1)}" y1="${axisX0[1].toFixed(1)}" x2="${axisX1[0].toFixed(1)}" y2="${axisX1[1].toFixed(1)}"/>` +
       `<line x1="200" y1="62" x2="200" y2="262"/>` +
       `</g>`;
-    return { tiles, restLead: 3, maxReach: 2.95, scale, baseY, guideMarkup };
+    return { solids, restLead: 3, maxReach: 2.95, scale, baseY, guideMarkup };
   }
 
   if (preset === 'switches') {
+    // 3D hardware deck tray + 6 ROUND cylindrical tactile buttons (circRing)
     const scale = 33;
-    const baseY = 184;
+    const baseY = 186;
+    const trayZ = 0.28;
     let idx = 0;
     for (let r = 0; r < 2; r++) {
       for (let c = 0; c < 3; c++) {
-        const cx = (c - 1) * 1.12;
-        const cy = (r - 0.5) * 1.18;
-        const zRest = idx === 2 ? 0.88 : 0.34 + ((r + c) % 2) * 0.22;
+        const cx = (c - 1) * 1.14;
+        const cy = (r - 0.5) * 1.16;
+        // Rest pose: button 3 sits latched deeper, others stand proud as cylindrical plungers
+        const zRest = idx === 2 ? 0.48 : 0.72 + ((r + c) % 2) * 0.08;
         const rc = isoProj(cx, cy, zRest, scale, baseY);
-        tiles.push({
-          r, c, cx, cy, order: r * 3 + c, zRest, z: zRest, v: 0, target: zRest,
+        solids.push({
+          r, c, cx, cy, order: r * 3 + c, z0: trayZ, zRest, z: zRest, v: 0, target: zRest,
           restX: rc[0], restY: rc[1],
-          outerPts: roundedTile(cx, cy, 0.44, 0.46, 0.14, 3),
-          innerPts: roundedTile(cx, cy, 0.29, 0.31, 0.08, 2),
+          outerRing: circRing(cx, cy, 0.42, 48),
+          innerRing: circRing(cx, cy, 0.31, 40),
           code: SWITCH_TAGS[idx],
         });
         idx++;
       }
     }
-    const tray = [isoProj(-1.78, -1.25, 0, scale, baseY), isoProj(1.78, -1.25, 0, scale, baseY), isoProj(1.78, 1.25, 0, scale, baseY), isoProj(-1.78, 1.25, 0, scale, baseY)];
-    const mid = [isoProj(-1.95, 0, 0, scale, baseY), isoProj(1.95, 0, 0, scale, baseY)];
+    const trayOuter = rrectRing(-1.82, -1.24, 1.82, 1.24, 0.28, 5);
+    const trayInner = rrectRing(-1.68, -1.1, 1.68, 1.1, 0.2, 4);
+    const trayMarkup =
+      `<g opacity="0.38">` +
+      prismMarkup(trayOuter, trayInner, 0, trayZ, scale, baseY, '0.45', '0.22') +
+      `</g>`;
+    const mid = [isoProj(-2.05, 0, 0, scale, baseY), isoProj(2.05, 0, 0, scale, baseY)];
     const guideMarkup =
       `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathFromPts(tray)}"/>` +
       `<line x1="${mid[0][0].toFixed(1)}" y1="${mid[0][1].toFixed(1)}" x2="${mid[1][0].toFixed(1)}" y2="${mid[1][1].toFixed(1)}"/>` +
       `</g>`;
-    return { tiles, restLead: 2, maxReach: 1.75, scale, baseY, guideMarkup };
-  }
-
-  if (preset === 'attitude') {
-    const scale = 31;
-    const baseY = 192;
-    const planes: Array<[number, number, number, number, number]> = [
-      [-0.25, -0.25, 0.34, 1.32, 0.36],
-      [0.05, 0.05, 0.92, 1.56, 0.24],
-      [0.32, 0.32, 1.52, 0.88, 0.34],
-    ];
-    planes.forEach(([cx, cy, zRest, hx, hy], i) => {
-      const rc = isoProj(cx, cy, zRest, scale, baseY);
-      tiles.push({
-        r: i, c: 0, cx, cy, order: i, zRest, z: zRest, v: 0, target: zRest,
-        restX: rc[0], restY: rc[1],
-        outerPts: roundedTile(cx, cy, hx, hy, Math.min(hx, hy) * 0.36, 3),
-        innerPts: roundedTile(cx, cy, hx * 0.72, hy * 0.56, Math.min(hx, hy) * 0.18, 2),
-        code: ATTITUDE_TAGS[i],
-      });
-    });
-    const ring = isoRingPts(2.05, 2.05, 0, 48, scale, baseY);
-    const crossA = [isoProj(-2.15, 0, 0, scale, baseY), isoProj(2.15, 0, 0, scale, baseY)];
-    const crossB = [isoProj(0, -2.15, 0, scale, baseY), isoProj(0, 2.15, 0, scale, baseY)];
-    const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathFromPts(ring)}"/>` +
-      `<line x1="${crossA[0][0].toFixed(1)}" y1="${crossA[0][1].toFixed(1)}" x2="${crossA[1][0].toFixed(1)}" y2="${crossA[1][1].toFixed(1)}"/>` +
-      `<line x1="${crossB[0][0].toFixed(1)}" y1="${crossB[0][1].toFixed(1)}" x2="${crossB[1][0].toFixed(1)}" y2="${crossB[1][1].toFixed(1)}"/>` +
-      `</g>`;
-    return { tiles, restLead: 1, maxReach: 2.35, scale, baseY, guideMarkup };
-  }
-
-  if (preset === 'ephemeris') {
-    const scale = 30;
-    const baseY = 186;
-    const orbitR = 1.48;
-    for (let i = 0; i < 5; i++) {
-      const ang = -Math.PI * 0.75 + (i / 5) * Math.PI * 2;
-      const cx = Math.cos(ang) * orbitR;
-      const cy = Math.sin(ang) * orbitR;
-      const zRest = 0.36 + ((i === 2 ? 1.15 : (i % 2) * 0.34));
-      const half = i === 2 ? 0.46 : 0.36;
-      const rc = isoProj(cx, cy, zRest, scale, baseY);
-      tiles.push({
-        r: i, c: 0, cx, cy, order: Math.round((cx + cy) * 100), zRest, z: zRest, v: 0, target: zRest,
-        restX: rc[0], restY: rc[1],
-        outerPts: roundedTile(cx, cy, half, half, half * 0.48, 4),
-        innerPts: roundedTile(cx, cy, half * 0.6, half * 0.6, half * 0.3, 3),
-        code: EPHEMERIS_TAGS[i],
-      });
-    }
-    const orbitPts = isoRingPts(orbitR, orbitR, 0, 48, scale, baseY);
-    const axis = [isoProj(-1.9, -1.9, 0, scale, baseY), isoProj(1.9, 1.9, 0, scale, baseY)];
-    const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathFromPts(orbitPts)}"/>` +
-      `<line x1="${axis[0][0].toFixed(1)}" y1="${axis[0][1].toFixed(1)}" x2="${axis[1][0].toFixed(1)}" y2="${axis[1][1].toFixed(1)}"/>` +
-      `</g>`;
-    return { tiles, restLead: 2, maxReach: 2.25, scale, baseY, guideMarkup };
-  }
-
-  if (preset === 'telemetry') {
-    const scale = 31;
-    const baseY = 186;
-    const nodes: Array<[number, number, number, number, number]> = [
-      [0, -1.35, 0.56, 0.42, 0.38],
-      [-1.35, 0, 0.42, 0.38, 0.42],
-      [0, 0, 1.08, 0.52, 0.52],
-      [1.35, 0, 0.46, 0.38, 0.42],
-      [0, 1.35, 0.38, 0.42, 0.38],
-    ];
-    nodes.forEach(([cx, cy, zRest, hx, hy], i) => {
-      const rc = isoProj(cx, cy, zRest, scale, baseY);
-      tiles.push({
-        r: i, c: 0, cx, cy, order: Math.round((cx + cy) * 100), zRest, z: zRest, v: 0, target: zRest,
-        restX: rc[0], restY: rc[1],
-        outerPts: roundedTile(cx, cy, hx, hy, Math.min(hx, hy) * 0.32, 3),
-        innerPts: roundedTile(cx, cy, hx * 0.64, hy * 0.64, Math.min(hx, hy) * 0.2, 2),
-        code: TELEMETRY_TAGS[i],
-      });
-    });
-    const ring = isoRingPts(1.85, 1.85, 0, 48, scale, baseY);
-    const ns = [isoProj(0, -1.95, 0, scale, baseY), isoProj(0, 1.95, 0, scale, baseY)];
-    const ew = [isoProj(-1.95, 0, 0, scale, baseY), isoProj(1.95, 0, 0, scale, baseY)];
-    const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
-      `<path d="${pathFromPts(ring)}"/>` +
-      `<line x1="${ns[0][0].toFixed(1)}" y1="${ns[0][1].toFixed(1)}" x2="${ns[1][0].toFixed(1)}" y2="${ns[1][1].toFixed(1)}"/>` +
-      `<line x1="${ew[0][0].toFixed(1)}" y1="${ew[0][1].toFixed(1)}" x2="${ew[1][0].toFixed(1)}" y2="${ew[1][1].toFixed(1)}"/>` +
-      `</g>`;
-    return { tiles, restLead: 2, maxReach: 2.15, scale, baseY, guideMarkup };
+    return { solids, restLead: 2, maxReach: 1.45, scale, baseY, guideMarkup, trayMarkup };
   }
 
   // 'octaves': stepped 5-octave Gann harmonic bars
@@ -340,23 +324,23 @@ function buildPresetTiles(preset: HairlinePreset): {
   for (let i = 0; i < 5; i++) {
     const cx = (i - 2) * 0.66;
     const cy = -(i - 2) * 0.28;
-    const zRest = 0.32 + Math.abs(Math.sin((i + 1) * 0.72)) * 0.96;
+    const zRest = 0.34 + Math.abs(Math.sin((i + 1) * 0.72)) * 0.96;
     const rc = isoProj(cx, cy, zRest, scale, baseY);
-    tiles.push({
-      r: 0, c: i, cx, cy, order: 10 + i, zRest, z: zRest, v: 0, target: zRest,
+    solids.push({
+      r: 0, c: i, cx, cy, order: 10 + i, z0: 0, zRest, z: zRest, v: 0, target: zRest,
       restX: rc[0], restY: rc[1],
-      outerPts: roundedTile(cx, cy, 0.31, 0.92, 0.11, 3),
-      innerPts: roundedTile(cx, cy, 0.19, 0.72, 0.06, 2),
+      outerRing: rrectRing(cx - 0.3, cy - 0.9, cx + 0.3, cy + 0.9, 0.12, 4),
+      innerRing: rrectRing(cx - 0.21, cy - 0.78, cx + 0.21, cy + 0.78, 0.06, 3),
     });
   }
   const d0 = isoProj(-2.05, 1.35, 0, scale, baseY);
   const d1 = isoProj(2.05, -1.35, 0, scale, baseY);
   const guideMarkup =
-    `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+    `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
     `<line x1="${d0[0].toFixed(1)}" y1="${d0[1].toFixed(1)}" x2="${d1[0].toFixed(1)}" y2="${d1[1].toFixed(1)}"/>` +
     `<line x1="48" y1="188" x2="352" y2="188"/>` +
     `</g>`;
-  return { tiles, restLead: 2, maxReach: 2.35, scale, baseY, guideMarkup };
+  return { solids, restLead: 2, maxReach: 2.35, scale, baseY, guideMarkup };
 }
 
 export function mountHairlineFigure(
@@ -367,10 +351,10 @@ export function mountHairlineFigure(
   if (!svg) return () => {};
   svg.setAttribute('data-hairline', '');
 
-  const { tiles, restLead, maxReach, scale, baseY, guideMarkup } = buildPresetTiles(preset);
-  const drawOrder = tiles
+  const { solids, restLead, maxReach, scale, baseY, guideMarkup, trayMarkup } = buildPresetSolids(preset);
+  const drawOrder = solids
     .map((_, i) => i)
-    .sort((a, b) => tiles[a].order - tiles[b].order || tiles[a].r - tiles[b].r || tiles[a].c - tiles[b].c);
+    .sort((a, b) => solids[a].order - solids[b].order || solids[a].r - solids[b].r || solids[a].c - solids[b].c);
 
   let activeIdx = -1;
   let pinnedIdx = -1;
@@ -382,22 +366,17 @@ export function mountHairlineFigure(
   function render(): void {
     if (!svg) return;
     const lead = activeIdx >= 0 ? activeIdx : pinnedIdx >= 0 ? pinnedIdx : restLead;
-    let html = guideMarkup;
+    let html = guideMarkup + (trayMarkup ?? '');
     for (const idx of drawOrder) {
-      const tile = tiles[idx];
+      const s = solids[idx];
       const isActive = idx === lead;
-      const zBot = preset === 'strata' || preset === 'beacon' || preset === 'attitude' ? Math.max(0, tile.z - 0.24) : 0;
-      const botPts = tile.outerPts.map(([x, y]) => isoProj(x, y, zBot, scale, baseY));
-      const topPts = tile.outerPts.map(([x, y]) => isoProj(x, y, tile.z, scale, baseY));
-      const hull = hull2d(topPts.concat(botPts));
-      const creasePts = tile.innerPts.map(([x, y]) => isoProj(x, y, tile.z, scale, baseY));
-      const pip = isoProj(tile.cx, tile.cy + (preset === 'wave' || preset === 'switches' ? 0.14 : 0), tile.z, scale, baseY);
+      const zBot = preset === 'strata' || preset === 'beacon' ? Math.max(0, s.z - 0.26) : s.z0;
+      const pip = isoProj(s.cx, s.cy, s.z, scale, baseY);
       const gOp = isActive ? '0.92' : '0.32';
       const primaryW = isActive ? '0.65' : '0.45';
 
       html += `<g opacity="${gOp}">`;
-      html += `<path data-plotter-role="primary" d="${pathFromPts(hull)}" fill="var(--ds-bg)" stroke="currentColor" stroke-width="${primaryW}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>`;
-      html += `<path data-plotter-role="secondary" d="${pathFromPts(creasePts)}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="0.24"/>`;
+      html += prismMarkup(s.outerRing, s.innerRing, zBot, s.z, scale, baseY, primaryW, isActive ? '0.32' : '0.22');
       if (isActive) {
         html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="1.15" fill="currentColor" stroke="none"/>`;
       }
@@ -409,29 +388,29 @@ export function mountHairlineFigure(
   function updateReadout(focusIdx: number): void {
     if (!readout) return;
     if (focusIdx < 0) {
-      readout.textContent = `rest · ${PRESET_LABEL[preset]} · z +${tiles[restLead].zRest.toFixed(2)}`;
+      readout.textContent = `rest · ${PRESET_LABEL[preset]} · z +${solids[restLead].zRest.toFixed(2)}`;
       return;
     }
-    const ft = tiles[focusIdx];
+    const ft = solids[focusIdx];
     const idLabel =
       preset === 'wave'
         ? `cell ${ft.r + 1}·${ft.c + 1}`
         : ft.code
-          ? `${preset === 'switches' ? 'key' : preset === 'telemetry' ? 'vane' : 'node'} 0${focusIdx + 1} · ${ft.code}`
+          ? `key 0${focusIdx + 1} · ${ft.code}`
           : `tier 0${focusIdx + 1}`;
     readout.textContent = `${idLabel} · z +${ft.target.toFixed(2)}`;
   }
 
   function setTargets(focusIdx: number): void {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const ft = focusIdx >= 0 ? tiles[focusIdx] : null;
-    for (let i = 0; i < tiles.length; i++) {
-      const t = tiles[i];
+    const ft = focusIdx >= 0 ? solids[focusIdx] : null;
+    for (let i = 0; i < solids.length; i++) {
+      const t = solids[i];
       if (!ft) {
         t.target = t.zRest;
       } else if (preset === 'switches') {
         const d = Math.hypot(t.c - ft.c, t.r - ft.r);
-        t.target = i === focusIdx ? Math.max(0.14, t.zRest - 0.14) : Math.min(maxReach, t.zRest + Math.max(0.06, 0.34 / (1 + d * 0.9)));
+        t.target = i === focusIdx ? 0.36 : Math.min(maxReach, 0.72 + 0.14 / (1 + d * 0.9));
       } else {
         const d = preset === 'wave' ? Math.hypot(t.c - ft.c, t.r - ft.r) : Math.abs(i - focusIdx);
         const lift = Math.min(0.92, 0.92 / (1 + d * d * 0.72));
@@ -456,7 +435,7 @@ export function mountHairlineFigure(
     const dt = Math.min(0.025, lastT ? (now - lastT) / 1000 : 0.016);
     lastT = now;
     let moving = false;
-    for (const t of tiles) {
+    for (const t of solids) {
       const force = -100 * (t.z - t.target) - 18 * t.v;
       t.v += force * dt;
       t.z += t.v * dt;
@@ -479,7 +458,7 @@ export function mountHairlineFigure(
     }
   }
 
-  function pickRestTile(clientX: number, clientY: number): number {
+  function pickRestSolid(clientX: number, clientY: number): number {
     if (!svg) return -1;
     const ctm = svg.getScreenCTM();
     if (!ctm) return -1;
@@ -488,8 +467,8 @@ export function mountHairlineFigure(
     const vy = clientX * inv.b + clientY * inv.d + inv.f;
     let best = -1;
     let bestD = preset === 'wave' ? 32 : preset === 'switches' ? 38 : 44;
-    for (let i = 0; i < tiles.length; i++) {
-      const d = Math.hypot(vx - tiles[i].restX, vy - tiles[i].restY);
+    for (let i = 0; i < solids.length; i++) {
+      const d = Math.hypot(vx - solids[i].restX, vy - solids[i].restY);
       if (d < bestD) {
         bestD = d;
         best = i;
@@ -500,7 +479,7 @@ export function mountHairlineFigure(
 
   const onMove = (e: PointerEvent) => {
     if (e.pointerType === 'touch') return;
-    const next = pickRestTile(e.clientX, e.clientY);
+    const next = pickRestSolid(e.clientX, e.clientY);
     if (next !== activeIdx) {
       activeIdx = next;
       setTargets(activeIdx >= 0 ? activeIdx : pinnedIdx);
@@ -513,7 +492,7 @@ export function mountHairlineFigure(
     }
   };
   const onClick = (e: MouseEvent) => {
-    const picked = pickRestTile(e.clientX, e.clientY);
+    const picked = pickRestSolid(e.clientX, e.clientY);
     if (picked < 0) return;
     pinnedIdx = pinnedIdx === picked ? -1 : picked;
     activeIdx = -1;

@@ -409,7 +409,7 @@
 
 .ml-btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; padding: 4px; }
 
-/* ---------- Slider ---------- */
+/* ---------- Slider (3D Recessed Channel + Cylindrical Plunger) ---------- */
 .ml-slider {
   width: min(100%, 260px);
   touch-action: none;
@@ -419,18 +419,28 @@
 
 .ml-slider-track {
   position: relative;
-  height: 2px;
-  background: color-mix(in srgb, var(--ds-fg) 14%, transparent);
+  height: 10px;
+  background: var(--ds-surface-1);
+  border: var(--ds-hairline) solid var(--ds-border-strong);
   border-radius: 999px;
+  box-shadow:
+    inset 0 2px 0 0 color-mix(in srgb, var(--ds-fg) 10%, transparent),
+    0 1px 0 0 color-mix(in srgb, var(--ds-fg) 12%, transparent);
+}
+
+.ml-slider- track-ticks {
+  position: absolute;
+  inset: 0 8px;
+  pointer-events: none;
 }
 
 .ml-slider-range {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: var(--ml-slider-pct, 40%);
-  background: var(--ds-fg);
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  width: calc(var(--ml-slider-pct, 40%) - 2px);
+  background: color-mix(in srgb, var(--ds-fg) 82%, transparent);
   border-radius: inherit;
 }
 
@@ -438,39 +448,69 @@
   position: absolute;
   top: 50%;
   left: var(--ml-slider-pct, 40%);
-  width: 16px;
-  height: 16px;
-  margin: -8px 0 0 -8px;
+  width: 22px;
+  height: 22px;
+  margin: -13px 0 0 -11px;
   border-radius: 50%;
   border: var(--ds-hairline) solid var(--ds-fg);
   background: var(--ds-bg);
+  box-shadow:
+    0 3.5px 0 0 var(--ds-border-strong),
+    0 4px 0 0 var(--ds-fg);
   cursor: grab;
-  transition: transform var(--ds-duration-press) var(--ds-ease-out);
+  transition:
+    transform var(--ds-duration-press) var(--ds-ease-out),
+    box-shadow var(--ds-duration-press) var(--ds-ease-out);
+}
+
+.ml-slider-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  border: 0.65px solid color-mix(in srgb, var(--ds-fg) 38%, transparent);
+  pointer-events: none;
+}
+
+.ml-slider-thumb::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px 0 0 -1.5px;
+  border-radius: 50%;
+  background: var(--ds-fg);
+  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ml-slider:hover .ml-slider-thumb {
-    transform: scale(1.08);
+    transform: translateY(-0.5px);
   }
 }
 
 .ml-slider[data-dragging="true"] .ml-slider-thumb {
   cursor: grabbing;
-  transform: scale(1.08);
+  transform: translateY(2px);
+  box-shadow:
+    0 1.5px 0 0 var(--ds-border-strong),
+    0 2px 0 0 var(--ds-fg);
 }
 
 .ml-slider input {
   position: absolute;
-  inset: 0;
+  inset: -6px 0;
   opacity: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 12px);
   margin: 0;
   cursor: pointer;
 }
 
 .ml-slider-readout {
-  margin-top: 10px;
+  margin-top: 12px;
   text-align: center;
   font-family: var(--ds-font-mono);
   font-size: var(--ds-text-mono-sm);
@@ -478,14 +518,17 @@
   color: var(--ds-fg-muted);
 }
 
-/* ---------- Switch ---------- */
+/* ---------- Switch (3D Stadium Well + Round Cylindrical Plunger) ---------- */
 .ml-switch {
   position: relative;
-  width: 48px;
-  height: 28px;
+  width: 54px;
+  height: 30px;
   border: var(--ds-hairline) solid var(--ds-border-strong);
   border-radius: 999px;
-  background: var(--ds-bg);
+  background: var(--ds-surface-1);
+  box-shadow:
+    inset 0 2.5px 0 0 color-mix(in srgb, var(--ds-fg) 12%, transparent),
+    0 2px 0 0 var(--ds-border);
   cursor: pointer;
   padding: 0;
   transition:
@@ -495,46 +538,60 @@
 }
 
 .ml-switch[aria-checked="true"] {
-  background: var(--ds-fg);
+  background: color-mix(in srgb, var(--ds-fg) 14%, var(--ds-bg));
   border-color: var(--ds-fg);
 }
 
 .ml-switch-thumb {
   position: absolute;
-  top: 3px;
+  top: 2px;
   left: 3px;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: var(--ds-hairline) solid var(--ds-fg);
   background: var(--ds-bg);
+  box-shadow:
+    0 2.5px 0 0 var(--ds-border-strong),
+    0 3px 0 0 var(--ds-fg);
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.ml-switch-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  border: 0.65px solid color-mix(in srgb, var(--ds-fg) 36%, transparent);
+}
+
 .ml-switch[aria-checked="true"] .ml-switch-thumb {
-  transform: translateX(20px);
-  border-color: var(--ds-bg);
-  background: var(--ds-bg);
+  transform: translateX(23px);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ml-switch:hover { border-color: var(--ds-fg); }
 }
-.ml-switch:active { transform: scale(0.94); }
+.ml-switch:active .ml-switch-thumb {
+  transform: translateY(1.5px);
+}
+.ml-switch[aria-checked="true"]:active .ml-switch-thumb {
+  transform: translateX(23px) translateY(1.5px);
+}
 
-/* ---------- Dial ---------- */
+/* ---------- Dial (3D Cylindrical Rotary Encoder) ---------- */
 .ml-dial {
   --ml-dial-turn: -90deg;
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 136px;
+  height: 136px;
   touch-action: none;
   user-select: none;
 }
 
 .ml-dial svg { width: 100%; height: 100%; display: block; max-width: none; }
 .ml-dial .ml-dial-knob {
-  transform-origin: 60px 60px;
+  transform-origin: 60px 57px;
   transform: rotate(var(--ml-dial-turn));
   transition: transform 110ms var(--ds-ease-out);
 }
@@ -549,30 +606,37 @@
 }
 .ml-dial[data-dragging="true"] input { cursor: grabbing; }
 
-/* ---------- Bar slider ---------- */
+/* ---------- Bar slider (3D Extruded Columns) ---------- */
 .ml-bar {
   display: flex;
-  gap: 4px;
+  gap: 5px;
   align-items: flex-end;
-  height: 56px;
+  height: 62px;
   touch-action: none;
   cursor: ew-resize;
   user-select: none;
-  padding: 4px 2px;
+  padding: 6px 8px 8px;
+  border: var(--ds-hairline) solid var(--ds-border);
+  border-radius: var(--ds-radius-squircle);
+  background: var(--ds-surface-1);
+  box-shadow: inset 0 2px 0 0 color-mix(in srgb, var(--ds-fg) 8%, transparent);
 }
 .ml-bar[data-dragging="true"] { cursor: grabbing; }
 .ml-bar-cell {
-  width: 10px;
+  position: relative;
+  width: 11px;
   height: 100%;
-  border: 1px solid color-mix(in srgb, var(--ds-fg) 22%, transparent);
-  border-radius: 2px;
-  background: transparent;
+  border: 0.75px solid color-mix(in srgb, var(--ds-fg) 34%, transparent);
+  border-radius: 999px;
+  background: var(--ds-bg);
+  box-shadow: 0 2.5px 0 0 var(--ds-border-strong);
   padding: 0;
   pointer-events: none;
   transform-origin: bottom center;
   transition:
     background-color 140ms var(--ds-ease-out),
     border-color 140ms var(--ds-ease-out),
+    box-shadow 140ms var(--ds-ease-out),
     transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--ml-bar-delay, 0ms);
 }
@@ -580,14 +644,17 @@
   transition-duration: 70ms;
 }
 @media (hover: hover) and (pointer: fine) {
-  .ml-bar:hover .ml-bar-cell[data-on="true"] { transform: scaleY(1.04); }
+  .ml-bar:hover .ml-bar-cell[data-on="true"] { transform: translateY(-1px) scaleY(1.04); }
 }
 .ml-bar-cell[data-on="true"] {
-  background: var(--ds-fg);
+  background: var(--ds-bg);
   border-color: var(--ds-fg);
+  box-shadow:
+    inset 0 2px 0 0 color-mix(in srgb, var(--ds-fg) 18%, transparent),
+    0 3px 0 0 var(--ds-fg);
 }
 .ml-bar-cell[data-edge="true"] {
-  transform: scaleY(1.12);
+  transform: translateY(-2px) scaleY(1.08);
   border-color: var(--ds-fg);
 }
 
@@ -624,67 +691,136 @@
 .ml-radio input:checked + .ml-radio-ring::after { transform: scale(1); }
 .ml-radio input:focus-visible + .ml-radio-ring { outline: none; border-color: var(--ds-fg); }
 
-/* ---------- Keys / keypad / lever ---------- */
+/* ---------- Keys / keypad / lever / console (Round 3D Tactile Buttons & 3D Fader) ---------- */
 .ml-key {
-  width: 52px;
-  height: 52px;
-  border: var(--ds-hairline) solid var(--ds-border-strong);
-  border-radius: var(--ds-radius-squircle);
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: var(--ds-hairline) solid var(--ds-fg);
+  border-radius: 50%;
   background: var(--ds-bg);
+  color: var(--ds-fg);
   font-family: var(--ds-font-mono);
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
+  box-shadow:
+    0 4px 0 0 var(--ds-border-strong),
+    0 4.5px 0 0 var(--ds-fg),
+    0 0 0 4px var(--ds-surface-1),
+    0 0 0 4.75px var(--ds-border);
   transition:
     transform var(--ds-duration-press) var(--ds-ease-out),
-    background-color 140ms var(--ds-ease-out),
-    border-color 140ms var(--ds-ease-out);
+    box-shadow var(--ds-duration-press) var(--ds-ease-out),
+    background-color 140ms var(--ds-ease-out);
+}
+.ml-key::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 0.65px solid color-mix(in srgb, var(--ds-fg) 34%, transparent);
+  pointer-events: none;
 }
 @media (hover: hover) and (pointer: fine) {
   .ml-key:hover {
     background: var(--ds-bg-tint-subtle);
-    border-color: var(--ds-fg);
-    transform: translateY(-1px);
+    transform: translateY(-0.5px);
   }
 }
-.ml-key:active { transform: translateY(1px) scale(0.94); }
+.ml-key:active,
+.ml-key[data-latched="true"] {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 0 var(--ds-border-strong),
+    0 1.5px 0 0 var(--ds-fg),
+    0 0 0 4px var(--ds-surface-1),
+    0 0 0 4.75px var(--ds-border);
+}
 
 .ml-keypad {
   display: grid;
-  grid-template-columns: repeat(3, 52px);
-  gap: 8px;
+  grid-template-columns: repeat(3, 50px);
+  gap: 14px;
+  padding: 16px 18px 14px;
+  border: var(--ds-hairline) solid var(--ds-border-strong);
+  border-radius: 18px;
+  background: var(--ds-surface-1);
+  box-shadow: 0 3.5px 0 0 var(--ds-border-strong);
 }
 .ml-keypad-out {
   grid-column: 1 / -1;
   font-family: var(--ds-font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--ds-fg-muted);
   text-align: center;
-  min-height: 1.2em;
+  min-height: 1.4em;
+  padding-top: 4px;
+  border-top: var(--ds-hairline) solid var(--ds-rule);
 }
 
 .ml-lever {
   position: relative;
-  width: 36px;
-  height: 120px;
+  width: 46px;
+  height: 128px;
   border: var(--ds-hairline) solid var(--ds-border-strong);
   border-radius: 999px;
   touch-action: none;
-  background: var(--ds-surface-1);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 11px,
+      color-mix(in srgb, var(--ds-fg) 18%, transparent) 11px 12px
+    ) center / 64% 80% no-repeat,
+    var(--ds-surface-1);
+  box-shadow:
+    inset 0 2.5px 0 0 color-mix(in srgb, var(--ds-fg) 12%, transparent),
+    0 2.5px 0 0 var(--ds-border-strong);
+}
+.ml-lever::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  border-radius: 999px;
+  border: 0.65px solid var(--ds-border-strong);
+  background: var(--ds-bg);
 }
 .ml-lever-handle {
   position: absolute;
-  left: 4px;
-  right: 4px;
+  left: 5px;
+  right: 5px;
   height: 28px;
   top: var(--ml-lever-top, 60%);
-  margin-top: -14px;
+  margin-top: -15px;
   border: var(--ds-hairline) solid var(--ds-fg);
   border-radius: 999px;
   background: var(--ds-bg);
+  box-shadow:
+    0 3.5px 0 0 var(--ds-border-strong),
+    0 4px 0 0 var(--ds-fg);
   cursor: grab;
+  transition: box-shadow 120ms var(--ds-ease-out);
 }
-.ml-lever[data-dragging="true"] .ml-lever-handle { cursor: grabbing; }
+.ml-lever-handle::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  top: 50%;
+  height: 0.75px;
+  background: var(--ds-fg);
+  opacity: 0.55;
+}
+.ml-lever[data-dragging="true"] .ml-lever-handle {
+  cursor: grabbing;
+  box-shadow:
+    0 1.5px 0 0 var(--ds-border-strong),
+    0 2px 0 0 var(--ds-fg);
+}
 
 /* ---------- Progress / metric ---------- */
 .ml-progress {
@@ -909,23 +1045,23 @@
 
 /* ---------- Instruments SVG ---------- */
 .ml-svg {
-  width: min(100%, 180px);
+  width: min(100%, 200px);
   height: auto;
   color: var(--ds-fg);
-  --ml-primary: 1.5px;
-  --ml-secondary: 1.15px;
-  --ml-guide: 0.7px;
+  --ml-primary: 0.85px;
+  --ml-secondary: 0.6px;
+  --ml-guide: 0.45px;
 }
-.ml-svg :is(line, path, circle, polygon, polyline) {
+.ml-svg :is(line, path, circle, ellipse, polygon, polyline) {
   vector-effect: non-scaling-stroke;
-  stroke-linecap: butt;
-  stroke-linejoin: miter;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .ml-svg .ml-primary { stroke-width: var(--ml-primary); }
 .ml-svg .ml-secondary { stroke-width: var(--ml-secondary); }
 .ml-svg .ml-guide { stroke-width: var(--ml-guide); }
-.ml-svg .ml-mark { r: 2px; }
-.ml-svg .ml-donut { stroke-width: 8px; fill: none; }
+.ml-svg .ml-mark { r: 1.6px; }
+.ml-svg .ml-donut { stroke-width: 6px; fill: none; }
 .ml-svg text {
   font-family: var(--ds-font-mono);
   font-size: 10px;
@@ -1693,28 +1829,91 @@
 .ml-kpi em { font-style: normal; font-size: 10.5px; color: var(--ds-fg-muted); }
 
 .ml-console {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  gap: 14px 16px;
+  padding: 16px 18px 14px;
+  border: var(--ds-hairline) solid var(--ds-border-strong);
+  border-radius: 18px;
+  background: var(--ds-surface-1);
+  box-shadow: 0 3.5px 0 0 var(--ds-border-strong);
+}
+.ml-console-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
 }
 .ml-console-key {
-  border: var(--ds-hairline) solid var(--ds-border-strong); border-radius: var(--ds-radius-squircle);
-  background: var(--ds-bg); padding: 10px 8px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 6px; font: inherit;
-  transition: transform 120ms var(--ds-ease-out), background-color 140ms var(--ds-ease-out), border-color 140ms var(--ds-ease-out);
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border: var(--ds-hairline) solid var(--ds-fg);
+  border-radius: 50%;
+  background: var(--ds-bg);
+  color: var(--ds-fg);
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font: inherit;
+  box-shadow:
+    0 4px 0 0 var(--ds-border-strong),
+    0 4.5px 0 0 var(--ds-fg),
+    0 0 0 3.5px var(--ds-bg),
+    0 0 0 4.25px var(--ds-border);
+  transition:
+    transform 120ms var(--ds-ease-out),
+    box-shadow 120ms var(--ds-ease-out),
+    background-color 140ms var(--ds-ease-out);
 }
-.ml-console-key:hover {
-  background: var(--ds-bg-tint-subtle);
-  border-color: var(--ds-fg);
-  transform: translateY(-1px);
+.ml-console-key::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 0.65px solid color-mix(in srgb, var(--ds-fg) 34%, transparent);
+  pointer-events: none;
 }
-.ml-console-key:active { transform: scale(0.95); }
+@media (hover: hover) and (pointer: fine) {
+  .ml-console-key:hover {
+    background: var(--ds-bg-tint-subtle);
+    transform: translateY(-0.5px);
+  }
+}
+.ml-console-key:active,
+.ml-console-key[data-on="true"] {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 0 var(--ds-border-strong),
+    0 1.5px 0 0 var(--ds-fg),
+    0 0 0 3.5px var(--ds-bg),
+    0 0 0 4.25px var(--ds-border);
+}
 .ml-console-led {
-  width: 8px; height: 8px; border-radius: 50%;
-  border: 1px solid var(--ds-fg); background: transparent;
-  transition: background-color 160ms var(--ds-ease-out), outline 160ms var(--ds-ease-out);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: 0.75px solid var(--ds-fg);
+  background: transparent;
+  transition: background-color 160ms var(--ds-ease-out), box-shadow 160ms var(--ds-ease-out);
 }
 .ml-console-key[data-on="true"] .ml-console-led {
   background: var(--ds-fg);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-fg) 16%, transparent);
+  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--ds-fg) 16%, transparent);
+}
+.ml-console-readout {
+  grid-column: 1 / -1;
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-fg-muted);
+  text-align: center;
+  padding-top: 6px;
+  border-top: var(--ds-hairline) solid var(--ds-rule);
 }
 
 .lab-sheet-backdrop, .lab-drawer-backdrop {
@@ -1965,6 +2164,10 @@
   min-height: 32px;
   padding: 0 12px;
   font-size: 12px;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 /* ---------- Individual Component Detail Page (?component=<id>) ---------- */

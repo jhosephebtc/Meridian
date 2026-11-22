@@ -202,20 +202,46 @@ function bindDial(root: HTMLElement, opts: { detent?: boolean } = {}): void {
   input.addEventListener('lostpointercapture', release);
 }
 
-function demoDial(detent = false): HTMLElement {
+function demoDial(kind = 'dial'): HTMLElement {
+  const detent = kind === 'detent-dial' || kind === 'camera-dial';
+  const knurlCount = kind === 'camera-wheel' ? 19 : 11;
+  const tickCount = kind === 'camera-dial' ? 13 : 21;
+  const ticks = Array.from({ length: tickCount }, (_, i) => {
+    const deg = -135 + (i / (tickCount - 1)) * 270;
+    const a = ((deg - 90) * Math.PI) / 180;
+    const r0 = i % 2 === 0 ? 43 : 45.5;
+    const r1 = 49;
+    return `<line data-plotter-role="${i % 2 === 0 ? 'secondary' : 'guide'}" x1="${(60 + Math.cos(a) * r0).toFixed(1)}" y1="${(57 + Math.sin(a) * r0).toFixed(1)}" x2="${(60 + Math.cos(a) * r1).toFixed(1)}" y2="${(57 + Math.sin(a) * r1).toFixed(1)}" stroke="currentColor"/>`;
+  }).join('');
+  const knurls = Array.from({ length: knurlCount }, (_, i) => {
+    const a = (Math.PI * (i + 1)) / (knurlCount + 1);
+    const x = 60 - Math.cos(a) * 31;
+    const yTop = 57 + Math.sin(a) * 31;
+    const yBot = 63 + Math.sin(a) * 31;
+    return `<line data-plotter-role="secondary" x1="${x.toFixed(1)}" y1="${yTop.toFixed(1)}" x2="${x.toFixed(1)}" y2="${yBot.toFixed(1)}" stroke="currentColor" opacity="0.28"/>`;
+  }).join('');
+
   const el = document.createElement('div');
   el.className = 'ml-dial';
   el.innerHTML = `
-    <svg class="ml-svg" viewBox="0 0 120 120" aria-hidden="true">
-      <circle class="ml-guide" cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-opacity="0.55"/>
-      <path class="ml-secondary" d="M22 88 A48 48 0 1 1 98 88" fill="none" stroke="currentColor" stroke-opacity="0.8"/>
+    <svg class="ml-svg" data-plotter data-hairline viewBox="0 0 120 120" aria-hidden="true">
+      <circle data-plotter-role="guide" cx="60" cy="60" r="54" fill="none" stroke="currentColor"/>
+      ${ticks}
+      <!-- 3D Cylindrical Skirt + Side Wall -->
+      <path data-plotter-role="primary" d="M 29 57 L 29 63 A 31 31 0 0 0 91 63 L 91 57 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+      ${knurls}
+      <!-- 3D Top Circular Platter -->
+      <circle data-plotter-role="primary" cx="60" cy="57" r="31" fill="var(--ds-bg)" stroke="currentColor"/>
+      <!-- Open Front-Facing Chamfer Crease -->
+      <path data-plotter-role="secondary" d="M 34.5 57 A 25.5 25.5 0 0 0 85.5 57" fill="none" stroke="currentColor" opacity="0.32"/>
+      ${kind === 'camera-dial' ? '<circle data-plotter-role="secondary" cx="60" cy="57" r="16" fill="none" stroke="currentColor" opacity="0.26"/>' : ''}
       <g class="ml-dial-knob">
-        <circle class="ml-secondary" cx="60" cy="60" r="28" fill="var(--ds-bg)" stroke="currentColor"/>
-        <line class="ml-primary" x1="60" y1="60" x2="60" y2="38" stroke="currentColor"/>
+        <line data-plotter-role="primary" x1="60" y1="45" x2="60" y2="30" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="60" cy="34" r="1.3" fill="currentColor" stroke="none"/>
       </g>
     </svg>
     <input type="range" min="0" max="100" step="${detent ? 10 : 1}" aria-label="Dial" />
-    <div class="ml-slider-readout ml-dial-out" style="position:absolute;inset:auto 0 4px;pointer-events:none"></div>`;
+    <div class="ml-slider-readout ml-dial-out" style="position:absolute;inset:auto 0 2px;pointer-events:none"></div>`;
   bindDial(el, { detent });
   return el;
 }
@@ -332,11 +358,25 @@ function demoSegmented(): HTMLElement {
 }
 
 function demoKey(): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:12px;';
   const b = document.createElement('button');
   b.type = 'button';
   b.className = 'ml-key';
+  b.setAttribute('aria-pressed', 'false');
   b.textContent = '⌘';
-  return b;
+  const out = document.createElement('div');
+  out.className = 'ds-mono';
+  out.style.cssText = 'font-size:10.5px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
+  out.textContent = 'READY · Z 0.0mm';
+  b.addEventListener('click', () => {
+    const on = b.dataset.latched !== 'true';
+    b.dataset.latched = String(on);
+    b.setAttribute('aria-pressed', String(on));
+    out.textContent = on ? 'LATCHED · Z −2.5mm' : 'READY · Z 0.0mm';
+  });
+  wrap.append(b, out);
+  return wrap;
 }
 
 function demoKeypad(): HTMLElement {
@@ -633,28 +673,235 @@ function demoCalendar(): HTMLElement {
   return el;
 }
 
-function demoCompass(): HTMLElement {
-  const el = document.createElement('div');
-  el.innerHTML = `
-    <svg class="ml-svg" viewBox="0 0 160 160" aria-label="Compass">
-      <circle class="ml-guide" cx="80" cy="80" r="68" fill="none" stroke="currentColor" stroke-opacity="0.7"/>
-      <circle class="ml-secondary" cx="80" cy="80" r="52" fill="none" stroke="currentColor" stroke-opacity="0.85"/>
-      <g class="ml-guide" stroke="currentColor">
-        ${Array.from({ length: 36 }, (_, i) => {
-          const a = (i / 36) * Math.PI * 2;
-          const inner = i % 3 === 0 ? 58 : 62;
-          const x1 = 80 + Math.cos(a) * inner;
-          const y1 = 80 + Math.sin(a) * inner;
-          const x2 = 80 + Math.cos(a) * 68;
-          const y2 = 80 + Math.sin(a) * 68;
-          return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke-opacity="${i % 3 === 0 ? 0.7 : 0.25}"/>`;
-        }).join('')}
+function demoCompass(kind = 'compass'): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:210px;';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'ml-svg');
+  svg.setAttribute('data-plotter', '');
+  svg.setAttribute('data-hairline', '');
+  svg.setAttribute('viewBox', '0 0 160 164');
+  svg.style.cssText = 'width:100%;max-width:176px;height:auto;touch-action:none;color:var(--ds-fg);';
+  const readout = document.createElement('div');
+  readout.className = 'ds-mono';
+  readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
+
+  const ticks36 = Array.from({ length: 36 }, (_, i) => {
+    const a = (i / 36) * Math.PI * 2;
+    const inner = i % 3 === 0 ? 55 : 58.5;
+    const role = i % 3 === 0 ? 'secondary' : 'guide';
+    return `<line data-plotter-role="${role}" x1="${(80 + Math.cos(a) * inner).toFixed(1)}" y1="${(78 + Math.sin(a) * inner).toFixed(1)}" x2="${(80 + Math.cos(a) * 62).toFixed(1)}" y2="${(78 + Math.sin(a) * 62).toFixed(1)}" stroke="currentColor"/>`;
+  }).join('');
+
+  // 3D Bezel base rim (cy=83 vs top plate cy=78)
+  const bezel3d = `
+    <path data-plotter-role="primary" d="M 14 78 L 14 83 A 66 66 0 0 0 146 83 L 146 78 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+    <circle data-plotter-role="primary" cx="80" cy="78" r="66" fill="var(--ds-bg)" stroke="currentColor"/>
+    <path data-plotter-role="secondary" d="M 19 78 A 61 61 0 0 0 141 78" fill="none" stroke="currentColor" opacity="0.28"/>
+  `;
+
+  if (kind === 'weather-instrument') {
+    // 3D Barometric & Hygro Annular Dial (980..1040 hPa + inner %RH sub-dial)
+    const scaleTicks = Array.from({ length: 25 }, (_, i) => {
+      const deg = -135 + (i / 24) * 270;
+      const a = ((deg - 90) * Math.PI) / 180;
+      const r0 = i % 4 === 0 ? 48 : 52;
+      return `<line data-plotter-role="${i % 4 === 0 ? 'secondary' : 'guide'}" x1="${(80 + Math.cos(a) * r0).toFixed(1)}" y1="${(78 + Math.sin(a) * r0).toFixed(1)}" x2="${(80 + Math.cos(a) * 56).toFixed(1)}" y2="${(78 + Math.sin(a) * 56).toFixed(1)}" stroke="currentColor"/>`;
+    }).join('');
+    let hpa = 1018;
+    const renderWeather = (val: number) => {
+      const norm = clamp((val - 980) / 60, 0, 1);
+      const deg = -135 + norm * 270;
+      const rh = Math.round(42 + (1 - norm) * 36);
+      svg.innerHTML = `
+        ${bezel3d}
+        ${scaleTicks}
+        <path data-plotter-role="guide" d="M 38 112 A 54 54 0 1 1 122 112" fill="none" stroke="currentColor"/>
+        <!-- Inner 3D Hygro Sub-Dial -->
+        <circle data-plotter-role="secondary" cx="80" cy="101" r="15" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
+        <line data-plotter-role="secondary" x1="80" y1="101" x2="${(80 + Math.cos(((rh / 100) * Math.PI * 1.5 - Math.PI * 1.25)) * 11).toFixed(1)}" y2="${(101 + Math.sin(((rh / 100) * Math.PI * 1.5 - Math.PI * 1.25)) * 11).toFixed(1)}" stroke="currentColor"/>
+        <!-- Reference Set Hand (dashed) -->
+        <line data-plotter-role="guide" x1="80" y1="78" x2="98" y2="36" stroke="currentColor"/>
+        <!-- Main Barometer Needle + 3D Hub Cap -->
+        <g transform="rotate(${deg.toFixed(1)} 80 78)">
+          <path data-plotter-role="primary" d="M 80 26 L 82.2 78 L 80 90 L 77.8 78 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        </g>
+        <circle data-plotter-role="primary" cx="80" cy="79.5" r="5.5" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="78" r="5.5" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="78" r="1.3" fill="currentColor" stroke="none"/>
+      `;
+      readout.textContent = `${Math.round(val)} hPa · ${rh}% RH`;
+    };
+    renderWeather(hpa);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      const t = clamp((e.clientX - r.left) / r.width, 0, 1);
+      hpa = 985 + t * 50;
+      renderWeather(hpa);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  if (kind === 'wind-instrument') {
+    // 3D Anemometer & Wind Vector Rose
+    let angleDeg = 285;
+    let speedKt = 18.4;
+    const renderWind = (deg: number, kt: number) => {
+      const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+      const dir = dirs[Math.round((((deg % 360) + 360) % 360) / 45) % 8];
+      svg.innerHTML = `
+        ${bezel3d}
+        ${ticks36}
+        <circle data-plotter-role="guide" cx="80" cy="78" r="42" fill="none" stroke="currentColor"/>
+        <circle data-plotter-role="guide" cx="80" cy="78" r="24" fill="none" stroke="currentColor"/>
+        <line data-plotter-role="guide" x1="80" y1="18" x2="80" y2="138" stroke="currentColor"/>
+        <line data-plotter-role="guide" x1="20" y1="78" x2="140" y2="78" stroke="currentColor"/>
+        <g transform="rotate(${deg.toFixed(1)} 80 78)">
+          <!-- Aerodynamic Wind Vane with 3D Tail Fin -->
+          <path data-plotter-role="primary" d="M 80 24 L 83 40 L 80 37 L 77 40 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+          <line data-plotter-role="primary" x1="80" y1="37" x2="80" y2="116" stroke="currentColor"/>
+          <path data-plotter-role="primary" d="M 80 104 L 87 122 L 80 117 L 73 122 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        </g>
+        <!-- 3D Central Spindle Cylinder -->
+        <circle data-plotter-role="primary" cx="80" cy="80" r="7" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="78" r="7" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="78" r="1.4" fill="currentColor" stroke="none"/>
+      `;
+      readout.textContent = `${String(Math.round(deg)).padStart(3, '0')}° ${dir} · ${kt.toFixed(1)} kt`;
+    };
+    renderWind(angleDeg, speedKt);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      angleDeg = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
+      speedKt = clamp((Math.hypot(dx, dy) / (r.width * 0.45)) * 28, 4.2, 32.8);
+      renderWind(angleDeg, speedKt);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  if (kind === 'navigation-instrument') {
+    // 3D HSI Course Deviation Indicator (CDI + Rotating Azimuth Card)
+    let crs = 38;
+    let dev = 0.4;
+    const renderNav = (cDeg: number, dVal: number) => {
+      const cdiOffset = clamp(dVal * 14, -22, 22);
+      svg.innerHTML = `
+        ${bezel3d}
+        ${ticks36}
+        <!-- Top Lubber Triangle -->
+        <path data-plotter-role="primary" d="M 80 15 L 76.5 9.5 L 83.5 9.5 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="secondary" cx="80" cy="78" r="46" fill="none" stroke="currentColor" opacity="0.38"/>
+        <!-- Lateral Deviation Scale Dots -->
+        ${[-2, -1, 1, 2].map((d) => `<circle data-plotter-role="secondary" cx="${80 + d * 11}" cy="78" r="1.4" fill="none" stroke="currentColor"/>`).join('')}
+        <!-- Rotating Course Pointer & CDI Bar -->
+        <g transform="rotate(${cDeg.toFixed(1)} 80 78)">
+          <path data-plotter-role="primary" d="M 80 22 L 83.5 34 L 76.5 34 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+          <line data-plotter-role="primary" x1="80" y1="34" x2="80" y2="56" stroke="currentColor"/>
+          <line data-plotter-role="primary" x1="80" y1="100" x2="80" y2="132" stroke="currentColor"/>
+          <line data-plotter-role="primary" x1="${(80 + cdiOffset).toFixed(1)}" y1="58" x2="${(80 + cdiOffset).toFixed(1)}" y2="98" stroke="currentColor"/>
+        </g>
+        <!-- Fixed Central Aircraft Reference -->
+        <path data-plotter-role="secondary" d="M 80 71 L 80 86 M 71 77 L 89 77 M 75 84 L 85 84" fill="none" stroke="currentColor"/>
+      `;
+      readout.textContent = `CRS ${String(Math.round(cDeg)).padStart(3, '0')}° · DEV ${dVal >= 0 ? '+' : ''}${dVal.toFixed(1)}°`;
+    };
+    renderNav(crs, dev);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      crs = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
+      dev = clamp((dx / (r.width * 0.4)) * 1.6, -1.6, 1.6);
+      renderNav(crs, dev);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  if (kind === 'astrology-wheel') {
+    // 3D 12-House Astrolabe Wheel with Concentric Rings & Planetary Aspect Chords
+    let activeHouse = 8;
+    const houses = ['ARI', 'TAU', 'GEM', 'CAN', 'LEO', 'VIR', 'LIB', 'SCO', 'SAG', 'CAP', 'AQU', 'PIS'];
+    const renderAstro = (hIdx: number) => {
+      const spokes = Array.from({ length: 12 }, (_, i) => {
+        const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+        const isHi = i === hIdx;
+        return `<line data-plotter-role="${isHi ? 'primary' : 'secondary'}" x1="${(80 + Math.cos(a) * 26).toFixed(1)}" y1="${(78 + Math.sin(a) * 26).toFixed(1)}" x2="${(80 + Math.cos(a) * 56).toFixed(1)}" y2="${(78 + Math.sin(a) * 56).toFixed(1)}" stroke="currentColor" opacity="${isHi ? '0.95' : '0.32'}"/>`;
+      }).join('');
+      const planetIdx = [0, 3, 5, 8, 10].map((p) => (p + hIdx) % 12);
+      const planetPts = planetIdx.map((idx) => {
+        const a = ((idx + 0.5) / 12) * Math.PI * 2 - Math.PI / 2;
+        return [80 + Math.cos(a) * 38, 78 + Math.sin(a) * 38] as const;
+      });
+      svg.innerHTML = `
+        ${bezel3d}
+        ${ticks36}
+        <circle data-plotter-role="secondary" cx="80" cy="78" r="56" fill="none" stroke="currentColor" opacity="0.45"/>
+        <!-- Stepped Inner 3D Ring -->
+        <circle data-plotter-role="primary" cx="80" cy="80" r="26" fill="var(--ds-bg)" stroke="currentColor" opacity="0.35"/>
+        <circle data-plotter-role="primary" cx="80" cy="78" r="26" fill="var(--ds-bg)" stroke="currentColor"/>
+        ${spokes}
+        <!-- Aspect Chords -->
+        <path data-plotter-role="guide" d="M ${planetPts[0][0].toFixed(1)} ${planetPts[0][1].toFixed(1)} L ${planetPts[2][0].toFixed(1)} ${planetPts[2][1].toFixed(1)} L ${planetPts[4][0].toFixed(1)} ${planetPts[4][1].toFixed(1)} Z" fill="none" stroke="currentColor"/>
+        <line data-plotter-role="secondary" x1="${planetPts[1][0].toFixed(1)}" y1="${planetPts[1][1].toFixed(1)}" x2="${planetPts[3][0].toFixed(1)}" y2="${planetPts[3][1].toFixed(1)}" stroke="currentColor" opacity="0.45"/>
+        <!-- 3D Planetary Nodes -->
+        ${planetPts
+          .map(
+            ([x, y], i) =>
+              `<circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i === 3 ? '3.4' : '2.4'}" fill="var(--ds-bg)" stroke="currentColor"/>` +
+              (i === 3 ? `<circle data-plotter-role="primary" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.1" fill="currentColor" stroke="none"/>` : ''),
+          )
+          .join('')}
+        <circle data-plotter-role="primary" cx="80" cy="78" r="3" fill="var(--ds-bg)" stroke="currentColor"/>
+      `;
+      readout.textContent = `CASA ${String(hIdx + 1).padStart(2, '0')} · ${houses[hIdx]} · ${hIdx * 30 + 15}°`;
+    };
+    renderAstro(activeHouse);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      const ang = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
+      activeHouse = Math.floor(ang / 30) % 12;
+      renderAstro(activeHouse);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  // Default: 'compass' — 3D Marine Compass Rose
+  let brg = 18;
+  const renderCompass = (deg: number) => {
+    svg.innerHTML = `
+      ${bezel3d}
+      ${ticks36}
+      <circle data-plotter-role="secondary" cx="80" cy="78" r="48" fill="none" stroke="currentColor" opacity="0.38"/>
+      <line data-plotter-role="guide" x1="80" y1="22" x2="80" y2="134" stroke="currentColor"/>
+      <line data-plotter-role="guide" x1="24" y1="78" x2="136" y2="78" stroke="currentColor"/>
+      <g transform="rotate(${deg.toFixed(1)} 80 78)">
+        <path data-plotter-role="primary" d="M 80 24 L 84 78 L 80 128 L 76 78 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="80" cy="34" r="1.3" fill="currentColor" stroke="none"/>
       </g>
-      <path class="ml-primary" d="M80 30 C82 52 83 68 81 80 C79 66 78 50 80 30" fill="none" stroke="currentColor"/>
-      <circle class="ml-mark" cx="80" cy="80" r="2" fill="currentColor"/>
-      <text x="80" y="18" text-anchor="middle">N</text>
-    </svg>`;
-  return el.firstElementChild as HTMLElement;
+      <circle data-plotter-role="primary" cx="80" cy="80" r="6" fill="var(--ds-bg)" stroke="currentColor"/>
+      <circle data-plotter-role="primary" cx="80" cy="78" r="6" fill="var(--ds-bg)" stroke="currentColor"/>
+      <circle data-plotter-role="primary" cx="80" cy="78" r="1.3" fill="currentColor" stroke="none"/>
+    `;
+    readout.textContent = `BRG ${String(Math.round(deg)).padStart(3, '0')}°`;
+  };
+  renderCompass(brg);
+  svg.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width / 2);
+    const dy = e.clientY - (r.top + r.height / 2);
+    brg = ((Math.atan2(dy, dx) * 180) / Math.PI + 90 + 360) % 360;
+    renderCompass(brg);
+  });
+  wrap.append(svg, readout);
+  return wrap;
 }
 
 function demoAudioMeter(): HTMLElement {
@@ -711,13 +958,190 @@ function demoHairlineIso(preset: HairlinePreset = 'wave'): HTMLElement {
 }
 
 function demoSvgInstrument(kind: string): HTMLElement {
-  const map: Record<string, HairlinePreset> = {
-    instrument: 'octaves',
-    'attitude-indicator': 'attitude',
-    'astronomy-instrument': 'beacon',
-    'lunar-ephemeris': 'ephemeris',
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:240px;';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'ml-svg');
+  svg.setAttribute('data-plotter', '');
+  svg.setAttribute('data-hairline', '');
+  svg.setAttribute('viewBox', '0 0 220 144');
+  svg.style.cssText = 'width:100%;max-width:220px;height:auto;touch-action:none;color:var(--ds-fg);';
+  const readout = document.createElement('div');
+  readout.className = 'ds-mono';
+  readout.style.cssText = 'font-size:10px;color:var(--ds-fg-muted);font-variant-numeric:tabular-nums;';
+
+  if (kind === 'attitude-indicator') {
+    // 3D Gyroscopic Artificial Horizon (Bezel + Bank Scale + Tilting Pitch Ladder + Fixed Gull-Wing)
+    let roll = 11;
+    let pitch = 4;
+    const bankTicks = [-60, -45, -30, -15, 0, 15, 30, 45, 60]
+      .map((deg) => {
+        const a = ((deg - 90) * Math.PI) / 180;
+        const r0 = deg % 30 === 0 ? 48 : 50.5;
+        return `<line data-plotter-role="secondary" x1="${(110 + Math.cos(a) * r0).toFixed(1)}" y1="${(70 + Math.sin(a) * r0).toFixed(1)}" x2="${(110 + Math.cos(a) * 54).toFixed(1)}" y2="${(70 + Math.sin(a) * 54).toFixed(1)}" stroke="currentColor"/>`;
+      })
+      .join('');
+    const renderAttitude = (rDeg: number, pDeg: number) => {
+      const py = clamp(pDeg * 1.1, -16, 16);
+      svg.innerHTML = `
+        <defs>
+          <clipPath id="att-clip"><circle cx="110" cy="70" r="46"/></clipPath>
+        </defs>
+        <!-- 3D Cylindrical Instrument Casing -->
+        <path data-plotter-role="primary" d="M 52 70 L 52 75 A 58 58 0 0 0 168 75 L 168 70 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="110" cy="70" r="58" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="secondary" cx="110" cy="70" r="46" fill="none" stroke="currentColor" opacity="0.4"/>
+        ${bankTicks}
+        <!-- Gimbal Horizon & Pitch Ladder -->
+        <g clip-path="url(#att-clip)">
+          <g transform="rotate(${rDeg.toFixed(1)} 110 70) translate(0 ${py.toFixed(1)})">
+            <line data-plotter-role="primary" x1="56" y1="70" x2="164" y2="70" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="94" y1="56" x2="126" y2="56" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="100" y1="44" x2="120" y2="44" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="94" y1="84" x2="126" y2="84" stroke="currentColor"/>
+            <line data-plotter-role="secondary" x1="100" y1="96" x2="120" y2="96" stroke="currentColor"/>
+          </g>
+        </g>
+        <!-- Fixed 3D Aircraft Reference Gull-Wing -->
+        <path data-plotter-role="primary" d="M 80 70 L 98 70 L 103 75 M 140 70 L 122 70 L 117 75" fill="none" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="110" cy="70" r="2.2" fill="var(--ds-bg)" stroke="currentColor"/>
+      `;
+      readout.textContent = `ROLL ${rDeg >= 0 ? '+' : ''}${Math.round(rDeg)}° · PITCH ${pDeg >= 0 ? '+' : ''}${Math.round(pDeg)}°`;
+    };
+    renderAttitude(roll, pitch);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      const ny = (0.5 - (e.clientY - r.top) / r.height) * 2;
+      roll = clamp(nx * 28, -28, 28);
+      pitch = clamp(ny * 15, -15, 15);
+      renderAttitude(roll, pitch);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  if (kind === 'astronomy-instrument') {
+    // 3D Solar Horizon Dome & Ecliptic Arc
+    let tNorm = 0.62;
+    const renderSolar = (t: number) => {
+      const ang = Math.PI * (1 - t);
+      const sx = 110 - Math.cos(ang) * 72;
+      const sy = 96 - Math.sin(ang) * 58;
+      const gy = 96 + Math.sin(ang) * 10;
+      const hour = 6 + Math.round(t * 12);
+      const alt = Math.round(Math.sin(ang) * 68);
+      const az = Math.round(90 + t * 180);
+      svg.innerHTML = `
+        <!-- 3D Horizon Disc with Extruded Front Rim -->
+        <path data-plotter-role="primary" d="M 26 96 L 26 101 A 84 22 0 0 0 194 101 L 194 96 Z" fill="var(--ds-bg)" stroke="currentColor"/>
+        <ellipse data-plotter-role="primary" cx="110" cy="96" rx="84" ry="22" fill="var(--ds-bg)" stroke="currentColor"/>
+        <line data-plotter-role="guide" x1="26" y1="96" x2="194" y2="96" stroke="currentColor"/>
+        <line data-plotter-role="guide" x1="110" y1="74" x2="110" y2="118" stroke="currentColor"/>
+        <!-- Winter / Summer Solstice Reference Arcs -->
+        <path data-plotter-role="guide" d="M 48 96 A 62 40 0 0 1 172 96" fill="none" stroke="currentColor"/>
+        <!-- Main Solar Ecliptic Arc -->
+        <path data-plotter-role="secondary" d="M 38 96 A 72 58 0 0 1 182 96" fill="none" stroke="currentColor"/>
+        <!-- Solar Altitude Plumb Line & Ground Projection -->
+        <line data-plotter-role="guide" x1="${sx.toFixed(1)}" y1="${sy.toFixed(1)}" x2="${sx.toFixed(1)}" y2="${gy.toFixed(1)}" stroke="currentColor"/>
+        <ellipse data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${gy.toFixed(1)}" rx="3.2" ry="1.4" fill="none" stroke="currentColor"/>
+        <!-- 3D Solar Orb + Corona Ring -->
+        <circle data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="10.5" fill="none" stroke="currentColor" opacity="0.34"/>
+        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="6" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="1.4" fill="currentColor" stroke="none"/>
+      `;
+      readout.textContent = `${String(hour).padStart(2, '0')}:00 · ALT +${alt}° · AZ ${az}°`;
+    };
+    renderSolar(tNorm);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      tNorm = clamp((e.clientX - r.left) / r.width, 0.08, 0.92);
+      renderSolar(tNorm);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  if (kind === 'lunar-ephemeris') {
+    // 3D Lunar Phase Disc & 8-Phase Orbital Ring
+    let phase = 0.64;
+    const names = ['NOVA', 'CRESCENTE', 'QUARTO CRESC.', 'GIBOSA CRESC.', 'CHEIA', 'GIBOSA MING.', 'QUARTO MING.', 'MINGUANTE'];
+    const renderLunar = (p: number) => {
+      const idx = Math.round(p * 7) % 8;
+      const kx = Math.cos(p * Math.PI * 2) * 26;
+      const orbitNodes = Array.from({ length: 8 }, (_, i) => {
+        const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
+        const ox = 110 + Math.cos(a) * 52;
+        const oy = 70 + Math.sin(a) * 44;
+        const isSel = i === idx;
+        return (
+          `<circle data-plotter-role="${isSel ? 'primary' : 'secondary'}" cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="${isSel ? '6.5' : '4.5'}" fill="var(--ds-bg)" stroke="currentColor" opacity="${isSel ? '1' : '0.42'}"/>` +
+          (isSel ? `<circle data-plotter-role="primary" cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="1.3" fill="currentColor" stroke="none"/>` : '')
+        );
+      }).join('');
+      svg.innerHTML = `
+        <ellipse data-plotter-role="guide" cx="110" cy="70" rx="52" ry="44" fill="none" stroke="currentColor"/>
+        ${orbitNodes}
+        <!-- Central 3D Moon Globe with Extruded Lower Rim -->
+        <circle data-plotter-role="primary" cx="110" cy="73" r="26" fill="var(--ds-bg)" stroke="currentColor" opacity="0.38"/>
+        <circle data-plotter-role="primary" cx="110" cy="70" r="26" fill="var(--ds-bg)" stroke="currentColor"/>
+        <!-- Dynamic Terminator Curve -->
+        <path data-plotter-role="primary" d="M 110 44 A ${Math.abs(kx).toFixed(1)} 26 0 0 ${kx >= 0 ? 1 : 0} 110 96" fill="none" stroke="currentColor"/>
+        <path data-plotter-role="secondary" d="M 88 70 A 22 22 0 0 0 132 70" fill="none" stroke="currentColor" opacity="0.28"/>
+      `;
+      readout.textContent = `${names[idx]} · ELONG ${Math.round(p * 360)}°`;
+    };
+    renderLunar(phase);
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      phase = clamp((e.clientX - r.left) / r.width, 0.02, 0.98);
+      renderLunar(phase);
+    });
+    wrap.append(svg, readout);
+    return wrap;
+  }
+
+  // Default: 'instrument' (Instrument Bars) — Front-Facing 3D 8-Column Harmonic Level Gauge
+  const levels = [0.42, 0.64, 0.54, 0.86, 0.72, 0.48, 0.68, 0.58];
+  let focusCol = 3;
+  const renderBars = (activeCol: number) => {
+    const cols = levels
+      .map((lv, i) => {
+        const x = 26 + i * 22;
+        const h = Math.round(24 + lv * 78);
+        const yTop = 116 - h;
+        const isHi = i === activeCol;
+        const role = isHi ? 'primary' : 'secondary';
+        return `
+          <!-- Recessed 3D Slot -->
+          <rect data-plotter-role="guide" x="${x}" y="20" width="12" height="100" rx="6" fill="none" stroke="currentColor"/>
+          <!-- 3D Extruded Column Base Skirt -->
+          <rect data-plotter-role="${role}" x="${x}" y="${yTop + 4}" width="12" height="${h}" rx="6" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '0.95' : '0.45'}"/>
+          <!-- 3D Raised Column Top Face -->
+          <rect data-plotter-role="${role}" x="${x}" y="${yTop}" width="12" height="${h}" rx="6" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '1' : '0.58'}"/>
+          <!-- Inner Chamfer Crease -->
+          <line data-plotter-role="secondary" x1="${x + 3}" y1="${yTop + 5}" x2="${x + 9}" y2="${yTop + 5}" stroke="currentColor" opacity="0.35"/>
+          ${isHi ? `<circle data-plotter-role="primary" cx="${x + 6}" cy="${yTop + 10}" r="1.3" fill="currentColor" stroke="none"/>` : ''}
+        `;
+      })
+      .join('');
+    svg.innerHTML = `
+      <line data-plotter-role="guide" x1="16" y1="120" x2="204" y2="120" stroke="currentColor"/>
+      ${cols}
+    `;
+    readout.textContent = `CH 0${activeCol + 1} · ${Math.round(levels[activeCol] * 100)} dB`;
   };
-  return demoHairlineIso(map[kind] ?? 'strata');
+  renderBars(focusCol);
+  svg.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect();
+    const t = clamp((e.clientX - r.left) / r.width, 0, 0.99);
+    focusCol = Math.floor(t * levels.length);
+    const ny = clamp(1 - (e.clientY - r.top) / r.height, 0.18, 0.96);
+    levels[focusCol] = ny;
+    renderBars(focusCol);
+  });
+  wrap.append(svg, readout);
+  return wrap;
 }
 
 function seriesPoints(values: number[], w: number, h: number, pad = 8): Array<readonly [number, number]> {
@@ -1387,7 +1811,37 @@ function demoKpiStrip(): HTMLElement {
 }
 
 function demoConsole(): HTMLElement {
-  return demoHairlineIso('switches');
+  const el = document.createElement('div');
+  el.className = 'ml-console';
+  const readout = document.createElement('div');
+  readout.className = 'ml-console-readout';
+  const updateReadout = () => {
+    const active = Array.from(el.querySelectorAll<HTMLButtonElement>('.ml-console-key'))
+      .map((b, i) => (b.dataset.on === 'true' ? `CH${i + 1}` : null))
+      .filter(Boolean);
+    readout.textContent = active.length ? `ACTIVE · ${active.join(' · ')}` : 'ALL CHANNELS STANDBY';
+  };
+  for (let i = 0; i < 6; i++) {
+    const on = i === 0 || i === 2 || i === 4;
+    const cell = document.createElement('div');
+    cell.className = 'ml-console-cell';
+    cell.innerHTML = `
+      <button type="button" class="ml-console-key" data-on="${on}" aria-pressed="${on}" aria-label="Channel ${i + 1}">
+        <span class="ml-console-led"></span>
+        <span class="ds-mono" style="font-size:10px">0${i + 1}</span>
+      </button>`;
+    const btn = qs<HTMLButtonElement>(cell, 'button');
+    btn.addEventListener('click', () => {
+      const next = btn.dataset.on !== 'true';
+      btn.dataset.on = String(next);
+      btn.setAttribute('aria-pressed', String(next));
+      updateReadout();
+    });
+    el.append(cell);
+  }
+  el.append(readout);
+  updateReadout();
+  return el;
 }
 
 function demoPlate(item: CatalogItem): HTMLElement {
@@ -1409,7 +1863,7 @@ function buildDemo(item: CatalogItem): HTMLElement {
     case 'switch':
       return demoSwitch();
     case 'dial':
-      return demoDial(item.id === 'detent-dial');
+      return demoDial(item.id);
     case 'bar-slider':
       return demoBarSlider();
     case 'radio':
@@ -1469,11 +1923,7 @@ function buildDemo(item: CatalogItem): HTMLElement {
     case 'calendar':
       return demoCalendar();
     case 'compass':
-      if (item.id === 'astrology-wheel') return demoHairlineIso('ephemeris');
-      if (item.id === 'weather-instrument' || item.id === 'navigation-instrument' || item.id === 'wind-instrument') {
-        return demoHairlineIso('telemetry');
-      }
-      return demoCompass();
+      return demoCompass(item.id);
     case 'audio-meter':
       return demoAudioMeter();
     case 'steps':
@@ -1860,6 +2310,12 @@ function renderGrid(): void {
       });
     });
 
+    meta.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('[data-copy-cli], [data-open-component], code, button, a')) return;
+      openComponentPage(item.id);
+    });
+
     meta.querySelector('[data-copy-cli]')!.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(cmd);
@@ -1972,17 +2428,33 @@ function renderPageView(): void {
 
   if (item) {
     document.title = `${item.name} — Meridian Components Lab`;
-    if (hero) hero.hidden = true;
-    if (toolbar) toolbar.hidden = true;
+    if (hero) {
+      hero.hidden = true;
+      hero.style.display = 'none';
+    }
+    if (toolbar) {
+      toolbar.hidden = true;
+      toolbar.style.display = 'none';
+    }
     grid.hidden = true;
+    grid.style.display = 'none';
     detail.hidden = false;
+    detail.style.display = 'flex';
     renderDetail(item);
   } else {
     document.title = 'Meridian — Components Lab';
-    if (hero) hero.hidden = false;
-    if (toolbar) toolbar.hidden = false;
+    if (hero) {
+      hero.hidden = false;
+      hero.style.display = '';
+    }
+    if (toolbar) {
+      toolbar.hidden = false;
+      toolbar.style.display = '';
+    }
     grid.hidden = false;
+    grid.style.display = '';
     detail.hidden = true;
+    detail.style.display = 'none';
     detail.innerHTML = '';
     renderGrid();
   }

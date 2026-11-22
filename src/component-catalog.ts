@@ -105,21 +105,21 @@ export const CATEGORY_LABELS: Record<ComponentCategory, string> = {
 export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   // Controls
   { id: 'button', name: 'Line Button', category: 'controls', blurb: 'Pressão local no ponteiro, scale 0.97, ripple seco.', demo: 'button', install: 'button', interactive: true },
-  { id: 'slider', name: 'Line Slider', category: 'controls', blurb: 'Trilha hairline + thumb circular, captura 1:1.', demo: 'slider', install: 'slider', interactive: true },
-  { id: 'switch', name: 'Line Switch', category: 'controls', blurb: 'Rocker de baixo relevo com estado aria-checked.', demo: 'switch', install: 'switch', interactive: true },
-  { id: 'dial', name: 'Tactile Dial', category: 'controls', blurb: 'Ângulo absoluto −135°→135° com knob SVG.', demo: 'dial', install: 'dial', interactive: true },
-  { id: 'bar-slider', name: 'Bar Slider', category: 'controls', blurb: 'Células em série para nível discreto.', demo: 'bar-slider', install: 'bar-slider', interactive: true },
+  { id: 'slider', name: 'Line Slider', category: 'controls', blurb: 'Canal 3D rebaixado + êmbolo cilíndrico com saia e vinco hairline.', demo: 'slider', install: 'slider', interactive: true },
+  { id: 'switch', name: 'Line Switch', category: 'controls', blurb: 'Berço 3D rebaixado com êmbolo circular tátil e estado aria-checked.', demo: 'switch', install: 'switch', interactive: true },
+  { id: 'dial', name: 'Tactile Dial', category: 'controls', blurb: 'Knob rotativo cilíndrico 3D (−135°→135°) em traço Hairline 0.65px.', demo: 'dial', install: 'dial', interactive: true },
+  { id: 'bar-slider', name: 'Bar Slider', category: 'controls', blurb: 'Colunas cápsula 3D em série para nível discreto.', demo: 'bar-slider', install: 'bar-slider', interactive: true },
   { id: 'radio-group', name: 'Radio Group', category: 'controls', blurb: 'Anéis SVG, seleção exclusiva e foco visível.', demo: 'radio', install: 'radio-group', interactive: true },
-  { id: 'tactile-key', name: 'Tactile Key', category: 'controls', blurb: 'Tecla isolada com depressão.', demo: 'tactile-key', install: 'tactile-key', interactive: true },
-  { id: 'tactile-keypad', name: 'Tactile Keypad', category: 'controls', blurb: 'Grade 3×4 + readout tabular.', demo: 'tactile-keypad', install: 'tactile-keypad', interactive: true },
-  { id: 'tactile-console', name: 'Tactile Console', category: 'controls', blurb: 'Matriz 3×2 Hairline 2:1 com depressão tátil e mola k100/c18.', demo: 'tactile-console', install: 'tactile-console', interactive: true },
-  { id: 'camera-wheel', name: 'Camera Wheel', category: 'controls', blurb: 'Roda óptica com ticks e arraste.', demo: 'dial', install: 'camera-wheel', interactive: true },
-  { id: 'camera-dial', name: 'Camera Dial', category: 'controls', blurb: 'Dial vernier de abertura/velocidade.', demo: 'dial', install: 'camera-dial', interactive: true },
-  { id: 'spectrum-control', name: 'Spectrum Control', category: 'controls', blurb: 'Canal espectral single-ink.', demo: 'slider', install: 'spectrum-control', interactive: true },
+  { id: 'tactile-key', name: 'Tactile Key', category: 'controls', blurb: 'Botão tátil redondo 3D com curso físico de depressão (−2.5mm).', demo: 'tactile-key', install: 'tactile-key', interactive: true },
+  { id: 'tactile-keypad', name: 'Tactile Keypad', category: 'controls', blurb: 'Matriz 3×4 de botões táteis redondos 3D + readout tabular.', demo: 'tactile-keypad', install: 'tactile-keypad', interactive: true },
+  { id: 'tactile-console', name: 'Tactile Console', category: 'controls', blurb: 'Deck 3D com 6 botões táteis redondos com trava (latch) + LEDs.', demo: 'tactile-console', install: 'tactile-console', interactive: true },
+  { id: 'camera-wheel', name: 'Camera Wheel', category: 'controls', blurb: 'Roda cilíndrica 3D recartilhada com ticks e arraste.', demo: 'dial', install: 'camera-wheel', interactive: true },
+  { id: 'camera-dial', name: 'Camera Dial', category: 'controls', blurb: 'Dial vernier 3D de velocidade/abertura com anel concêntrico.', demo: 'dial', install: 'camera-dial', interactive: true },
+  { id: 'spectrum-control', name: 'Spectrum Control', category: 'controls', blurb: 'Slider 3D de canal espectral single-ink.', demo: 'slider', install: 'spectrum-control', interactive: true },
   { id: 'oklch-palette', name: 'OKLCH Palette', category: 'controls', blurb: 'Swatches + sliders L/C/H sobre papel neutro.', demo: 'color-picker', install: 'oklch-palette', interactive: true },
   { id: 'color-picker', name: 'Color Picker', category: 'controls', blurb: 'Picker de cor com preview e grid tátil.', demo: 'color-picker', install: 'color-picker', interactive: true },
-  { id: 'detent-dial', name: 'Detent Dial', category: 'controls', blurb: 'Degraus discretos com snap.', demo: 'dial', install: 'detent-dial', interactive: true },
-  { id: 'tactile-lever', name: 'Tactile Lever', category: 'controls', blurb: 'Alavanca vertical com curso limitado.', demo: 'tactile-lever', install: 'tactile-lever', interactive: true },
+  { id: 'detent-dial', name: 'Detent Dial', category: 'controls', blurb: 'Knob cilíndrico 3D com degraus discretos e snap.', demo: 'dial', install: 'detent-dial', interactive: true },
+  { id: 'tactile-lever', name: 'Tactile Lever', category: 'controls', blurb: 'Fader vertical 3D com trilho rebaixado graduado e punho cilíndrico.', demo: 'tactile-lever', install: 'tactile-lever', interactive: true },
 
   // Inputs
   { id: 'calendar', name: 'Calendar', category: 'inputs', blurb: 'Grade mensal tabular com seleção.', demo: 'calendar', install: 'calendar', interactive: true },
@@ -195,24 +195,24 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'financial-chart', name: 'Financial Chart', category: 'charts', blurb: 'Combo candles + volume.', demo: 'chart-candles', install: 'financial-chart', interactive: true },
 
   // Instruments
-  { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Barras harmônicas 2:1 em sólidos Hairline × Plotter (0.65/0.45px).', demo: 'svg-instrument', install: 'instrument', interactive: true },
+  { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Rack frontal 3D de 8 colunas cápsula com relevo e traço Hairline 0.65px.', demo: 'svg-instrument', install: 'instrument', interactive: true },
   { id: 'image-inspector', name: 'Image Inspector', category: 'instruments', blurb: 'Crosshair, coords e zoom de moldura.', demo: 'image-inspector', install: 'image-inspector', interactive: true },
-  { id: 'compass', name: 'Compass', category: 'instruments', blurb: 'Rosa com anel 1.15, guias 0.7 e agulha 1.5.', demo: 'compass', install: 'compass', interactive: true },
+  { id: 'compass', name: 'Compass', category: 'instruments', blurb: 'Rosa náutica 3D com bisel cilíndrico, 36 ticks e agulha interativa.', demo: 'compass', install: 'compass', interactive: true },
   { id: 'audio-meter', name: 'Audio Meter', category: 'instruments', blurb: 'VU em colunas SVG.', demo: 'audio-meter', install: 'audio-meter', interactive: true },
-  { id: 'weather-instrument', name: 'Weather Instrument', category: 'instruments', blurb: 'Palheta direcional 2:1 isométrica (Hairline × Plotter).', demo: 'compass', install: 'weather-instrument', interactive: true },
-  { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial em planos Hairline 2:1 com mola.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
-  { id: 'navigation-instrument', name: 'Nav Instrument', category: 'instruments', blurb: 'Quadrantes cardeais 2:1 + núcleo bárico Hairline.', demo: 'compass', install: 'navigation-instrument', interactive: true },
+  { id: 'weather-instrument', name: 'Weather Instrument', category: 'instruments', blurb: 'Barômetro anelar 3D (980–1040 hPa) + sub-dial higrométrico %RH.', demo: 'compass', install: 'weather-instrument', interactive: true },
+  { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial giroscópico 3D com escada de pitch e asas fixas.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
+  { id: 'navigation-instrument', name: 'Nav Instrument', category: 'instruments', blurb: 'Bússola HSI 3D com ponteiro de curso (CRS) e barra de desvio (CDI).', demo: 'compass', install: 'navigation-instrument', interactive: true },
   { id: 'race-telemetry', name: 'Race Telemetry', category: 'instruments', blurb: 'Telemetria com sparkline.', demo: 'chart-spark', install: 'race-telemetry', interactive: true },
   { id: 'hairline-isometric', name: 'Hairline Isometric', category: 'instruments', blurb: 'Malha 4×4 isométrica 2:1 com traço fino 0.65/0.45px e hit em repouso.', demo: 'hairline-iso', install: 'hairline-isometric', interactive: true },
 
   // Astronomy
-  { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Anéis concêntricos solares 2:1 em traço Hairline × Plotter.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },
-  { id: 'astrology-wheel', name: 'Astrology Wheel', category: 'astronomy', blurb: 'Órbita elíptica 2:1 com 5 nós sagrados Hairline.', demo: 'compass', install: 'astrology-wheel', interactive: true },
-  { id: 'lunar-ephemeris', name: 'Moon Ephemeris', category: 'astronomy', blurb: 'Fases lunares 2:1 em órbita isométrica interativa.', demo: 'svg-instrument', install: 'lunar-ephemeris', interactive: true },
+  { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Domo de horizonte solar 3D com arco eclíptico, prumo de altitude e orbe.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },
+  { id: 'astrology-wheel', name: 'Astrology Wheel', category: 'astronomy', blurb: 'Astrolábio 3D de 12 casas com anéis concêntricos e cordas de aspecto.', demo: 'compass', install: 'astrology-wheel', interactive: true },
+  { id: 'lunar-ephemeris', name: 'Moon Ephemeris', category: 'astronomy', blurb: 'Esfera lunar 3D com terminador dinâmico e anel orbital de 8 fases.', demo: 'svg-instrument', install: 'lunar-ephemeris', interactive: true },
 
   // Weather
   { id: 'weather-conditions', name: 'Weather Conditions', category: 'weather', blurb: 'Condições + métricas line.', demo: 'metric', install: 'weather-conditions', interactive: true },
-  { id: 'wind-instrument', name: 'Wind Vector', category: 'weather', blurb: 'Vetor cardinal 2:1 com placas de pressão Hairline.', demo: 'compass', install: 'wind-instrument', interactive: true },
+  { id: 'wind-instrument', name: 'Wind Vector', category: 'weather', blurb: 'Anemômetro 3D com anéis Beaufort e biruta aerodinâmica direcional.', demo: 'compass', install: 'wind-instrument', interactive: true },
   { id: 'tide-instrument', name: 'Tide Curve', category: 'weather', blurb: 'Curva de maré contínua.', demo: 'chart-area', install: 'tide-instrument', interactive: true },
 ] as const;
 
