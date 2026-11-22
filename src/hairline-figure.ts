@@ -7,7 +7,7 @@
  *  01. hit      — Hit testing strictly on static rest centers (zero hover flicker)
  *  02. order    — Distance-staggered wave settle outward from focus
  *  03. reach    — Clamped elevation within the 400x320 2:1 viewBox frame
- *  04. accent   — Thin foreground stroke highlight only (0.85 / 0.6 / 0.5 non-scaling-stroke)
+ *  04. accent   — Ultra-thin foreground stroke highlight (0.65 / 0.45 / 0.4 non-scaling-stroke)
  *  05. rest     — Designed asymmetric rest composition (never flat)
  *  06. honesty  — Back-to-front painter occlusion with opaque var(--ds-bg) plates
  *  07. cost     — Sleeps idle / offscreen via IntersectionObserver + reduced-motion snap
@@ -148,7 +148,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     const axisH = [isoProj(-2.25, 0, 0, scale, baseY), isoProj(2.25, 0, 0, scale, baseY)];
     const axisV = [isoProj(0, -2.25, 0, scale, baseY), isoProj(0, 2.25, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<path d="${pathFromPts(baseCorners)}"/>` +
       `<line x1="${axisH[0][0].toFixed(1)}" y1="${axisH[0][1].toFixed(1)}" x2="${axisH[1][0].toFixed(1)}" y2="${axisH[1][1].toFixed(1)}"/>` +
       `<line x1="${axisV[0][0].toFixed(1)}" y1="${axisV[0][1].toFixed(1)}" x2="${axisV[1][0].toFixed(1)}" y2="${axisV[1][1].toFixed(1)}"/>` +
@@ -172,7 +172,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     }
     const base = [isoProj(-2.1, -2.1, 0, scale, baseY), isoProj(2.1, -2.1, 0, scale, baseY), isoProj(2.1, 2.1, 0, scale, baseY), isoProj(-2.1, 2.1, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<path d="${pathFromPts(base)}"/>` +
       `<line x1="200" y1="68" x2="200" y2="254"/>` +
       `</g>`;
@@ -204,7 +204,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     const axisX0 = isoProj(-2.25, 0, 0, scale, baseY);
     const axisX1 = isoProj(2.25, 0, 0, scale, baseY);
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<line x1="${r0[0].toFixed(1)}" y1="${r0[1].toFixed(1)}" x2="${r1[0].toFixed(1)}" y2="${r1[1].toFixed(1)}"/>` +
       `<line x1="${l0[0].toFixed(1)}" y1="${l0[1].toFixed(1)}" x2="${l1[0].toFixed(1)}" y2="${l1[1].toFixed(1)}"/>` +
       `<line x1="${axisX0[0].toFixed(1)}" y1="${axisX0[1].toFixed(1)}" x2="${axisX1[0].toFixed(1)}" y2="${axisX1[1].toFixed(1)}"/>` +
@@ -236,7 +236,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     const tray = [isoProj(-1.78, -1.25, 0, scale, baseY), isoProj(1.78, -1.25, 0, scale, baseY), isoProj(1.78, 1.25, 0, scale, baseY), isoProj(-1.78, 1.25, 0, scale, baseY)];
     const mid = [isoProj(-1.95, 0, 0, scale, baseY), isoProj(1.95, 0, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<path d="${pathFromPts(tray)}"/>` +
       `<line x1="${mid[0][0].toFixed(1)}" y1="${mid[0][1].toFixed(1)}" x2="${mid[1][0].toFixed(1)}" y2="${mid[1][1].toFixed(1)}"/>` +
       `</g>`;
@@ -265,7 +265,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     const crossA = [isoProj(-2.15, 0, 0, scale, baseY), isoProj(2.15, 0, 0, scale, baseY)];
     const crossB = [isoProj(0, -2.15, 0, scale, baseY), isoProj(0, 2.15, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<path d="${pathFromPts(ring)}"/>` +
       `<line x1="${crossA[0][0].toFixed(1)}" y1="${crossA[0][1].toFixed(1)}" x2="${crossA[1][0].toFixed(1)}" y2="${crossA[1][1].toFixed(1)}"/>` +
       `<line x1="${crossB[0][0].toFixed(1)}" y1="${crossB[0][1].toFixed(1)}" x2="${crossB[1][0].toFixed(1)}" y2="${crossB[1][1].toFixed(1)}"/>` +
@@ -295,7 +295,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     const orbitPts = isoRingPts(orbitR, orbitR, 0, 48, scale, baseY);
     const axis = [isoProj(-1.9, -1.9, 0, scale, baseY), isoProj(1.9, 1.9, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<path d="${pathFromPts(orbitPts)}"/>` +
       `<line x1="${axis[0][0].toFixed(1)}" y1="${axis[0][1].toFixed(1)}" x2="${axis[1][0].toFixed(1)}" y2="${axis[1][1].toFixed(1)}"/>` +
       `</g>`;
@@ -326,7 +326,7 @@ function buildPresetTiles(preset: HairlinePreset): {
     const ns = [isoProj(0, -1.95, 0, scale, baseY), isoProj(0, 1.95, 0, scale, baseY)];
     const ew = [isoProj(-1.95, 0, 0, scale, baseY), isoProj(1.95, 0, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.22">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
       `<path d="${pathFromPts(ring)}"/>` +
       `<line x1="${ns[0][0].toFixed(1)}" y1="${ns[0][1].toFixed(1)}" x2="${ns[1][0].toFixed(1)}" y2="${ns[1][1].toFixed(1)}"/>` +
       `<line x1="${ew[0][0].toFixed(1)}" y1="${ew[0][1].toFixed(1)}" x2="${ew[1][0].toFixed(1)}" y2="${ew[1][1].toFixed(1)}"/>` +
@@ -392,14 +392,14 @@ export function mountHairlineFigure(
       const hull = hull2d(topPts.concat(botPts));
       const creasePts = tile.innerPts.map(([x, y]) => isoProj(x, y, tile.z, scale, baseY));
       const pip = isoProj(tile.cx, tile.cy + (preset === 'wave' || preset === 'switches' ? 0.14 : 0), tile.z, scale, baseY);
-      const gOp = isActive ? '1' : '0.38';
-      const primaryW = isActive ? '0.85' : '0.6';
+      const gOp = isActive ? '0.92' : '0.32';
+      const primaryW = isActive ? '0.65' : '0.45';
 
       html += `<g opacity="${gOp}">`;
       html += `<path data-plotter-role="primary" d="${pathFromPts(hull)}" fill="var(--ds-bg)" stroke="currentColor" stroke-width="${primaryW}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>`;
-      html += `<path data-plotter-role="secondary" d="${pathFromPts(creasePts)}" fill="none" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="0.34"/>`;
+      html += `<path data-plotter-role="secondary" d="${pathFromPts(creasePts)}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="0.24"/>`;
       if (isActive) {
-        html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="1.5" fill="currentColor" stroke="none"/>`;
+        html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="1.15" fill="currentColor" stroke="none"/>`;
       }
       html += `</g>`;
     }

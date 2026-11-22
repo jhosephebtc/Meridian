@@ -12,6 +12,7 @@ import {
   buildInstallPrompt,
   buildSystemInstallPrompt,
   installCommand,
+  resolveComponentTarget,
 } from './component-catalog.ts';
 import { getLang, initI18n, type Lang } from './i18n';
 import './i18n.css';
@@ -1642,7 +1643,7 @@ function renderCmdkList(query: string): void {
   list.querySelectorAll<HTMLElement>('.lab-cmdk-item').forEach((row) => {
     row.addEventListener('click', () => {
       setCmdk(false);
-      document.getElementById(`card-${row.dataset.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      openComponentPage(row.dataset.id ?? null);
     });
   });
 }
@@ -1665,6 +1666,30 @@ function setCmdk(open: boolean): void {
 let activeCategory: ComponentCategory | 'all' = 'all';
 let searchQuery = '';
 
+function findComponent(id: string | null): CatalogItem | undefined {
+  if (!id) return undefined;
+  return COMPONENT_CATALOG.find((c) => c.id === id);
+}
+
+function readComponentFromUrl(): string | null {
+  const id = new URLSearchParams(window.location.search).get('component');
+  return findComponent(id) ? id : null;
+}
+
+let selectedComponentId: string | null = readComponentFromUrl();
+
+function openComponentPage(id: string | null, push = true): void {
+  selectedComponentId = id && findComponent(id) ? id : null;
+  if (push) {
+    const nextUrl = selectedComponentId
+      ? `${window.location.pathname}?component=${encodeURIComponent(selectedComponentId)}`
+      : window.location.pathname;
+    window.history.pushState({ component: selectedComponentId }, '', nextUrl);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  renderPageView();
+}
+
 function filtered(): CatalogItem[] {
   return COMPONENT_CATALOG.filter((c) => {
     if (activeCategory !== 'all' && c.category !== activeCategory) return false;
@@ -1684,6 +1709,12 @@ const LAB_TEXT: Record<
     expand: string;
     collapse: string;
     copyCli: string;
+    openDetail: string;
+    backAll: string;
+    prevLabel: string;
+    nextLabel: string;
+    targetLabel: string;
+    registryLabel: string;
     heroPrompt: string;
     heroEyebrow: string;
     heroTitle: string;
@@ -1699,11 +1730,17 @@ const LAB_TEXT: Record<
     expand: 'Ver completo',
     collapse: 'Recolher',
     copyCli: 'Copiar CLI',
+    openDetail: 'Abrir componente →',
+    backAll: '← Todos os componentes',
+    prevLabel: 'Anterior',
+    nextLabel: 'Próximo',
+    targetLabel: 'Arquivo & Export',
+    registryLabel: 'Registry CLI',
     heroPrompt: 'Copiar prompt do sistema',
     heroEyebrow: 'Components Lab · v1.5 · 90 componentes',
     heroTitle: 'Componentes em linha tátil para sentir — e instalar',
     heroDesc:
-      'Catálogo expandido do Meridian: 90 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único com prompt individual de instalação para IA e registry shadcn.',
+      'Catálogo expandido do Meridian: 90 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único Hairline × Plotter. Abra qualquer componente para ver a demonstração isolada e o prompt de instalação.',
     searchPlaceholder: 'Buscar componentes…',
   },
   en: {
@@ -1714,11 +1751,17 @@ const LAB_TEXT: Record<
     expand: 'Full prompt',
     collapse: 'Collapse',
     copyCli: 'Copy CLI',
+    openDetail: 'Open component →',
+    backAll: '← All components',
+    prevLabel: 'Previous',
+    nextLabel: 'Next',
+    targetLabel: 'Target & Export',
+    registryLabel: 'Registry CLI',
     heroPrompt: 'Copy system prompt',
     heroEyebrow: 'Components Lab · v1.5 · 90 components',
     heroTitle: 'Line components you can feel — and install',
     heroDesc:
-      'Expanded Meridian catalog: 90 tactile controls, menus, modals, sheets, drawers, pickers, tables, charts, and instruments in single-ink SVG grammar with per-component AI install prompts and shadcn registry.',
+      'Expanded Meridian catalog: 90 tactile controls, menus, modals, sheets, drawers, pickers, tables, charts, and instruments in single-ink Hairline × Plotter grammar. Open any component for its dedicated page and install prompt.',
     searchPlaceholder: 'Search components…',
   },
   es: {
@@ -1729,11 +1772,17 @@ const LAB_TEXT: Record<
     expand: 'Ver completo',
     collapse: 'Contraer',
     copyCli: 'Copiar CLI',
+    openDetail: 'Abrir componente →',
+    backAll: '← Todos los componentes',
+    prevLabel: 'Anterior',
+    nextLabel: 'Siguiente',
+    targetLabel: 'Archivo y Export',
+    registryLabel: 'Registry CLI',
     heroPrompt: 'Copiar prompt del sistema',
     heroEyebrow: 'Components Lab · v1.5 · 90 componentes',
     heroTitle: 'Componentes en línea táctil para sentir — e instalar',
     heroDesc:
-      'Catálogo expandido de Meridian: 90 controles, menús, modales, sheets, drawers, pickers, tablas, gráficos e instrumentos en trazo único con prompt de instalación por componente y registry shadcn.',
+      'Catálogo expandido de Meridian: 90 controles, menús, modales, sheets, drawers, pickers, tablas, gráficos e instrumentos en trazo único Hairline × Plotter. Abre cualquier componente para ver su página y su prompt de instalación.',
     searchPlaceholder: 'Buscar componentes…',
   },
   fr: {
@@ -1744,11 +1793,17 @@ const LAB_TEXT: Record<
     expand: 'Tout voir',
     collapse: 'Réduire',
     copyCli: 'Copier CLI',
+    openDetail: 'Ouvrir →',
+    backAll: '← Tous les composants',
+    prevLabel: 'Précédent',
+    nextLabel: 'Suivant',
+    targetLabel: 'Cible & Export',
+    registryLabel: 'Registry CLI',
     heroPrompt: 'Copier le prompt système',
     heroEyebrow: 'Components Lab · v1.5 · 90 composants',
     heroTitle: 'Des composants ligne tactiles — à ressentir et installer',
     heroDesc:
-      'Catalogue Meridian étendu : 90 contrôles, menus, modales, sheets, tiroirs, sélecteurs, tableaux, graphiques et instruments en encre unique avec prompt d’installation par composant et registry shadcn.',
+      'Catalogue Meridian étendu : 90 contrôles, menus, modales, sheets, tiroirs, sélecteurs, tableaux, graphiques et instruments en encre unique Hairline × Plotter. Ouvrez un composant pour voir sa page et son prompt d’installation.',
     searchPlaceholder: 'Rechercher un composant…',
   },
 };
@@ -1786,50 +1841,23 @@ function renderGrid(): void {
     const meta = document.createElement('div');
     meta.className = 'lab-card-meta';
     const cmd = installCommand(item.install, REGISTRY_BASE);
-    const prompt = buildInstallPrompt(item, REGISTRY_BASE, lang);
+    const detailHref = `?component=${encodeURIComponent(item.id)}`;
     meta.innerHTML = `
       <div class="ds-eyebrow">${CATEGORY_LABELS[item.category]}${item.interactive ? ' · live' : ''}</div>
-      <h3>${item.name}</h3>
+      <h3><a class="lab-card-title-link" href="${detailHref}" data-open-component="${item.id}">${item.name}</a></h3>
       <p>${item.blurb}</p>
-      <div class="lab-prompt-section" data-expanded="false">
-        <div class="lab-prompt-head">
-          <span class="ds-eyebrow">${copy.promptTitle}</span>
-          <div class="lab-prompt-btns">
-            <button type="button" class="lab-prompt-expand-btn" aria-expanded="false">${copy.expand}</button>
-            <button type="button" class="lab-prompt-copy-btn">${copy.copyPrompt}</button>
-          </div>
-        </div>
-        <pre class="lab-prompt-pre" aria-label="${item.name} — ${copy.promptTitle}"></pre>
-      </div>
       <div class="lab-card-actions">
+        <a class="ml-btn" href="${detailHref}" data-open-component="${item.id}">${copy.openDetail}</a>
         <button type="button" class="ml-btn" data-copy-cli>${copy.copyCli}</button>
         <code title="${cmd}">${cmd}</code>
       </div>`;
 
-    const promptBox = qs<HTMLElement>(meta, '.lab-prompt-section');
-    const preEl = qs<HTMLElement>(meta, '.lab-prompt-pre');
-    const copyPromptBtn = qs<HTMLButtonElement>(meta, '.lab-prompt-copy-btn');
-    const expandBtn = qs<HTMLButtonElement>(meta, '.lab-prompt-expand-btn');
-    preEl.textContent = prompt;
-
-    expandBtn.addEventListener('click', () => {
-      const next = promptBox.dataset.expanded !== 'true';
-      promptBox.dataset.expanded = String(next);
-      expandBtn.setAttribute('aria-expanded', String(next));
-      expandBtn.textContent = next ? copy.collapse : copy.expand;
-    });
-
-    copyPromptBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(prompt);
-        copyPromptBtn.textContent = copy.copied;
-        pushToast(`${copy.copied} · ${item.name}`);
-        window.setTimeout(() => {
-          copyPromptBtn.textContent = copy.copyPrompt;
-        }, 1400);
-      } catch {
-        pushToast('Clipboard unavailable');
-      }
+    meta.querySelectorAll<HTMLAnchorElement>('[data-open-component]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        openComponentPage(item.id);
+      });
     });
 
     meta.querySelector('[data-copy-cli]')!.addEventListener('click', async () => {
@@ -1842,6 +1870,121 @@ function renderGrid(): void {
     });
     card.append(stage, meta);
     grid.append(card);
+  }
+}
+
+function renderDetail(item: CatalogItem): void {
+  const detail = qs<HTMLElement>(document, '#lab-detail');
+  const lang = getLang();
+  const copy = LAB_TEXT[lang];
+  const cmd = installCommand(item.install, REGISTRY_BASE);
+  const prompt = buildInstallPrompt(item, REGISTRY_BASE, lang);
+  const target = resolveComponentTarget(item.id);
+  const idx = COMPONENT_CATALOG.findIndex((c) => c.id === item.id);
+  const prev = idx > 0 ? COMPONENT_CATALOG[idx - 1] : null;
+  const next = idx >= 0 && idx < COMPONENT_CATALOG.length - 1 ? COMPONENT_CATALOG[idx + 1] : null;
+
+  detail.innerHTML = `
+    <div class="lab-detail-top">
+      <a href="./components.html" class="ml-btn" id="lab-detail-back">${copy.backAll}</a>
+      <span class="ds-eyebrow">${CATEGORY_LABELS[item.category]} · ${item.id}${item.interactive ? ' · live' : ''}</span>
+    </div>
+    <header class="lab-detail-header">
+      <h1>${item.name}</h1>
+      <p>${item.blurb}</p>
+    </header>
+    <div class="lab-detail-stage" id="lab-detail-stage"></div>
+    <div class="lab-prompt-section" data-expanded="true">
+      <div class="lab-prompt-head">
+        <span class="ds-eyebrow">${copy.promptTitle}</span>
+        <div class="lab-prompt-btns">
+          <button type="button" class="lab-prompt-copy-btn">${copy.copyPrompt}</button>
+        </div>
+      </div>
+      <pre class="lab-prompt-pre" aria-label="${item.name} — ${copy.promptTitle}"></pre>
+    </div>
+    <div class="lab-detail-meta-grid">
+      <div class="lab-detail-meta-cell">
+        <span class="ds-eyebrow">${copy.registryLabel}</span>
+        <div class="lab-detail-cli-row">
+          <code>${cmd}</code>
+          <button type="button" class="ml-btn" id="lab-detail-copy-cli" style="min-height:30px;padding:0 10px;font-size:11.5px;">${copy.copyCli}</button>
+        </div>
+      </div>
+      <div class="lab-detail-meta-cell">
+        <span class="ds-eyebrow">${copy.targetLabel}</span>
+        <code>${target.file} · export ${target.symbol}</code>
+        <a href="${REGISTRY_BASE}/${item.install}.json" target="_blank" rel="noopener noreferrer">${REGISTRY_BASE}/${item.install}.json ↗</a>
+      </div>
+    </div>
+    <nav class="lab-detail-pager" aria-label="Component pagination">
+      ${prev ? `<a class="ml-btn" href="?component=${encodeURIComponent(prev.id)}" data-pager="${prev.id}">← ${copy.prevLabel}: ${prev.name}</a>` : '<span></span>'}
+      ${next ? `<a class="ml-btn" href="?component=${encodeURIComponent(next.id)}" data-pager="${next.id}">${copy.nextLabel}: ${next.name} →</a>` : '<span></span>'}
+    </nav>`;
+
+  qs<HTMLElement>(detail, '#lab-detail-stage').append(buildDemo(item));
+  qs<HTMLElement>(detail, '.lab-prompt-pre').textContent = prompt;
+
+  qs<HTMLButtonElement>(detail, '.lab-prompt-copy-btn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    try {
+      await navigator.clipboard.writeText(prompt);
+      btn.textContent = copy.copied;
+      pushToast(`${copy.copied} · ${item.name}`);
+      window.setTimeout(() => {
+        btn.textContent = copy.copyPrompt;
+      }, 1400);
+    } catch {
+      pushToast('Clipboard unavailable');
+    }
+  });
+
+  qs<HTMLButtonElement>(detail, '#lab-detail-copy-cli').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(cmd);
+      pushToast(`Copied CLI · ${item.install}`);
+    } catch {
+      pushToast('Clipboard unavailable');
+    }
+  });
+
+  qs<HTMLAnchorElement>(detail, '#lab-detail-back').addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    openComponentPage(null);
+  });
+
+  detail.querySelectorAll<HTMLAnchorElement>('[data-pager]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      openComponentPage(a.dataset.pager ?? null);
+    });
+  });
+}
+
+function renderPageView(): void {
+  const hero = document.querySelector<HTMLElement>('.lab-hero');
+  const toolbar = document.querySelector<HTMLElement>('.lab-toolbar');
+  const grid = qs<HTMLElement>(document, '#lab-grid');
+  const detail = qs<HTMLElement>(document, '#lab-detail');
+  const item = findComponent(selectedComponentId);
+
+  if (item) {
+    document.title = `${item.name} — Meridian Components Lab`;
+    if (hero) hero.hidden = true;
+    if (toolbar) toolbar.hidden = true;
+    grid.hidden = true;
+    detail.hidden = false;
+    renderDetail(item);
+  } else {
+    document.title = 'Meridian — Components Lab';
+    if (hero) hero.hidden = false;
+    if (toolbar) toolbar.hidden = false;
+    grid.hidden = false;
+    detail.hidden = true;
+    detail.innerHTML = '';
+    renderGrid();
   }
 }
 
@@ -1875,7 +2018,7 @@ function renderSidebar(): void {
     b.addEventListener('click', () => {
       activeCategory = c;
       renderSidebar();
-      renderGrid();
+      openComponentPage(null);
     });
     wrap.append(b);
   }
@@ -1926,7 +2069,12 @@ function init(): void {
   initChrome();
   syncLabHeroCopy(lang);
   renderSidebar();
-  renderGrid();
+  renderPageView();
+
+  window.addEventListener('popstate', () => {
+    selectedComponentId = readComponentFromUrl();
+    renderPageView();
+  });
 
   const search = document.getElementById('lab-search-input') as HTMLInputElement | null;
   search?.addEventListener('input', () => {
@@ -1956,7 +2104,7 @@ function init(): void {
   window.addEventListener('meridian:lang', ((ev: CustomEvent<{ lang: Lang }>) => {
     syncLabHeroCopy(ev.detail.lang);
     renderSidebar();
-    renderGrid();
+    renderPageView();
   }) as EventListener);
 }
 

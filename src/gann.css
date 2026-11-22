@@ -883,10 +883,10 @@ html, body {
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
-[data-plotter][data-hairline] [data-plotter-role="primary"] { stroke-width: 0.85; }
-[data-plotter][data-hairline] [data-plotter-role="secondary"] { stroke-width: 0.6; }
-[data-plotter][data-hairline] [data-plotter-role="secondary"][stroke-width="0.5"] { stroke-width: 0.5; }
-[data-plotter][data-hairline] [data-plotter-role="guide"] { stroke-width: 0.5; stroke-dasharray: 2 3; }
+[data-plotter][data-hairline] [data-plotter-role="primary"] { stroke-width: 0.65; }
+[data-plotter][data-hairline] [data-plotter-role="secondary"] { stroke-width: 0.45; }
+[data-plotter][data-hairline] [data-plotter-role="secondary"][stroke-width="0.4"] { stroke-width: 0.4; }
+[data-plotter][data-hairline] [data-plotter-role="guide"] { stroke-width: 0.4; stroke-dasharray: 2 3.5; }
 
 .gann-plot-draw {
   stroke-dasharray: 1200;

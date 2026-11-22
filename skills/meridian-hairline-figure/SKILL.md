@@ -25,8 +25,8 @@ Whereas **Plotter** draws orthographic 2D plans, cross-sections, dimensions, and
    - Clamp every lift, gap, tilt, and spring target so extremes remain framed at `intensity = 1` inside `viewBox="0 0 400 320"` (or `.ds-svg-frame`). Apply sublinear distance falloff (`1 → 0.31 → 0.09`).
 
 4. **04 · `accent` — Stroke Is the Only Highlight (Razor-Thin Hairline Scale):**
-   - Use **one** foreground stroke (`var(--ds-fg)` / `currentColor`) across all 13 Meridian surfaces with **`vector-effect="non-scaling-stroke"`** so lines stay razor-thin at every card width: active contour `0.85px` (`opacity: 1`), resting contour `0.6px` (`opacity: 0.38`), inner crease `0.5px` (`opacity: 0.34`), base guide `0.5px` (`opacity: 0.22`), zero fills, glows, gradients, blurs, or secondary accent stripes.
-   - Highlight **one** subject at a time: at rest, one lead mark (`r=1.5`) guides the eye; on pointer hover/lock, the rest mark yields brightness to the hovered piece.
+   - Use **one** foreground stroke (`var(--ds-fg)` / `currentColor`) across all 13 Meridian surfaces with **`vector-effect="non-scaling-stroke"`** so lines stay razor-thin at every card width: active contour `0.65px` (`opacity: 0.92`), resting contour `0.45px` (`opacity: 0.32`), inner crease `0.4px` (`opacity: 0.24`), base guide `0.4px` (`opacity: 0.18`), zero fills, glows, gradients, blurs, or secondary accent stripes.
+   - Highlight **one** subject at a time: at rest, one lead mark (`r=1.15`) guides the eye; on pointer hover/lock, the rest mark yields brightness to the hovered piece.
 
 5. **05 · `rest` — Rest Is Designed, Never Flat:**
    - Frame 0 is the cover thumbnail. Give rest state subtle asymmetric elevation/lean (a wave crest, fanned angles, or slight lift) so resting composition holds up without interaction.

@@ -195,7 +195,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'financial-chart', name: 'Financial Chart', category: 'charts', blurb: 'Combo candles + volume.', demo: 'chart-candles', install: 'financial-chart', interactive: true },
 
   // Instruments
-  { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Barras harmônicas 2:1 em sólidos Hairline × Plotter (0.85/0.60px).', demo: 'svg-instrument', install: 'instrument', interactive: true },
+  { id: 'instrument', name: 'Instrument Bars', category: 'instruments', blurb: 'Barras harmônicas 2:1 em sólidos Hairline × Plotter (0.65/0.45px).', demo: 'svg-instrument', install: 'instrument', interactive: true },
   { id: 'image-inspector', name: 'Image Inspector', category: 'instruments', blurb: 'Crosshair, coords e zoom de moldura.', demo: 'image-inspector', install: 'image-inspector', interactive: true },
   { id: 'compass', name: 'Compass', category: 'instruments', blurb: 'Rosa com anel 1.15, guias 0.7 e agulha 1.5.', demo: 'compass', install: 'compass', interactive: true },
   { id: 'audio-meter', name: 'Audio Meter', category: 'instruments', blurb: 'VU em colunas SVG.', demo: 'audio-meter', install: 'audio-meter', interactive: true },
@@ -203,7 +203,7 @@ export const COMPONENT_CATALOG: readonly CatalogItem[] = [
   { id: 'attitude-indicator', name: 'Attitude Indicator', category: 'instruments', blurb: 'Horizonte artificial em planos Hairline 2:1 com mola.', demo: 'svg-instrument', install: 'attitude-indicator', interactive: true },
   { id: 'navigation-instrument', name: 'Nav Instrument', category: 'instruments', blurb: 'Quadrantes cardeais 2:1 + núcleo bárico Hairline.', demo: 'compass', install: 'navigation-instrument', interactive: true },
   { id: 'race-telemetry', name: 'Race Telemetry', category: 'instruments', blurb: 'Telemetria com sparkline.', demo: 'chart-spark', install: 'race-telemetry', interactive: true },
-  { id: 'hairline-isometric', name: 'Hairline Isometric', category: 'instruments', blurb: 'Malha 4×4 isométrica 2:1 com traço fino 0.85/0.60px e hit em repouso.', demo: 'hairline-iso', install: 'hairline-isometric', interactive: true },
+  { id: 'hairline-isometric', name: 'Hairline Isometric', category: 'instruments', blurb: 'Malha 4×4 isométrica 2:1 com traço fino 0.65/0.45px e hit em repouso.', demo: 'hairline-iso', install: 'hairline-isometric', interactive: true },
 
   // Astronomy
   { id: 'astronomy-instrument', name: 'Solar Ephemeris', category: 'astronomy', blurb: 'Anéis concêntricos solares 2:1 em traço Hairline × Plotter.', demo: 'svg-instrument', install: 'astronomy-instrument', interactive: true },
@@ -229,6 +229,10 @@ function pascalCase(id: string): string {
     .split('-')
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
     .join('');
+}
+
+export function resolveComponentTarget(id: string): { symbol: string; file: string } {
+  return resolveTarget(id);
 }
 
 function resolveTarget(id: string): { symbol: string; file: string } {
