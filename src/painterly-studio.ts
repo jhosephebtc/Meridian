@@ -185,27 +185,53 @@ function bootPainterlyStudio(): void {
   const splitLine = document.getElementById('painterly-split-line') as HTMLElement | null;
   const splitToggleBtn = document.getElementById('btn-painterly-split') as HTMLButtonElement | null;
   const exportBtn = document.getElementById('btn-painterly-export') as HTMLButtonElement | null;
+  const exportAllBtn = document.getElementById('btn-painterly-export-all') as HTMLButtonElement | null;
   const resetBtn = document.getElementById('btn-painterly-reset') as HTMLButtonElement | null;
   const readoutEl = document.getElementById('painterly-telemetry');
   const srcNameEl = document.getElementById('painterly-source-name');
+  const processTagEl = document.getElementById('painterly-process-tag');
 
   let activePreset: PainterlyPresetId = 'gouache';
+  let activeProcess: PainterlyDebugMode = 'final';
   let splitEnabled = true;
   let splitPos = 0.42;
   let lastRenderMs = 0;
   let sourceLabel = 'Lighthouse Dusk (Procedural)';
 
+  const PROCESS_TAGS: Record<PainterlyDebugMode, string> = {
+    final: '4-Pass Anisotropic Kuwahara · WebGL',
+    kuwahara: 'Raw Kuwahara Kernel · WebGL',
+    tensor: 'Structure Tensor Flow · WebGL',
+    halftone: 'Hexagonal Halftone Screen · WebGL',
+    engraving: 'Copperplate Engraving · WebGL',
+    stipple: 'Stochastic Pointillism · WebGL',
+    woodblock: 'Woodblock / Screenprint · WebGL',
+    risograph: 'Dual-Plate Risograph · WebGL',
+    original: 'Original Unfiltered Plate · WebGL',
+  };
+
   const sampleCanvas = createPainterlySampleCanvas(960, 600);
   const imageCache = new Map<string, HTMLImageElement>();
 
+  function syncStageAspect(): void {
+    const w = canvas!.width || 960;
+    const h = canvas!.height || 600;
+    stage!.style.setProperty('--stage-w', String(w));
+    stage!.style.setProperty('--stage-h', String(h));
+  }
+
   function updateTelemetry(): void {
+    syncStageAspect();
     const p = renderer.getParams();
     if (readoutEl) {
       readoutEl.textContent =
-        `${canvas!.width}×${canvas!.height} · r=${p.radius.toFixed(0)} · A=${p.anisotropy.toFixed(2)} · q=${p.sharpness.toFixed(1)} · ${lastRenderMs.toFixed(1)}ms`;
+        `${canvas!.width}×${canvas!.height} · ${activePreset} · ${activeProcess} · r=${p.radius.toFixed(0)} · A=${p.anisotropy.toFixed(2)} · ${lastRenderMs.toFixed(1)}ms`;
     }
     if (srcNameEl) {
       srcNameEl.textContent = sourceLabel;
+    }
+    if (processTagEl) {
+      processTagEl.textContent = PROCESS_TAGS[activeProcess] || PROCESS_TAGS.final;
     }
   }
 
@@ -245,22 +271,23 @@ function bootPainterlyStudio(): void {
   function applyPreset(id: PainterlyPresetId, tabBtn?: HTMLElement | null): void {
     activePreset = id;
     const next = PAINTERLY_PRESETS[id];
-    renderer.setParams({ ...next, debug: 'final' });
+    renderer.setParams({ ...next, debug: activeProcess });
     lastRenderMs = renderer.render();
     syncSlidersToParams();
     updateTelemetry();
 
-    // Reset debug tab to Final
-    section!.querySelectorAll<HTMLButtonElement>('[data-painterly-debug]').forEach((b) => {
-      const on = b.dataset.painterlyDebug === 'final';
+    section!.querySelectorAll<HTMLButtonElement>('[data-painterly-preset]').forEach((b) => {
+      const on = b.dataset.painterlyPreset === id;
       b.classList.toggle('btn-primary', on);
       b.classList.toggle('btn-tertiary', !on);
       b.setAttribute('aria-pressed', String(on));
     });
 
     const container = section!.querySelector<HTMLElement>('[data-cliptabs="painterly-preset"]');
-    const btn = tabBtn || container?.querySelector<HTMLElement>(`[data-painterly-preset="${id}"]`) || null;
-    syncClipTabsLocal(container, btn);
+    if (container) {
+      const btn = tabBtn || container.querySelector<HTMLElement>(`[data-painterly-preset="${id}"]`) || null;
+      syncClipTabsLocal(container, btn);
+    }
   }
 
   function loadPlateUrl(url: string, label: string): void {
@@ -310,10 +337,11 @@ function bootPainterlyStudio(): void {
     });
   });
 
-  // Debug pass buttons
+  // Debug / shader process buttons
   section.querySelectorAll<HTMLButtonElement>('[data-painterly-debug]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const mode = (btn.dataset.painterlyDebug as PainterlyDebugMode) || 'final';
+      activeProcess = mode;
       section.querySelectorAll<HTMLButtonElement>('[data-painterly-debug]').forEach((b) => {
         const on = b === btn;
         b.classList.toggle('btn-primary', on);
@@ -418,12 +446,37 @@ function bootPainterlyStudio(): void {
   resetBtn?.addEventListener('click', () => {
     splitEnabled = true;
     splitPos = 0.42;
+    activeProcess = 'final';
+    section!.querySelectorAll<HTMLButtonElement>('[data-painterly-debug]').forEach((b) => {
+      const on = b.dataset.painterlyDebug === 'final';
+      b.classList.toggle('btn-primary', on);
+      b.classList.toggle('btn-tertiary', !on);
+      b.setAttribute('aria-pressed', String(on));
+    });
     applyPreset(activePreset);
     syncSplitUi();
   });
 
   exportBtn?.addEventListener('click', () => {
-    renderer.exportPng(`meridian-painterly-${activePreset}.png`);
+    const suffix = activeProcess === 'final' ? activePreset : `${activeProcess}-${activePreset}`;
+    renderer.exportPng(`meridian-${suffix}.png`);
+  });
+
+  exportAllBtn?.addEventListener('click', () => {
+    const modes: PainterlyDebugMode[] = ['final', 'tensor', 'halftone', 'engraving', 'stipple', 'woodblock', 'risograph'];
+    const prev = activeProcess;
+    exportAllBtn.disabled = true;
+    modes.forEach((mode, idx) => {
+      window.setTimeout(() => {
+        renderer.setParams({ debug: mode });
+        renderer.exportPng(`meridian-${mode}-${activePreset}.png`);
+        if (idx === modes.length - 1) {
+          renderer.setParams({ debug: prev });
+          exportAllBtn.disabled = false;
+          updateTelemetry();
+        }
+      }, idx * 240);
+    });
   });
 
   // Sync with Meridian 13 surfaces & i18n language switches

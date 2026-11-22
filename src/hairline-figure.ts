@@ -164,25 +164,9 @@ function ringAt(ring: RingSample[], z: number, scale: number, baseY: number): Ar
   return ring.map((q) => isoProj(q.u, q.v, z, scale, baseY));
 }
 
-let activeToothId = 'hl-tooth';
-
-function toothDefs(id: string): string {
-  // Ink specks in the same color as the stroke. The face under this pattern
-  // stays an opaque surface token; transparent gaps show that face, not the drawing behind it.
-  return (
-    `<defs><pattern id="${id}" width="22" height="22" patternUnits="userSpaceOnUse">` +
-    `<rect x="3" y="5" width="1.15" height="1.15" fill="currentColor" opacity="0.28"/>` +
-    `<rect x="14" y="15" width="0.9" height="0.9" fill="currentColor" opacity="0.18"/>` +
-    `</pattern></defs>`
-  );
-}
-
 function solidPath(d: string, fill: string): string {
   if (!d) return '';
-  return (
-    `<path data-hairline-solid="" data-plotter-role="primary" d="${d}" fill="${fill}" fill-opacity="1" stroke="none"/>` +
-    `<path data-hairline-tooth="" d="${d}" fill="url(#${activeToothId})" fill-opacity="1" stroke="none"/>`
-  );
+  return `<path data-hairline-solid="" data-plotter-role="primary" d="${d}" fill="${fill}" fill-opacity="1" stroke="none"/>`;
 }
 
 function prismMarkup(
@@ -193,11 +177,11 @@ function prismMarkup(
   scale: number,
   baseY: number,
   strokeW: string,
-  creaseOp = '0.24',
+  creaseOp = '0.18',
   coreRing?: RingSample[],
   hullFill = FILL_NEAR,
   capFill = FILL_CAP,
-  strokeOp = '0.32',
+  strokeOp = '0.28',
 ): string {
   const topPts = ringAt(outerRing, z1, scale, baseY);
   const botPts = ringAt(outerRing, z0, scale, baseY);
@@ -238,9 +222,9 @@ function buildSteppedPlinth(
   const inner2 = rrectRing(-(u2 - 0.12), -(v2 - 0.12), u2 - 0.12, v2 - 0.12, Math.max(0.06, r2 - 0.05), 4);
   const well = pathClosed(ringAt(inner2, zStep2, scale, baseY));
   return (
-    prismMarkup(outer1, inner1, 0, zStep1, scale, baseY, '0.45', '0.24', undefined, FILL_BACK, FILL_BACK, '0.32') +
-    prismMarkup(outer2, inner2, zStep1, zStep2, scale, baseY, '0.45', '0.24', undefined, FILL_MID, FILL_MID, '0.32') +
-    `<path data-hairline-stroke="crease" data-plotter-role="secondary" d="${well}" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.24" vector-effect="non-scaling-stroke"/>` +
+    prismMarkup(outer1, inner1, 0, zStep1, scale, baseY, '0.45', '0.18', undefined, FILL_BACK, FILL_BACK, '0.28') +
+    prismMarkup(outer2, inner2, zStep1, zStep2, scale, baseY, '0.45', '0.18', undefined, FILL_MID, FILL_MID, '0.28') +
+    `<path data-hairline-stroke="crease" data-plotter-role="secondary" d="${well}" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.18" vector-effect="non-scaling-stroke"/>` +
     extraInnerMarkup
   );
 }
@@ -586,7 +570,6 @@ export function mountHairlineFigure(
   if (!svg) return () => {};
   svg.setAttribute('data-hairline', '');
   if (!svg.id) svg.id = `hairline-${preset}-${Math.random().toString(36).slice(2, 7)}`;
-  activeToothId = `${svg.id}-tooth`;
 
   const { solids, restLead, maxReach, scale, baseY, guideMarkup, trayMarkup } = buildPresetSolids(preset);
   const drawOrder = solids
@@ -602,15 +585,14 @@ export function mountHairlineFigure(
 
   function render(): void {
     if (!svg) return;
-    activeToothId = `${svg.id || 'hairline'}-tooth`;
     const lead = activeIdx >= 0 ? activeIdx : pinnedIdx >= 0 ? pinnedIdx : restLead;
-    let html = toothDefs(activeToothId) + guideMarkup + (trayMarkup ?? '');
+    let html = guideMarkup + (trayMarkup ?? '');
     for (const idx of drawOrder) {
       const s = solids[idx];
       const isActive = idx === lead;
       const zBot = s.thickness != null ? Math.max(0.24, s.z - s.thickness) : s.z0;
       const pip = isoProj(s.cx, s.cy, s.z, scale, baseY);
-      const strokeOp = isActive ? '0.92' : '0.32';
+      const strokeOp = isActive ? '0.52' : '0.28';
       const primaryW = isActive ? '0.65' : '0.45';
 
       html += prismMarkup(
@@ -621,14 +603,14 @@ export function mountHairlineFigure(
         scale,
         baseY,
         primaryW,
-        '0.24',
+        '0.18',
         s.coreRing,
         FILL_NEAR,
         FILL_CAP,
         strokeOp,
       );
       if (isActive) {
-        html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="1.15" fill="currentColor" stroke="none"/>`;
+        html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="0.85" fill="currentColor" fill-opacity="0.45" stroke="none"/>`;
       }
     }
     svg.innerHTML = html;

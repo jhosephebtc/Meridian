@@ -639,7 +639,7 @@
       margin-top: 4px;
       font-family: var(--ds-font-mono);
       font-size: 11px;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-secondary);
     }
     html[data-mode="invisible"] .card-extra[hidden] {
       display: none !important;
@@ -1850,7 +1850,7 @@
     .telemetry-val {
       font-family: var(--ds-font-mono);
       font-size: 13px;
-      color: var(--ds-fg);
+      color: var(--ds-type-primary);
     }
 
     /* 5 Edition Plates (Click to switch entire surface!) */
@@ -1949,13 +1949,13 @@
     .color-token {
       font-family: var(--ds-font-mono);
       font-size: 11px;
-      color: var(--ds-fg);
+      color: var(--ds-type-primary);
     }
 
     .color-hex {
       font-family: var(--ds-font-mono);
       font-size: 11px;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-tertiary);
     }
 
     .sub-grid-2 {
@@ -2033,7 +2033,7 @@
       max-width: 68ch;
       font-size: 13.5px;
       line-height: 1.55;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-tertiary);
       text-wrap: pretty;
     }
     .weight-ramp {
@@ -2053,7 +2053,7 @@
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
       letter-spacing: 0.04em;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-tertiary);
     }
     .weight-sample {
       margin: 10px 0 0;
@@ -2095,7 +2095,7 @@
       font-size: 10.5px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-tertiary);
     }
     .combo-title {
       margin: 0;
@@ -2104,12 +2104,13 @@
       font-size: 26px;
       line-height: 1.12;
       letter-spacing: -0.02em;
+      color: var(--ds-type-primary);
     }
     .combo-body {
       margin: 0;
       font-size: 14.5px;
       line-height: 1.55;
-      color: var(--ds-fg-secondary);
+      color: var(--ds-type-secondary);
       text-wrap: pretty;
     }
     .combo-meta {
@@ -2117,7 +2118,7 @@
       padding-top: 8px;
       font-family: var(--ds-font-mono);
       font-size: 11px;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-tertiary);
     }
     @media (max-width: 900px) {
       .combo-grid { grid-template-columns: 1fr; }
@@ -2155,16 +2156,16 @@
       grid-area: name;
       font-family: var(--ds-font-mono);
       font-size: 11.5px;
-      color: var(--ds-fg);
+      color: var(--ds-type-primary);
       overflow-wrap: anywhere;
     }
-    .token-role { grid-area: role; font-size: 12px; color: var(--ds-fg-muted); }
+    .token-role { grid-area: role; font-size: 12px; color: var(--ds-type-tertiary); }
     .token-val {
       grid-area: val;
       max-width: 140px;
       font-family: var(--ds-font-mono);
       font-size: 11px;
-      color: var(--ds-fg-secondary);
+      color: var(--ds-type-secondary);
       text-align: right;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -2876,7 +2877,7 @@
     .card-desc {
       margin: 0;
       font-size: 14px;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-secondary);
       max-width: 58ch;
       text-wrap: pretty;
     }
@@ -4088,6 +4089,7 @@
     }
 
     .painterly-stage-card {
+      min-width: 0;
       background: color-mix(in srgb, var(--ds-fg) 2%, var(--ds-bg));
       border: var(--ds-hairline) solid var(--ds-border-strong);
       border-radius: var(--ds-radius-lg);
@@ -4096,11 +4098,18 @@
       flex-direction: column;
       gap: 14px;
     }
+    .painterly-stage-card .cliptabs {
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .painterly-stage-card .cliptabs::-webkit-scrollbar { display: none; }
 
     .painterly-stage {
       position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 10;
+      width: min(100%, calc(min(72vh, 640px) * var(--stage-w, 16) / var(--stage-h, 10)));
+      aspect-ratio: var(--stage-w, 16) / var(--stage-h, 10);
+      margin-inline: auto;
       border-radius: var(--ds-radius-md);
       border: var(--ds-hairline) solid var(--ds-border);
       overflow: hidden;
@@ -4180,6 +4189,7 @@
     }
 
     .painterly-controls-card {
+      min-width: 0;
       background: color-mix(in srgb, var(--ds-fg) 2%, var(--ds-bg));
       border: var(--ds-hairline) solid var(--ds-border-strong);
       border-radius: var(--ds-radius-lg);
@@ -4264,50 +4274,51 @@
       background: color-mix(in srgb, var(--ds-fg) 2.5%, var(--ds-bg));
     }
 
-    /* ---------------- PLOTTER BLUEPRINT SVG GRAMMAR (gramática plotter) ---------------- */
+    /* ---------------- PLOTTER BLUEPRINT SVG GRAMMAR (thin hairline flat 2D) ---------------- */
     [data-plotter] {
       --plotter-ink: var(--ds-fg);
-      --plotter-stroke-primary: 1.5px;
-      --plotter-stroke-secondary: 1.15px;
-      --plotter-stroke-dimension: 1px;
-      --plotter-stroke-guide: 0.7px;
-      --plotter-stroke-grid: 0.55px;
-      --plotter-stroke-hatch: 0.75px;
-      --plotter-stroke-center: 0.85px;
-      --plotter-node-root: 3px;
-      --plotter-node-mark: 2px;
-      --plotter-node-pip: 1.35px;
-      --plotter-node-ring: 5.5px;
-      --plotter-opacity-primary: 1;
-      --plotter-opacity-secondary: 0.32;
+      --plotter-stroke-primary: 0.72px;
+      --plotter-stroke-secondary: 0.48px;
+      --plotter-stroke-dimension: 0.45px;
+      --plotter-stroke-guide: 0.38px;
+      --plotter-stroke-grid: 0.32px;
+      --plotter-stroke-hatch: 0.42px;
+      --plotter-stroke-center: 0.45px;
+      --plotter-node-root: 2.2px;
+      --plotter-node-mark: 1.5px;
+      --plotter-node-pip: 1.1px;
+      --plotter-node-ring: 4.5px;
+      --plotter-opacity-primary: 0.64;
+      --plotter-opacity-secondary: 0.28;
       --plotter-opacity-guide: 0.14;
-      --plotter-opacity-grid: 0.06;
-      --plotter-opacity-hatch: 0.18;
-      --plotter-opacity-hidden: 0.32;
+      --plotter-opacity-grid: 0.08;
+      --plotter-opacity-hatch: 0.16;
+      --plotter-opacity-hidden: 0.24;
       color: var(--plotter-ink);
       stroke: var(--plotter-ink);
     }
     [data-plotter] [fill="currentColor"] { fill: var(--plotter-ink); }
     [data-plotter] text { stroke: none; }
     [data-plotter] [data-plotter-role="primary"],
-    [data-plotter] [data-plotter-role="section"]    { stroke-width: var(--plotter-stroke-primary); opacity: 1; stroke-dasharray: none; }
-    [data-plotter] [data-plotter-role="secondary"]  { stroke-width: var(--plotter-stroke-secondary); opacity: 0.32; stroke-dasharray: none; }
+    [data-plotter] [data-plotter-role="section"]    { stroke-width: var(--plotter-stroke-primary); opacity: var(--plotter-opacity-primary); stroke-dasharray: none; }
+    [data-plotter] [data-plotter-role="secondary"]  { stroke-width: var(--plotter-stroke-secondary); opacity: var(--plotter-opacity-secondary); stroke-dasharray: none; }
     [data-plotter] [data-plotter-role="dimension"],
-    [data-plotter] [data-plotter-role="leader"]     { stroke-width: var(--plotter-stroke-dimension); opacity: 0.55; stroke-dasharray: none; }
-    [data-plotter] [data-plotter-role="guide"]      { stroke-width: var(--plotter-stroke-guide); opacity: 0.22; stroke-dasharray: none; }
-    [data-plotter] [data-plotter-role="grid"]       { stroke-width: var(--plotter-stroke-grid); opacity: 0.1; stroke-dasharray: none; }
-    [data-plotter] [data-plotter-role="hatch"]      { stroke-width: var(--plotter-stroke-hatch); opacity: 0.22; stroke-dasharray: none; }
-    [data-plotter] [data-plotter-role="centerline"] { stroke-width: var(--plotter-stroke-center); opacity: 0.28; stroke-dasharray: 8 3 1 3; }
+    [data-plotter] [data-plotter-role="leader"]     { stroke-width: var(--plotter-stroke-dimension); opacity: 0.42; stroke-dasharray: none; }
+    [data-plotter] [data-plotter-role="guide"]      { stroke-width: var(--plotter-stroke-guide); opacity: var(--plotter-opacity-guide); stroke-dasharray: none; }
+    [data-plotter] [data-plotter-role="grid"]       { stroke-width: var(--plotter-stroke-grid); opacity: var(--plotter-opacity-grid); stroke-dasharray: none; }
+    [data-plotter] [data-plotter-role="hatch"]      { stroke-width: var(--plotter-stroke-hatch); opacity: var(--plotter-opacity-hatch); stroke-dasharray: none; }
+    [data-plotter] [data-plotter-role="centerline"] { stroke-width: var(--plotter-stroke-center); opacity: 0.22; stroke-dasharray: 8 3 1 3; }
     [data-plotter] [data-plotter-role="hidden"],
     [data-plotter] [data-plotter-role="absent"],
-    [data-plotter] [data-plotter-role="proposed"]   { stroke-width: var(--plotter-stroke-dimension); opacity: 0.32; stroke-dasharray: 3 5; }
-    [data-plotter] [data-plotter-role="transfer"]   { stroke-width: var(--plotter-stroke-secondary); opacity: 0.4; stroke-dasharray: 4 6; }
+    [data-plotter] [data-plotter-role="proposed"]   { stroke-width: var(--plotter-stroke-dimension); opacity: 0.26; stroke-dasharray: 3 5; }
+    [data-plotter] [data-plotter-role="transfer"]   { stroke-width: var(--plotter-stroke-secondary); opacity: 0.34; stroke-dasharray: 4 6; }
     [data-plotter] [data-plotter-node="root"] { r: var(--plotter-node-root); stroke: none; }
     [data-plotter] [data-plotter-node="mark"] { r: var(--plotter-node-mark); stroke: none; }
     [data-plotter] [data-plotter-node="pip"]  { r: var(--plotter-node-pip); stroke: none; }
     [data-plotter] [data-plotter-node="ring"] {
       r: var(--plotter-node-ring);
-      fill: var(--ds-bg);
+      fill: var(--ds-surface-2);
+      fill-opacity: 0.85;
       stroke: currentColor;
       stroke-width: var(--plotter-stroke-secondary);
     }
@@ -4329,15 +4340,20 @@
     }
     [data-plotter] [data-plotter-role].chart-dashed {
       stroke-dasharray: 2 3;
-      opacity: 0.4;
+      opacity: 0.34;
     }
     [data-plotter] :is(line, path, circle, rect, polygon, polyline),
     #svg-gann :is(line, path, circle, polygon),
     #svg-env :is(line, circle) {
-      stroke-linecap: butt;
-      stroke-linejoin: miter;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       vector-effect: non-scaling-stroke;
     }
+    [data-plotter] rect[fill-opacity],
+    [data-plotter] circle[data-hairline-plate] {
+      stroke-width: var(--plotter-stroke-secondary);
+    }
+
 
     [data-hairline] :is(line, path, circle) { stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
     [data-plotter][data-hairline] [data-plotter-role="primary"] { stroke-width: 0.65; }
@@ -4796,7 +4812,7 @@
       font-size: 11px;
     }
     .skill-card-link {
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-secondary);
       text-decoration: none;
     }
     .skill-copy-btn {
@@ -5025,7 +5041,7 @@
                 <button class="btn btn-sm btn-primary" data-set-signals="chromatic" data-home="grain.chromatic">Cromático</button>
                 <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome" data-home="grain.mono">Monocromo</button>
               </div>
-              <div class="mono" style="font-size:10.5px; color:var(--ds-fg-muted); line-height:1.45;">
+              <div class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary); line-height:1.45;">
                 <span data-home="grain.help">Intensidade + opacidade · Dust/Scratch opcionais.</span>
                 <span id="grain-blend-readout">edit. · 100% · médio</span>
               </div>
@@ -5376,48 +5392,48 @@
         <div class="type-row">
           <div>
             <div class="eyebrow">Geist Serif · H1</div>
-            <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">clamp(38px, 4.8vw, 72px)</div>
+            <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">clamp(38px, 4.8vw, 72px)</div>
           </div>
           <div class="serif" data-home="type.sample.h1" data-type-sample="primary" style="font-size:var(--ds-text-h1); line-height:var(--ds-lh-display); letter-spacing:var(--ds-tracking-display); color:var(--ds-type-primary);">
             Confluência Planetária &amp; Atmosfera
           </div>
-          <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">weight 400 · lh 1.08 · ls -0.022em</div>
+          <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">weight 400 · lh 1.08 · ls -0.022em</div>
         </div>
 
         <div class="type-row">
           <div>
             <div class="eyebrow">Geist Serif · H2 / Metric</div>
-            <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">40px–68px · tabular</div>
+            <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">40px–68px · tabular</div>
           </div>
           <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:24px;">
             <span class="serif tabular" style="font-size:var(--ds-text-metric); line-height:var(--ds-lh-metric); letter-spacing:var(--ds-tracking-metric);" id="live-metric-readout">84.2°</span>
             <span class="serif" data-home="type.sample.h2" data-type-sample="secondary" style="font-size:var(--ds-text-h3); color:var(--ds-type-secondary);">Índice de Confluência &amp; Qualidade do Ar</span>
           </div>
-          <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">tabular-nums · zero jitter</div>
+          <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">tabular-nums · zero jitter</div>
         </div>
 
         <div class="type-row">
           <div>
             <div class="eyebrow">Functional Sans · Prose</div>
-            <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">17px · max-width: 65ch</div>
+            <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">17px · max-width: 65ch</div>
           </div>
           <p data-home="type.sample.prose" style="margin:0; max-width:65ch; font-size:var(--ds-text-body-lg); line-height:var(--ds-lh-body-lg); letter-spacing:var(--ds-tracking-body);">
             A coluna de leitura enciclopédica limita cada linha a 65 caracteres (regra do UI Cheatsheet de Meridian Motion), garantindo ritmo confortável em relatórios de endereço, análises climáticas e resumos diários sem fadiga ocular.
           </p>
-          <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">weight 400 · lh 1.58 · ls -0.006em</div>
+          <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">weight 400 · lh 1.58 · ls -0.006em</div>
         </div>
 
         <div class="type-row" style="border-bottom:0;">
           <div>
             <div class="eyebrow">Technical Mono · Telemetria</div>
-            <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">11px–13px · tabular-nums</div>
+            <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">11px–13px · tabular-nums</div>
           </div>
           <div class="mono tabular" data-home-html="type.voice.mono" data-type-sample="tertiary" style="font-size:12.5px; display:flex; flex-wrap:wrap; gap:18px; color:var(--ds-type-tertiary);">
             <span>LAT -23.5505° · LON -46.6333°</span>
             <span>AQI 28 · PM2.5 6.4 µg/m³</span>
             <span>SQ9 63.75° · TIER A (BIGQUERY)</span>
           </div>
-          <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">uppercase eyebrow +0.06em</div>
+          <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">uppercase eyebrow +0.06em</div>
         </div>
 
         <div class="type-block">
@@ -5454,7 +5470,7 @@
             </article>
             <article class="combo-card">
               <div class="combo-kicker" data-home="type.combo.ui.k">Interface · sans 500 + mono 400</div>
-              <p class="combo-body" style="font-weight:500; color:var(--ds-fg);" data-home-html="type.combo.ui.b">O rótulo usa sans 500.<br>O token fica em mono 400.<br>O atalho também fica em mono.</p>
+              <p class="combo-body" style="font-weight:500; color:var(--ds-type-primary);" data-home-html="type.combo.ui.b">O rótulo usa sans 500.<br>O token fica em mono 400.<br>O atalho também fica em mono.</p>
               <div class="combo-meta">--ds-text-ui-md · ⌘K · 120ms</div>
             </article>
           </div>
@@ -5729,95 +5745,18 @@
               <article class="editorial-card col-4">
                 <div class="plate-box plate-ratio-square">
                   <svg class="plate-art" viewBox="0 0 400 300" fill="none" aria-hidden="true">
-                    <rect width="400" height="300" fill="var(--ds-surface-1)"/>
-                    <g stroke="var(--ds-fg)" stroke-width="0.9" opacity="0.22">
-                      <line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="120" x2="400" y2="120"/>
-                      <line x1="0" y1="180" x2="400" y2="180"/><line x1="0" y1="240" x2="400" y2="240"/>
-                      <line x1="80" y1="0" x2="80" y2="300"/><line x1="160" y1="0" x2="160" y2="300"/>
-                      <line x1="240" y1="0" x2="240" y2="300"/><line x1="320" y1="0" x2="320" y2="300"/>
-                    </g>
-                    <circle cx="200" cy="150" r="88" stroke="var(--ds-fg)" stroke-width="1.3"/>
-                    <circle cx="200" cy="150" r="54" fill="var(--ds-organic-sky)" opacity="0.34"/>
-                    <circle cx="200" cy="150" r="24" fill="var(--ds-fg)"/>
-                    <path d="M55 215 Q200 75 345 110" stroke="var(--ds-fg)" stroke-width="1.5" stroke-dasharray="4 4"/>
-                  </svg>
-                </div>
-                <div class="card-meta-bar">
-                  <span class="eyebrow" data-home="ed.card1.eyebrow" data-b2c="Clima &amp; Saúde · #01" data-tech="Camada 1–4 · #26">Clima &amp; Saúde · #01</span>
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">20 NOV 2026</span>
-                    <button class="tiny-more-btn" aria-expanded="false" aria-label="Expandir metadados" data-toggle-extra="extra-1">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.4"/></svg>
-                    </button>
-                  </div>
-                </div>
-                <h3 class="card-title" data-home="ed.card1.title" data-b2c="Guardião Família: janela segura de passeio e ar limpo" data-tech="Terminal Gann–Jenkins AI: confluência em escala 1:1">Guardião Família: janela segura de passeio e ar limpo</h3>
-                <p class="card-desc" data-home="ed.card1.desc" data-b2c="Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos." data-tech="Cruzamento determinístico de Square of Nine, ângulos secretos 63,75° e trânsitos rápidos/lentos auditados via ledger analítico.">Combina alertas de clima, ar e pólen em recomendações diretas, sem termos técnicos — com prioridade absoluta para dados físicos.</p>
-                <div class="card-extra" id="extra-1" hidden>Conector: env-connector · Superfície sugerida: Ivory / Aqua · Latência alvo: &lt;180ms</div>
-              </article>
-
-              <article class="editorial-card col-8">
-                <div class="plate-box plate-ratio-wide">
-                  <svg class="plate-art" viewBox="0 0 640 360" fill="none" aria-hidden="true">
-                    <rect width="640" height="360" fill="var(--ds-surface-1)"/>
-                    <rect x="34" y="34" width="248" height="292" fill="var(--ds-organic-olive)" opacity="0.22" stroke="var(--ds-fg)" stroke-width="1"/>
-                    <rect x="310" y="34" width="296" height="292" stroke="var(--ds-fg)" stroke-width="1"/>
-                    <path d="M310 326 L606 34 M310 230 L508 34 M408 326 L606 128" stroke="var(--ds-fg)" stroke-width="1.1" opacity="0.6"/>
-                    <circle cx="158" cy="180" r="82" stroke="var(--ds-fg)" stroke-width="1.4"/>
-                    <circle cx="158" cy="180" r="46" stroke="var(--ds-fg)" stroke-width="1" stroke-dasharray="3 3"/>
-                    <path d="M340 280 C400 220, 440 120, 580 78" stroke="var(--ds-organic-coral)" stroke-width="2.2"/>
-                    <circle cx="452" cy="176" r="6" fill="var(--ds-fg)"/>
-                    <text x="48" y="60" fill="var(--ds-fg)" font-family="Geist Mono, ui-monospace, monospace" font-size="11">PLATE II · ARCHIVAL CARTOGRAPHY</text>
-                  </svg>
-                </div>
-                <div class="card-meta-bar">
-                  <span class="eyebrow" data-home="ed.card2.eyebrow" data-b2c="Imóveis &amp; Rua · #11" data-tech="Ambiente &amp; Ciclos · #27">Imóveis &amp; Rua · #11</span>
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">18 NOV 2026</span>
-                    <button class="tiny-more-btn" aria-expanded="false" aria-label="Expandir metadados" data-toggle-extra="extra-2">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.4"/></svg>
-                    </button>
-                  </div>
-                </div>
-                <h3 class="card-title" data-home="ed.card2.title" data-b2c="Raio-X Real do Endereço antes de assinar o contrato" data-tech="AgroCiclos AI: anomalia térmica e embeddings AlphaEarth 10m">Raio-X Real do Endereço antes de assinar o contrato</h3>
-                <p class="card-desc" data-home="ed.card2.desc" data-b2c="Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial." data-tech="Séries de satélite AlphaEarth cruzadas com janelas sazonais de precipitação e volatilidade histórica de commodities.">Auditoria visual de fachada via visão de rua + análise visual, insolação real, ruído urbano e histórico ambiental em dossiê editorial.</p>
-                <div class="card-extra" id="extra-2" hidden>Conector: env-connector + visão · Superfície sugerida: Paper White · Exportação PDF</div>
-              </article>
-            </div>
-
-            <!-- Row 2: 7-col + 5-col (never repeats Row 1 rhythm!) -->
-            <div class="masonry-row">
-              <article class="editorial-card col-7">
-                <div class="plate-box plate-ratio-wide">
-                  <svg class="plate-art" viewBox="0 0 560 315" fill="none" aria-hidden="true">
-                    <rect width="560" height="315" fill="var(--ds-surface-1)"/>
-                    <path d="M40 250 Q140 80 260 190 T520 75" stroke="var(--ds-fg)" stroke-width="1.6"/>
-                    <path d="M40 270 Q170 155 290 215 T520 130" stroke="var(--ds-organic-ochre)" stroke-width="1.8" opacity="0.85"/>
-                    <rect x="230" y="54" width="110" height="196" fill="var(--ds-organic-ochre)" opacity="0.16" stroke="var(--ds-fg)" stroke-width="0.9" stroke-dasharray="4 3"/>
-                    <text x="242" y="74" fill="var(--ds-fg)" font-family="Geist Mono, ui-monospace, monospace" font-size="10">WINDOW 11:00–14:30</text>
-                  </svg>
-                </div>
-                <div class="card-meta-bar">
-                  <span class="eyebrow" data-home="ed.card3.eyebrow" data-b2c="Energia &amp; Casa · #36" data-tech="Observatório · #30">Energia &amp; Casa · #36</span>
-                  <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">15 NOV 2026</span>
-                </div>
-                <h3 class="card-title" data-home="ed.card3.title" data-b2c="Simulador Solar 3D com incidência real por telhado" data-tech="Pulse &amp; DNA: sentimento Pulse Social vs. ciclos de atenção">Simulador Solar 3D com incidência real por telhado</h3>
-                <p class="card-desc" data-home="ed.card3.desc" data-b2c="Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras." data-tech="Mapeia divergências entre pico de euforia social (AltRank / Galaxy Score) e janelas harmônicas de exaustão.">Estima economia mensal com modelo solar e apresenta retorno em papel quente sem planilhas intimidadoras.</p>
-              </article>
-
-              <article class="editorial-card col-5">
-                <div class="plate-box plate-ratio-square">
-                  <svg class="plate-art" viewBox="0 0 400 300" fill="none" aria-hidden="true">
-                    <rect width="400" height="300" fill="var(--ds-surface-1)"/>
-                    <path d="M80 220 A120 120 0 0 1 320 220" stroke="var(--ds-fg)" stroke-width="1.4"/>
-                    <path d="M120 220 A80 80 0 0 1 280 220" fill="var(--ds-organic-coral)" opacity="0.24" stroke="var(--ds-fg)" stroke-width="1"/>
-                    <line x1="200" y1="220" x2="262" y2="112" stroke="var(--ds-fg)" stroke-width="2"/>
-                    <circle cx="200" cy="220" r="6" fill="var(--ds-fg)"/>
+                    <rect width="400" height="300" fill="var(--ds-surface-1)" fill-opacity="0.55"/>
+                    <path d="M80 220 A120 120 0 0 1 320 220 Z" fill="var(--ds-bg)" fill-opacity="0.6" stroke="var(--ds-fg)" stroke-width="0.55" stroke-opacity="0.44" vector-effect="non-scaling-stroke"/>
+                    <path d="M120 220 A80 80 0 0 1 280 220 Z" fill="var(--ds-surface-2)" fill-opacity="0.72"/>
+                    <path d="M120 220 A80 80 0 0 1 280 220" fill="var(--ds-organic-coral)" fill-opacity="0.16" stroke="var(--ds-fg)" stroke-width="0.45" stroke-opacity="0.28" stroke-dasharray="2 3" vector-effect="non-scaling-stroke"/>
+                    <line x1="200" y1="220" x2="262" y2="112" stroke="var(--ds-fg)" stroke-width="0.72" stroke-opacity="0.62" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+                    <circle cx="200" cy="220" r="5" fill="var(--ds-surface-3)" stroke="var(--ds-fg)" stroke-width="0.55" stroke-opacity="0.55" vector-effect="non-scaling-stroke"/>
+                    <circle cx="200" cy="220" r="1.8" fill="var(--ds-fg)" fill-opacity="0.64"/>
                   </svg>
                 </div>
                 <div class="card-meta-bar">
                   <span class="eyebrow" data-home="ed.card4.eyebrow" data-b2c="Cultura &amp; Voz · #21" data-tech="Risco Global · #29">Cultura &amp; Voz · #21</span>
-                  <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">12 NOV 2026</span>
+                  <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">12 NOV 2026</span>
                 </div>
                 <h3 class="card-title" data-home="ed.card4.title" data-b2c="Jornal de 3 Minutos narrado para o seu bairro" data-tech="Chronos Earth Watch: atividade geomagnética NOAA &amp; USGS">Jornal de 3 Minutos narrado para o seu bairro</h3>
                 <p class="card-desc" data-home="ed.card4.desc" data-b2c="Síntese em áudio TTS + cartões limpos com fontes verificáveis sobre clima, trânsito e assuntos do dia." data-tech="Monitoramento contínuo de tempestades solares Kp, sismicidade global e impacto em infraestrutura crítica.">Síntese em áudio TTS + cartões limpos com fontes verificáveis sobre clima, trânsito e assuntos do dia.</p>
@@ -5861,26 +5800,26 @@
                 <div class="reader-section" id="rd-sources">
                   <div class="eyebrow" data-home="ed.sources" style="margin-bottom:10px;">Fontes Verificadas (clique nas frases acima para destacar)</div>
                   <div class="source-row" id="src-1">
-                    <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">01</span>
+                    <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">01</span>
                     <div>
                       <div style="font-size:13.5px; font-weight:500;" data-home="ed.src1">Telemetria ambiental — ar e pólen</div>
-                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">env-connector · Sensor físico em tempo real</div>
+                      <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">env-connector · Sensor físico em tempo real</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
                   </div>
                   <div class="source-row" id="src-2">
-                    <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">02</span>
+                    <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">02</span>
                     <div>
                       <div style="font-size:13.5px; font-weight:500;" data-home="ed.src2">Imagens satélite — embeddings 10m</div>
-                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);" data-i18n="src.orbital">orbital-archive · Série histórica orbital</div>
+                      <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);" data-i18n="src.orbital">orbital-archive · Série histórica orbital</div>
                     </div>
                     <span class="tier-badge">Tier A</span>
                   </div>
                   <div class="source-row" id="src-3">
-                    <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);">03</span>
+                    <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">03</span>
                     <div>
                       <div style="font-size:13.5px; font-weight:500;" data-home="ed.src3">Ledger de Backtest — Confluência &amp; Validação Estatística</div>
-                      <div class="mono" style="font-size:11px; color:var(--ds-fg-muted);">ephemeris-connector · Motor determinístico TypeScript</div>
+                      <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary);">ephemeris-connector · Motor determinístico TypeScript</div>
                     </div>
                     <span class="tier-badge">Tier B</span>
                   </div>
@@ -5939,7 +5878,7 @@
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
             <span class="serif" data-home="ll.heading" style="font-size:24px;" id="lifeline-heading">Lifeline · Janelas do Ciclo</span>
             <div style="display:flex; align-items:center; gap:8px;">
-              <span class="mono" data-home="ll.range" style="font-size:11px; color:var(--ds-fg-muted);" id="lifeline-range">ARRASTE ↔ · 1:1 DIRECT TRACK</span>
+              <span class="mono" data-home="ll.range" style="font-size:11px; color:var(--ds-type-tertiary);" id="lifeline-range">ARRASTE ↔ · 1:1 DIRECT TRACK</span>
               <button class="btn btn-circle" id="btn-ll-prev" aria-label="Rolar para esquerda">←</button>
               <button class="btn btn-circle" id="btn-ll-next" aria-label="Rolar para direita">→</button>
             </div>
@@ -5968,7 +5907,7 @@
               <div class="eyebrow" data-home="ll.shelf.eye">Biblioteca de Dossiês PDF · CSS preserve-3d &amp; Páginas Caneladas</div>
               <h3 class="serif" data-home="ll.shelf" style="font-size:26px; margin:4px 0 0;">Estante Tátil de Relatórios</h3>
             </div>
-            <span class="mono" data-home="ll.shelf.hint" style="font-size:11px; color:var(--ds-fg-muted);">Passe o mouse ou clique para abrir o volume (800ms volume curve)</span>
+            <span class="mono" data-home="ll.shelf.hint" style="font-size:11px; color:var(--ds-type-tertiary);">Passe o mouse ou clique para abrir o volume (800ms volume curve)</span>
           </div>
 
           <div class="shelf-viewport" id="dossier-shelf">
@@ -6096,7 +6035,7 @@
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="guide">Guides (0.14)</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-plotter-iso="dimension" data-home="svg.dimension">Cota &amp; Leader</button>
             </div>
-            <span class="mono tabular" id="globe-telemetry" data-home="svg.globe.drag" style="font-size:11px; color:var(--ds-fg-muted);">
+            <span class="mono tabular" id="globe-telemetry" data-home="svg.globe.drag" style="font-size:11px; color:var(--ds-type-tertiary);">
               LON -46° · TILT 15° · Arraste 1:1 no globo para orbitar
             </span>
           </div>
@@ -6382,7 +6321,7 @@
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · terrain 7×7</span>
-              <span class="mono" data-home="svg.hl1.meta" style="font-size:11px; color:var(--ds-fg-muted);">0.65px / 0.45px · mola k100/c18</span>
+              <span class="mono" data-home="svg.hl1.meta" style="font-size:11px; color:var(--ds-type-tertiary);">0.65px / 0.45px · mola k100/c18</span>
             </div>
           </div>
 
@@ -6399,7 +6338,7 @@
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-strata-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · strata 7×1</span>
-              <span class="mono" data-home="svg.hl2.meta" style="font-size:11px; color:var(--ds-fg-muted);">oclusão opaca · planos por valor</span>
+              <span class="mono" data-home="svg.hl2.meta" style="font-size:11px; color:var(--ds-type-tertiary);">oclusão opaca · planos por valor</span>
             </div>
           </div>
 
@@ -6416,7 +6355,7 @@
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-switches-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · buttons 3×2</span>
-              <span class="mono" data-home="svg.hl3.meta" style="font-size:11px; color:var(--ds-fg-muted);">tokens · grain · motion · plotter · hairline · gridlines</span>
+              <span class="mono" data-home="svg.hl3.meta" style="font-size:11px; color:var(--ds-type-tertiary);">tokens · grain · motion · plotter · hairline · gridlines</span>
             </div>
           </div>
 
@@ -6433,7 +6372,7 @@
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-beacon-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · beacon 2:1</span>
-              <span class="mono" data-home="svg.hl4.meta" style="font-size:11px; color:var(--ds-fg-muted);">ataque rápido · retorno suave · traço 0.40px</span>
+              <span class="mono" data-home="svg.hl4.meta" style="font-size:11px; color:var(--ds-type-tertiary);">ataque rápido · retorno suave · traço 0.40px</span>
             </div>
           </div>
 
@@ -6450,7 +6389,7 @@
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-riffle-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · riffle 8×1</span>
-              <span class="mono" data-home="svg.hl5.meta" style="font-size:11px; color:var(--ds-fg-muted);">8 dossiês · seleção em repouso · 0.65px</span>
+              <span class="mono" data-home="svg.hl5.meta" style="font-size:11px; color:var(--ds-type-tertiary);">8 dossiês · seleção em repouso · 0.65px</span>
             </div>
           </div>
 
@@ -6467,7 +6406,7 @@
             </div>
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
               <span class="mono tabular" id="hairline-iso-phosphor-readout" style="font-size:11.5px; color:var(--ds-fg-muted);">rest · phosphor 7×7</span>
-              <span class="mono" data-home="svg.hl6.meta" style="font-size:11px; color:var(--ds-fg-muted);">49 células cilíndricas · onda radial</span>
+              <span class="mono" data-home="svg.hl6.meta" style="font-size:11px; color:var(--ds-type-tertiary);">49 células cilíndricas · onda radial</span>
             </div>
           </div>
         </div>
@@ -6507,7 +6446,7 @@
                 </g>
               </svg>
             </div>
-            <p class="mono" style="margin:0; font-size:11px; color:var(--ds-fg-muted);" data-home="svg.evo.cap">Sólida · atenção. Tracejada · clima. O ponto percorre a série viva.</p>
+            <p class="mono" style="margin:0; font-size:11px; color:var(--ds-type-tertiary);" data-home="svg.evo.cap">Sólida · atenção. Tracejada · clima. O ponto percorre a série viva.</p>
           </div>
 
           <div class="svg-instrument-card">
@@ -6551,14 +6490,14 @@
                   <rect x="508" y="190" width="2.5" height="22"/>
                   <rect x="552" y="186" width="2.5" height="26"/>
                 </g>
-                <path data-plotter-role="primary" class="plotter-draw" pathLength="1" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" d="M 72 96 C 140 88, 200 104, 292 62 C 380 40, 460 78, 556 46"/>
+                <path data-plotter-role="primary" class="plotter-draw" pathLength="1" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" d="M 72 96 C 140 88, 200 104, 292 62 C 380 40, 460 78, 556 46"/>
                 <g class="plotter-label plotter-label-dim">
                   <text x="40" y="248">vol</text>
                   <text x="556" y="22" text-anchor="end">média</text>
                 </g>
               </svg>
             </div>
-            <p class="mono" style="margin:0; font-size:11px; color:var(--ds-fg-muted);" data-home="svg.fin.cap">Corpo vazado cai. Corpo suave sobe. A média atravessa a sessão. Volume no rodapé.</p>
+            <p class="mono" style="margin:0; font-size:11px; color:var(--ds-type-tertiary);" data-home="svg.fin.cap">Corpo vazado cai. Corpo suave sobe. A média atravessa a sessão. Volume no rodapé.</p>
           </div>
 
           <div class="svg-instrument-card">
@@ -6578,7 +6517,7 @@
                   <text x="4" y="94">ciclo</text>
                   <text x="4" y="154">mercado</text>
                 </g>
-                <g class="plotter-w-secondary" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke">
+                <g class="plotter-w-secondary" fill="none" stroke="currentColor" stroke-opacity="0.42" vector-effect="non-scaling-stroke">
                   <rect x="120" y="38" width="160" height="16" fill="currentColor" fill-opacity="0.08"/>
                   <rect x="320" y="38" width="90" height="16"/>
                   <rect x="460" y="38" width="110" height="16" fill="currentColor" fill-opacity="0.08"/>
@@ -6590,7 +6529,7 @@
                 </g>
                 <g fill="currentColor">
                   <line class="plotter-w-guide" x1="88" y1="28" x2="600" y2="28" stroke="currentColor" vector-effect="non-scaling-stroke" opacity="0.4"/>
-                  <line class="plotter-w-primary" stroke="currentColor" vector-effect="non-scaling-stroke" y1="24" y2="196" opacity="0.85">
+                  <line class="plotter-w-primary" stroke="currentColor" vector-effect="non-scaling-stroke" y1="24" y2="196" opacity="0.58">
                     <animate attributeName="x1" values="100;580;100" dur="9s" repeatCount="indefinite"/>
                     <animate attributeName="x2" values="100;580;100" dur="9s" repeatCount="indefinite"/>
                   </line>
@@ -6604,7 +6543,7 @@
                 </g>
               </svg>
             </div>
-            <p class="mono" style="margin:0; font-size:11px; color:var(--ds-fg-muted);" data-home="svg.time.cap">Três faixas. O fio percorre o dia e marca a janela ativa.</p>
+            <p class="mono" style="margin:0; font-size:11px; color:var(--ds-type-tertiary);" data-home="svg.time.cap">Três faixas. O fio percorre o dia e marca a janela ativa.</p>
           </div>
         </div>
       </div>
@@ -6657,31 +6596,45 @@
             </div>
           </div>
 
-          <!-- Interactive Freehand Analog Brushes + Pigment Picker -->
-          <div class="atelier-controls-bar">
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <!-- Interactive Freehand Analog Brushes (9) + Brush Size Slider + Pigment Picker -->
+          <div class="atelier-controls-bar" style="row-gap:10px;">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
               <span class="eyebrow" data-home="atelier.brush.label">Pincel Livre:</span>
               <button class="btn btn-sm btn-pill btn-primary" data-brush="watercolor" data-home="atelier.brush.watercolor">Aquarela</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-brush="gouache" data-home="atelier.brush.gouache">Gouache Tensor</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-brush="pencil" data-home="atelier.brush.pencil">Lápis 4B</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-brush="crayon" data-home="atelier.brush.crayon">Giz de Cera</button>
               <button class="btn btn-sm btn-pill btn-tertiary" data-brush="ink" data-home="atelier.brush.ink">Pincel Tinta</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="charcoal" data-home="atelier.brush.charcoal">Carvão</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="pastel" data-home="atelier.brush.pastel">Pastel Seco</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="marker" data-home="atelier.brush.marker">Marcador</button>
+              <button class="btn btn-sm btn-pill btn-tertiary" data-brush="splatter" data-home="atelier.brush.splatter">Respingo</button>
             </div>
 
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-              <span class="eyebrow" data-home="atelier.pigment">Pigmento:</span>
-              <div style="display:inline-flex; align-items:center; gap:6px;" id="atelier-pigments">
-                <button class="pigment-swatch" data-pigment="coral" aria-pressed="true" style="background:var(--ds-organic-coral)" data-tip="Pigmento Coral"></button>
-                <button class="pigment-swatch" data-pigment="sky" aria-pressed="false" style="background:var(--ds-organic-sky)" data-tip="Pigmento Sky"></button>
-                <button class="pigment-swatch" data-pigment="olive" aria-pressed="false" style="background:var(--ds-organic-olive)" data-tip="Pigmento Olive"></button>
-                <button class="pigment-swatch" data-pigment="ochre" aria-pressed="false" style="background:var(--ds-organic-ochre)" data-tip="Pigmento Ochre"></button>
-                <button class="pigment-swatch" data-pigment="ink" aria-pressed="false" style="background:var(--ds-fg)" data-tip="Grafite / Tinta Única"></button>
+            <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+              <label style="display:inline-flex; align-items:center; gap:8px; min-width:170px;">
+                <span class="eyebrow" style="margin:0; white-space:nowrap;" data-home="atelier.brush.size">Tamanho:</span>
+                <input type="range" id="atelier-brush-size" class="painterly-range" style="width:96px;" min="4" max="36" step="1" value="14" aria-label="Tamanho do pincel" />
+                <output class="mono tabular" id="atelier-brush-size-out" style="font-size:11px; color:var(--ds-fg); min-width:34px;">14 px</output>
+              </label>
+
+              <div style="display:inline-flex; align-items:center; gap:8px;">
+                <span class="eyebrow" data-home="atelier.pigment">Pigmento:</span>
+                <div style="display:inline-flex; align-items:center; gap:6px;" id="atelier-pigments">
+                  <button class="pigment-swatch" data-pigment="coral" aria-pressed="true" style="background:var(--ds-organic-coral)" data-tip="Pigmento Coral"></button>
+                  <button class="pigment-swatch" data-pigment="sky" aria-pressed="false" style="background:var(--ds-organic-sky)" data-tip="Pigmento Sky"></button>
+                  <button class="pigment-swatch" data-pigment="olive" aria-pressed="false" style="background:var(--ds-organic-olive)" data-tip="Pigmento Olive"></button>
+                  <button class="pigment-swatch" data-pigment="ochre" aria-pressed="false" style="background:var(--ds-organic-ochre)" data-tip="Pigmento Ochre"></button>
+                  <button class="pigment-swatch" data-pigment="ink" aria-pressed="false" style="background:var(--ds-fg)" data-tip="Grafite / Tinta Única"></button>
+                </div>
               </div>
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);" id="atelier-perf-readout">
+
+              <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);" id="atelier-perf-readout">
                 &lt; 0.7ms/frame · Structure Tensor + Anisotropic Kuwahara ready
               </span>
             </div>
           </div>
+
 
           <!-- GPU Painterly Post-Process Bridge (Maxime Heckel 4-Pass Kuwahara Shader on Atelier Canvas) -->
           <div class="atelier-controls-bar" style="border-top: var(--ds-hairline) solid var(--ds-border); padding-top: 10px; margin-top: 2px;">
@@ -6717,26 +6670,25 @@
         <div class="painterly-grid">
           <!-- Left: Interactive WebGL Multi-Pass Stage + Presets + Split Curtain -->
           <div class="painterly-stage-card">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-              <div class="cliptabs" data-cliptabs="painterly-preset">
-                <div class="cliptabs-track">
-                  <button type="button" class="cliptabs-btn" data-painterly-preset="gouache" data-active="true" data-home="painterly.preset.gouache">Gouache</button>
-                  <button type="button" class="cliptabs-btn" data-painterly-preset="oil" data-home="painterly.preset.oil">Óleo / Impasto</button>
-                  <button type="button" class="cliptabs-btn" data-painterly-preset="watercolor" data-home="painterly.preset.watercolor">Aquarela</button>
-                  <button type="button" class="cliptabs-btn" data-painterly-preset="ink" data-home="painterly.preset.ink">Single-Ink</button>
-                  <div class="cliptabs-overlay" aria-hidden="true">
-                    <span data-home="painterly.preset.gouache">Gouache</span>
-                    <span data-home="painterly.preset.oil">Óleo / Impasto</span>
-                    <span data-home="painterly.preset.watercolor">Aquarela</span>
-                    <span data-home="painterly.preset.ink">Single-Ink</span>
-                  </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                <span class="eyebrow" style="margin:0;" data-home="painterly.styles.label">Estilos de Pintura (8):</span>
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <button type="button" class="btn btn-sm btn-tertiary" id="btn-painterly-split" data-home="painterly.btn.split">Cortina 1:1</button>
+                  <button type="button" class="btn btn-sm btn-ghost" id="btn-painterly-reset" data-home="painterly.btn.reset">Resetar</button>
+                  <button type="button" class="btn btn-sm btn-secondary" id="btn-painterly-export" data-home="painterly.btn.export">Exportar .PNG</button>
+                  <button type="button" class="btn btn-sm btn-tertiary" id="btn-painterly-export-all" data-home="painterly.btn.exportAll">Baixar Série (7)</button>
                 </div>
               </div>
-
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="btn btn-sm btn-tertiary" id="btn-painterly-split" data-home="painterly.btn.split">Cortina 1:1</button>
-                <button type="button" class="btn btn-sm btn-ghost" id="btn-painterly-reset" data-home="painterly.btn.reset">Resetar</button>
-                <button type="button" class="btn btn-sm btn-secondary" id="btn-painterly-export" data-home="painterly.btn.export">Exportar .PNG</button>
+                <button type="button" class="btn btn-sm btn-pill btn-primary" data-painterly-preset="gouache" aria-pressed="true" data-home="painterly.preset.gouache">Gouache</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="oil" aria-pressed="false" data-home="painterly.preset.oil">Óleo / Impasto</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="watercolor" aria-pressed="false" data-home="painterly.preset.watercolor">Aquarela</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="pastel" aria-pressed="false" data-home="painterly.preset.pastel">Pastel Seco</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="sumie" aria-pressed="false" data-home="painterly.preset.sumie">Sumi-e</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="fresco" aria-pressed="false" data-home="painterly.preset.fresco">Afresco Mineral</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="fauve" aria-pressed="false" data-home="painterly.preset.fauve">Fauvismo</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-preset="ink" aria-pressed="false" data-home="painterly.preset.ink">Single-Ink</button>
               </div>
             </div>
 
@@ -6747,12 +6699,12 @@
               </div>
               <div class="painterly-split-tags">
                 <span class="painterly-split-tag" data-home="painterly.tag.left">Arraste ↔ para comparar Original</span>
-                <span class="painterly-split-tag" data-home="painterly.tag.right">4-Pass Anisotropic Kuwahara · WebGL</span>
+                <span class="painterly-split-tag" id="painterly-process-tag" data-home="painterly.tag.right">4-Pass Anisotropic Kuwahara · WebGL</span>
               </div>
             </div>
 
-            <!-- Built-in Sample Plates & Pass Inspector -->
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+            <!-- Built-in Sample Plates & Multi-Process Inspector -->
+            <div style="display:flex; flex-direction:column; gap:8px;">
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <span class="eyebrow" style="margin:0;" data-home="painterly.plates.label">Chapas:</span>
                 <button type="button" class="btn btn-sm btn-pill btn-primary" data-painterly-plate="sample" data-home="painterly.plate.sample">Farol Crepúsculo</button>
@@ -6762,11 +6714,16 @@
               </div>
 
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                <span class="eyebrow" style="margin:0;" data-home="painterly.pass.label">Pass:</span>
-                <button type="button" class="btn btn-sm btn-pill btn-primary" data-painterly-debug="final" data-home="painterly.pass.final">Final</button>
-                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="kuwahara" data-home="painterly.pass.kuwahara">Kuwahara</button>
-                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="tensor" data-home="painterly.pass.tensor">Structure Tensor</button>
-                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="original" data-home="painterly.pass.original">Original</button>
+                <span class="eyebrow" style="margin:0;" data-home="painterly.pass.label">Processos WebGL:</span>
+                <button type="button" class="btn btn-sm btn-pill btn-primary" data-painterly-debug="final" aria-pressed="true" data-home="painterly.pass.final">Kuwahara Final</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="kuwahara" aria-pressed="false" data-home="painterly.pass.kuwahara">Kuwahara Puro</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="tensor" aria-pressed="false" data-home="painterly.pass.tensor">Structure Tensor</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="halftone" aria-pressed="false" data-home="painterly.pass.halftone">Halftone Hex</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="engraving" aria-pressed="false" data-home="painterly.pass.engraving">Gravura</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="stipple" aria-pressed="false" data-home="painterly.pass.stipple">Pontilhismo</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="woodblock" aria-pressed="false" data-home="painterly.pass.woodblock">Xilogravura</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="risograph" aria-pressed="false" data-home="painterly.pass.risograph">Risografia</button>
+                <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-painterly-debug="original" aria-pressed="false" data-home="painterly.pass.original">Original</button>
               </div>
             </div>
           </div>
@@ -6778,7 +6735,7 @@
               <div class="painterly-upload-box">
                 <div style="min-width:0;">
                   <div style="font-size:12px; font-weight:500; color:var(--ds-fg);" data-home="painterly.upload.title">Enviar ou soltar imagem (PNG, JPG, WebP)</div>
-                  <div class="mono" style="font-size:11px; color:var(--ds-fg-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="painterly-source-name">
+                  <div class="mono" style="font-size:11px; color:var(--ds-type-tertiary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="painterly-source-name">
                     Chapa Procedural · Farol no Crepúsculo
                   </div>
                 </div>
@@ -6846,7 +6803,7 @@
             </div>
 
             <div style="border-top:var(--ds-hairline) solid var(--ds-border); padding-top:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-              <span class="mono" style="font-size:11px; color:var(--ds-fg-muted);" id="painterly-telemetry">
+              <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);" id="painterly-telemetry">
                 painterly-shader.ts · 4-Pass WebGL · Kuwahara r=8 · A=1.20 · q=6.5
               </span>
               <a class="mono" href="https://blog.maximeheckel.com/posts/on-crafting-painterly-shaders/" target="_blank" rel="noopener noreferrer" style="font-size:11px; color:var(--ds-fg-secondary);">
@@ -8167,18 +8124,20 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       function renderGannSvg() {
         const svg = document.getElementById('svg-gann');
         const fg = cssVar('--ds-fg');
-        const muted = cssVar('--ds-fg-muted');
-        const rule = cssVar('--ds-rule');
-        const ruleStrong = cssVar('--ds-rule-strong');
         const sky = cssVar('--ds-organic-sky');
         const coral = cssVar('--ds-organic-coral');
         const ochre = cssVar('--ds-organic-ochre');
 
         const cx = 200, cy = 200, R = 152, rMid = 108, rIn = 58;
         const n = state.harmonic;
-        const ink = (w) => `class="plotter-w-${w}" vector-effect="non-scaling-stroke" fill="none"`;
+        const ink = (w) => `class="plotter-w-${w}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" fill="none"`;
 
         let out = '';
+        // Flat 2D Hairline translucent layered ground planes (zero 3D extrusion)
+        out += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--ds-surface-1)" fill-opacity="0.58" stroke="none"/>`;
+        out += `<circle cx="${cx}" cy="${cy}" r="${rMid}" fill="var(--ds-bg)" fill-opacity="0.55" stroke="none"/>`;
+        out += `<circle cx="${cx}" cy="${cy}" r="${rIn}" fill="var(--ds-surface-2)" fill-opacity="0.72" stroke="none"/>`;
+
         for (let deg = 0; deg < 360; deg += 5) {
           const rad = (deg - 90) * Math.PI / 180;
           const major = deg % 45 === 0;
@@ -8187,29 +8146,29 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           const x1 = cx + Math.cos(rad) * r1, y1 = cy + Math.sin(rad) * r1;
           const x2 = cx + Math.cos(rad) * R, y2 = cy + Math.sin(rad) * R;
           const tw = major ? 'secondary' : mid ? 'guide' : 'grid';
-          out += `<line ${ink(tw)} x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${fg}" opacity="${major ? 0.7 : mid ? 0.36 : 0.18}"/>`;
+          out += `<line ${ink(tw)} x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${fg}" opacity="${major ? 0.48 : mid ? 0.28 : 0.14}"/>`;
           if (deg % 90 === 0) {
             const lx = cx + Math.cos(rad) * (R + 26), ly = cy + Math.sin(rad) * (R + 26) + 3;
             out += `<text class="plotter-dial" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${deg}°</text>`;
           }
         }
 
-        out += `<circle ${ink('primary')} cx="${cx}" cy="${cy}" r="${R}" stroke="${fg}" opacity="0.85"/>`;
-        out += `<circle ${ink('guide')} cx="${cx}" cy="${cy}" r="${rMid}" stroke="${fg}" opacity="0.4" stroke-dasharray="2 3"/>`;
-        out += `<circle ${ink('secondary')} cx="${cx}" cy="${cy}" r="${rIn}" stroke="${fg}" opacity="0.55"/>`;
-        out += `<line ${ink('guide')} x1="${cx - R}" y1="${cy}" x2="${cx + R}" y2="${cy}" stroke="${fg}" opacity="0.28"/>`;
-        out += `<line ${ink('guide')} x1="${cx}" y1="${cy - R}" x2="${cx}" y2="${cy + R}" stroke="${fg}" opacity="0.28"/>`;
+        out += `<circle ${ink('primary')} cx="${cx}" cy="${cy}" r="${R}" stroke="${fg}" opacity="0.52"/>`;
+        out += `<circle ${ink('guide')} cx="${cx}" cy="${cy}" r="${rMid}" stroke="${fg}" opacity="0.28" stroke-dasharray="2 3"/>`;
+        out += `<circle ${ink('secondary')} cx="${cx}" cy="${cy}" r="${rIn}" stroke="${fg}" opacity="0.38"/>`;
+        out += `<line ${ink('guide')} x1="${cx - R}" y1="${cy}" x2="${cx + R}" y2="${cy}" stroke="${fg}" opacity="0.2"/>`;
+        out += `<line ${ink('guide')} x1="${cx}" y1="${cy - R}" x2="${cx}" y2="${cy + R}" stroke="${fg}" opacity="0.2"/>`;
 
         const pts = [];
         for (let i = 0; i < n; i++) {
           const rad = ((i * 360 / n) - 90) * Math.PI / 180;
           const x = cx + Math.cos(rad) * R, y = cy + Math.sin(rad) * R;
           pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-          out += `<line ${ink('guide')} x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${fg}" opacity="0.22"/>`;
+          out += `<line ${ink('guide')} x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${fg}" opacity="0.16"/>`;
         }
-        out += `<polygon class="plotter-w-primary" points="${pts.join(' ')}" fill="${sky}" fill-opacity="0.07" stroke="${fg}" vector-effect="non-scaling-stroke" opacity="0.9"/>`;
+        out += `<polygon class="plotter-w-primary" points="${pts.join(' ')}" fill="${sky}" fill-opacity="0.06" stroke="${fg}" vector-effect="non-scaling-stroke" stroke-linejoin="round" opacity="0.54"/>`;
 
-        out += `<g id="gann-sweep"><line ${ink('secondary')} x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - R + 6}" stroke="${fg}" opacity="0.55" stroke-dasharray="1 3"/></g>`;
+        out += `<g id="gann-sweep"><line ${ink('secondary')} x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - R + 6}" stroke="${fg}" opacity="0.38" stroke-dasharray="1 3"/></g>`;
 
         out += `<g id="gann-orbit">`;
         if (state.jenkins) {
@@ -8217,25 +8176,24 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           angles.forEach((deg, idx) => {
             const rad = (deg - 90) * Math.PI / 180;
             const x2 = cx + Math.cos(rad) * R, y2 = cy + Math.sin(rad) * R;
-            out += `<line ${ink('secondary')} x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${idx % 2 ? coral : ochre}" opacity="0.85" stroke-dasharray="${idx % 2 ? '3 3' : 'none'}"/>`;
+            out += `<line ${ink('secondary')} x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${idx % 2 ? coral : ochre}" opacity="0.62" stroke-dasharray="${idx % 2 ? '3 3' : 'none'}"/>`;
           });
-          out += `<path ${ink('secondary')} d="M ${cx - 108} ${cy + 108} A 152 152 0 0 1 ${cx + 108} ${cy - 108}" stroke="${ochre}" opacity="0.6"/>`;
+          out += `<path ${ink('secondary')} d="M ${cx - 108} ${cy + 108} A 152 152 0 0 1 ${cx + 108} ${cy - 108}" stroke="${ochre}" opacity="0.45"/>`;
         }
         const planets = [
           { sym: '⊙', deg: 238.4, r: rMid, col: ochre },
           { sym: '☽', deg: 114.2, r: rMid, col: sky },
           { sym: '♄', deg: 12.7,  r: rIn,  col: coral },
         ];
-        const bg = cssVar('--ds-bg');
         planets.forEach(p => {
           const rad = (p.deg - 90) * Math.PI / 180;
           const px = cx + Math.cos(rad) * p.r, py = cy + Math.sin(rad) * p.r;
-          out += `<line ${ink('secondary')} x1="${cx}" y1="${cy}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}" stroke="${p.col}" opacity="0.8"/>`;
+          out += `<line ${ink('secondary')} x1="${cx}" y1="${cy}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}" stroke="${p.col}" opacity="0.6"/>`;
           out += `<circle data-plotter-node="ring" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5.5"/>`;
           out += `<text class="plotter-label" x="${px.toFixed(1)}" y="${(py + 3.5).toFixed(1)}" text-anchor="middle">${p.sym}</text>`;
         });
         out += `</g>`;
-        out += `<circle data-plotter-node="pip" cx="${cx}" cy="${cy}" r="1.35" fill="${fg}"/>`;
+        out += `<circle data-plotter-node="pip" cx="${cx}" cy="${cy}" r="1.2" fill="${fg}" fill-opacity="0.58"/>`;
         svg.innerHTML = out;
         document.getElementById('gann-telemetry').textContent =
           `H${n} (${(360 / n).toFixed(1)}°) · ⊙ 238.4° · ☽ 114.2° · ♄ 012.7° · Jenkins 63.75° ${state.jenkins ? 'ativo' : 'oculto'}`;
@@ -8254,20 +8212,20 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       function renderEnvSvg() {
         const svg = document.getElementById('svg-env');
         const fg = cssVar('--ds-fg');
-        const muted = cssVar('--ds-fg-muted');
-        const rule = cssVar('--ds-rule');
-        const ruleStrong = cssVar('--ds-rule-strong');
         const olive = cssVar('--ds-organic-olive');
         const sky = cssVar('--ds-organic-sky');
         const coral = cssVar('--ds-organic-coral');
 
         const cx = 200, cy = 200, R = 148;
-        const ink = (w) => `class="plotter-w-${w}" vector-effect="non-scaling-stroke" fill="none"`;
+        const ink = (w) => `class="plotter-w-${w}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" fill="none"`;
 
         let out = '';
-        out += `<circle ${ink('primary')} cx="${cx}" cy="${cy}" r="${R}" stroke="${fg}" opacity="0.7"/>`;
-        out += `<circle ${ink('guide')} cx="${cx}" cy="${cy}" r="${R - 28}" stroke="${fg}" opacity="0.32"/>`;
-        out += `<circle class="plotter-w-secondary" cx="${cx}" cy="${cy}" r="52" fill="${cssVar('--ds-bg-tint-subtle')}" stroke="${fg}" vector-effect="non-scaling-stroke" opacity="0.95"/>`;
+        // Flat 2D Hairline translucent ring surfaces (zero 3D)
+        out += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--ds-surface-1)" fill-opacity="0.54" stroke="none"/>`;
+        out += `<circle cx="${cx}" cy="${cy}" r="${R - 28}" fill="var(--ds-bg)" fill-opacity="0.65" stroke="none"/>`;
+        out += `<circle ${ink('primary')} cx="${cx}" cy="${cy}" r="${R}" stroke="${fg}" opacity="0.48"/>`;
+        out += `<circle ${ink('guide')} cx="${cx}" cy="${cy}" r="${R - 28}" stroke="${fg}" opacity="0.22"/>`;
+        out += `<circle class="plotter-w-secondary" cx="${cx}" cy="${cy}" r="54" fill="var(--ds-surface-2)" fill-opacity="0.72" stroke="${fg}" vector-effect="non-scaling-stroke" opacity="0.46"/>`;
 
         ENV_HOURS.forEach(d => {
           const rad = (d.h * 15 - 90) * Math.PI / 180;
@@ -8277,19 +8235,19 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           const x1 = cx + Math.cos(rad) * r1, y1 = cy + Math.sin(rad) * r1;
           const x2 = cx + Math.cos(rad) * r2, y2 = cy + Math.sin(rad) * r2;
           const col = d.aqi >= 42 ? coral : (d.h >= 12 && d.h <= 15 ? sky : olive);
-          out += `<line class="env-tick plotter-w-secondary" data-h="${d.h}" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" opacity="0.72"/>`;
+          out += `<line class="env-tick plotter-w-secondary" data-h="${d.h}" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" opacity="0.64"/>`;
           if (d.h % 6 === 0) {
             const lx = cx + Math.cos(rad) * (R + 26), ly = cy + Math.sin(rad) * (R + 26) + 3;
             out += `<text class="plotter-dial" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${String(d.h).padStart(2, '0')}h</text>`;
           }
         });
 
-        out += `<g id="env-sweep"><line ${ink('guide')} x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - (R - 34)}" stroke="${fg}" opacity="0.4" stroke-dasharray="1 4"/></g>`;
-        out += `<g id="env-hand"><line ${ink('primary')} x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - (R - 46)}" stroke="${fg}"/><circle data-plotter-node="mark" cx="${cx}" cy="${cy - (R - 46)}" r="2" fill="${fg}"/></g>`;
-        out += `<circle data-plotter-node="pip" cx="${cx}" cy="${cy}" r="1.35" fill="${fg}"/>`;
-        out += `<text id="env-aqi-k" class="plotter-readout-meta" x="${cx}" y="${cy - 8}" text-anchor="middle">AQI</text>`;
-        out += `<text id="env-aqi-n" class="plotter-readout" x="${cx}" y="${cy + 18}" text-anchor="middle">0</text>`;
-        out += `<text id="env-aqi-s" class="plotter-readout-meta" x="${cx}" y="${cy + 34}" text-anchor="middle"></text>`;
+        out += `<g id="env-sweep"><line ${ink('guide')} x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - (R - 34)}" stroke="${fg}" opacity="0.28" stroke-dasharray="1 4"/></g>`;
+        out += `<g id="env-hand"><line ${ink('primary')} x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - (R - 46)}" stroke="${fg}" opacity="0.62"/><circle data-plotter-node="mark" cx="${cx}" cy="${cy - (R - 46)}" r="1.6" fill="${fg}" fill-opacity="0.62"/></g>`;
+        out += `<circle cx="${cx}" cy="${cy}" r="50" fill="var(--ds-surface-3)" fill-opacity="0.82" stroke="none"/>`;
+        out += `<text id="env-aqi-k" class="plotter-readout-meta" x="${cx}" y="${cy - 18}" text-anchor="middle">AQI</text>`;
+        out += `<text id="env-aqi-n" class="plotter-readout" x="${cx}" y="${cy + 10}" text-anchor="middle">0</text>`;
+        out += `<text id="env-aqi-s" class="plotter-readout-meta" x="${cx}" y="${cy + 29}" text-anchor="middle"></text>`;
         svg.innerHTML = out;
         paintEnvHour();
       }
@@ -8795,35 +8753,51 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       ];
 
       function isLandApprox(lat, lon) {
-        if (lat > 14 && lat < 70 && lon > -162 && lon < -55) {
-          if (lat > 24 && lon > -126 && lon < -66) return true;
-          if (lat <= 24 && lon > -108 && lon < -82) return true;
-          if (lat > 52 && lon > -162 && lon < -118) return true;
+        if (lat > 10 && lat < 72 && lon > -168 && lon < -52) {
+          if (lat > 54 && lon > -166 && lon < -130) return true;
+          if (lat > 49 && lat < 69 && lon >= -130 && lon < -60 && !(lat > 55 && lat < 63 && lon > -94 && lon < -77)) return true;
+          if (lat >= 25 && lat <= 49 && lon > -125 && lon < -67 && !(lat < 31 && lon > -82 && lon < -70)) return true;
+          if (lat >= 15 && lat < 29 && lon > -114 && lon < -87 && lon < -76 - (lat - 14) * 1.15) return true;
+          if (lat >= 8 && lat < 16 && lon > -92 && lon < -77 && Math.abs(lon - (-90 + (15 - lat) * 1.8)) < 3.5) return true;
+          if (lat > 19.5 && lat < 23.2 && lon > -85 && lon < -74) return true;
         }
-        if (lat > -54 && lat < 13 && lon > -82 && lon < -34) {
-          const cLon = -58 - (lat + 15) * 0.28;
-          const hw = lat > -15 ? 23 : Math.max(4, 23 - (-15 - lat) * 0.48);
+        if (lat > 60 && lat < 83 && lon > -56 && lon < -16 && !(lat > 72 && lon < -44)) return true;
+        if (lat > 63.3 && lat < 66.6 && lon > -24.5 && lon < -13.5) return true;
+        if (lat > -55 && lat < 12.5 && lon > -82 && lon < -34.5) {
+          const cLon = lat > -6 ? -62 - (lat + 6) * 0.45 : -58 + (-6 - lat) * 0.14;
+          const hw = lat > 0 ? 11 : lat > -16 ? 18 + (lat + 16) * 0.35 : Math.max(2.6, 17.5 - (-16 - lat) * 0.38);
           if (Math.abs(lon - cLon) < hw) return true;
         }
-        if (lat > 36 && lat < 71 && lon > -10 && lon < 44 && (lat < 58 || lon > 4)) return true;
-        if (lat > -35 && lat < 36 && lon > -18 && lon < 52) {
-          if (lat > 5 && lon > -17 && lon < 50) return true;
-          if (lat <= 5 && lon > 10 && lon < 42 - (-lat) * 0.35) return true;
+        if (lat > 36 && lat < 71 && lon > -10 && lon < 44) {
+          if (lat < 44 && lon > -9.5 && lon < 3.5) return true;
+          if (lat >= 38 && lat < 46.5 && lon > 7.5 && lon < 18.5) return true;
+          if (lat >= 43 && lat < 55.5 && lon > -5 && lon < 44) return true;
+          if (lat >= 55.5 && lon > 5 && lon < 32) return true;
         }
-        if (lat > 8 && lat < 74 && lon >= 44 && lon < 148) {
-          if (lat > 22) return true;
-          if (lon > 68 && lon < 108 && lat > 8) return true;
-          if (lon > 128 && lon < 146 && lat > 31 && lat < 45) return true;
+        if (lat > 50 && lat < 59 && lon > -10 && lon < 2) return true;
+        if (lat > -35 && lat < 37 && lon > -18 && lon < 52) {
+          if (lat > 5 && lat < 36 && lon > -17 && lon < 35) return true;
+          if (lat >= 2 && lat <= 13 && lon >= 35 && lon < 51 - (13 - lat) * 0.5) return true;
+          if (lat <= 5 && lon > 9 && lon < 41 - (-lat) * 0.42) return true;
         }
-        if (lat > -40 && lat < -11 && lon > 113 && lon < 154) return true;
-        if (lat > 60 && lat < 82 && lon > -54 && lon < -18) return true;
+        if (lat > -25.6 && lat < -12 && lon > 43 && lon < 50.5) return true;
+        if (lat > -9 && lat < 75 && lon >= 34 && lon < 148) {
+          if (lat > 13 && lat < 33 && lon >= 35 && lon < 59 && !(lat < 20 && lon < 41)) return true;
+          if (lat >= 24 && lon >= 44 && lon < 142 && !(lat > 62 && lon > 135)) return true;
+          if (lat > 8 && lat <= 24 && lon > 68 && lon < 87 && Math.abs(lon - 77.5) < (lat - 5) * 0.62) return true;
+          if (lat > 9 && lat <= 24 && lon > 93 && lon < 109) return true;
+          if (lat > 31 && lat < 45 && lon > 129 && lon < 145) return true;
+          if (lat > -8.5 && lat < 7 && lon > 96 && lon < 140 && Math.sin(lat * 0.7 + lon * 0.22) > 0.05) return true;
+        }
+        if (lat > -39 && lat < -11.5 && lon > 113.5 && lon < 153.5 && !(lat < -32 && lon > 126 && lon < 134)) return true;
+        if (lat > -46.5 && lat < -34.5 && lon > 166 && lon < 178.5) return true;
         return false;
       }
 
-      // Pré-calcula a grade de pontos terrestres uma única vez (0ms por frame!)
+      // Pré-calcula malha densa de micro-pontos terrestres (step 2.8°, 0ms por frame)
       const LAND_DOTS = [];
-      for (let lat = -72; lat <= 78; lat += 5.5) {
-        const lonStep = 5.5 / Math.max(0.28, Math.cos(lat * Math.PI / 180));
+      for (let lat = -72; lat <= 78; lat += 2.8) {
+        const lonStep = 2.8 / Math.max(0.28, Math.cos(lat * Math.PI / 180));
         for (let lon = -180; lon < 180; lon += lonStep) {
           if (isLandApprox(lat, lon)) LAND_DOTS.push([lat, lon]);
         }
@@ -8851,68 +8825,95 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         els.push(`<line x1="${cx - R - ext}" y1="${cy}" x2="${cx + R + ext}" y2="${cy}" data-plotter-role="centerline" fill="none"/>`);
         els.push(`<line x1="${cx}" y1="${cy - R - ext}" x2="${cx}" y2="${cy + R + ext}" data-plotter-role="centerline" fill="none"/>`);
 
-        // 2. Anel orbital proposto (3 5)
-        els.push(`<circle cx="${cx}" cy="${cy}" r="${R + 16}" data-plotter-role="proposed" fill="none"/>`);
+        // 2. Anel orbital proposto + limbo azimutal graduado a cada 15° (Plotter × Hairline)
+        const ringR = R + 16;
+        els.push(`<circle cx="${cx}" cy="${cy}" r="${ringR}" data-plotter-role="proposed" fill="none"/>`);
+        for (let deg = 0; deg < 360; deg += 15) {
+          const a = (deg * Math.PI) / 180;
+          const major = deg % 45 === 0;
+          const r0 = ringR - (major ? 4 : 2);
+          const r1 = ringR + (major ? 4 : 2);
+          els.push(`<line x1="${(cx + Math.cos(a) * r0).toFixed(1)}" y1="${(cy + Math.sin(a) * r0).toFixed(1)}" x2="${(cx + Math.cos(a) * r1).toFixed(1)}" y2="${(cy + Math.sin(a) * r1).toFixed(1)}" data-plotter-role="${major ? 'secondary' : 'guide'}" fill="none"/>`);
+        }
 
-        // 3. Paralelos & meridianos (guide / centerline no equador)
+        // 3. Paralelos & meridianos (hemisfério oculto `hidden` atrás + `guide`/`centerline` na frente)
         for (const lat of [-60, -30, 0, 30, 60]) {
-          let seg = [];
+          let seg = [], back = [];
           const role = lat === 0 ? 'centerline' : 'guide';
-          for (let lon = -180; lon <= 180; lon += 8) {
+          for (let lon = -180; lon <= 180; lon += 6) {
             const p = projOrtho(lat, lon, rotLon, tiltLat, cx, cy, R);
-            if (p.visible) seg.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
-            else { if (seg.length > 1) els.push(`<polyline points="${seg.join(' ')}" data-plotter-role="${role}" fill="none"/>`); seg = []; }
+            if (p.visible) {
+              if (back.length > 1) els.push(`<polyline points="${back.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
+              back = []; seg.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+            } else {
+              if (seg.length > 1) els.push(`<polyline points="${seg.join(' ')}" data-plotter-role="${role}" fill="none"/>`);
+              seg = []; back.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+            }
           }
           if (seg.length > 1) els.push(`<polyline points="${seg.join(' ')}" data-plotter-role="${role}" fill="none"/>`);
+          if (back.length > 1) els.push(`<polyline points="${back.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
         }
         for (let lon = -180; lon < 180; lon += 30) {
-          let seg = [];
-          for (let lat = -84; lat <= 84; lat += 8) {
+          let seg = [], back = [];
+          for (let lat = -84; lat <= 84; lat += 6) {
             const p = projOrtho(lat, lon, rotLon, tiltLat, cx, cy, R);
-            if (p.visible) seg.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
-            else { if (seg.length > 1) els.push(`<polyline points="${seg.join(' ')}" data-plotter-role="guide" fill="none"/>`); seg = []; }
+            if (p.visible) {
+              if (back.length > 1) els.push(`<polyline points="${back.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
+              back = []; seg.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+            } else {
+              if (seg.length > 1) els.push(`<polyline points="${seg.join(' ')}" data-plotter-role="guide" fill="none"/>`);
+              seg = []; back.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+            }
           }
           if (seg.length > 1) els.push(`<polyline points="${seg.join(' ')}" data-plotter-role="guide" fill="none"/>`);
+          if (back.length > 1) els.push(`<polyline points="${back.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
         }
 
-        // 4. Pontos continentais 81k (secondary, sem preenchimento pesado)
+        // 4. Micro-pontos continentais 81k (alta densidade em escala Hairline 0.44..0.86)
         for (let i = 0; i < LAND_DOTS.length; i++) {
           const p = projOrtho(LAND_DOTS[i][0], LAND_DOTS[i][1], rotLon, tiltLat, cx, cy, R);
           if (!p.visible) continue;
-          const dr = (1.05 + p.z * 0.95).toFixed(2);
+          const dr = (0.44 + p.z * 0.42).toFixed(2);
           const op = (0.18 + p.z * 0.56).toFixed(2);
           els.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${dr}" fill="currentColor" stroke="none" fill-opacity="${op}" data-plotter-role="secondary"/>`);
         }
 
-        // 5. Estações visíveis + arco de transferência (4 6) com seta aberta sólida 6u/45°
-        const vis = EARTH_STATIONS
-          .map(s => ({ ...s, p: projOrtho(s.lat, s.lon, rotLon, tiltLat, cx, cy, R) }))
-          .filter(s => s.p.z > 0.14);
-
+        // 5. Estações visíveis + arco geodésico real sobre a esfera (transfer 4 6 + seta 5.5u)
+        const vis = EARTH_STATIONS.map(st => ({ ...st, p: projOrtho(st.lat, st.lon, rotLon, tiltLat, cx, cy, R) })).filter(st => st.p.z > 0.14);
         if (vis.length >= 2) {
-          const a = vis[0].p, b = vis[1].p;
-          const mx = (a.x + b.x) * 0.5, my = (a.y + b.y) * 0.5 - 32;
-          els.push(`<path d="M ${a.x.toFixed(1)} ${a.y.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}" data-plotter-role="transfer" fill="none"/>`);
-          const ang = Math.atan2(b.y - my, b.x - mx);
-          const leg = 6, sp = Math.PI / 4;
-          const ax1 = b.x + Math.cos(ang + Math.PI - sp) * leg, ay1 = b.y + Math.sin(ang + Math.PI - sp) * leg;
-          const ax2 = b.x + Math.cos(ang + Math.PI + sp) * leg, ay2 = b.y + Math.sin(ang + Math.PI + sp) * leg;
-          els.push(`<path d="M ${ax1.toFixed(1)} ${ay1.toFixed(1)} L ${b.x.toFixed(1)} ${b.y.toFixed(1)} L ${ax2.toFixed(1)} ${ay2.toFixed(1)}" data-plotter-role="primary" fill="none"/>`);
+          const sA = vis[0], sB = vis[1], geo = [];
+          for (let k = 0; k <= 16; k++) {
+            const t = k / 16;
+            const la = sA.lat + (sB.lat - sA.lat) * t;
+            const lo = sA.lon + (sB.lon - sA.lon) * t;
+            const pr = projOrtho(la, lo, rotLon, tiltLat, cx, cy, R * (1 + Math.sin(t * Math.PI) * 0.04));
+            if (pr.visible) geo.push(pr);
+          }
+          if (geo.length >= 2) {
+            els.push(`<polyline points="${geo.map(pt => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(' ')}" data-plotter-role="transfer" fill="none"/>`);
+            const prev = geo[geo.length - 2], b = geo[geo.length - 1];
+            const ang = Math.atan2(b.y - prev.y, b.x - prev.x), leg = 5.5, sp = Math.PI / 4;
+            const ax1 = b.x + Math.cos(ang + Math.PI - sp) * leg, ay1 = b.y + Math.sin(ang + Math.PI - sp) * leg;
+            const ax2 = b.x + Math.cos(ang + Math.PI + sp) * leg, ay2 = b.y + Math.sin(ang + Math.PI + sp) * leg;
+            els.push(`<path d="M ${ax1.toFixed(1)} ${ay1.toFixed(1)} L ${b.x.toFixed(1)} ${b.y.toFixed(1)} L ${ax2.toFixed(1)} ${ay2.toFixed(1)}" data-plotter-role="primary" fill="none"/>`);
+          }
         }
 
-        // 6. Contorno principal da esfera (Primary = 1.0)
-        els.push(`<circle cx="${cx}" cy="${cy}" r="${R}" data-plotter-role="primary" fill="none"/>`);
+        // 6. Contorno duplo Hairline da esfera (aro 0.65px suave + bisel interno 0.4px)
+        els.push(`<circle cx="${cx}" cy="${cy}" r="${R}" data-plotter-role="primary" data-hairline-stroke="active" stroke-opacity="0.72" fill="none"/>`);
+        els.push(`<circle cx="${cx}" cy="${cy}" r="${R - 3.5}" data-plotter-role="secondary" stroke-opacity="0.16" fill="none"/>`);
 
-        // 7. Callouts silenciosos padrão Plotter (stroke="none", 0.72 nome / 0.50 valor)
-        vis.slice(0, 2).forEach((s, idx) => {
-          const side = s.p.x >= cx ? 1 : -1;
-          const ex = cx + side * (R + 28), ey = s.p.y + (idx === 0 ? -16 : 18), tx = ex + side * 24;
+        // 7. Callouts concêntricos Hairline × Plotter (stroke="none", 0.72 nome / 0.50 valor)
+        vis.slice(0, 2).forEach((st, idx) => {
+          const side = st.p.x >= cx ? 1 : -1;
+          const ex = cx + side * (R + 28), ey = st.p.y + (idx === 0 ? -16 : 18), tx = ex + side * 24;
           const anchor = side > 0 ? 'start' : 'end';
-          els.push(`<circle cx="${s.p.x.toFixed(1)}" cy="${s.p.y.toFixed(1)}" r="2" fill="currentColor" stroke="none" data-plotter-role="primary" data-plotter-node="mark"/>`);
-          els.push(`<circle cx="${s.p.x.toFixed(1)}" cy="${s.p.y.toFixed(1)}" r="7.5" fill="none" data-plotter-role="secondary"/>`);
-          els.push(`<polyline points="${s.p.x.toFixed(1)},${s.p.y.toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)} ${tx.toFixed(1)},${ey.toFixed(1)}" data-plotter-role="leader" fill="none"/>`);
-          els.push(`<text x="${(tx + side * 6).toFixed(1)}" y="${(ey - 2).toFixed(1)}" text-anchor="${anchor}" stroke="none" fill="currentColor" fill-opacity="0.72" font-size="11" font-weight="400" data-plotter-role="leader">${s.name}</text>`);
-          els.push(`<text x="${(tx + side * 6).toFixed(1)}" y="${(ey + 11).toFixed(1)}" text-anchor="${anchor}" stroke="none" fill="currentColor" fill-opacity="0.5" font-size="10" font-weight="400" data-plotter-role="leader">${s.metric}</text>`);
+          els.push(`<circle cx="${st.p.x.toFixed(1)}" cy="${st.p.y.toFixed(1)}" r="1.8" fill="currentColor" fill-opacity="0.78" stroke="none" data-plotter-role="primary" data-plotter-node="mark"/>`);
+          els.push(`<circle cx="${st.p.x.toFixed(1)}" cy="${st.p.y.toFixed(1)}" r="5.5" fill="none" data-plotter-role="secondary"/>`);
+          els.push(`<circle cx="${st.p.x.toFixed(1)}" cy="${st.p.y.toFixed(1)}" r="9.0" fill="none" data-plotter-role="proposed"/>`);
+          els.push(`<polyline points="${st.p.x.toFixed(1)},${st.p.y.toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)} ${tx.toFixed(1)},${ey.toFixed(1)}" data-plotter-role="leader" fill="none"/>`);
+          els.push(`<text x="${(tx + side * 6).toFixed(1)}" y="${(ey - 2).toFixed(1)}" text-anchor="${anchor}" stroke="none" fill="currentColor" fill-opacity="0.72" font-size="11" font-weight="400" data-plotter-role="leader">${st.name}</text>`);
+          els.push(`<text x="${(tx + side * 6).toFixed(1)}" y="${(ey + 11).toFixed(1)}" text-anchor="${anchor}" stroke="none" fill="currentColor" fill-opacity="0.5" font-size="10" font-weight="400" data-plotter-role="leader">${st.metric}</text>`);
         });
 
         // 8. Cota dimensional real do diâmetro com folga de 3u ao redor do rótulo
@@ -8928,7 +8929,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         const styleBlock = standalone
           ? `<style>svg{color:${cssVar('--ds-fg')};stroke:currentColor;font-family:system-ui,sans-serif}[data-plotter-role="primary"]{stroke-width:1;opacity:1}[data-plotter-role="secondary"],[data-plotter-role="dimension"],[data-plotter-role="leader"]{stroke-width:1;opacity:.32}[data-plotter-role="guide"]{stroke-width:1;opacity:.14}[data-plotter-role="centerline"]{stroke-width:1;opacity:.14;stroke-dasharray:8 3 1 3}[data-plotter-role="proposed"]{stroke-width:1;opacity:.32;stroke-dasharray:3 5}[data-plotter-role="transfer"]{stroke-width:1;opacity:.32;stroke-dasharray:4 6}</style>`
           : '';
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" data-plotter="true"${isoAttr} fill="none">${styleBlock}${els.join('')}</svg>`;
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" data-plotter="true" data-hairline="true"${isoAttr} fill="none">${styleBlock}${els.join('')}</svg>`;
       }
 
       function renderPlottedGlobe() {
@@ -9023,6 +9024,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       const atelierState = {
         preset: 'econ',
         brush: 'watercolor',
+        brushSize: 14,
         pigment: 'coral',
         seed: 20261120,
         frame: 0,
@@ -9031,6 +9033,8 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         inView: false,
         drawing: false,
         strokePts: [],
+        strokeDist: 0,
+        lastMoveMs: 0,
         /** ms entre frames do reveal (~3–4s no preset econ) */
         frameMs: 85,
       };
@@ -9109,20 +9113,35 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         return cur;
       }
 
-      /** Aquarela: poucas coats, mais borda úmida e manchas de pigmento no miolo. */
+      /** Suavização Chaikin (elimina vértices poligonais duros em lavagens de aquarela) */
+      function aSmoothPoly(pts, iters = 2) {
+        let cur = pts.slice();
+        for (let it = 0; it < iters; it++) {
+          const nxt = [];
+          for (let i = 0; i < cur.length; i++) {
+            const p0 = cur[i], p1 = cur[(i + 1) % cur.length];
+            nxt.push({ x: p0.x * 0.75 + p1.x * 0.25, y: p0.y * 0.75 + p1.y * 0.25 });
+            nxt.push({ x: p0.x * 0.25 + p1.x * 0.75, y: p0.y * 0.25 + p1.y * 0.75 });
+          }
+          cur = nxt;
+        }
+        return cur;
+      }
+
+      /** Aquarela: camadas suaves sem borda poligonal dura + granulação em dente de papel algodão */
       function aWatercolor(poly, color, layers = 5, bleed = 0.22, alpha = null, wetEdge = true) {
         if (!poly || poly.length < 3) return;
         const tm = aTheme();
-        const a = alpha ?? (tm.dark ? 0.16 : 0.13);
+        const a = alpha ?? (tm.dark ? 0.14 : 0.1);
         const coats = Math.min(6, Math.max(2, layers));
-        const base = aDeform(poly, 2, bleed * 0.55);
+        const base = aSmoothPoly(aDeform(poly, 2, bleed * 0.45), 2);
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = tm.comp;
         atelierCtx.fillStyle = color;
         for (let i = 0; i < coats; i++) {
-          const coat = i === 0 ? base : aDeform(base, 1, bleed * (0.2 + 0.35 * (i / coats)));
-          atelierCtx.globalAlpha = a * (0.92 - i * 0.06);
+          const coat = i === 0 ? base : aSmoothPoly(aDeform(base, 1, bleed * (0.14 + 0.22 * (i / coats))), 1);
+          atelierCtx.globalAlpha = a * (0.86 - i * 0.07);
           atelierCtx.beginPath();
           atelierCtx.moveTo(coat[0].x, coat[0].y);
           for (let k = 1; k < coat.length; k++) atelierCtx.lineTo(coat[k].x, coat[k].y);
@@ -9138,23 +9157,27 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           if (p.y > maxY) maxY = p.y;
         }
         const bw = maxX - minX, bh = maxY - minY;
-        if (bw > 18 && bh > 18) {
-          const blooms = bw * bh > 3500 ? 3 : 2;
-          atelierCtx.globalAlpha = Math.min(0.4, a * 2.1);
-          for (let b = 0; b < blooms; b++) {
-            const cx = aNoise.rand(minX + bw * 0.22, maxX - bw * 0.22);
-            const cy = aNoise.rand(minY + bh * 0.22, maxY - bh * 0.22);
-            const rx = Math.max(4, Math.min(bw, bh) * 0.18);
-            const ry = rx * (0.5 + aNoise.rand(0, 0.28));
+        if (bw > 16 && bh > 16) {
+          // Granulação natural do pigmento nos poros do papel (substitui manchas ovais duras)
+          const specks = Math.min(180, Math.round((bw * bh) / 110));
+          for (let g = 0; g < specks; g++) {
+            const gx = aNoise.rand(minX, maxX);
+            const gy = aNoise.rand(minY, maxY);
+            const tooth = aNoise.noise2D(gx * 0.28, gy * 0.28);
+            if (tooth < 0.48) continue;
+            atelierCtx.globalAlpha = Math.min(0.22, a * 1.4) * ((tooth - 0.48) / 0.52);
             atelierCtx.beginPath();
-            atelierCtx.ellipse(cx, cy, rx, ry, aNoise.rand(-0.5, 0.5), 0, Math.PI * 2);
+            atelierCtx.ellipse(gx, gy, aNoise.rand(0.9, 2.2), aNoise.rand(0.7, 1.8), aNoise.rand(0, Math.PI), 0, Math.PI * 2);
             atelierCtx.fill();
           }
         }
         if (wetEdge) {
+          // Capilaridade difusa em dupla passarela macia (nunca linha dura 1.6px)
           atelierCtx.strokeStyle = color;
-          atelierCtx.lineWidth = 1.6;
-          atelierCtx.globalAlpha = Math.min(0.4, a * 2.6);
+          atelierCtx.lineJoin = 'round';
+          atelierCtx.lineCap = 'round';
+          atelierCtx.lineWidth = 2.6;
+          atelierCtx.globalAlpha = Math.min(0.11, a * 0.9);
           atelierCtx.beginPath();
           atelierCtx.moveTo(base[0].x, base[0].y);
           for (let k = 1; k < base.length; k++) atelierCtx.lineTo(base[k].x, base[k].y);
@@ -9262,33 +9285,60 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         return out;
       }
 
-      function aPencil(path, color, grade = 'HB', pressure = 0.9) {
+      /** Lápis grafite realista: grão direto no dente do papel + micro-fios interrompidos (2H / HB / 4B) */
+      function aPencil(path, color, grade = 'HB', pressure = 0.9, sizePx = 0) {
         if (path.length < 2) return;
         const tm = aTheme();
         const col = color || tm.fg;
-        const weight = grade === '2H' ? 1.0 : grade === '4B' ? 2.2 : 1.4;
-        const strands = grade === '4B' ? 3 : 2;
-        const op = (grade === '2H' ? 0.28 : grade === '4B' ? 0.42 : 0.34) * pressure;
-        const pts = aResample(path, 4.5);
+        const baseW = sizePx > 0 ? Math.max(1.1, sizePx * 0.24) : (grade === '2H' ? 1.2 : grade === '4B' ? 3.2 : 1.9);
+        const toothThresh = grade === '2H' ? 0.58 : grade === '4B' ? 0.36 : 0.48;
+        const pts = aResample(path, 2.2);
 
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = tm.comp;
+        atelierCtx.fillStyle = col;
         atelierCtx.strokeStyle = col;
         atelierCtx.lineCap = 'round';
         atelierCtx.lineJoin = 'round';
-        for (let s = 0; s < strands; s++) {
-          const lat = ((s / Math.max(1, strands - 1)) - 0.5) * weight * 1.1;
-          atelierCtx.globalAlpha = op * (0.8 + aNoise.rand(0, 0.15));
-          atelierCtx.lineWidth = Math.max(0.55, weight * 0.4);
+
+        // 1. Camada de grão de grafite preso nos picos do papel algodão (física análoga ao giz, porém fina)
+        const grainsPerPt = Math.max(3, Math.round(baseW * 2.1));
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
+          const ang = Math.atan2(nxPt.y - pr.y, nxPt.x - pr.x);
+          for (let g = 0; g < grainsPerPt; g++) {
+            const off = aNoise.gauss(0, baseW * 0.42);
+            const gx = p.x - Math.sin(ang) * off + aNoise.rand(-0.5, 0.5);
+            const gy = p.y + Math.cos(ang) * off + aNoise.rand(-0.5, 0.5);
+            const peak = aNoise.noise2D(gx * 0.42, gy * 0.42);
+            if (peak < toothThresh) continue;
+            const fall = Math.max(0.15, 1 - Math.abs(off) / (baseW * 0.95));
+            atelierCtx.globalAlpha = (grade === '2H' ? 0.22 : 0.36) * pressure * fall * ((peak - toothThresh) / (1 - toothThresh));
+            atelierCtx.beginPath();
+            atelierCtx.ellipse(gx, gy, 0.72, 0.42, ang + 0.35, 0, Math.PI * 2);
+            atelierCtx.fill();
+          }
+        }
+
+        // 2. Núcleo fino interrompido pelo relevo do papel (mantém precisão geométrica sem parecer arame duro)
+        const strands = grade === '2H' ? 1 : 2;
+        for (let st = 0; st < strands; st++) {
+          const lat = (st - (strands - 1) * 0.5) * baseW * 0.36;
+          let penDown = false;
+          atelierCtx.lineWidth = grade === '2H' ? 0.55 : Math.max(0.65, baseW * 0.22);
+          atelierCtx.globalAlpha = (grade === '2H' ? 0.26 : 0.34) * pressure;
           atelierCtx.beginPath();
           for (let i = 0; i < pts.length; i++) {
             const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
             const mg = Math.hypot(nxPt.x - pr.x, nxPt.y - pr.y) || 1;
             const nx = -(nxPt.y - pr.y) / mg, ny = (nxPt.x - pr.x) / mg;
-            const wob = (aNoise.noise2D(p.x * 0.04 + s, p.y * 0.04) - 0.5) * 1.2;
-            const x = p.x + nx * (lat + wob), y = p.y + ny * (lat + wob);
-            if (i === 0) atelierCtx.moveTo(x, y); else atelierCtx.lineTo(x, y);
+            const x = p.x + nx * lat, y = p.y + ny * lat;
+            if (aNoise.noise2D(x * 0.32 + st * 4, y * 0.32) < (grade === '2H' ? 0.32 : 0.24)) {
+              penDown = false;
+              continue;
+            }
+            if (!penDown) { atelierCtx.moveTo(x, y); penDown = true; } else atelierCtx.lineTo(x, y);
           }
           atelierCtx.stroke();
         }
@@ -9305,7 +9355,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       function aCrayon(path, color, thickness = 11, tooth = 0.52) {
         if (path.length < 2) return;
-        const pts = aResample(path, 4);
+        const pts = aResample(path, 3.2);
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = aTheme().comp;
@@ -9313,50 +9363,202 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         for (let i = 0; i < pts.length; i++) {
           const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
           const ang = Math.atan2(nxPt.y - pr.y, nxPt.x - pr.x);
-          const grains = Math.round(thickness * 0.7);
+          const grains = Math.round(thickness * 0.9);
           for (let g = 0; g < grains; g++) {
-            const across = aNoise.gauss(0, thickness * 0.3);
+            const across = aNoise.gauss(0, thickness * 0.32);
             const gx = p.x - Math.sin(ang) * across;
             const gy = p.y + Math.cos(ang) * across;
             const peak = aNoise.noise2D(gx * 0.3, gy * 0.3);
             if (peak < tooth) continue;
-            atelierCtx.globalAlpha = 0.35 * Math.max(0.2, 1 - Math.abs(across) / (thickness * 0.7));
+            atelierCtx.globalAlpha = 0.36 * Math.max(0.2, 1 - Math.abs(across) / (thickness * 0.72));
             atelierCtx.beginPath();
-            atelierCtx.ellipse(gx, gy, 1.2, 0.8, ang, 0, Math.PI * 2);
+            atelierCtx.ellipse(gx, gy, 1.25, 0.8, ang, 0, Math.PI * 2);
             atelierCtx.fill();
           }
         }
         atelierCtx.restore();
       }
 
-      function aInkBrush(path, color, width = 7, bristles = 4, dryness = 0.38) {
+      /** Pincel de Tinta Sumi-e: 11 cerdas contínuas + afilamento real sem reiniciar em segmentos curtos */
+      function aInkBrush(path, color, width = 10, bristles = 11, dryness = 0.34, tOffset = 0) {
         if (path.length < 2) return;
         const tm = aTheme();
-        const pts = aResample(path, 3.5);
-        const nBristles = Math.min(5, bristles);
+        const pts = aResample(path, 2.2);
+        const nBristles = Math.min(14, Math.max(5, bristles));
         atelierCtx.save();
         atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
         atelierCtx.globalCompositeOperation = tm.comp;
         atelierCtx.strokeStyle = color || tm.fg;
         atelierCtx.lineCap = 'round';
+        atelierCtx.lineJoin = 'round';
         for (let b = 0; b < nBristles; b++) {
           const frac = nBristles === 1 ? 0 : (b / (nBristles - 1)) * 2 - 1;
+          const jitterW = 0.72 + aNoise.noise2D(b * 3.7, 1.9) * 0.55;
           let penDown = false;
-          atelierCtx.lineWidth = Math.max(0.7, (width / nBristles) * 1.4);
-          atelierCtx.globalAlpha = 0.7;
+          atelierCtx.lineWidth = Math.max(0.55, (width / nBristles) * 1.45 * jitterW);
+          atelierCtx.globalAlpha = Math.max(0.22, 0.76 - Math.abs(frac) * 0.34);
           atelierCtx.beginPath();
           for (let i = 0; i < pts.length; i++) {
-            const t = i / Math.max(1, pts.length - 1);
-            const dry = dryness * (0.2 + 0.8 * t) * Math.abs(frac);
-            if (aNoise.noise2D(i * 0.45 + b * 7, b * 2.1) < dry) { penDown = false; continue; }
             const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
             const mg = Math.hypot(nxPt.x - pr.x, nxPt.y - pr.y) || 1;
             const nx = -(nxPt.y - pr.y) / mg, ny = (nxPt.x - pr.x) / mg;
-            const sp = frac * width * 0.5 * (0.35 + 0.8 * Math.sin(t * Math.PI));
+            const globalT = tOffset > 0 ? Math.min(1, (tOffset + i * 2.2) / 260) : i / Math.max(1, pts.length - 1);
+            const taper = tOffset > 0 ? (0.72 + 0.28 * Math.sin(globalT * Math.PI)) : (0.38 + 0.72 * Math.sin(globalT * Math.PI));
+            const tooth = aNoise.noise2D(p.x * 0.24 + b * 2.3, p.y * 0.24);
+            const dry = dryness * (0.25 + 0.75 * globalT) * (0.35 + Math.abs(frac) * 0.85);
+            if (tooth < dry) { penDown = false; continue; }
+            const sp = frac * width * 0.5 * taper + (aNoise.noise2D(p.x * 0.08 + b, p.y * 0.08) - 0.5) * 0.9;
             const x = p.x + nx * sp, y = p.y + ny * sp;
             if (!penDown) { atelierCtx.moveTo(x, y); penDown = true; } else atelierCtx.lineTo(x, y);
           }
           atelierCtx.stroke();
+        }
+        atelierCtx.restore();
+      }
+
+      /** Aquarela fluida contínua para pincel livre (sem círculos/decágonos repetidos!) */
+      function aWatercolorRibbon(p0, p1, color, size) {
+        const tm = aTheme();
+        const dx = p1.x - p0.x, dy = p1.y - p0.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        const ang = Math.atan2(dy, dx);
+        const steps = Math.max(1, Math.ceil(dist / 2.6));
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = tm.comp;
+        for (let s = 0; s <= steps; s++) {
+          const t = s / steps;
+          const x = p0.x + dx * t + (aNoise.noise2D(p0.x * 0.04 + s, p0.y * 0.04) - 0.5) * 1.4;
+          const y = p0.y + dy * t + (aNoise.noise2D(p0.x * 0.04, p0.y * 0.04 + s) - 0.5) * 1.4;
+          const r = size * (0.75 + 0.35 * aNoise.noise2D(x * 0.06, y * 0.06));
+          const grad = atelierCtx.createRadialGradient(x, y, r * 0.15, x, y, r);
+          grad.addColorStop(0, color);
+          grad.addColorStop(0.76, color);
+          grad.addColorStop(1, 'transparent');
+          atelierCtx.fillStyle = grad;
+          atelierCtx.globalAlpha = tm.dark ? 0.14 : 0.1;
+          atelierCtx.beginPath();
+          atelierCtx.ellipse(x, y, r, r * 0.86, ang, 0, Math.PI * 2);
+          atelierCtx.fill();
+
+          // Granulação capilar fina nos poros do papel algodão
+          const specks = Math.max(2, Math.round(size * 0.32));
+          atelierCtx.fillStyle = color;
+          for (let g = 0; g < specks; g++) {
+            const ox = aNoise.gauss(0, r * 0.45), oy = aNoise.gauss(0, r * 0.45);
+            const n = aNoise.noise2D((x + ox) * 0.34, (y + oy) * 0.34);
+            if (n < 0.52) continue;
+            atelierCtx.globalAlpha = 0.09 * (n - 0.52) * 2;
+            atelierCtx.beginPath();
+            atelierCtx.arc(x + ox, y + oy, 1.05, 0, Math.PI * 2);
+            atelierCtx.fill();
+          }
+        }
+        atelierCtx.restore();
+      }
+
+      /** Carvão (Charcoal): textura aveludada densa em grão duplo + halo suave esfumado */
+      function aCharcoal(path, color, size = 14) {
+        if (path.length < 2) return;
+        const pts = aResample(path, 2.5);
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = aTheme().comp;
+        atelierCtx.fillStyle = color;
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
+          const ang = Math.atan2(nxPt.y - pr.y, nxPt.x - pr.x);
+          // Halo esfumado sutil
+          atelierCtx.globalAlpha = 0.038;
+          atelierCtx.beginPath();
+          atelierCtx.ellipse(p.x, p.y, size * 0.68, size * 0.52, ang, 0, Math.PI * 2);
+          atelierCtx.fill();
+          // Grãos de carvão prensado sobre o papel
+          const grains = Math.round(size * 1.45);
+          for (let g = 0; g < grains; g++) {
+            const across = aNoise.gauss(0, size * 0.34);
+            const along = aNoise.rand(-1.5, 1.5);
+            const gx = p.x - Math.sin(ang) * across + Math.cos(ang) * along;
+            const gy = p.y + Math.cos(ang) * across + Math.sin(ang) * along;
+            const peak = aNoise.noise2D(gx * 0.24, gy * 0.24) * 0.65 + aNoise.noise2D(gx * 0.62, gy * 0.62) * 0.35;
+            if (peak < 0.42) continue;
+            atelierCtx.globalAlpha = 0.32 * Math.max(0.12, 1 - Math.abs(across) / (size * 0.85));
+            atelierCtx.beginPath();
+            atelierCtx.ellipse(gx, gy, aNoise.rand(0.7, 1.6), aNoise.rand(0.5, 1.1), ang + 0.4, 0, Math.PI * 2);
+            atelierCtx.fill();
+          }
+        }
+        atelierCtx.restore();
+      }
+
+      /** Pastel Seco: nuvem opaca aveludada com quebra porosa do dente do papel */
+      function aPastel(path, color, size = 14) {
+        if (path.length < 2) return;
+        const pts = aResample(path, 2.4);
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = 'source-over';
+        atelierCtx.fillStyle = color;
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i], pr = pts[Math.max(0, i - 1)], nxPt = pts[Math.min(pts.length - 1, i + 1)];
+          const ang = Math.atan2(nxPt.y - pr.y, nxPt.x - pr.x);
+          atelierCtx.globalAlpha = 0.085;
+          atelierCtx.beginPath();
+          atelierCtx.ellipse(p.x, p.y, size * 0.56, size * 0.42, ang + 0.2, 0, Math.PI * 2);
+          atelierCtx.fill();
+          const crumbs = Math.round(size * 1.1);
+          for (let g = 0; g < crumbs; g++) {
+            const across = aNoise.gauss(0, size * 0.36);
+            const gx = p.x - Math.sin(ang) * across + aNoise.rand(-1, 1);
+            const gy = p.y + Math.cos(ang) * across + aNoise.rand(-1, 1);
+            const tooth = aNoise.noise2D(gx * 0.36, gy * 0.36);
+            if (tooth < 0.46) continue;
+            atelierCtx.globalAlpha = 0.44 * (1 - Math.abs(across) / (size * 0.9));
+            atelierCtx.beginPath();
+            atelierCtx.ellipse(gx, gy, 1.35, 0.9, ang + aNoise.rand(-0.3, 0.3), 0, Math.PI * 2);
+            atelierCtx.fill();
+          }
+        }
+        atelierCtx.restore();
+      }
+
+      /** Marcador Chisel (Copic): ponta chanfrada em 35° com sobreposição translúcida a álcool */
+      function aMarker(p0, p1, color, size = 14) {
+        const tm = aTheme();
+        const nibAng = -0.62; // ~35 deg architectural chisel
+        const hw = Math.cos(nibAng) * (size * 0.52);
+        const hh = Math.sin(nibAng) * (size * 0.52);
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = tm.comp;
+        atelierCtx.fillStyle = color;
+        atelierCtx.globalAlpha = tm.dark ? 0.36 : 0.28;
+        atelierCtx.beginPath();
+        atelierCtx.moveTo(p0.x - hw, p0.y - hh);
+        atelierCtx.lineTo(p0.x + hw, p0.y + hh);
+        atelierCtx.lineTo(p1.x + hw, p1.y + hh);
+        atelierCtx.lineTo(p1.x - hw, p1.y - hh);
+        atelierCtx.closePath();
+        atelierCtx.fill();
+        atelierCtx.restore();
+      }
+
+      /** Respingo / Aerógrafo Orgânico */
+      function aSplatter(pt, color, size = 14, speed = 1) {
+        const tm = aTheme();
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = tm.comp;
+        atelierCtx.fillStyle = color;
+        const count = Math.min(26, Math.round(size * 0.8 + speed * 4));
+        for (let i = 0; i < count; i++) {
+          const ang = aNoise.rand(0, Math.PI * 2);
+          const dist = Math.abs(aNoise.gauss(0, size * (0.55 + Math.min(0.8, speed * 0.25))));
+          const r = Math.max(0.45, (size * 0.14) / (1 + dist * 0.08) * aNoise.rand(0.4, 1.35));
+          atelierCtx.globalAlpha = aNoise.rand(0.18, 0.52);
+          atelierCtx.beginPath();
+          atelierCtx.arc(pt.x + Math.cos(ang) * dist, pt.y + Math.sin(ang) * dist, r, 0, Math.PI * 2);
+          atelierCtx.fill();
         }
         atelierCtx.restore();
       }
@@ -9412,37 +9614,50 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       }
 
       /**
-       * Pincelada Anisotrópica Kuwahara / Gouache:
-       * Elipse poligonal deformada rotacionada por phi e alongada por (1 + A * 1.45),
-       * com 3 veladuras, modulação de dente de papel e borda úmida capilar.
+       * Pincelada Realista de Gouache / Anisotrópica (Structure Tensor):
+       * Em vez de polígonos cercados, constrói um feixe denso de 12 cerdas opacas/cremosas
+       * rotacionadas pelo autovetor tangente phi, com quebra natural nos poros do papel.
        */
-      function aAnisotropicDab(cx, cy, radius, color, alpha = 0.22, opts = {}) {
+      function aAnisotropicDab(cx, cy, radius, color, alpha = 0.24, opts = {}) {
         const tm = aTheme();
         const tensor = opts.phi !== undefined
           ? { phi: opts.phi, anisotropy: opts.anisotropy ?? 0.65 }
           : aSampleTensor(cx, cy);
-        const stretch = 1 + tensor.anisotropy * (opts.anisotropyScale ?? 1.45);
-        const rx = radius * stretch;
-        const ry = Math.max(2.2, radius / Math.sqrt(stretch));
+        const stretch = 1 + tensor.anisotropy * (opts.anisotropyScale ?? 1.35);
+        const len = radius * stretch * 1.15;
+        const halfW = Math.max(2.6, radius * 0.52 / Math.sqrt(stretch));
         const cos = Math.cos(tensor.phi), sin = Math.sin(tensor.phi);
-        const sides = opts.sides ?? 10;
-        const pts = [];
-        for (let i = 0; i < sides; i++) {
-          const ang = (i / sides) * Math.PI * 2;
-          const tooth = 0.84 + aNoise.noise2D(Math.cos(ang) * 1.3 + cx * 0.02, Math.sin(ang) * 1.3 + cy * 0.02) * 0.32;
-          const lx = Math.cos(ang) * rx * tooth;
-          const ly = Math.sin(ang) * ry * tooth;
-          pts.push({
-            x: cx + lx * cos - ly * sin,
-            y: cy + lx * sin + ly * cos,
-          });
+        const bristles = opts.bristlesCount ?? 11;
+        atelierCtx.save();
+        atelierCtx.setTransform(2, 0, 0, 2, 0, 0);
+        atelierCtx.globalCompositeOperation = opts.opaque ? 'source-over' : tm.comp;
+        atelierCtx.strokeStyle = color;
+        atelierCtx.fillStyle = color;
+        atelierCtx.lineCap = 'round';
+
+        for (let b = 0; b < bristles; b++) {
+          const frac = (b / Math.max(1, bristles - 1)) * 2 - 1;
+          const off = frac * halfW;
+          const bLen = len * (0.72 + aNoise.noise2D(cx * 0.05 + b, cy * 0.05) * 0.34) * (1 - Math.abs(frac) * 0.22);
+          const x0 = cx - cos * bLen * 0.5 - sin * off;
+          const y0 = cy - sin * bLen * 0.5 + cos * off;
+          const x1 = cx + cos * bLen * 0.5 - sin * off;
+          const y1 = cy + sin * bLen * 0.5 + cos * off;
+          const tooth = aNoise.noise2D(cx * 0.14 + b * 1.9, cy * 0.14);
+          if (tooth < 0.22 && Math.abs(frac) > 0.45) continue;
+          atelierCtx.globalAlpha = Math.min(0.68, alpha * (1.25 + tooth * 0.8) * (1 - Math.abs(frac) * 0.28));
+          atelierCtx.lineWidth = Math.max(0.9, (halfW * 2 / bristles) * (1.05 + aNoise.rand(-0.2, 0.25)));
+          atelierCtx.beginPath();
+          atelierCtx.moveTo(x0, y0);
+          atelierCtx.quadraticCurveTo(
+            cx - sin * (off + aNoise.rand(-1.2, 1.2)),
+            cy + cos * (off + aNoise.rand(-1.2, 1.2)),
+            x1,
+            y1,
+          );
+          atelierCtx.stroke();
         }
-        aWatercolor(pts, color, opts.coats ?? 3, opts.bleed ?? 0.16, alpha, opts.wetEdge ?? true);
-        if (opts.bristles !== false) {
-          const p0 = { x: cx - cos * rx * 0.72, y: cy - sin * rx * 0.72 };
-          const p1 = { x: cx + cos * rx * 0.72, y: cy + sin * rx * 0.72 };
-          aDryBrush([p0, p1], color, Math.max(1.2, ry * 0.32), 0.35);
-        }
+        atelierCtx.restore();
       }
 
       /**
@@ -9622,9 +9837,9 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           }
           aCrayon(ring, pal[(i + 2) % pal.length], 9, 0.5);
         } else if (frame === 14) {
-          aHandRect(72, 62, 316, 274, tm.fg, 'HB', 0.7);
+          aHandRect(72, 62, 316, 274, tm.fg, 'HB', 0.65);
           for (let k = 0; k < 5; k++) {
-            aAnisotropicDab(470 + k * 26, 150 + (k % 2) * 85, 16, pal[k % pal.length], 0.15, { coats: 3, wetEdge: true });
+            aAnisotropicDab(470 + k * 26, 150 + (k % 2) * 85, 16, pal[k % pal.length], 0.22);
           }
         }
         return 14;
@@ -9729,10 +9944,16 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         atelierCanvas.setPointerCapture(e.pointerId);
         const pt = getCanvasPoint(e);
         atelierState.strokePts = [pt];
+        atelierState.strokeDist = 0;
+        atelierState.lastMoveMs = performance.now();
+        const col = activePigmentColor();
+        const sz = atelierState.brushSize;
         if (atelierState.brush === 'watercolor') {
-          aWatercolor(aBlob(pt.x, pt.y, 16, 13, 8), activePigmentColor(), 4, 0.24, null, true);
+          aWatercolorRibbon(pt, { x: pt.x + 1, y: pt.y + 1 }, col, sz * 1.15);
         } else if (atelierState.brush === 'gouache') {
-          aAnisotropicDab(pt.x, pt.y, 15, activePigmentColor(), 0.22, { coats: 3, wetEdge: true });
+          aAnisotropicDab(pt.x, pt.y, sz * 1.05, col, 0.26, { opaque: true });
+        } else if (atelierState.brush === 'splatter') {
+          aSplatter(pt, col, sz, 1.2);
         }
       });
 
@@ -9740,37 +9961,61 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (!atelierState.drawing) return;
         const pt = getCanvasPoint(e);
         const prev = atelierState.strokePts[atelierState.strokePts.length - 1];
-        if (Math.hypot(pt.x - prev.x, pt.y - prev.y) < 4) return;
+        const dist = Math.hypot(pt.x - prev.x, pt.y - prev.y);
+        if (dist < 2.5) return;
+        const now = performance.now();
+        const dt = Math.max(4, now - atelierState.lastMoveMs);
+        atelierState.lastMoveMs = now;
+        atelierState.strokeDist += dist;
         atelierState.strokePts.push(pt);
         const seg = [prev, pt];
         const col = activePigmentColor();
+        const sz = atelierState.brushSize;
+        const speed = dist / dt;
+
         if (atelierState.brush === 'watercolor') {
-          aWatercolor(aBlob(pt.x, pt.y, 13, 11, 7), col, 3, 0.22, null, false);
+          aWatercolorRibbon(prev, pt, col, sz * 1.08);
         } else if (atelierState.brush === 'gouache') {
           const strokePhi = Math.atan2(pt.y - prev.y, pt.x - prev.x);
           const tensor = aSampleTensor(pt.x, pt.y);
           const blendedPhi = Math.atan2(
-            Math.sin(strokePhi) * 0.65 + Math.sin(tensor.phi) * 0.35,
-            Math.cos(strokePhi) * 0.65 + Math.cos(tensor.phi) * 0.35,
+            Math.sin(strokePhi) * 0.72 + Math.sin(tensor.phi) * 0.28,
+            Math.cos(strokePhi) * 0.72 + Math.cos(tensor.phi) * 0.28,
           );
-          aAnisotropicDab(pt.x, pt.y, 12.5, col, 0.2, {
+          aAnisotropicDab(pt.x, pt.y, sz * 0.96, col, 0.24, {
             phi: blendedPhi,
-            anisotropy: Math.max(0.55, tensor.anisotropy),
-            coats: 3,
-            wetEdge: false,
+            anisotropy: Math.max(0.5, tensor.anisotropy),
+            opaque: true,
           });
         } else if (atelierState.brush === 'pencil') {
-          aPencil(seg, col, '4B', 0.95);
+          aPencil(seg, col, '4B', 0.95, sz * 0.65);
         } else if (atelierState.brush === 'crayon') {
-          aCrayon(seg, col, 11, 0.5);
+          aCrayon(seg, col, sz * 0.86, 0.5);
+        } else if (atelierState.brush === 'charcoal') {
+          aCharcoal(seg, col, sz * 1.05);
+        } else if (atelierState.brush === 'pastel') {
+          aPastel(seg, col, sz * 1.05);
+        } else if (atelierState.brush === 'marker') {
+          aMarker(prev, pt, col, sz * 1.08);
+        } else if (atelierState.brush === 'splatter') {
+          aSplatter(pt, col, sz, speed);
         } else {
-          aInkBrush(seg, col, 7, 5, 0.32);
+          aInkBrush(seg, col, sz * 0.78, 12, 0.34, atelierState.strokeDist);
         }
       });
 
-      const endPaint = () => { atelierState.drawing = false; atelierState.strokePts = []; };
+      const endPaint = () => { atelierState.drawing = false; atelierState.strokePts = []; atelierState.strokeDist = 0; };
       atelierCanvas.addEventListener('pointerup', endPaint);
       atelierCanvas.addEventListener('pointercancel', endPaint);
+
+      const brushSizeInput = document.getElementById('atelier-brush-size');
+      const brushSizeOut = document.getElementById('atelier-brush-size-out');
+      if (brushSizeInput) {
+        brushSizeInput.addEventListener('input', () => {
+          atelierState.brushSize = Number(brushSizeInput.value) || 14;
+          if (brushSizeOut) brushSizeOut.textContent = `${atelierState.brushSize} px`;
+        });
+      }
 
       document.addEventListener('click', (e) => {
         const prBtn = e.target.closest('[data-atelier-preset]');
@@ -9783,7 +10028,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
             b.classList.toggle('btn-primary', b === brBtn);
             b.classList.toggle('btn-tertiary', b !== brBtn);
           });
-          showToast(`Pincel ativo: ${brBtn.textContent}`);
+          showToast(`Pincel ativo: ${brBtn.textContent.trim()} (${atelierState.brushSize} px)`);
           return;
         }
 
@@ -9794,6 +10039,8 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           return;
         }
       });
+
+
 
       document.getElementById('btn-atelier-replay').addEventListener('click', () => restartAtelier(true, { forcePlay: true }));
       document.getElementById('btn-atelier-seed').addEventListener('click', () => {

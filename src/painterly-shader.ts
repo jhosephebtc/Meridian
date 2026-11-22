@@ -14,8 +14,25 @@
  *                            Meridian Single-Ink duotone mode, Structure Tensor flow debug & 1:1 split curtain.
  */
 
-export type PainterlyPresetId = 'gouache' | 'oil' | 'watercolor' | 'ink';
-export type PainterlyDebugMode = 'final' | 'kuwahara' | 'tensor' | 'original';
+export type PainterlyPresetId =
+  | 'gouache'
+  | 'oil'
+  | 'watercolor'
+  | 'pastel'
+  | 'sumie'
+  | 'fresco'
+  | 'fauve'
+  | 'ink';
+export type PainterlyDebugMode =
+  | 'final'
+  | 'kuwahara'
+  | 'tensor'
+  | 'halftone'
+  | 'engraving'
+  | 'stipple'
+  | 'woodblock'
+  | 'risograph'
+  | 'original';
 
 export interface PainterlyParams {
   /** Brush stroke kernel radius in pixels (2..10). */
@@ -69,6 +86,46 @@ export const PAINTERLY_PRESETS: Record<PainterlyPresetId, Omit<PainterlyParams, 
     paper: 0.92,
     saturation: 1.05,
     edge: 0.82,
+    inkMix: 0,
+  },
+  pastel: {
+    radius: 6,
+    anisotropy: 0.55,
+    sharpness: 4.5,
+    tensorSigma: 1.4,
+    paper: 0.98,
+    saturation: 1.34,
+    edge: 0.22,
+    inkMix: 0,
+  },
+  sumie: {
+    radius: 8,
+    anisotropy: 1.95,
+    sharpness: 7.5,
+    tensorSigma: 2.4,
+    paper: 0.88,
+    saturation: 0.15,
+    edge: 0.68,
+    inkMix: 0.92,
+  },
+  fresco: {
+    radius: 7,
+    anisotropy: 0.85,
+    sharpness: 5.5,
+    tensorSigma: 1.9,
+    paper: 0.95,
+    saturation: 0.9,
+    edge: 0.38,
+    inkMix: 0.14,
+  },
+  fauve: {
+    radius: 9,
+    anisotropy: 1.55,
+    sharpness: 11.5,
+    tensorSigma: 1.7,
+    paper: 0.52,
+    saturation: 1.62,
+    edge: 0.54,
     inkMix: 0,
   },
   ink: {
@@ -310,6 +367,7 @@ uniform sampler2D u_kuwahara;
 uniform sampler2D u_original;
 uniform sampler2D u_tensor;
 uniform vec2 u_resolution;
+uniform float u_radius;
 uniform float u_paper;
 uniform float u_saturation;
 uniform float u_edge;
@@ -354,8 +412,10 @@ void main() {
   vec3 orig = texture2D(u_original, v_uv).rgb;
   vec3 kuw = texture2D(u_kuwahara, v_uv).rgb;
   vec3 ten = texture2D(u_tensor, v_uv).rgb;
+  vec2 px = v_uv * u_resolution;
+  float grain = paperGrain(px);
 
-  // Before/After vertical split curtain (left = original, right = shader)
+  // Before/After vertical split curtain (left = original, right = active process)
   if (u_split > 0.002 && u_split < 0.998 && v_uv.x < u_split) {
     gl_FragColor = vec4(orig, 1.0);
     return;
@@ -370,16 +430,116 @@ void main() {
     return;
   }
   if (u_debug == 2) {
-    // Structure Tensor visualization: directional streamlines aligned with phi + anisotropy luminance
+    // Structure Tensor Flow: directional streamlines aligned with phi + anisotropy luminance
     float phi = ten.r * PI;
     float A = ten.g;
     float edge = ten.b;
-    vec2 px = v_uv * u_resolution;
     vec2 dir = vec2(cos(phi), sin(phi));
     vec2 perp = vec2(-dir.y, dir.x);
-    float linePattern = sin(dot(px, perp) * 0.65 + vnoise(px * 0.03) * 3.0);
-    float hatch = smoothstep(0.68, 0.96, abs(linePattern)) * (0.25 + 0.75 * A);
-    vec3 col = mix(u_bgColor, u_fgColor, clamp(hatch * 0.72 + edge * 0.42, 0.0, 1.0));
+    float pitch = max(0.32, 1.15 - u_radius * 0.075);
+    float linePattern = sin(dot(px, perp) * pitch + vnoise(px * 0.03) * 2.8);
+    float hatch = smoothstep(0.62, 0.95, abs(linePattern)) * (0.28 + 0.72 * A);
+    vec3 col = mix(u_bgColor, u_fgColor, clamp(hatch * 0.72 + edge * (0.35 + u_edge * 0.45), 0.0, 1.0));
+    col = clamp(col + vec3(grain * u_paper * 0.14), 0.0, 1.0);
+    gl_FragColor = vec4(col, 1.0);
+    return;
+  }
+  if (u_debug == 4) {
+    // Hexagonal Halftone Dot Screen (Paper Design inspired)
+    float cell = max(4.5, 3.2 + u_radius * 1.15);
+    vec2 r = vec2(cell, cell * 1.7320508);
+    vec2 h = r * 0.5;
+    vec2 a = mod(px, r) - h;
+    vec2 b = mod(px - h, r) - h;
+    vec2 gv = dot(a, a) < dot(b, b) ? a : b;
+    vec2 id = px - gv;
+    vec2 cellUv = clamp(id / u_resolution, 0.0, 1.0);
+    vec3 sampleCol = texture2D(u_original, cellUv).rgb;
+    float lum = clamp(dot(sampleCol, vec3(0.2126, 0.7152, 0.0722)), 0.0, 1.0);
+    lum = clamp((lum - 0.5) * (0.95 + u_saturation * 0.25) + 0.5, 0.0, 1.0);
+    float dotR = sqrt(clamp(1.0 - lum, 0.0, 1.0)) * (cell * 0.49);
+    float d = length(gv);
+    float dotMask = 1.0 - smoothstep(dotR - 0.8, dotR + 0.8, d);
+    float contour = smoothstep(0.2, 0.72, ten.b) * u_edge * 0.65;
+    float inkAmt = clamp(max(dotMask * 0.92, contour), 0.0, 1.0);
+    vec3 chromaDot = mix(u_bgColor, clamp(sampleCol * (0.65 + u_saturation * 0.35), 0.0, 1.0), dotMask);
+    vec3 inkPlate = mix(u_bgColor, u_fgColor, inkAmt);
+    vec3 col = mix(chromaDot, inkPlate, clamp(0.35 + u_inkMix * 0.65, 0.0, 1.0));
+    col = clamp(col + vec3(grain * u_paper * 0.16), 0.0, 1.0);
+    gl_FragColor = vec4(col, 1.0);
+    return;
+  }
+  if (u_debug == 5) {
+    // Copperplate Engraving / Tensor-Aligned Cross-Hatching
+    float phi = ten.r * PI;
+    vec2 dir = vec2(cos(phi), sin(phi));
+    vec2 perp = vec2(-dir.y, dir.x);
+    float lum = clamp(dot(orig, vec3(0.2126, 0.7152, 0.0722)), 0.0, 1.0);
+    float darkness = clamp(1.0 - lum, 0.0, 1.0);
+    float freq = max(0.35, 1.45 - u_radius * 0.1);
+    float h1 = smoothstep(1.0 - darkness * 1.15, 1.05 - darkness * 0.85, sin(dot(px, perp) * freq) * 0.5 + 0.5);
+    float h2 = smoothstep(1.05 - max(0.0, darkness - 0.35) * 1.4, 1.1 - max(0.0, darkness - 0.35) * 1.1, sin(dot(px, dir + perp * 0.35) * (freq * 0.88)) * 0.5 + 0.5);
+    float h3 = step(0.72, darkness) * (0.5 + 0.5 * sin((px.x - px.y) * freq * 0.75));
+    float contour = smoothstep(0.16, 0.62, ten.b) * (0.35 + u_edge * 0.65);
+    float ink = clamp(max(max(h1 * 0.72, h2 * 0.82), max(h3 * 0.75, contour)), 0.0, 1.0);
+    vec3 mono = mix(u_bgColor, u_fgColor, ink);
+    vec3 tinted = mix(mix(u_bgColor, orig, 0.75 * clamp(u_saturation, 0.0, 1.2)), u_fgColor, ink * 0.85);
+    vec3 col = mix(tinted, mono, clamp(0.65 + u_inkMix * 0.35, 0.0, 1.0));
+    col = clamp(col + vec3(grain * u_paper * 0.2), 0.0, 1.0);
+    gl_FragColor = vec4(col, 1.0);
+    return;
+  }
+  if (u_debug == 6) {
+    // Stochastic Jittered Pointillism / Stipple
+    float stepPx = max(4.0, 2.8 + u_radius * 1.05);
+    vec2 cellId = floor(px / stepPx);
+    vec2 jitter = vec2(hash21(cellId), hash21(cellId + 17.3)) - 0.5;
+    vec2 center = (cellId + 0.5 + jitter * 0.55) * stepPx;
+    vec3 sampleCol = texture2D(u_original, clamp(center / u_resolution, 0.0, 1.0)).rgb;
+    float lum = clamp(dot(sampleCol, vec3(0.2126, 0.7152, 0.0722)), 0.0, 1.0);
+    float rad = pow(clamp(1.0 - lum, 0.05, 1.0), 0.85) * (stepPx * 0.46);
+    float dotMask = 1.0 - smoothstep(rad - 0.7, rad + 0.7, length(px - center));
+    float contour = smoothstep(0.24, 0.74, ten.b) * u_edge * 0.45;
+    vec3 pigmentDot = mix(vec3(dot(sampleCol, vec3(0.2126, 0.7152, 0.0722))), sampleCol, u_saturation);
+    vec3 colorOut = mix(u_bgColor, clamp(pigmentDot * 0.92, 0.0, 1.0), clamp(max(dotMask, contour), 0.0, 1.0));
+    vec3 monoOut = mix(u_bgColor, u_fgColor, clamp(max(dotMask, contour), 0.0, 1.0));
+    vec3 col = mix(colorOut, monoOut, u_inkMix);
+    col = clamp(col + vec3(grain * u_paper * 0.18), 0.0, 1.0);
+    gl_FragColor = vec4(col, 1.0);
+    return;
+  }
+  if (u_debug == 7) {
+    // Woodblock / Screenprint Posterization with Tensor-Smoothed Zones & Variable-Weight Ink Contour
+    float levels = clamp(7.5 - u_radius * 0.35, 3.0, 7.0);
+    float lumaK = dot(kuw, vec3(0.2126, 0.7152, 0.0722));
+    float banded = floor(lumaK * levels + 0.5) / levels;
+    vec3 qCol = kuw * (banded / max(lumaK, 0.04));
+    qCol = mix(vec3(banded), clamp(qCol, 0.0, 1.0), u_saturation);
+    float outline = smoothstep(0.14, 0.55, ten.b) * clamp(0.35 + u_edge * 0.85, 0.0, 1.0);
+    vec3 col = mix(qCol, u_fgColor, outline * 0.88);
+    if (u_inkMix > 0.01) {
+      vec3 mono = mix(u_fgColor, u_bgColor, clamp(banded, 0.0, 1.0));
+      col = mix(col, mix(mono, u_fgColor, outline * 0.9), u_inkMix);
+    }
+    col = clamp(col + vec3(grain * u_paper * 0.22), 0.0, 1.0);
+    gl_FragColor = vec4(col, 1.0);
+    return;
+  }
+  if (u_debug == 8) {
+    // Dual-Plate Risograph (Misregistered Warm Coral & Deep Teal/Ink halftone plates)
+    float off = 1.5 + u_radius * 0.65;
+    vec3 sA = texture2D(u_original, clamp(v_uv + vec2(off, -off * 0.5) / u_resolution, 0.0, 1.0)).rgb;
+    vec3 sB = texture2D(u_original, clamp(v_uv - vec2(off, -off * 0.5) / u_resolution, 0.0, 1.0)).rgb;
+    float noiseDither = (hash21(floor(px * 0.65)) - 0.5) * (0.14 + u_paper * 0.2);
+    float darkPlate = clamp(1.0 - dot(sA, vec3(0.2126, 0.7152, 0.0722)) + noiseDither, 0.0, 1.0);
+    float warmPlate = clamp((sB.r - sB.b * 0.45) * 1.15 + (1.0 - dot(sB, vec3(0.333))) * 0.35 + noiseDither, 0.0, 1.0);
+    vec3 risoWarm = mix(vec3(0.85, 0.46, 0.34), u_fgColor, u_inkMix * 0.75);
+    vec3 risoDeep = mix(vec3(0.14, 0.31, 0.38), u_fgColor, 0.45 + u_inkMix * 0.55);
+    vec3 col = mix(u_bgColor, risoWarm, smoothstep(0.18, 0.82, warmPlate) * clamp(u_saturation * 0.72, 0.25, 0.95));
+    col = mix(col, risoDeep, smoothstep(0.28, 0.88, darkPlate) * 0.86);
+    float contour = smoothstep(0.22, 0.68, ten.b) * u_edge * 0.45;
+    col = mix(col, u_fgColor, contour);
+    col = clamp(col + vec3(grain * u_paper * 0.2), 0.0, 1.0);
     gl_FragColor = vec4(col, 1.0);
     return;
   }
@@ -392,8 +552,6 @@ void main() {
   col = clamp((col - 0.5) * 1.08 + 0.5, 0.0, 1.0);
 
   // 2. Watercolor wet-edge pigment pooling along Sobel contours
-  vec2 px = v_uv * u_resolution;
-  float grain = paperGrain(px);
   float edgeMask = smoothstep(0.08, 0.62, ten.b) * (0.78 + 0.4 * (grain + 0.5));
   float wetDarken = 1.0 - edgeMask * u_edge * 0.7;
   col *= wetDarken;
@@ -502,6 +660,11 @@ const DEBUG_INT: Record<PainterlyDebugMode, number> = {
   kuwahara: 1,
   tensor: 2,
   original: 3,
+  halftone: 4,
+  engraving: 5,
+  stipple: 6,
+  woodblock: 7,
+  risograph: 8,
 };
 
 /**
@@ -801,7 +964,7 @@ export function createPainterlyRenderer(
 
   function ensureFbos(w: number, h: number): void {
     const safeW = Math.max(2, Math.min(1440, Math.round(w)));
-    const safeH = Math.max(2, Math.min(1080, Math.round(h)));
+    const safeH = Math.max(2, Math.min(1440, Math.round(h)));
     if (canvas.width !== safeW || canvas.height !== safeH) {
       canvas.width = safeW;
       canvas.height = safeH;
@@ -903,6 +1066,7 @@ export function createPainterlyRenderer(
     gl!.bindTexture(gl!.TEXTURE_2D, fboBlur.tex);
     gl!.uniform1i(gl!.getUniformLocation(progFinal, 'u_tensor'), 2);
     gl!.uniform2f(gl!.getUniformLocation(progFinal, 'u_resolution'), w, h);
+    gl!.uniform1f(gl!.getUniformLocation(progFinal, 'u_radius'), params.radius);
     gl!.uniform1f(gl!.getUniformLocation(progFinal, 'u_paper'), params.paper);
     gl!.uniform1f(gl!.getUniformLocation(progFinal, 'u_saturation'), params.saturation);
     gl!.uniform1f(gl!.getUniformLocation(progFinal, 'u_edge'), params.edge);

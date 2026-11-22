@@ -1590,13 +1590,13 @@ function demoSvgInstrument(kind: string): HTMLElement {
           <rect data-plotter-role="guide" x="${x}" y="18" width="10" height="72" rx="5" fill="none" stroke="currentColor"/>
           <!-- 3D Extruded Lower Cylinder Skirt -->
           <rect data-hairline-solid="" data-plotter-role="primary" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="var(--ds-surface-1)" fill-opacity="1" stroke="none"/>
-          <rect data-hairline-stroke="${isHi ? 'active' : 'rest'}" data-plotter-role="primary" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="none" stroke="currentColor" stroke-width="${isHi ? '0.65' : '0.45'}" stroke-opacity="${isHi ? '0.92' : '0.32'}"/>
+          <rect data-hairline-stroke="${isHi ? 'active' : 'rest'}" data-plotter-role="primary" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="none" stroke="currentColor" stroke-width="${isHi ? '0.65' : '0.45'}" stroke-opacity="${isHi ? '0.52' : '0.28'}"/>
           <!-- 3D Raised Top Capsule Face -->
           <rect data-hairline-solid="" data-plotter-role="primary" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="${isHi ? 'var(--ds-surface-3)' : 'var(--ds-surface-2)'}" fill-opacity="1" stroke="none"/>
-          <rect data-hairline-stroke="${isHi ? 'active' : 'rest'}" data-plotter-role="primary" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="none" stroke="currentColor" stroke-width="${isHi ? '0.65' : '0.45'}" stroke-opacity="${isHi ? '0.92' : '0.32'}"/>
+          <rect data-hairline-stroke="${isHi ? 'active' : 'rest'}" data-plotter-role="primary" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="none" stroke="currentColor" stroke-width="${isHi ? '0.65' : '0.45'}" stroke-opacity="${isHi ? '0.52' : '0.28'}"/>
           <!-- Front Chamfer Crease -->
-          <line data-plotter-role="secondary" x1="${x + 2.5}" y1="${yTop + 4}" x2="${x + 7.5}" y2="${yTop + 4}" stroke="currentColor" opacity="0.35"/>
-          ${isHi ? `<circle data-plotter-role="primary" cx="${x + 5}" cy="${yTop + 8.5}" r="1.3" fill="currentColor" stroke="none"/>` : ''}
+          <line data-plotter-role="secondary" x1="${x + 2.5}" y1="${yTop + 4}" x2="${x + 7.5}" y2="${yTop + 4}" stroke="currentColor" opacity="0.28"/>
+          ${isHi ? `<circle data-plotter-role="primary" cx="${x + 5}" cy="${yTop + 8.5}" r="0.95" fill="currentColor" fill-opacity="0.48" stroke="none"/>` : ''}
         `;
       })
       .join('');
