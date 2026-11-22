@@ -451,7 +451,12 @@
     [data-surface="mocha"],
     [data-surface="pine"],
     [data-surface="umber"],
-    [data-surface="charcoal"] {
+    [data-surface="charcoal"],
+    [data-surface="basalt"],
+    [data-surface="graphite"],
+    [data-surface="moss"],
+    [data-surface="prune"],
+    [data-surface="espresso"] {
       color-scheme: dark;
       --ds-signal-support: #4ADE80;
       --ds-signal-caution: #FBBF24;
@@ -508,6 +513,46 @@
       --ds-accent: #F4F2EC; --ds-accent-hover: #E0DDD6; --ds-accent-fg: #3E3C38;
       --ds-inverted-bg: #F4F2EC; --ds-inverted-surface: #E0DDD6; --ds-inverted-fg: #3E3C38; --ds-inverted-muted: #64625C; --ds-inverted-border: #B8B4AC;
       --ds-spine-1: #36342F; --ds-spine-2: #2E2C28; --ds-spine-3: #4A4844;
+    }
+    [data-surface="basalt"] {
+      --ds-bg: #191B1D; --ds-surface-1: #212427; --ds-surface-2: #2B2E32; --ds-surface-3: #363A3F;
+      --ds-highlight: rgba(243, 244, 244, 0.08);
+      --ds-fg: #F3F4F4; --ds-fg-secondary: #D4D7DA; --ds-fg-muted: #9FA4A8; --ds-fg-subtle: #787D82;
+      --ds-accent: #F3F4F4; --ds-accent-hover: #D4D7DA; --ds-accent-fg: #191B1D;
+      --ds-inverted-bg: #F3F4F4; --ds-inverted-surface: #D4D7DA; --ds-inverted-fg: #191B1D; --ds-inverted-muted: #363A3F; --ds-inverted-border: #9FA4A8;
+      --ds-spine-1: #16181A; --ds-spine-2: #111315; --ds-spine-3: #24272B;
+    }
+    [data-surface="graphite"] {
+      --ds-bg: #1E1D1B; --ds-surface-1: #272522; --ds-surface-2: #312E2A; --ds-surface-3: #3D3934;
+      --ds-highlight: rgba(245, 243, 238, 0.08);
+      --ds-fg: #F5F3EE; --ds-fg-secondary: #DAD7D0; --ds-fg-muted: #A6A29A; --ds-fg-subtle: #7E7A72;
+      --ds-accent: #F5F3EE; --ds-accent-hover: #DAD7D0; --ds-accent-fg: #1E1D1B;
+      --ds-inverted-bg: #F5F3EE; --ds-inverted-surface: #DAD7D0; --ds-inverted-fg: #1E1D1B; --ds-inverted-muted: #3D3934; --ds-inverted-border: #A6A29A;
+      --ds-spine-1: #1A1917; --ds-spine-2: #141311; --ds-spine-3: #292724;
+    }
+    [data-surface="moss"] {
+      --ds-bg: #171C19; --ds-surface-1: #1E2521; --ds-surface-2: #27302B; --ds-surface-3: #323D36;
+      --ds-highlight: rgba(242, 245, 243, 0.08);
+      --ds-fg: #F2F5F3; --ds-fg-secondary: #D2DBD5; --ds-fg-muted: #9BA59F; --ds-fg-subtle: #758079;
+      --ds-accent: #F2F5F3; --ds-accent-hover: #D2DBD5; --ds-accent-fg: #171C19;
+      --ds-inverted-bg: #F2F5F3; --ds-inverted-surface: #D2DBD5; --ds-inverted-fg: #171C19; --ds-inverted-muted: #323D36; --ds-inverted-border: #9BA59F;
+      --ds-spine-1: #141816; --ds-spine-2: #101412; --ds-spine-3: #212824;
+    }
+    [data-surface="prune"] {
+      --ds-bg: #1B171D; --ds-surface-1: #231E26; --ds-surface-2: #2D2730; --ds-surface-3: #38313C;
+      --ds-highlight: rgba(244, 242, 245, 0.08);
+      --ds-fg: #F4F2F5; --ds-fg-secondary: #D8D3DC; --ds-fg-muted: #A49DA8; --ds-fg-subtle: #7B7480;
+      --ds-accent: #F4F2F5; --ds-accent-hover: #D8D3DC; --ds-accent-fg: #1B171D;
+      --ds-inverted-bg: #F4F2F5; --ds-inverted-surface: #D8D3DC; --ds-inverted-fg: #1B171D; --ds-inverted-muted: #38313C; --ds-inverted-border: #A49DA8;
+      --ds-spine-1: #171419; --ds-spine-2: #121014; --ds-spine-3: #262129;
+    }
+    [data-surface="espresso"] {
+      --ds-bg: #1D1815; --ds-surface-1: #26201C; --ds-surface-2: #302823; --ds-surface-3: #3B322C;
+      --ds-highlight: rgba(246, 242, 238, 0.08);
+      --ds-fg: #F6F2EE; --ds-fg-secondary: #DCD5CE; --ds-fg-muted: #A89E96; --ds-fg-subtle: #7F766F;
+      --ds-accent: #F6F2EE; --ds-accent-hover: #DCD5CE; --ds-accent-fg: #1D1815;
+      --ds-inverted-bg: #F6F2EE; --ds-inverted-surface: #DCD5CE; --ds-inverted-fg: #1D1815; --ds-inverted-muted: #3B322C; --ds-inverted-border: #A89E96;
+      --ds-spine-1: #191512; --ds-spine-2: #14100E; --ds-spine-3: #29221E;
     }
 
     /* Page enter / loading veil */
@@ -752,7 +797,12 @@
     html[data-surface="mocha"] .ds-paper-grain-layer,
     html[data-surface="pine"] .ds-paper-grain-layer,
     html[data-surface="umber"] .ds-paper-grain-layer,
-    html[data-surface="charcoal"] .ds-paper-grain-layer {
+    html[data-surface="charcoal"] .ds-paper-grain-layer,
+    html[data-surface="basalt"] .ds-paper-grain-layer,
+    html[data-surface="graphite"] .ds-paper-grain-layer,
+    html[data-surface="moss"] .ds-paper-grain-layer,
+    html[data-surface="prune"] .ds-paper-grain-layer,
+    html[data-surface="espresso"] .ds-paper-grain-layer {
       filter: invert(1);
       opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1) * 0.92);
     }
@@ -3591,10 +3641,58 @@
       #env-hand { transition: none; }
     }
 
-    .range-control {
+    .range-control,
+    input[type="range"].ds-trans-range {
+      -webkit-appearance: none;
+      appearance: none;
       width: 100%;
-      accent-color: var(--ds-fg);
+      height: 18px;
+      background: transparent;
       cursor: pointer;
+      margin: 0;
+    }
+    .range-control::-webkit-slider-runnable-track,
+    input[type="range"].ds-trans-range::-webkit-slider-runnable-track {
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(
+        to right,
+        var(--ds-type-primary, var(--ds-fg)) 0%,
+        var(--ds-type-primary, var(--ds-fg)) var(--range-pct, 42%),
+        color-mix(in srgb, var(--ds-type-primary, var(--ds-fg)) 18%, transparent) var(--range-pct, 42%),
+        color-mix(in srgb, var(--ds-type-primary, var(--ds-fg)) 18%, transparent) 100%
+      );
+    }
+    .range-control::-moz-range-track,
+    input[type="range"].ds-trans-range::-moz-range-track {
+      height: 3px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ds-type-primary, var(--ds-fg)) 18%, transparent);
+    }
+    .range-control::-moz-range-progress,
+    input[type="range"].ds-trans-range::-moz-range-progress {
+      height: 3px;
+      border-radius: 999px;
+      background: var(--ds-type-primary, var(--ds-fg));
+    }
+    .range-control::-webkit-slider-thumb,
+    input[type="range"].ds-trans-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--ds-type-primary, var(--ds-fg));
+      border: 1.5px solid var(--ds-bg);
+      margin-top: -5.5px;
+    }
+    .range-control::-moz-range-thumb,
+    input[type="range"].ds-trans-range::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--ds-type-primary, var(--ds-fg));
+      border: 1.5px solid var(--ds-bg);
     }
 
     /* ---------------- INSTANT ⌘K PALETTE (ZERO ANIMATION!) ---------------- */
@@ -4677,43 +4775,55 @@
       border-color: var(--ds-fg);
     }
 
-    .ds-accordion { display: flex; flex-direction: column; gap: 6px; }
+    .ds-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
+    }
     .ds-acc-item {
-      border: 1px solid var(--ds-border);
-      border-radius: 12px;
-      background: var(--ds-bg-tint-subtle);
+      border: 0;
+      border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule);
+      border-radius: 0;
+      background: transparent;
       overflow: visible;
-      transition: border-color var(--ds-duration-fast) ease, background-color var(--ds-duration-fast) ease;
     }
     .ds-acc-item[open] {
-      border-color: var(--ds-border-strong);
-      background: var(--ds-bg);
+      background: transparent;
     }
     .ds-acc-item summary {
       list-style: none;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 12px 14px;
-      font-size: 13.5px; font-weight: 500; color: var(--ds-fg);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 11px 0;
+      font-size: 13.5px; font-weight: 500;
+      color: var(--ds-type-primary, var(--ds-fg));
       cursor: pointer;
       user-select: none;
       transition: padding-bottom 220ms var(--ds-ease-out);
     }
     .ds-acc-item summary::-webkit-details-marker { display: none; }
     .ds-acc-item summary::after {
-      content: '';
-      width: 8px; height: 8px;
+      content: '+';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
       flex-shrink: 0;
-      border-right: 1.5px solid var(--ds-fg-muted);
-      border-bottom: 1.5px solid var(--ds-fg-muted);
-      transform: rotate(45deg);
+      font-family: var(--ds-font-mono);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--ds-type-tertiary, var(--ds-fg-muted));
+      transform: none;
       transition: transform 220ms var(--ds-ease-drawer);
-      margin-left: 8px;
+      margin-left: 6px;
     }
     .ds-acc-meta {
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
       font-weight: 400;
-      color: var(--ds-fg-muted);
+      color: var(--ds-type-tertiary, var(--ds-fg-muted));
       letter-spacing: 0.02em;
       margin-left: auto;
     }
@@ -4730,11 +4840,11 @@
       min-height: 0;
     }
     .ds-acc-body {
-      padding: 0 14px 14px;
+      padding: 0 0 14px;
       font-size: 13px;
       line-height: 1.5;
-      color: var(--ds-fg-secondary);
-      max-width: 68ch;
+      color: var(--ds-type-secondary, var(--ds-fg-secondary));
+      max-width: none;
       opacity: 0;
       transform: translateY(-4px);
       transition:
@@ -4750,7 +4860,7 @@
     .ds-acc-item[data-anim="open"] summary { padding-bottom: 8px; }
     .ds-acc-item[open] summary::after,
     .ds-acc-item[data-anim="open"] summary::after {
-      transform: rotate(225deg);
+      transform: rotate(45deg);
     }
 
     /* Scroll-reveal — orçamento editorial (raro / 1ª vista) */
@@ -5040,34 +5150,206 @@
       color: var(--ds-bg);
     }
 
-    /* ---------------- 10. ARQUIVO ORBITAL NASA (DUST & SCRATCHES POR CIMA) ---------------- */
-    .nasa-controls-bar {
+    /* ---------------- 01B. CATÁLOGO & ESTUDO DAS 21 SUPERFÍCIES ---------------- */
+    .surfaces-study-head {
       display: flex;
       flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px 16px;
+      margin: 26px 0 14px;
+      padding-top: 20px;
+      border-top: 1px solid var(--ds-rule);
+    }
+    .surfaces-study-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .surface-study-card {
+      appearance: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 13px;
+      border-radius: var(--ds-radius-squircle);
+      border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 140ms var(--ds-ease-out), border-color 140ms var(--ds-ease-out);
+    }
+    .surface-study-card:hover {
+      transform: translateY(-1px);
+      border-color: currentColor;
+    }
+    .surface-study-card[aria-pressed="true"] {
+      outline: 1.5px solid var(--ds-type-primary, var(--ds-fg));
+      outline-offset: 1px;
+    }
+    .surface-study-top {
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px 20px;
-      padding: 12px 16px;
-      margin-bottom: 22px;
+      gap: 8px;
+      font-family: var(--ds-font-mono);
+      font-size: 10px;
+      opacity: 0.82;
+    }
+    .surface-study-name {
+      font-family: var(--ds-font-display);
+      font-size: 16px;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .surface-study-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-family: var(--ds-font-mono);
+      font-size: 10px;
+      line-height: 1.4;
+      opacity: 0.78;
+    }
+
+    /* ---------------- 10. ARQUIVO ORBITAL NASA (PAPER HALFTONE + DIAGRAMAÇÃO ASSIMÉTRICA) ---------------- */
+    .nasa-controls-bar {
+      display: grid;
+      gap: 12px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
       border-radius: var(--ds-radius-squircle);
       border: var(--ds-hairline, 1px) solid var(--ds-border);
       background: var(--ds-bg-tint-subtle);
     }
+    .nasa-controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+    }
+    .nasa-ctrl-group {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .nasa-ht-swatches-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      max-width: 100%;
+    }
+    .nasa-ht-swatch {
+      appearance: none;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 1.25px solid color-mix(in srgb, var(--ds-fg) 26%, transparent);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .nasa-ht-swatch[aria-pressed="true"] {
+      outline: 1.5px solid var(--ds-type-primary, var(--ds-fg));
+      outline-offset: 2px;
+    }
+    .nasa-color-picker {
+      appearance: none;
+      width: 24px;
+      height: 20px;
+      padding: 0;
+      border: 1px solid var(--ds-border-strong);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nasa-ht-sliders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px 16px;
+      padding-top: 8px;
+      border-top: 1px solid var(--ds-rule);
+    }
+    .nasa-ht-slider-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nasa-ht-slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
     .nasa-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px 20px;
-    }
-    @media (max-width: 1020px) {
-      .nasa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 640px) {
-      .nasa-grid { grid-template-columns: 1fr; }
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 28px 20px;
+      align-items: start;
     }
     .nasa-card {
       display: flex;
       flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      border-radius: var(--ds-radius-card);
+      border: var(--ds-hairline, 1px) solid var(--ds-border);
+      background: transparent;
+    }
+    .nasa-card--split {
+      grid-column: span 7;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .nasa-card--tall {
+      grid-column: span 5;
+    }
+    .nasa-card--square {
+      grid-column: span 4;
+    }
+    .nasa-card--panoramic {
+      grid-column: span 8;
+    }
+    .nasa-card--wide {
+      grid-column: span 5;
+    }
+    .nasa-card--split-rev {
+      grid-column: span 7;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 1020px) {
+      .nasa-card--split,
+      .nasa-card--tall,
+      .nasa-card--square,
+      .nasa-card--panoramic,
+      .nasa-card--wide,
+      .nasa-card--split-rev {
+        grid-column: span 12;
+      }
+    }
+    @media (max-width: 680px) {
+      .nasa-card--split,
+      .nasa-card--split-rev {
+        grid-template-columns: 1fr;
+      }
+      .nasa-card--split-rev .nasa-frame {
+        order: -1;
+      }
+    }
+    .nasa-copy-col {
+      display: flex;
+      flex-direction: column;
       gap: 10px;
+      min-width: 0;
     }
     .nasa-frame {
       position: relative;
@@ -5075,9 +5357,13 @@
       aspect-ratio: 4 / 3;
       border-radius: var(--ds-radius-squircle);
       overflow: hidden;
-      border: var(--ds-hairline, 1px) solid var(--ds-border-strong);
-      background: #141413;
+      border: var(--ds-hairline, 1px) solid var(--ds-border);
+      background: transparent;
     }
+    .nasa-card--tall .nasa-frame { aspect-ratio: 3 / 4; }
+    .nasa-card--square .nasa-frame { aspect-ratio: 1 / 1; }
+    .nasa-card--panoramic .nasa-frame { aspect-ratio: 16 / 9; }
+    .nasa-card--wide .nasa-frame { aspect-ratio: 16 / 10; }
     .nasa-frame img {
       position: relative;
       z-index: 1;
@@ -5085,17 +5371,26 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: contrast(1.06) sepia(0.14) saturate(0.86);
+      opacity: 0.85;
+      filter: saturate(0.70) contrast(1.03);
+      transition: opacity 220ms var(--ds-ease-out);
     }
-    .nasa-dust-canvas {
+    .nasa-frame[data-shader-active="true"] img {
+      opacity: 0;
+    }
+    .nasa-shader-host {
       position: absolute;
       inset: 0;
       z-index: 2;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      mix-blend-mode: screen;
       opacity: 0.92;
+    }
+    .nasa-shader-host canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
     }
     .nasa-card-meta {
       display: flex;
@@ -5120,6 +5415,14 @@
       font-size: 13.5px;
       line-height: 1.54;
       color: var(--ds-type-secondary);
+    }
+    .nasa-acc-wrap .ds-acc-item summary {
+      font-size: 12.5px;
+      padding: 8px 0;
+    }
+    .nasa-acc-wrap .ds-acc-body {
+      font-size: 12.5px;
+      padding-bottom: 10px;
     }
     main section[data-ds-hidden="true"] {
       display: none !important;
@@ -5189,6 +5492,11 @@
                 <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="pine" aria-pressed="false"><span class="surface-menu-swatch" style="background:#1E3328"></span>Pine Ink<span class="surface-menu-item-meta">#1E3328</span></button>
                 <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="umber" aria-pressed="false"><span class="surface-menu-swatch" style="background:#4E3E24"></span>Deep Ochre<span class="surface-menu-item-meta">#4E3E24</span></button>
                 <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="charcoal" aria-pressed="false"><span class="surface-menu-swatch" style="background:#3E3C38"></span>Charcoal<span class="surface-menu-item-meta">#3E3C38</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="basalt" aria-pressed="false"><span class="surface-menu-swatch" style="background:#191B1D"></span>Basalt Noir<span class="surface-menu-item-meta">#191B1D</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="graphite" aria-pressed="false"><span class="surface-menu-swatch" style="background:#1E1D1B"></span>Graphite Mute<span class="surface-menu-item-meta">#1E1D1B</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="moss" aria-pressed="false"><span class="surface-menu-swatch" style="background:#171C19"></span>Moss Shadow<span class="surface-menu-item-meta">#171C19</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="prune" aria-pressed="false"><span class="surface-menu-swatch" style="background:#1B171D"></span>Muted Eggplant<span class="surface-menu-item-meta">#1B171D</span></button>
+                <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="espresso" aria-pressed="false"><span class="surface-menu-swatch" style="background:#1D1815"></span>Smoked Umber<span class="surface-menu-item-meta">#1D1815</span></button>
                 <button type="button" class="surface-menu-item" role="menuitemradio" data-set-surface="obsidian" aria-pressed="false"><span class="surface-menu-swatch" style="background:#141413"></span>Obsidian Dark<span class="surface-menu-item-meta">#141413</span></button>
               </div>
             </div>
@@ -5204,6 +5512,16 @@
               <div class="surface-menu-scroll" id="type-menu-scroll"></div>
             </div>
           </div>
+
+          <button class="topbar-link surface-menu-trigger" id="btn-grain-direct" type="button" aria-expanded="false" aria-controls="grain-popover" data-tip="Grão, Poeira &amp; Riscos">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="5" cy="5" r="1.4" fill="currentColor"/><circle cx="10.5" cy="5.5" r="1.1" fill="currentColor" opacity="0.6"/>
+              <circle cx="15" cy="5" r="1.3" fill="currentColor"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/>
+              <circle cx="13.5" cy="10" r="1.1" fill="currentColor" opacity="0.75"/><circle cx="11" cy="15" r="1.4" fill="currentColor"/>
+              <line x1="15.5" y1="12" x2="17" y2="17" stroke="currentColor" stroke-width="1.1" opacity="0.65"/>
+            </svg>
+            <span class="surface-menu-label" data-home="top.grainBtn">Grão &amp; Dust</span>
+          </button>
 
           <div data-lang-slot aria-label="Idioma"></div>
 
@@ -5237,7 +5555,7 @@
               </div>
               <div class="eyebrow" data-home="grain.opacity" style="margin-bottom:8px;">Opacidade</div>
               <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-                <input id="grain-opacity-range" type="range" min="20" max="100" step="5" value="100" aria-label="Opacidade do grão" style="flex:1; accent-color:var(--ds-fg);" />
+                <input id="grain-opacity-range" class="ds-trans-range" type="range" min="20" max="100" step="5" value="100" aria-label="Opacidade do grão" style="flex:1;" />
                 <span id="grain-opacity-value" class="mono tabular" style="min-width:3.2em; text-align:right; font-size:11px;">100%</span>
               </div>
               <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
@@ -5245,6 +5563,20 @@
                 <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-opacity="70">70%</button>
                 <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-opacity="85">85%</button>
                 <button class="btn btn-sm btn-primary" type="button" data-set-grain-opacity="100">100%</button>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                <span class="eyebrow" data-home="grain.dustLevel" style="margin:0;">Poeira (Dust)</span>
+                <span id="grain-dust-value" class="mono tabular" style="font-size:11px;">0%</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                <input id="grain-dust-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de poeira (Dust)" style="flex:1;" />
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                <span class="eyebrow" data-home="grain.scratchLevel" style="margin:0;">Riscos (Scratches)</span>
+                <span id="grain-scratch-value" class="mono tabular" style="font-size:11px;">0%</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                <input id="grain-scratch-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de riscos (Scratches)" style="flex:1;" />
               </div>
               <div class="eyebrow" data-home="grain.size" style="margin-bottom:8px;">Tamanho do grão</div>
               <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
@@ -5278,15 +5610,15 @@
       </div>
 
       <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Abas do Design System">
-        <button class="topbar-link" type="button" data-ds-tab="overview" data-active="true">Geral &amp; História</button>
+        <button class="topbar-link" type="button" data-ds-tab="overview" data-active="true" data-home="nav.tab.overview">Geral &amp; História</button>
         <button class="topbar-link" type="button" data-ds-tab="foundations" data-i18n="nav.foundations">Fundamentos</button>
         <button class="topbar-link" type="button" data-ds-tab="motion" data-i18n="nav.motion">Motion</button>
-        <button class="topbar-link" type="button" data-ds-tab="editorial">Editorial</button>
-        <button class="topbar-link" type="button" data-ds-tab="plotter">Plotter &amp; 81k</button>
-        <button class="topbar-link" type="button" data-ds-tab="atelier">Atelier &amp; GPU</button>
-        <button class="topbar-link" type="button" data-ds-tab="nasa">Arquivo NASA</button>
-        <button class="topbar-link" type="button" data-ds-tab="skills">Skills</button>
-        <button class="topbar-link" type="button" data-ds-tab="all">Ver Tudo</button>
+        <button class="topbar-link" type="button" data-ds-tab="editorial" data-home="nav.tab.editorial">Editorial</button>
+        <button class="topbar-link" type="button" data-ds-tab="plotter" data-home="nav.tab.plotter">Plotter &amp; 81k</button>
+        <button class="topbar-link" type="button" data-ds-tab="atelier" data-home="nav.tab.atelier">Atelier &amp; GPU</button>
+        <button class="topbar-link" type="button" data-ds-tab="nasa" data-home="nav.tab.nasa">Arquivo NASA</button>
+        <button class="topbar-link" type="button" data-ds-tab="skills" data-home="nav.tab.skills">Skills</button>
+        <button class="topbar-link" type="button" data-ds-tab="all" data-home="nav.tab.all">Ver Tudo</button>
       </nav>
     </div>
 
@@ -5312,7 +5644,7 @@
             <p class="hero-lead" id="hero-lead-copy" data-i18n="hero.lead">
               Um meridiano visual entre o&nbsp;cotidiano calmo e&nbsp;o&nbsp;rigor técnico: papel tátil, uma só tinta, navegação sem latência — para React&nbsp;Native, Web em&nbsp;CSS puro e&nbsp;SVG&nbsp;1:1.
             </p>
-            <p style="font-size:13.5px; line-height:1.58; color:var(--ds-type-secondary); max-width:54ch; margin:-12px 0 20px;">
+            <p style="font-size:13.5px; line-height:1.58; color:var(--ds-type-secondary); max-width:54ch; margin:-12px 0 20px;" data-home="hero.colophon">
               Construído sobre grade modular 12×8px, traço Hairline 0.65px, 21 atmosferas Single-Ink persistidas entre páginas e 90 componentes auditáveis.
             </p>
             <div class="btn-row">
@@ -5323,7 +5655,7 @@
               <button class="btn btn-secondary btn-pill" id="hero-open-drawer" data-i18n="hero.tokens" data-tech-only>Tokens CSS &amp; TS</button>
             </div>
             <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-top:16px; padding-top:12px; border-top:1px solid var(--ds-rule);" aria-label="Leituras e dossiês">
-              <span class="eyebrow" style="margin:0;">Dossiês:</span>
+              <span class="eyebrow" style="margin:0;" data-home="hero.dossiers">Dossiês:</span>
               <a href="./manifesto.html" class="topbar-link" data-i18n="hero.manifesto">Manifesto ↗</a>
               <a href="./historia.html" class="topbar-link" data-i18n="hero.farol">O Farol e o Meridiano ↗</a>
               <a href="./gann.html" class="topbar-link" data-i18n="hero.gann">Dossiê W.D. Gann ↗</a>
@@ -5460,7 +5792,7 @@
     </section>
 
     <!-- ================= 01. SUPERFÍCIES & MOTOR SINGLE-INK ================= -->
-    <section class="section-block" id="cores" data-tab-group="foundations">
+    <section class="section-block" id="cores" data-tab-group="overview foundations">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -5473,6 +5805,15 @@
         </div>
 
         <div class="swatch-grid" id="dynamic-swatch-grid"></div>
+
+        <div class="surfaces-study-head">
+          <div>
+            <div class="eyebrow" data-home="cores.study.eyebrow">26 Atmosferas Single-Ink · Contraste WCAG &amp; Derivações</div>
+            <h3 class="h3" style="margin:4px 0 0; font-size:21px;" data-home="cores.study.title">Catálogo Completo &amp; Estudo Cromático</h3>
+          </div>
+          <span class="mono" style="font-size:11px; color:var(--ds-type-tertiary);" data-home="cores.study.meta">Ground · Single Ink · Muted Ink · Contraste</span>
+        </div>
+        <div class="surfaces-study-grid" id="all-surfaces-study-grid"></div>
 
         <div class="sub-grid-2">
           <div class="panel-card">
@@ -7389,87 +7730,245 @@
       <div class="container-wide">
         <div class="section-header">
           <div>
-            <div class="eyebrow">10 · Arquivo Orbital · NASA Public Domain</div>
-            <h2 class="section-title">Fotografias da Terra com Grão, Dust &amp; Scratches</h2>
+            <div class="eyebrow" data-home="nasa.eyebrow">10 · Arquivo Orbital · NASA Public Domain</div>
+            <h2 class="section-title" data-home="nasa.title">Fotografias da Terra · Paper Halftone &amp; Diagramação Orbital</h2>
           </div>
-          <p class="section-desc">
-            Acervo histórico de observação terrestre da NASA (domínio público) sob camada física de grão, poeira e riscos de película analógica — controle a intensidade do envelhecimento em tempo real.
+          <p class="section-desc" data-home="nasa.desc">
+            Acervo histórico de observação terrestre da NASA (domínio público) com saturação e opacidade suavizadas ao papel — adicione e regule o shader Paper Halftone Dots por cor, textura, tamanho e inversão.
           </p>
         </div>
 
         <div class="nasa-controls-bar">
-          <label style="display:inline-flex; align-items:center; gap:10px; flex:1 1 240px;">
-            <span class="eyebrow" style="margin:0; white-space:nowrap;">Dust &amp; Scratches:</span>
-            <input type="range" id="nasa-dust-slider" class="painterly-range" style="flex:1; max-width:220px;" min="0" max="100" step="5" value="55" aria-label="Intensidade de poeira e riscos" />
-            <output class="mono tabular" id="nasa-dust-out" style="font-size:11px; color:var(--ds-type-primary); min-width:38px;">55%</output>
-          </label>
-          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-dust="15">Limpo 15%</button>
-            <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-dust="55">Arquivo 55%</button>
-            <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-dust="80">Vintage 80%</button>
-            <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-dust="100">16mm 100%</button>
+          <div class="nasa-controls-row" style="justify-content:space-between;">
+            <div class="nasa-ctrl-group">
+              <button type="button" id="nasa-ht-toggle" class="btn btn-sm btn-secondary btn-pill" aria-pressed="false">
+                <span data-home="nasa.ht.shaderLabel">Paper Halftone Shader</span>
+                <span class="mono" data-nasa-ht-badge style="font-size:10px; opacity:0.85;">OFF</span>
+              </button>
+              <span style="width:1px; height:14px; background:var(--ds-rule); margin:0 2px;" aria-hidden="true"></span>
+              <span class="eyebrow" style="margin:0;" data-home="nasa.ht.invertLabel">Invertido:</span>
+              <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-ht-invert="false" aria-pressed="true" data-home="nasa.ht.normal">Normal</button>
+              <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-invert="true" aria-pressed="false" data-home="nasa.ht.inverted">Invertido</button>
+            </div>
+
+            <div class="nasa-ctrl-group">
+              <span class="eyebrow" style="margin:0;" data-home="nasa.ht.textureLabel">Textura:</span>
+              <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-ht-type="classic" aria-pressed="true" data-home="nasa.ht.texClassic">Clássico</button>
+              <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-type="gooey" aria-pressed="false" data-home="nasa.ht.texGooey">Gooey</button>
+              <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-type="holes" aria-pressed="false" data-home="nasa.ht.texHoles">Vazado</button>
+              <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-type="soft" aria-pressed="false" data-home="nasa.ht.texSoft">Suave</button>
+              <span style="width:1px; height:14px; background:var(--ds-rule); margin:0 2px;" aria-hidden="true"></span>
+              <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-ht-grid="hex" aria-pressed="true" data-home="nasa.ht.gridHex">Hex</button>
+              <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-grid="square" aria-pressed="false" data-home="nasa.ht.gridSquare">Grade</button>
+            </div>
+          </div>
+
+          <div class="nasa-controls-row" style="align-items:center; gap:10px 14px;">
+            <div class="nasa-ctrl-group">
+              <span class="eyebrow" style="margin:0;" data-home="nasa.ht.colorLabel">Cor:</span>
+              <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-ht-color-mode="original" aria-pressed="true" data-home="nasa.ht.colorOriginal">Colorido</button>
+              <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-color-mode="mono" aria-pressed="false" data-home="nasa.ht.colorDot">Cor do Ponto</button>
+            </div>
+            <div id="nasa-ht-swatches" class="nasa-ht-swatches-wrap" style="flex:1 1 320px;"></div>
+            <input type="color" id="nasa-ht-color" class="nasa-color-picker" value="#141413" aria-label="Cor personalizada do ponto" />
+          </div>
+
+          <div class="nasa-ht-sliders-grid">
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.sizeLabel">Tamanho:</span>
+                <output class="mono tabular" id="nasa-ht-size-out" style="font-size:11px;">0.16</output>
+              </div>
+              <input type="range" id="nasa-ht-size" class="ds-trans-range" min="0.04" max="0.42" step="0.02" value="0.16" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.radiusLabel">Raio:</span>
+                <output class="mono tabular" id="nasa-ht-radius-out" style="font-size:11px;">1.05</output>
+              </div>
+              <input type="range" id="nasa-ht-radius" class="ds-trans-range" min="0.25" max="2.00" step="0.05" value="1.05" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.contrastLabel">Contraste:</span>
+                <output class="mono tabular" id="nasa-ht-contrast-out" style="font-size:11px;">0.72</output>
+              </div>
+              <input type="range" id="nasa-ht-contrast" class="ds-trans-range" min="0.00" max="1.00" step="0.04" value="0.72" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.mixerLabel">Ruído Borda:</span>
+                <output class="mono tabular" id="nasa-ht-mixer-out" style="font-size:11px;">0.08</output>
+              </div>
+              <input type="range" id="nasa-ht-mixer" class="ds-trans-range" min="0.00" max="1.00" step="0.04" value="0.08" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.overlayLabel">Grão Overlay:</span>
+                <output class="mono tabular" id="nasa-ht-overlay-out" style="font-size:11px;">0.00</output>
+              </div>
+              <input type="range" id="nasa-ht-overlay" class="ds-trans-range" min="0.00" max="1.00" step="0.05" value="0.00" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.gsizeLabel">Escala Grão:</span>
+                <output class="mono tabular" id="nasa-ht-gsize-out" style="font-size:11px;">0.28</output>
+              </div>
+              <input type="range" id="nasa-ht-gsize" class="ds-trans-range" min="0.05" max="1.00" step="0.05" value="0.28" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.opacityLabel">Opacidade:</span>
+                <output class="mono tabular" id="nasa-ht-opacity-out" style="font-size:11px;">92%</output>
+              </div>
+              <input type="range" id="nasa-ht-opacity" class="ds-trans-range" min="0.25" max="1.00" step="0.05" value="0.92" />
+            </label>
           </div>
         </div>
 
         <div class="nasa-grid">
-          <article class="nasa-card">
+          <!-- Plate 1: Split horizontal (image left 4:3 | editorial + accordion right) -->
+          <article class="nasa-card nasa-card--split">
             <figure class="nasa-frame">
-              <img src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~medium.jpg" alt="The Blue Marble — Terra fotografada pela Apollo 17" loading="lazy" />
-              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+              <img src="./nasa/as17-148-22727.jpg" alt="The Blue Marble — Terra fotografada pela Apollo 17" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="nasa-card-meta"><span>AS17-148-22727 · 07 DEZ 1972</span><span>NASA · PUBLIC DOMAIN</span></div>
-            <h3 class="nasa-card-title">Apollo 17 · The Blue Marble</h3>
-            <p class="nasa-card-desc">Capturada a cerca de 29.000 km a caminho da Lua, revela a África, a Península Arábica e a calota polar sul sob luz solar direta sem nuvens no eixo sul-leste.</p>
+            <div class="nasa-copy-col">
+              <div class="nasa-card-meta"><span>AS17-148-22727 · 1972</span><span>NASA</span></div>
+              <h3 class="nasa-card-title" data-home="nasa.c1.title">Apollo 17 · The Blue Marble</h3>
+              <p class="nasa-card-desc" data-home="nasa.c1.desc">Capturada a ~29.000 km a caminho da Lua, revela a África, a Península Arábica e a calota polar sul sob iluminação solar direta sem cobertura frontal de nuvens.</p>
+              <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
+                <details class="ds-acc-item" open data-anim="open">
+                  <summary><span data-home="nasa.c1.acc1.sum">Telemetria de Voo &amp; Lente</span> <span class="ds-acc-meta">70MM</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c1.acc1.body">Hasselblad 500EL com lente Zeiss Planar 80mm f/2.8 · filme Kodak Ektachrome SO-368 70mm · 07 de dezembro de 1972 · tripulação Cernan, Evans e Schmitt.</div></div>
+                </details>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c1.acc2.sum">Leitura Editorial &amp; Superfície</span> <span class="ds-acc-meta">ALBEDO</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c1.acc2.body">Primeiro registro completo iluminado do disco planetário em missão tripulada; a suavização de saturação e opacidade integra a placa ao grão global da página.</div></div>
+                </details>
+              </div>
+            </div>
           </article>
 
-          <article class="nasa-card">
+          <!-- Plate 2: Tall portrait 3:4 -->
+          <article class="nasa-card nasa-card--tall">
             <figure class="nasa-frame">
-              <img src="https://images-assets.nasa.gov/image/art002e009280b/art002e009280b~large.jpg" alt="Artemis Era Earthrise — Terra nascendo além do limbo lunar" loading="lazy" />
-              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+              <img src="./nasa/art002e009280b.jpg" alt="Artemis Era Earthrise — Terra nascendo além do limbo lunar" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="nasa-card-meta"><span>ART002E009280B · PROGRAMA ARTEMIS</span><span>NASA · PUBLIC DOMAIN</span></div>
-            <h3 class="nasa-card-title">Artemis · Nascer da Terra</h3>
-            <p class="nasa-card-desc">O disco azulado emerge acima do horizonte cinzento da Lua, contrastando a fragilidade da atmosfera terrestre contra a escuridão absoluta do espaço profundo.</p>
+            <div class="nasa-copy-col">
+              <div class="nasa-card-meta"><span>ART002E009280B · ARTEMIS</span><span>3:4</span></div>
+              <h3 class="nasa-card-title" data-home="nasa.c2.title">Artemis · Nascer da Terra</h3>
+              <p class="nasa-card-desc" data-home="nasa.c2.desc">O disco azulado emerge acima do horizonte cinzento da Lua, contrastando a camada atmosférica contra o vácuo profundo em recorte vertical 3:4.</p>
+              <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c2.acc1.sum">Parâmetros Orbitais</span> <span class="ds-acc-meta">CISLUNAR</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc1.body">Distância cislunar ~380.000 km · contraste de limbo elevado ideal para testar retícula Halftone Hex com tamanho de ponto fino (0.10–0.16).</div></div>
+                </details>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c2.acc2.sum">Notas de Diagramação</span> <span class="ds-acc-meta">GRID 5</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc2.body">Proporção retrato vertical equilibra o bloco panorâmico da Apollo 17 ao lado, criando ritmo de coluna assimétrica 7 + 5.</div></div>
+                </details>
+              </div>
+            </div>
           </article>
 
-          <article class="nasa-card">
+          <!-- Plate 3: Compact 1:1 square -->
+          <article class="nasa-card nasa-card--square">
             <figure class="nasa-frame">
-              <img src="https://images-assets.nasa.gov/image/iss035e017673/iss035e017673~medium.jpg" alt="Curvatura terrestre observada pela Estação Espacial Internacional" loading="lazy" />
-              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+              <img src="./nasa/iss035e017673.jpg" alt="Curvatura terrestre observada pela Estação Espacial Internacional" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="nasa-card-meta"><span>ISS035-E-017673 · EXPEDIÇÃO 35</span><span>NASA · PUBLIC DOMAIN</span></div>
-            <h3 class="nasa-card-title">Órbita Baixa · Limbo Atmosférico</h3>
-            <p class="nasa-card-desc">Registro oblíquo a partir de 400 km de altitude exibindo a camada fina da troposfera e o espalhamento de Rayleigh ao longo do terminador planetário.</p>
+            <div class="nasa-copy-col">
+              <div class="nasa-card-meta"><span>ISS035-E-017673 · 400 KM</span><span>1:1</span></div>
+              <h3 class="nasa-card-title" data-home="nasa.c3.title">Órbita Baixa · Limbo Atmosférico</h3>
+              <p class="nasa-card-desc" data-home="nasa.c3.desc">Registro oblíquo pela ISS a 400 km de altitude exibindo a estreita faixa azul de espalhamento Rayleigh ao longo do terminador planetário.</p>
+              <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c3.acc1.sum">Dados da Expedição 35</span> <span class="ds-acc-meta">51.6°</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c3.acc1.body">Cúpula de observação orbital · inclinação 51,6° · velocidade orbital 7,66 km/s (um nascer do sol a cada 90 minutos).</div></div>
+                </details>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c3.acc2.sum">Estudo em Halftone Gooey/Soft</span> <span class="ds-acc-meta">SHADER</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c3.acc2.body">O gradiente contínuo do terminador revela transições suaves quando avaliado no modo Textura Soft ou Invertido sobre papel escuro.</div></div>
+                </details>
+              </div>
+            </div>
           </article>
 
-          <article class="nasa-card">
+          <!-- Plate 4: Copy ABOVE, 16:9 panoramic image middle, accordion BELOW -->
+          <article class="nasa-card nasa-card--panoramic">
+            <div class="nasa-copy-col">
+              <div class="nasa-card-meta"><span>STS065-86-095 · 18 JUL 1994</span><span>16:9 PANORAMA</span></div>
+              <h3 class="nasa-card-title" data-home="nasa.c4.title">Columbia · Olho do Furacão Emilia</h3>
+              <p class="nasa-card-desc" data-home="nasa.c4.desc">Parede simétrica do ciclone sobre o Pacífico Leste fotografada a bordo do ônibus espacial Columbia — título e síntese posicionados acima da faixa panorâmica 16:9.</p>
+            </div>
             <figure class="nasa-frame">
-              <img src="https://images-assets.nasa.gov/image/sts065-86-095/sts065-86-095~medium.jpg" alt="Olho do Furacão Emilia observado pelo ônibus espacial Columbia" loading="lazy" />
-              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+              <img src="./nasa/sts065-86-095.jpg" alt="Olho do Furacão Emilia observado pelo ônibus espacial Columbia" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="nasa-card-meta"><span>STS065-86-095 · 18 JUL 1994</span><span>NASA · PUBLIC DOMAIN</span></div>
-            <h3 class="nasa-card-title">Columbia · Furacão Emilia</h3>
-            <p class="nasa-card-desc">Parede simétrica do olho ciclônico sobre o Pacífico Leste fotografada com teleobjetiva a bordo do Columbia, evidenciando bandas espirais de convecção.</p>
+            <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
+              <details class="ds-acc-item" open data-anim="open">
+                <summary><span data-home="nasa.c4.acc1.sum">Sensores &amp; Meteorologia STS-65</span> <span class="ds-acc-meta">CAT 5</span></summary>
+                <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c4.acc1.body">18 de julho de 1994 · pressão central mínima ~948 hPa · ventos sustentados Categoria 5 fotografados em janela perpendicular à órbita.</div></div>
+              </details>
+              <details class="ds-acc-item" data-anim="closed">
+                <summary><span data-home="nasa.c4.acc2.sum">Dinâmica de Retícula Espiral</span> <span class="ds-acc-meta">INK</span></summary>
+                <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c4.acc2.body">As bandas espirais funcionam como teste natural de anisotropia visual e contraste em modo monocromático com cor do ponto customizada.</div></div>
+              </details>
+            </div>
           </article>
 
-          <article class="nasa-card">
+          <!-- Plate 5: Widescreen 16:10 -->
+          <article class="nasa-card nasa-card--wide">
             <figure class="nasa-frame">
-              <img src="https://images-assets.nasa.gov/image/iss040e091208/iss040e091208~medium.jpg" alt="Observação de sistema de nuvens e oceano pela ISS Expedição 40" loading="lazy" />
-              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+              <img src="./nasa/iss040e091208.jpg" alt="Observação de sistema de nuvens e oceano pela ISS Expedição 40" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="nasa-card-meta"><span>ISS040-E-091208 · 10 AGO 2014</span><span>NASA · PUBLIC DOMAIN</span></div>
-            <h3 class="nasa-card-title">Expedição 40 · Correntes &amp; Nuvens</h3>
-            <p class="nasa-card-desc">Estudo orbital de estratocúmulos e transição costeira usado no monitoramento de aerossóis, albedo superficial e padrões de vento em larga escala.</p>
+            <div class="nasa-copy-col">
+              <div class="nasa-card-meta"><span>ISS040-E-091208 · 2014</span><span>16:10</span></div>
+              <h3 class="nasa-card-title" data-home="nasa.c5.title">Expedição 40 · Correntes &amp; Nuvens</h3>
+              <p class="nasa-card-desc" data-home="nasa.c5.desc">Mapeamento de estratocúmulos e fronteira costeira usado no acompanhamento de aerossóis, albedo oceânico e padrões de vento em larga escala.</p>
+              <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c5.acc1.sum">Instrumentação Orbital</span> <span class="ds-acc-meta">TELE</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c5.acc1.body">Registro de 10 de agosto de 2014 · lente teleobjetiva de alta resolução através do vidro óptico de quartzo da ISS.</div></div>
+                </details>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c5.acc2.sum">Preservação &amp; Albedo</span> <span class="ds-acc-meta">86% OP</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c5.acc2.body">Altas luzes de nuvens refletem o papel Ivory/Paper sem estourar o branco quando a opacidade da chapa é calibrada em 86%.</div></div>
+                </details>
+              </div>
+            </div>
           </article>
 
-          <article class="nasa-card">
+          <!-- Plate 6: Reversed horizontal split (text + accordion LEFT | 4:3 image RIGHT) -->
+          <article class="nasa-card nasa-card--split-rev">
+            <div class="nasa-copy-col">
+              <div class="nasa-card-meta"><span>ART002E016299 · ORION</span><span>4:3 SPLIT</span></div>
+              <h3 class="nasa-card-title" data-home="nasa.c6.title">Cápsula Orion · Horizonte Lunar</h3>
+              <p class="nasa-card-desc" data-home="nasa.c6.desc">Texto à esquerda e fotografia 4:3 à direita: enquadramento de longa distância da Terra crescente atrás da câmera dos painéis solares.</p>
+              <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
+                <details class="ds-acc-item" open data-anim="open">
+                  <summary><span data-home="nasa.c6.acc1.sum">Sistema Óptico de Engenharia</span> <span class="ds-acc-meta">OPNAV</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c6.acc1.body">Câmera acoplada à ponta do painel solar da espaçonave Orion (Optical Navigation Camera) em trajetória além da órbita lunar.</div></div>
+                </details>
+                <details class="ds-acc-item" data-anim="closed">
+                  <summary><span data-home="nasa.c6.acc2.sum">Linhagem Arquivística 1968–2026</span> <span class="ds-acc-meta">ARCHIVE</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c6.acc2.body">Retoma a gramática visual do primeiro Earthrise, agora reprocessável ao vivo em malha quadrada ou hexagonal pelo shader Paper.</div></div>
+                </details>
+              </div>
+            </div>
             <figure class="nasa-frame">
-              <img src="https://images-assets.nasa.gov/image/art002e016299/art002e016299~large.jpg" alt="Earthrise capturado pela cápsula Orion" loading="lazy" />
-              <canvas class="nasa-dust-canvas" width="640" height="480" aria-hidden="true"></canvas>
+              <img src="./nasa/art002e016299.jpg" alt="Earthrise capturado pela cápsula Orion" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="nasa-card-meta"><span>ART002E016299 · ORION CAM</span><span>NASA · PUBLIC DOMAIN</span></div>
-            <h3 class="nasa-card-title">Cápsula Orion · Horizonte Lunar</h3>
-            <p class="nasa-card-desc">Enquadramento de longa distância da Terra crescente atrás da câmera externa dos painéis solares, retomando a linhagem visual dos arquivos Apollo.</p>
           </article>
         </div>
       </div>
@@ -7693,9 +8192,13 @@
         chunky: { canvasScale: 0.6,  blotScale: 0, blotDensity: 0, blotAlpha: 0, fiberScale: 0.9,  fiberDensity: 0.55, speckleHotspot: 0.85, seedSalt: 47 },
       };
       const GRAIN_SIZE_LABELS = { fine: 'Fino', medium: 'Médio', coarse: 'Grosso', chunky: 'Grumoso' };
+      const GRAIN_INTENSITY_KEY = 'meridian-grain';
+      const GRAIN_SIZE_KEY = 'meridian-grain-size';
       const GRAIN_OPACITY_KEY = 'meridian-grain-opacity-v2';
       const GRAIN_DUST_KEY = 'meridian-grain-dust';
       const GRAIN_SCRATCH_KEY = 'meridian-grain-scratch';
+      const GRAIN_DUST_LEVEL_KEY = 'meridian-grain-dust-level';
+      const GRAIN_SCRATCH_LEVEL_KEY = 'meridian-grain-scratch-level';
       const GRAIN_DOUBLE_KEY = 'meridian-grain-double';
       let paintPaperGrain = () => {};
 
@@ -7707,6 +8210,8 @@
         if (!root.dataset.grainDust) root.dataset.grainDust = 'off';
         if (!root.dataset.grainScratch) root.dataset.grainScratch = 'off';
         if (!root.dataset.grainDouble) root.dataset.grainDouble = 'off';
+        if (!root.dataset.grainDustLevel) root.dataset.grainDustLevel = '0';
+        if (!root.dataset.grainScratchLevel) root.dataset.grainScratchLevel = '0';
         root.style.setProperty('--ds-paper-texture', 'none');
 
         let canvas = document.getElementById('ds-paper-grain');
@@ -7724,6 +8229,11 @@
           const dustOn = root.dataset.grainDust === 'on';
           const scratchOn = root.dataset.grainScratch === 'on';
           const doubleOn = root.dataset.grainDouble === 'on';
+          const dustPct = Math.max(0, Math.min(100, Number(root.dataset.grainDustLevel || (dustOn ? 55 : 0))));
+          const scratchPct = Math.max(0, Math.min(100, Number(root.dataset.grainScratchLevel || (scratchOn ? 45 : 0))));
+          const effDust = dustOn ? (dustPct > 0 ? dustPct / 100 : 0.5) : 0;
+          const effScratch = scratchOn ? (scratchPct > 0 ? scratchPct / 100 : 0.45) : 0;
+
           const cssW = Math.max(1, window.innerWidth || 1280);
           const cssH = Math.max(1, window.innerHeight || 800);
           const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -7803,29 +8313,41 @@
             }
             ctx.globalAlpha = 1;
           }
-          if (dustOn) {
-            const dustCount = Math.round((28 + (w * h) / 22000) * sizeScale);
+          if (effDust > 0) {
+            const dustCount = Math.round((20 + (w * h) / 14000) * sizeScale * (0.28 + effDust * 1.65));
             for (let i = 0; i < dustCount; i++) {
-              const x = rng() * w, y = rng() * h, r = (0.6 + rng() * 2.4) * sizeScale;
+              const x = rng() * w, y = rng() * h, r = (0.55 + rng() * 2.5) * sizeScale * (0.85 + effDust * 0.45);
               const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-              g.addColorStop(0, `rgba(22, 20, 16, ${(0.045 + rng() * 0.09).toFixed(4)})`);
+              g.addColorStop(0, `rgba(22, 20, 16, ${Math.min(0.38, (0.032 + rng() * 0.082) * (0.38 + effDust * 0.92)).toFixed(4)})`);
               g.addColorStop(1, 'rgba(22, 20, 16, 0)');
               ctx.fillStyle = g;
               ctx.beginPath();
               ctx.arc(x, y, r, 0, Math.PI * 2);
               ctx.fill();
             }
+            const hairCount = Math.round((4 + (w * h) / 55000) * (0.25 + effDust * 1.4));
+            for (let i = 0; i < hairCount; i++) {
+              const x = rng() * w, y = rng() * h, len = (5 + rng() * 14) * sizeScale;
+              const ang = rng() * Math.PI * 2;
+              const cx = x + Math.cos(ang + 0.45) * len * 0.5, cy = y + Math.sin(ang + 0.45) * len * 0.5;
+              ctx.strokeStyle = `rgba(22, 20, 16, ${(0.03 + rng() * 0.055 * (0.4 + effDust)).toFixed(4)})`;
+              ctx.lineWidth = (0.35 + rng() * 0.45) * Math.max(0.7, sizeScale * 0.8);
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.quadraticCurveTo(cx, cy, x + Math.cos(ang) * len, y + Math.sin(ang) * len);
+              ctx.stroke();
+            }
           }
-          if (scratchOn) {
-            const scratchCount = Math.round(6 + (w * h) / 70000);
+          if (effScratch > 0) {
+            const scratchCount = Math.round((5 + (w * h) / 48000) * (0.25 + effScratch * 1.85));
             for (let i = 0; i < scratchCount; i++) {
               const x = rng() * w, y = rng() * h;
-              const len = (18 + rng() * 90) * sizeScale;
-              const base = rng() > 0.55 ? Math.PI / 2 : 0;
-              const ang = base + (rng() - 0.5) * 0.35;
+              const len = (18 + rng() * 115) * sizeScale * (0.85 + effScratch * 0.4);
+              const base = rng() > 0.35 ? Math.PI / 2 : 0;
+              const ang = base + (rng() - 0.5) * 0.32;
               const ex = x + Math.cos(ang) * len, ey = y + Math.sin(ang) * len;
-              ctx.strokeStyle = `rgba(18, 16, 12, ${(0.04 + rng() * 0.08).toFixed(4)})`;
-              ctx.lineWidth = (0.35 + rng() * 0.7) * Math.max(0.7, sizeScale * 0.85);
+              ctx.strokeStyle = `rgba(18, 16, 12, ${(0.035 + rng() * 0.08 * (0.38 + effScratch)).toFixed(4)})`;
+              ctx.lineWidth = (0.35 + rng() * 0.65) * Math.max(0.7, sizeScale * 0.85);
               ctx.beginPath();
               ctx.moveTo(x, y);
               ctx.lineTo(ex, ey);
@@ -7887,10 +8409,15 @@
         pine:       { name: 'Pine Ink',         bg: '#1E3328', s1: '#264034', s2: '#2E4A3C', s3: '#385646', fg: '#F2F6F3', muted: '#A8BAAE', contrast: '12.4:1 (AAA)', blend: 'screen + invert(1)' },
         umber:      { name: 'Deep Ochre',       bg: '#4E3E24', s1: '#5C4A2C', s2: '#6A5634', s3: '#78623C', fg: '#F7F3EA', muted: '#C4B496', contrast: '9.3:1 (AAA)', blend: 'screen + invert(1)' },
         charcoal:   { name: 'Charcoal',         bg: '#3E3C38', s1: '#4A4844', s2: '#565450', s3: '#64625C', fg: '#F4F2EC', muted: '#B8B4AC', contrast: '9.8:1 (AAA)', blend: 'screen + invert(1)' },
+        basalt:     { name: 'Basalt Noir',      bg: '#191B1D', s1: '#212427', s2: '#2B2E32', s3: '#363A3F', fg: '#F3F4F4', muted: '#9FA4A8', contrast: '16.4:1 (AAA)', blend: 'screen + invert(1)' },
+        graphite:   { name: 'Graphite Mute',    bg: '#1E1D1B', s1: '#272522', s2: '#312E2A', s3: '#3D3934', fg: '#F5F3EE', muted: '#A6A29A', contrast: '15.7:1 (AAA)', blend: 'screen + invert(1)' },
+        moss:       { name: 'Moss Shadow',      bg: '#171C19', s1: '#1E2521', s2: '#27302B', s3: '#323D36', fg: '#F2F5F3', muted: '#9BA59F', contrast: '16.5:1 (AAA)', blend: 'screen + invert(1)' },
+        prune:      { name: 'Muted Eggplant',   bg: '#1B171D', s1: '#231E26', s2: '#2D2730', s3: '#38313C', fg: '#F4F2F5', muted: '#A49DA8', contrast: '16.3:1 (AAA)', blend: 'screen + invert(1)' },
+        espresso:   { name: 'Smoked Umber',     bg: '#1D1815', s1: '#26201C', s2: '#302823', s3: '#3B322C', fg: '#F6F2EE', muted: '#A89E96', contrast: '16.1:1 (AAA)', blend: 'screen + invert(1)' },
       };
 
-      const SURFACE_ORDER = ['ivory', 'paper', 'blush', 'apricot', 'butter', 'sage', 'mist', 'aqua', 'sky', 'slate', 'lilac', 'terracotta', 'ash', 'stone', 'clay', 'navy', 'mocha', 'pine', 'umber', 'charcoal', 'obsidian'];
-      const DARK_SURFACES = new Set(['obsidian', 'navy', 'mocha', 'pine', 'umber', 'charcoal']);
+      const SURFACE_ORDER = ['ivory', 'paper', 'blush', 'apricot', 'butter', 'sage', 'mist', 'aqua', 'sky', 'slate', 'lilac', 'terracotta', 'ash', 'stone', 'clay', 'navy', 'mocha', 'pine', 'umber', 'charcoal', 'basalt', 'graphite', 'moss', 'prune', 'espresso', 'obsidian'];
+      const DARK_SURFACES = new Set(['obsidian', 'navy', 'mocha', 'pine', 'umber', 'charcoal', 'basalt', 'graphite', 'moss', 'prune', 'espresso']);
       const GRAIN_LABELS = { off: 'Off', subtle: 'Suave', editorial: 'Editorial', tactile: 'Tátil' };
 
       const state = {
@@ -8025,6 +8552,28 @@
             </div>
           </button>
         `).join('');
+
+        const studyGrid = document.getElementById('all-surfaces-study-grid');
+        if (studyGrid) {
+          studyGrid.innerHTML = SURFACE_ORDER.map((id, idx) => {
+            const sm = SURFACE_META[id];
+            const active = id === state.surface;
+            const num = String(idx + 1).padStart(2, '0');
+            return `
+              <button type="button" class="surface-study-card" data-set-surface="${id}" aria-pressed="${active ? 'true' : 'false'}" style="background:${sm.bg}; color:${sm.fg};">
+                <div class="surface-study-top">
+                  <span>${num} · ${id.toUpperCase()}</span>
+                  <span>${sm.contrast}</span>
+                </div>
+                <div class="surface-study-name">${sm.name}</div>
+                <div class="surface-study-meta">
+                  <span>Ground ${sm.bg} · Ink ${sm.fg}</span>
+                  <span>Muted ${sm.muted} · ${sm.blend}</span>
+                </div>
+              </button>
+            `;
+          }).join('');
+        }
       }
 
       function renderDrawerCode() {
@@ -8152,6 +8701,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         { id: 'pine', name: 'Pine Ink', hex: '#1E3328' },
         { id: 'umber', name: 'Deep Ochre', hex: '#4E3E24' },
         { id: 'charcoal', name: 'Charcoal', hex: '#3E3C38' },
+        { id: 'basalt', name: 'Basalt Noir', hex: '#191B1D' },
+        { id: 'graphite', name: 'Graphite Mute', hex: '#1E1D1B' },
+        { id: 'moss', name: 'Moss Shadow', hex: '#171C19' },
+        { id: 'prune', name: 'Muted Eggplant', hex: '#1B171D' },
+        { id: 'espresso', name: 'Smoked Umber', hex: '#1D1815' },
         { id: 'muted', key: 'type.ink.muted', name: 'Tinta suave' },
       ];
       const TYPE_OPACITY = [100, 78, 56];
@@ -8229,28 +8783,39 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       renderTypeMenu();
 
-      function applyGrain(preset) {
+      function syncRangeTrackFill(input) {
+        if (!input) return;
+        const min = Number(input.min || 0);
+        const max = Number(input.max || 100);
+        const val = Number(input.value || 0);
+        const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
+        input.style.setProperty('--range-pct', Math.max(0, Math.min(100, pct)).toFixed(1) + '%');
+      }
+
+      function applyGrain(preset, { announce = true } = {}) {
         state.grain = preset;
         document.documentElement.setAttribute('data-grain', preset);
+        try { localStorage.setItem(GRAIN_INTENSITY_KEY, preset); } catch (_) {}
         document.querySelectorAll('[data-set-grain]').forEach(btn => {
           btn.classList.toggle('btn-primary', btn.dataset.setGrain === preset);
           btn.classList.toggle('btn-tertiary', btn.dataset.setGrain !== preset);
         });
         updateTelemetry();
-        showToast(`Intensidade: ${GRAIN_LABELS[preset]}`);
+        if (announce) showToast(`Intensidade: ${GRAIN_LABELS[preset]}`);
       }
 
-      function applyGrainSize(sizeId) {
+      function applyGrainSize(sizeId, { announce = true } = {}) {
         if (!GRAIN_SIZES[sizeId]) return;
         state.grainSize = sizeId;
         document.documentElement.dataset.grainSize = sizeId;
+        try { localStorage.setItem(GRAIN_SIZE_KEY, sizeId); } catch (_) {}
         document.querySelectorAll('[data-set-grain-size]').forEach(btn => {
           btn.classList.toggle('btn-primary', btn.dataset.setGrainSize === sizeId);
           btn.classList.toggle('btn-tertiary', btn.dataset.setGrainSize !== sizeId);
         });
         paintPaperGrain();
         updateTelemetry();
-        showToast(`Tamanho do grão: ${GRAIN_SIZE_LABELS[sizeId]}`);
+        if (announce) showToast(`Tamanho do grão: ${GRAIN_SIZE_LABELS[sizeId]}`);
       }
 
       function applyGrainOpacity(raw, { announce = false } = {}) {
@@ -8263,7 +8828,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         try { localStorage.setItem(GRAIN_OPACITY_KEY, String(opacity)); } catch (_) {}
         const range = document.getElementById('grain-opacity-range');
         const label = document.getElementById('grain-opacity-value');
-        if (range) range.value = String(pct);
+        if (range) { range.value = String(pct); syncRangeTrackFill(range); }
         if (label) label.textContent = `${pct}%`;
         document.querySelectorAll('[data-set-grain-opacity]').forEach((btn) => {
           const active = Number(btn.dataset.setGrainOpacity) === pct;
@@ -8282,24 +8847,54 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         });
       }
 
-      function applyGrainDust(on, { announce = true } = {}) {
-        state.grainDust = !!on;
+      function applyGrainDustLevel(raw, { announce = false } = {}) {
+        const lv = Math.max(0, Math.min(100, Math.round(Number(raw) || 0)));
+        const on = lv > 0;
+        state.grainDust = on;
         document.documentElement.dataset.grainDust = on ? 'on' : 'off';
-        try { localStorage.setItem(GRAIN_DUST_KEY, on ? 'on' : 'off'); } catch (_) {}
+        document.documentElement.dataset.grainDustLevel = String(lv);
+        try {
+          localStorage.setItem(GRAIN_DUST_LEVEL_KEY, String(lv));
+          localStorage.setItem(GRAIN_DUST_KEY, on ? 'on' : 'off');
+        } catch (_) {}
+        const dr = document.getElementById('grain-dust-range');
+        const dv = document.getElementById('grain-dust-value');
+        if (dr) { dr.value = String(lv); syncRangeTrackFill(dr); }
+        if (dv) dv.textContent = `${lv}%`;
         syncGrainLayerBtn('[data-set-grain-dust]', on);
         paintPaperGrain();
         updateTelemetry();
-        if (announce) showToast(`Dust: ${on ? 'ON' : 'OFF'}`);
+        if (announce) showToast(`Poeira (Dust): ${lv}%`);
       }
 
-      function applyGrainScratch(on, { announce = true } = {}) {
-        state.grainScratch = !!on;
+      function applyGrainScratchLevel(raw, { announce = false } = {}) {
+        const lv = Math.max(0, Math.min(100, Math.round(Number(raw) || 0)));
+        const on = lv > 0;
+        state.grainScratch = on;
         document.documentElement.dataset.grainScratch = on ? 'on' : 'off';
-        try { localStorage.setItem(GRAIN_SCRATCH_KEY, on ? 'on' : 'off'); } catch (_) {}
+        document.documentElement.dataset.grainScratchLevel = String(lv);
+        try {
+          localStorage.setItem(GRAIN_SCRATCH_LEVEL_KEY, String(lv));
+          localStorage.setItem(GRAIN_SCRATCH_KEY, on ? 'on' : 'off');
+        } catch (_) {}
+        const sr = document.getElementById('grain-scratch-range');
+        const sv = document.getElementById('grain-scratch-value');
+        if (sr) { sr.value = String(lv); syncRangeTrackFill(sr); }
+        if (sv) sv.textContent = `${lv}%`;
         syncGrainLayerBtn('[data-set-grain-scratch]', on);
         paintPaperGrain();
         updateTelemetry();
-        if (announce) showToast(`Scratch: ${on ? 'ON' : 'OFF'}`);
+        if (announce) showToast(`Riscos (Scratches): ${lv}%`);
+      }
+
+      function applyGrainDust(on, { announce = true } = {}) {
+        const cur = Number(document.documentElement.dataset.grainDustLevel || 0);
+        applyGrainDustLevel(on ? (cur > 0 ? cur : 55) : 0, { announce });
+      }
+
+      function applyGrainScratch(on, { announce = true } = {}) {
+        const cur = Number(document.documentElement.dataset.grainScratchLevel || 0);
+        applyGrainScratchLevel(on ? (cur > 0 ? cur : 45) : 0, { announce });
       }
 
       function applyGrainDouble(on, { announce = true } = {}) {
@@ -8313,23 +8908,35 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       }
 
       (function bootGrainExtras() {
+        let grain = null;
+        let size = null;
         let opacity = 1;
-        let dust = false;
-        let scratch = false;
+        let dustLevel = 0;
+        let scratchLevel = 0;
         let dbl = false;
         try {
+          const savedG = localStorage.getItem(GRAIN_INTENSITY_KEY);
+          if (savedG && GRAIN_LABELS[savedG]) grain = savedG;
+          const savedS = localStorage.getItem(GRAIN_SIZE_KEY);
+          if (savedS && GRAIN_SIZES[savedS]) size = savedS;
           const savedOp = localStorage.getItem(GRAIN_OPACITY_KEY);
           if (savedOp != null && Number.isFinite(Number(savedOp))) opacity = Number(savedOp);
+          const savedDL = localStorage.getItem(GRAIN_DUST_LEVEL_KEY);
           const savedDust = localStorage.getItem(GRAIN_DUST_KEY);
-          if (savedDust === 'on' || savedDust === 'off') dust = savedDust === 'on';
+          if (savedDL != null && Number.isFinite(Number(savedDL))) dustLevel = Number(savedDL);
+          else if (savedDust === 'on') dustLevel = 55;
+          const savedSL = localStorage.getItem(GRAIN_SCRATCH_LEVEL_KEY);
           const savedScratch = localStorage.getItem(GRAIN_SCRATCH_KEY);
-          if (savedScratch === 'on' || savedScratch === 'off') scratch = savedScratch === 'on';
+          if (savedSL != null && Number.isFinite(Number(savedSL))) scratchLevel = Number(savedSL);
+          else if (savedScratch === 'on') scratchLevel = 45;
           const savedDouble = localStorage.getItem(GRAIN_DOUBLE_KEY);
           if (savedDouble === 'on' || savedDouble === 'off') dbl = savedDouble === 'on';
         } catch (_) {}
+        if (grain) applyGrain(grain, { announce: false });
+        if (size) applyGrainSize(size, { announce: false });
         applyGrainOpacity(Math.round(opacity * 100));
-        applyGrainDust(dust, { announce: false });
-        applyGrainScratch(scratch, { announce: false });
+        applyGrainDustLevel(dustLevel, { announce: false });
+        applyGrainScratchLevel(scratchLevel, { announce: false });
         applyGrainDouble(dbl, { announce: false });
       })();
 
@@ -8831,13 +9438,28 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       syncTopbarNavMode();
 
       const grainBtn = document.getElementById('btn-grain-popover');
+      const grainDirectBtn = document.getElementById('btn-grain-direct');
       const grainPop = document.getElementById('grain-popover');
       const grainOpacityRange = document.getElementById('grain-opacity-range');
+      const grainDustRange = document.getElementById('grain-dust-range');
+      const grainScratchRange = document.getElementById('grain-scratch-range');
       grainOpacityRange?.addEventListener('input', (e) => {
         applyGrainOpacity(e.target.value);
       });
       grainOpacityRange?.addEventListener('change', (e) => {
         applyGrainOpacity(e.target.value, { announce: true });
+      });
+      grainDustRange?.addEventListener('input', (e) => {
+        applyGrainDustLevel(e.target.value);
+      });
+      grainDustRange?.addEventListener('change', (e) => {
+        applyGrainDustLevel(e.target.value, { announce: true });
+      });
+      grainScratchRange?.addEventListener('input', (e) => {
+        applyGrainScratchLevel(e.target.value);
+      });
+      grainScratchRange?.addEventListener('change', (e) => {
+        applyGrainScratchLevel(e.target.value, { announce: true });
       });
       const surfaceMenuBtn = document.getElementById('btn-surface-menu');
       const surfaceMenu = document.getElementById('surface-menu');
@@ -8848,8 +9470,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       function setGrainPopover(open) {
         grainPop.dataset.open = open ? 'true' : 'false';
         grainPop.setAttribute('aria-hidden', open ? 'false' : 'true');
-        grainBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        grainBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+        grainDirectBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (open) {
+          const ms = document.getElementById('menu-shortcuts');
+          if (ms) ms.dataset.open = 'false';
           setSurfaceMenu(false);
           setTypeMenu(false);
           hideFloatingTip();
@@ -9060,7 +9685,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         }
       });
 
-      grainBtn.addEventListener('click', () => {
+      grainBtn?.addEventListener('click', () => {
+        setGrainPopover(grainPop.dataset.open !== 'true');
+      });
+      grainDirectBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
         setGrainPopover(grainPop.dataset.open !== 'true');
       });
 
@@ -9106,10 +9735,19 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         renderGannSvg();
       });
 
-      document.getElementById('env-hour-slider').addEventListener('input', (e) => {
-        state.envHour = Number(e.target.value);
-        if (document.getElementById('env-hand')) paintEnvHour();
-        else renderEnvSvg();
+      const envHourSlider = document.getElementById('env-hour-slider');
+      if (envHourSlider) {
+        syncRangeTrackFill(envHourSlider);
+        envHourSlider.addEventListener('input', (e) => {
+          syncRangeTrackFill(e.target);
+          state.envHour = Number(e.target.value);
+          if (document.getElementById('env-hand')) paintEnvHour();
+          else renderEnvSvg();
+        });
+      }
+      document.querySelectorAll('input[type="range"]').forEach(syncRangeTrackFill);
+      document.addEventListener('input', (e) => {
+        if (e.target && e.target.type === 'range') syncRangeTrackFill(e.target);
       });
 
       // Hold-to-Confirm Asymmetric Interaction 
@@ -10984,7 +11622,9 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       function selectDsTab(tabId, scrollTop = false) {
         const sections = document.querySelectorAll('main#topo > section[data-tab-group]');
         sections.forEach((sec) => {
-          const match = tabId === 'all' || sec.dataset.tabGroup === tabId;
+          const groups = (sec.dataset.tabGroup || '').split(/\s+/);
+          const match = tabId === 'all' || groups.includes(tabId);
+          sec.dataset.tabHidden = match ? 'false' : 'true';
           if (match) {
             sec.removeAttribute('data-ds-hidden');
             sec.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-inview'));
@@ -11011,93 +11651,14 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (anchor) {
           const id = anchor.getAttribute('href').slice(1);
           const targetSec = document.getElementById(id)?.closest('section[data-tab-group]');
-          if (targetSec?.dataset.tabGroup) selectDsTab(targetSec.dataset.tabGroup, false);
+          const primaryTab = (targetSec?.dataset.tabGroup || '').split(/\s+/)[0];
+          if (primaryTab) selectDsTab(primaryTab, false);
         }
       });
 
-      /* NASA Archive Dust & Scratches Renderer */
-      function renderNasaDustAndScratches(pct = 55) {
-        const level = Math.max(0, Math.min(1, pct / 100));
-        document.querySelectorAll('.nasa-dust-canvas').forEach((cv, idx) => {
-          const ctx = cv.getContext('2d');
-          const W = cv.width, H = cv.height;
-          ctx.clearRect(0, 0, W, H);
-          if (level <= 0.01) return;
-
-          let seed = 918273 + idx * 7919;
-          const rnd = () => {
-            seed = (seed * 1664525 + 1013904223) >>> 0;
-            return seed / 4294967296;
-          };
-
-          // Grão de película analógica
-          const speckCount = Math.round(180 + level * 620);
-          for (let i = 0; i < speckCount; i++) {
-            const x = rnd() * W, y = rnd() * H;
-            const r = 0.4 + rnd() * (0.9 + level * 0.9);
-            ctx.fillStyle = rnd() > 0.35
-              ? `rgba(255,250,242,${(0.08 + rnd() * 0.24 * level).toFixed(3)})`
-              : `rgba(20,20,18,${(0.10 + rnd() * 0.25 * level).toFixed(3)})`;
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.fill();
-          }
-
-          // Fibras finas de poeira (dust)
-          const hairCount = Math.round(4 + level * 22);
-          ctx.lineCap = 'round';
-          for (let i = 0; i < hairCount; i++) {
-            const x = rnd() * W, y = rnd() * H;
-            const len = 6 + rnd() * 18;
-            const a = rnd() * Math.PI * 2;
-            ctx.strokeStyle = `rgba(255,248,236,${(0.18 + level * 0.32).toFixed(3)})`;
-            ctx.lineWidth = 0.5 + rnd() * 0.6;
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.quadraticCurveTo(x + Math.cos(a + 0.5) * len * 0.5, y + Math.sin(a + 0.5) * len * 0.5, x + Math.cos(a) * len, y + Math.sin(a) * len);
-            ctx.stroke();
-          }
-
-          // Riscos verticais de película (scratches)
-          const scratchCount = Math.round(level * 12);
-          for (let i = 0; i < scratchCount; i++) {
-            const x = rnd() * W;
-            const y0 = rnd() * H * 0.4;
-            const y1 = y0 + H * (0.35 + rnd() * 0.6);
-            ctx.strokeStyle = rnd() > 0.25
-              ? `rgba(255,252,245,${(0.12 + level * 0.24).toFixed(3)})`
-              : `rgba(15,15,14,${(0.15 + level * 0.22).toFixed(3)})`;
-            ctx.lineWidth = 0.4 + rnd() * 0.7;
-            ctx.beginPath();
-            ctx.moveTo(x, y0);
-            ctx.lineTo(x + (rnd() - 0.5) * 4, y1);
-            ctx.stroke();
-          }
-        });
-      }
-
-      const nasaSlider = document.getElementById('nasa-dust-slider');
-      const nasaOut = document.getElementById('nasa-dust-out');
-      function updateNasaDust(val) {
-        const v = Math.max(0, Math.min(100, Number(val)));
-        if (nasaSlider) nasaSlider.value = String(v);
-        if (nasaOut) nasaOut.textContent = v + '%';
-        document.querySelectorAll('[data-nasa-dust]').forEach((b) => {
-          const on = Number(b.dataset.nasaDust) === v;
-          b.classList.toggle('btn-primary', on);
-          b.classList.toggle('btn-tertiary', !on);
-        });
-        renderNasaDustAndScratches(v);
-      }
-      if (nasaSlider) nasaSlider.addEventListener('input', () => updateNasaDust(nasaSlider.value));
-      document.addEventListener('click', (e) => {
-        const preset = e.target.closest('[data-nasa-dust]');
-        if (preset) updateNasaDust(preset.dataset.nasaDust);
-      });
-      renderNasaDustAndScratches(55);
-
       const initialHash = window.location.hash.slice(1);
-      const hashTab = initialHash ? document.getElementById(initialHash)?.closest('section[data-tab-group]')?.dataset.tabGroup : null;
+      const hashGroups = initialHash ? document.getElementById(initialHash)?.closest('section[data-tab-group]')?.dataset.tabGroup : null;
+      const hashTab = hashGroups ? hashGroups.split(/\s+/)[0] : null;
       selectDsTab(hashTab || 'overview', false);
 
       applySurface(state.surface, false);
@@ -11109,6 +11670,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
   </script>
   <script type="module" src="./src/i18n-boot.ts"></script>
   <script type="module" src="./src/painterly-studio.ts"></script>
+  <script type="module" src="./src/nasa-halftone.ts"></script>
 
   <script type="module">
     import { mountHairlineFigure } from './src/hairline-figure.ts';

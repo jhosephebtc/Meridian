@@ -15,6 +15,8 @@ import {
 } from './tokens.ts';
 import {
   mountPaperGrain,
+  setPaperGrainIntensity,
+  getPaperGrainIntensity,
   setPaperGrainSize,
   setPaperGrainOpacity,
   setPaperGrainDust,
@@ -239,7 +241,7 @@ function setSurface(surface: SurfaceId, announce = true): void {
 
 function setGrain(grain: GrainPreset): void {
   appState.grain = grain;
-  document.documentElement.setAttribute('data-grain', grain);
+  setPaperGrainIntensity(grain);
   document.querySelectorAll<HTMLButtonElement>('[data-grain-pick]').forEach((b) => {
     const active = b.dataset.grainPick === grain;
     b.classList.toggle('ds-btn-primary', active);
@@ -873,6 +875,20 @@ function bootstrap(): void {
     syncClipTabs(nav, nav?.querySelector<HTMLElement>(`[data-view="${appState.view}"]`) ?? null);
   });
   bootPaperGrainExtras();
+  appState.grain = getPaperGrainIntensity();
+  appState.grainSize = (document.documentElement.dataset.grainSize as GrainSizeId) || appState.grainSize;
+  window.addEventListener('meridian:grain', () => {
+    appState.grain = getPaperGrainIntensity();
+    appState.grainSize = (document.documentElement.dataset.grainSize as GrainSizeId) || appState.grainSize;
+    syncGrainOpacityUi(getPaperGrainOpacity());
+    syncStatusBar();
+  });
+  window.addEventListener('meridian:surface', ((e: CustomEvent<{ surface: SurfaceId }>) => {
+    const next = e.detail?.surface;
+    if (next && next !== appState.surface && next in SURFACES) {
+      setSurface(next, false);
+    }
+  }) as EventListener);
   syncGrainOpacityUi(getPaperGrainOpacity());
   syncLayerToggle('[data-grain-dust-pick]', document.documentElement.dataset.grainDust === 'on');
   syncLayerToggle('[data-grain-scratch-pick]', document.documentElement.dataset.grainScratch === 'on');
@@ -884,7 +900,12 @@ function bootstrap(): void {
   grainOpacityRange?.addEventListener('change', (e) => {
     applyGrainOpacity((e.target as HTMLInputElement).value, true);
   });
-  setSurface('ivory', false);
+  let initialSurface: SurfaceId = 'ivory';
+  try {
+    const saved = localStorage.getItem('meridian-surface') as SurfaceId | null;
+    if (saved) initialSurface = saved;
+  } catch { /* ignore */ }
+  setSurface(initialSurface, false);
   setView('today');
   markPageReady();
   window.addEventListener('resize', () => {

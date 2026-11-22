@@ -665,7 +665,12 @@
 [data-surface="mocha"],
 [data-surface="pine"],
 [data-surface="umber"],
-[data-surface="charcoal"] {
+[data-surface="charcoal"],
+[data-surface="basalt"],
+[data-surface="graphite"],
+[data-surface="moss"],
+[data-surface="prune"],
+[data-surface="espresso"] {
   color-scheme: dark;
   --ds-signal-support: #4ADE80;
   --ds-signal-caution: #FBBF24;
@@ -727,6 +732,51 @@
   --ds-accent: #F4F2EC; --ds-accent-hover: #E0DDD6; --ds-accent-fg: #3E3C38;
   --ds-inverted-bg: #F4F2EC; --ds-inverted-surface: #E0DDD6; --ds-inverted-fg: #3E3C38; --ds-inverted-muted: #64625C; --ds-inverted-border: #B8B4AC;
   --ds-spine-1: #36342F; --ds-spine-2: #2E2C28; --ds-spine-3: #4A4844;
+}
+[data-surface="basalt"] {
+  --ds-surface-name: "Basalt Noir";
+  --ds-bg: #191B1D; --ds-surface-1: #212427; --ds-surface-2: #2B2E32; --ds-surface-3: #363A3F;
+  --ds-highlight: rgba(243, 244, 244, 0.08);
+  --ds-fg: #F3F4F4; --ds-fg-secondary: #D4D7DA; --ds-fg-muted: #9FA4A8; --ds-fg-subtle: #787D82;
+  --ds-accent: #F3F4F4; --ds-accent-hover: #D4D7DA; --ds-accent-fg: #191B1D;
+  --ds-inverted-bg: #F3F4F4; --ds-inverted-surface: #D4D7DA; --ds-inverted-fg: #191B1D; --ds-inverted-muted: #363A3F; --ds-inverted-border: #9FA4A8;
+  --ds-spine-1: #16181A; --ds-spine-2: #111315; --ds-spine-3: #24272B;
+}
+[data-surface="graphite"] {
+  --ds-surface-name: "Graphite Mute";
+  --ds-bg: #1E1D1B; --ds-surface-1: #272522; --ds-surface-2: #312E2A; --ds-surface-3: #3D3934;
+  --ds-highlight: rgba(245, 243, 238, 0.08);
+  --ds-fg: #F5F3EE; --ds-fg-secondary: #DAD7D0; --ds-fg-muted: #A6A29A; --ds-fg-subtle: #7E7A72;
+  --ds-accent: #F5F3EE; --ds-accent-hover: #DAD7D0; --ds-accent-fg: #1E1D1B;
+  --ds-inverted-bg: #F5F3EE; --ds-inverted-surface: #DAD7D0; --ds-inverted-fg: #1E1D1B; --ds-inverted-muted: #3D3934; --ds-inverted-border: #A6A29A;
+  --ds-spine-1: #1A1917; --ds-spine-2: #141311; --ds-spine-3: #292724;
+}
+[data-surface="moss"] {
+  --ds-surface-name: "Moss Shadow";
+  --ds-bg: #171C19; --ds-surface-1: #1E2521; --ds-surface-2: #27302B; --ds-surface-3: #323D36;
+  --ds-highlight: rgba(242, 245, 243, 0.08);
+  --ds-fg: #F2F5F3; --ds-fg-secondary: #D2DBD5; --ds-fg-muted: #9BA59F; --ds-fg-subtle: #758079;
+  --ds-accent: #F2F5F3; --ds-accent-hover: #D2DBD5; --ds-accent-fg: #171C19;
+  --ds-inverted-bg: #F2F5F3; --ds-inverted-surface: #D2DBD5; --ds-inverted-fg: #171C19; --ds-inverted-muted: #323D36; --ds-inverted-border: #9BA59F;
+  --ds-spine-1: #141816; --ds-spine-2: #101412; --ds-spine-3: #212824;
+}
+[data-surface="prune"] {
+  --ds-surface-name: "Muted Eggplant";
+  --ds-bg: #1B171D; --ds-surface-1: #231E26; --ds-surface-2: #2D2730; --ds-surface-3: #38313C;
+  --ds-highlight: rgba(244, 242, 245, 0.08);
+  --ds-fg: #F4F2F5; --ds-fg-secondary: #D8D3DC; --ds-fg-muted: #A49DA8; --ds-fg-subtle: #7B7480;
+  --ds-accent: #F4F2F5; --ds-accent-hover: #D8D3DC; --ds-accent-fg: #1B171D;
+  --ds-inverted-bg: #F4F2F5; --ds-inverted-surface: #D8D3DC; --ds-inverted-fg: #1B171D; --ds-inverted-muted: #38313C; --ds-inverted-border: #A49DA8;
+  --ds-spine-1: #171419; --ds-spine-2: #121014; --ds-spine-3: #262129;
+}
+[data-surface="espresso"] {
+  --ds-surface-name: "Smoked Umber";
+  --ds-bg: #1D1815; --ds-surface-1: #26201C; --ds-surface-2: #302823; --ds-surface-3: #3B322C;
+  --ds-highlight: rgba(246, 242, 238, 0.08);
+  --ds-fg: #F6F2EE; --ds-fg-secondary: #DCD5CE; --ds-fg-muted: #A89E96; --ds-fg-subtle: #7F766F;
+  --ds-accent: #F6F2EE; --ds-accent-hover: #DCD5CE; --ds-accent-fg: #1D1815;
+  --ds-inverted-bg: #F6F2EE; --ds-inverted-surface: #DCD5CE; --ds-inverted-fg: #1D1815; --ds-inverted-muted: #3B322C; --ds-inverted-border: #A89E96;
+  --ds-spine-1: #191512; --ds-spine-2: #14100E; --ds-spine-3: #29221E;
 }
 
 /* --------------------------------------------------------------------------
@@ -875,7 +925,12 @@ html[data-surface="navy"] .ds-paper-grain-layer,
 html[data-surface="mocha"] .ds-paper-grain-layer,
 html[data-surface="pine"] .ds-paper-grain-layer,
 html[data-surface="umber"] .ds-paper-grain-layer,
-html[data-surface="charcoal"] .ds-paper-grain-layer {
+html[data-surface="charcoal"] .ds-paper-grain-layer,
+html[data-surface="basalt"] .ds-paper-grain-layer,
+html[data-surface="graphite"] .ds-paper-grain-layer,
+html[data-surface="moss"] .ds-paper-grain-layer,
+html[data-surface="prune"] .ds-paper-grain-layer,
+html[data-surface="espresso"] .ds-paper-grain-layer {
   filter: invert(1);
   opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1) * 0.92);
 }

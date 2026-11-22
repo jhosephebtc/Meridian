@@ -11,6 +11,7 @@
 import {
   GRAIN_SIZES,
   PAPER_SHADER,
+  type GrainPreset,
   type GrainSizeId,
 } from './tokens.ts';
 
@@ -22,6 +23,8 @@ export interface PaperGrainOptions {
   dust?: boolean;
   scratch?: boolean;
   double?: boolean;
+  dustLevel?: number;
+  scratchLevel?: number;
 }
 
 export interface PaperGrainHandle {
@@ -65,26 +68,52 @@ function isOn(flag: string | undefined, fallback = false): boolean {
   return flag === 'on' || flag === 'true' || flag === '1';
 }
 
+function clampLevel(val: number): number {
+  return Math.max(0, Math.min(100, Math.round(Number.isFinite(val) ? val : 0)));
+}
+
 function paintDust(
   ctx: CanvasRenderingContext2D,
   rng: () => number,
   w: number,
   h: number,
   sizeScale: number,
+  levelPct: number,
 ): void {
-  const count = Math.round((28 + (w * h) / 22000) * sizeScale);
+  const level = Math.max(0, Math.min(1, levelPct / 100));
+  if (level <= 0) return;
+
+  const count = Math.round((20 + (w * h) / 14000) * sizeScale * (0.28 + level * 1.65));
   for (let i = 0; i < count; i++) {
     const x = rng() * w;
     const y = rng() * h;
-    const r = (0.6 + rng() * 2.4) * sizeScale;
-    const alpha = 0.045 + rng() * 0.09;
+    const r = (0.55 + rng() * 2.5) * sizeScale * (0.85 + level * 0.45);
+    const alpha = (0.032 + rng() * 0.082) * (0.38 + level * 0.92);
     const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, `rgba(22, 20, 16, ${alpha.toFixed(4)})`);
+    g.addColorStop(0, `rgba(22, 20, 16, ${Math.min(0.38, alpha).toFixed(4)})`);
     g.addColorStop(1, 'rgba(22, 20, 16, 0)');
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
+  }
+
+  // Fibras orgânicas de poeira (dust hairs)
+  const hairCount = Math.round((4 + (w * h) / 55000) * (0.25 + level * 1.4));
+  ctx.lineCap = 'round';
+  for (let i = 0; i < hairCount; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    const len = (5 + rng() * 14) * sizeScale;
+    const ang = rng() * Math.PI * 2;
+    const cx = x + Math.cos(ang + 0.45) * len * 0.5;
+    const cy = y + Math.sin(ang + 0.45) * len * 0.5;
+    ctx.strokeStyle = `rgba(22, 20, 16, ${(0.03 + rng() * 0.055 * (0.4 + level)).toFixed(4)})`;
+    ctx.lineWidth = (0.35 + rng() * 0.45) * Math.max(0.7, sizeScale * 0.8);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.quadraticCurveTo(cx, cy, x + Math.cos(ang) * len, y + Math.sin(ang) * len);
+    ctx.stroke();
   }
 }
 
@@ -94,30 +123,34 @@ function paintScratches(
   w: number,
   h: number,
   sizeScale: number,
+  levelPct: number,
 ): void {
-  const count = Math.round(6 + (w * h) / 70000);
+  const level = Math.max(0, Math.min(1, levelPct / 100));
+  if (level <= 0) return;
+
+  const count = Math.round((5 + (w * h) / 48000) * (0.25 + level * 1.85));
   ctx.lineCap = 'round';
   for (let i = 0; i < count; i++) {
     const x = rng() * w;
     const y = rng() * h;
-    const len = (18 + rng() * 90) * sizeScale;
+    const len = (18 + rng() * 115) * sizeScale * (0.85 + level * 0.4);
     // Prefer near-vertical / near-horizontal film scratches
-    const base = rng() > 0.55 ? Math.PI / 2 : 0;
-    const ang = base + (rng() - 0.5) * 0.35;
+    const base = rng() > 0.35 ? Math.PI / 2 : 0;
+    const ang = base + (rng() - 0.5) * 0.32;
     const ex = x + Math.cos(ang) * len;
     const ey = y + Math.sin(ang) * len;
-    ctx.strokeStyle = `rgba(18, 16, 12, ${(0.04 + rng() * 0.08).toFixed(4)})`;
-    ctx.lineWidth = (0.35 + rng() * 0.7) * Math.max(0.7, sizeScale * 0.85);
+    ctx.strokeStyle = `rgba(18, 16, 12, ${(0.035 + rng() * 0.08 * (0.38 + level)).toFixed(4)})`;
+    ctx.lineWidth = (0.35 + rng() * 0.65) * Math.max(0.7, sizeScale * 0.85);
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(ex, ey);
     ctx.stroke();
 
     // Occasional twin hairline
-    if (rng() > 0.72) {
+    if (rng() > 0.68) {
       const ox = (rng() - 0.5) * 2.2;
       const oy = (rng() - 0.5) * 2.2;
-      ctx.strokeStyle = `rgba(18, 16, 12, ${(0.02 + rng() * 0.04).toFixed(4)})`;
+      ctx.strokeStyle = `rgba(18, 16, 12, ${(0.02 + rng() * 0.04 * (0.4 + level)).toFixed(4)})`;
       ctx.lineWidth = 0.3 * sizeScale;
       ctx.beginPath();
       ctx.moveTo(x + ox, y + oy);
@@ -174,6 +207,8 @@ function paintGrain(
   dust: boolean,
   scratch: boolean,
   double: boolean,
+  dustLevel: number,
+  scratchLevel: number,
 ): void {
   const size = GRAIN_SIZES[sizeId];
   const cssW = Math.max(1, window.innerWidth || 1280);
@@ -241,11 +276,30 @@ function paintGrain(
 
   const sizeScale = Math.max(0.75, 1.15 - size.canvasScale * 0.35);
   if (double) paintDoubleGrain(ctx, rng, w, h, strength, sizeScale);
-  if (dust) paintDust(ctx, rng, w, h, sizeScale);
-  if (scratch) paintScratches(ctx, rng, w, h, sizeScale);
+  const effectiveDust = dust ? (dustLevel > 0 ? dustLevel : 50) : 0;
+  const effectiveScratch = scratch ? (scratchLevel > 0 ? scratchLevel : 45) : 0;
+  if (effectiveDust > 0) paintDust(ctx, rng, w, h, sizeScale, effectiveDust);
+  if (effectiveScratch > 0) paintScratches(ctx, rng, w, h, sizeScale, effectiveScratch);
 }
 
 let activeHandle: PaperGrainHandle | null = null;
+
+function dispatchGrainEvent(): void {
+  if (typeof window === 'undefined') return;
+  const root = document.documentElement;
+  window.dispatchEvent(new CustomEvent('meridian:grain', {
+    detail: {
+      intensity: root.getAttribute('data-grain') || 'editorial',
+      size: root.dataset.grainSize || PAPER_SHADER.defaultSize,
+      opacity: getPaperGrainOpacity(),
+      dust: root.dataset.grainDust === 'on',
+      scratch: root.dataset.grainScratch === 'on',
+      double: root.dataset.grainDouble === 'on',
+      dustLevel: getPaperGrainDustLevel(),
+      scratchLevel: getPaperGrainScratchLevel(),
+    },
+  }));
+}
 
 export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHandle {
   if (typeof document === 'undefined') {
@@ -269,6 +323,8 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
     dust: options.dust ?? isOn(root.dataset.grainDust, PAPER_SHADER.defaultDust),
     scratch: options.scratch ?? isOn(root.dataset.grainScratch, PAPER_SHADER.defaultScratch),
     double: options.double ?? isOn(root.dataset.grainDouble, PAPER_SHADER.defaultDouble),
+    dustLevel: clampLevel(options.dustLevel ?? Number(root.dataset.grainDustLevel || PAPER_SHADER.defaultDustLevel)),
+    scratchLevel: clampLevel(options.scratchLevel ?? Number(root.dataset.grainScratchLevel || PAPER_SHADER.defaultScratchLevel)),
   };
 
   root.dataset.paperShader = 'canvas';
@@ -276,6 +332,8 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
   root.dataset.grainDust = state.dust ? 'on' : 'off';
   root.dataset.grainScratch = state.scratch ? 'on' : 'off';
   root.dataset.grainDouble = state.double ? 'on' : 'off';
+  root.dataset.grainDustLevel = String(state.dustLevel);
+  root.dataset.grainScratchLevel = String(state.scratchLevel);
   root.style.setProperty('--ds-paper-texture', 'none');
   document.getElementById('ds-paper-shader-root')?.remove();
 
@@ -287,10 +345,18 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
     state.dust = isOn(root.dataset.grainDust, state.dust);
     state.scratch = isOn(root.dataset.grainScratch, state.scratch);
     state.double = isOn(root.dataset.grainDouble, state.double);
+    if (root.dataset.grainDustLevel != null && root.dataset.grainDustLevel !== '') {
+      state.dustLevel = clampLevel(Number(root.dataset.grainDustLevel));
+    }
+    if (root.dataset.grainScratchLevel != null && root.dataset.grainScratchLevel !== '') {
+      state.scratchLevel = clampLevel(Number(root.dataset.grainScratchLevel));
+    }
     root.dataset.grainSize = size;
     root.dataset.grainDust = state.dust ? 'on' : 'off';
     root.dataset.grainScratch = state.scratch ? 'on' : 'off';
     root.dataset.grainDouble = state.double ? 'on' : 'off';
+    root.dataset.grainDustLevel = String(state.dustLevel);
+    root.dataset.grainScratchLevel = String(state.scratchLevel);
     paintGrain(
       canvas,
       state.seed,
@@ -300,6 +366,8 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
       state.dust,
       state.scratch,
       state.double,
+      state.dustLevel,
+      state.scratchLevel,
     );
   };
 
@@ -325,7 +393,9 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
     setSize: (size: GrainSizeId) => {
       state.size = size;
       root.dataset.grainSize = size;
+      try { localStorage.setItem(PAPER_SHADER.grainSizeStorageKey, size); } catch { /* ignore */ }
       apply();
+      dispatchGrainEvent();
     },
     setOptions: (partial) => {
       if (partial.seed != null) state.seed = partial.seed;
@@ -334,6 +404,22 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
       if (partial.size != null) {
         state.size = partial.size;
         root.dataset.grainSize = partial.size;
+      }
+      if (partial.dustLevel != null) {
+        state.dustLevel = clampLevel(partial.dustLevel);
+        root.dataset.grainDustLevel = String(state.dustLevel);
+        if (partial.dust == null) {
+          state.dust = state.dustLevel > 0;
+          root.dataset.grainDust = state.dust ? 'on' : 'off';
+        }
+      }
+      if (partial.scratchLevel != null) {
+        state.scratchLevel = clampLevel(partial.scratchLevel);
+        root.dataset.grainScratchLevel = String(state.scratchLevel);
+        if (partial.scratch == null) {
+          state.scratch = state.scratchLevel > 0;
+          root.dataset.grainScratch = state.scratch ? 'on' : 'off';
+        }
       }
       if (partial.dust != null) {
         state.dust = partial.dust;
@@ -348,6 +434,7 @@ export function mountPaperGrain(options: PaperGrainOptions = {}): PaperGrainHand
         root.dataset.grainDouble = partial.double ? 'on' : 'off';
       }
       apply();
+      dispatchGrainEvent();
     },
     getSize: () => state.size,
   };
@@ -404,28 +491,98 @@ export function getPaperGrainOpacity(): number {
   return PAPER_SHADER.defaultOpacity;
 }
 
-export function setPaperGrainDust(on: boolean): void {
+export function setPaperGrainIntensity(preset: GrainPreset): GrainPreset {
   const root = document.documentElement;
+  root.setAttribute('data-grain', preset);
+  try {
+    localStorage.setItem(PAPER_SHADER.grainStorageKey, preset);
+  } catch { /* ignore */ }
+  dispatchGrainEvent();
+  return preset;
+}
+
+export function getPaperGrainIntensity(): GrainPreset {
+  const attr = document.documentElement.getAttribute('data-grain');
+  if (attr === 'off' || attr === 'subtle' || attr === 'editorial' || attr === 'tactile') return attr;
+  try {
+    const saved = localStorage.getItem(PAPER_SHADER.grainStorageKey);
+    if (saved === 'off' || saved === 'subtle' || saved === 'editorial' || saved === 'tactile') return saved;
+  } catch { /* ignore */ }
+  return 'editorial';
+}
+
+export function setPaperGrainDustLevel(level: number): number {
+  const clamped = clampLevel(level);
+  const root = document.documentElement;
+  const on = clamped > 0;
+  root.dataset.grainDustLevel = String(clamped);
   root.dataset.grainDust = on ? 'on' : 'off';
   try {
+    localStorage.setItem(PAPER_SHADER.dustLevelStorageKey, String(clamped));
     localStorage.setItem(PAPER_SHADER.dustStorageKey, on ? 'on' : 'off');
   } catch {
     /* ignore */
   }
-  if (activeHandle) activeHandle.setOptions({ dust: on });
-  else mountPaperGrain({ dust: on });
+  if (activeHandle) activeHandle.setOptions({ dust: on, dustLevel: clamped });
+  else mountPaperGrain({ dust: on, dustLevel: clamped });
+  return clamped;
 }
 
-export function setPaperGrainScratch(on: boolean): void {
+export function getPaperGrainDustLevel(): number {
+  const ds = document.documentElement.dataset.grainDustLevel;
+  if (ds != null && ds !== '' && Number.isFinite(Number(ds))) {
+    return clampLevel(Number(ds));
+  }
+  try {
+    const saved = localStorage.getItem(PAPER_SHADER.dustLevelStorageKey);
+    if (saved != null && Number.isFinite(Number(saved))) return clampLevel(Number(saved));
+    const flag = localStorage.getItem(PAPER_SHADER.dustStorageKey);
+    if (flag === 'on') return 55;
+  } catch { /* ignore */ }
+  return document.documentElement.dataset.grainDust === 'on' ? 55 : PAPER_SHADER.defaultDustLevel;
+}
+
+export function setPaperGrainScratchLevel(level: number): number {
+  const clamped = clampLevel(level);
   const root = document.documentElement;
+  const on = clamped > 0;
+  root.dataset.grainScratchLevel = String(clamped);
   root.dataset.grainScratch = on ? 'on' : 'off';
   try {
+    localStorage.setItem(PAPER_SHADER.scratchLevelStorageKey, String(clamped));
     localStorage.setItem(PAPER_SHADER.scratchStorageKey, on ? 'on' : 'off');
   } catch {
     /* ignore */
   }
-  if (activeHandle) activeHandle.setOptions({ scratch: on });
-  else mountPaperGrain({ scratch: on });
+  if (activeHandle) activeHandle.setOptions({ scratch: on, scratchLevel: clamped });
+  else mountPaperGrain({ scratch: on, scratchLevel: clamped });
+  return clamped;
+}
+
+export function getPaperGrainScratchLevel(): number {
+  const ds = document.documentElement.dataset.grainScratchLevel;
+  if (ds != null && ds !== '' && Number.isFinite(Number(ds))) {
+    return clampLevel(Number(ds));
+  }
+  try {
+    const saved = localStorage.getItem(PAPER_SHADER.scratchLevelStorageKey);
+    if (saved != null && Number.isFinite(Number(saved))) return clampLevel(Number(saved));
+    const flag = localStorage.getItem(PAPER_SHADER.scratchStorageKey);
+    if (flag === 'on') return 45;
+  } catch { /* ignore */ }
+  return document.documentElement.dataset.grainScratch === 'on' ? 45 : PAPER_SHADER.defaultScratchLevel;
+}
+
+export function setPaperGrainDust(on: boolean): void {
+  const cur = getPaperGrainDustLevel();
+  const nextLevel = on ? (cur > 0 ? cur : 55) : 0;
+  setPaperGrainDustLevel(nextLevel);
+}
+
+export function setPaperGrainScratch(on: boolean): void {
+  const cur = getPaperGrainScratchLevel();
+  const nextLevel = on ? (cur > 0 ? cur : 45) : 0;
+  setPaperGrainScratchLevel(nextLevel);
 }
 
 export function setPaperGrainDouble(on: boolean): void {
@@ -440,18 +597,34 @@ export function setPaperGrainDouble(on: boolean): void {
   else mountPaperGrain({ double: on });
 }
 
-/** Restaura opacidade + dust/scratch/duplo do localStorage. */
+/** Restaura intensidade + opacidade + tamanho + dust/scratch/duplo do localStorage. */
 export function bootPaperGrainExtras(): void {
   setPaperGrainOpacity(getPaperGrainOpacity());
 
+  let grain: GrainPreset | null = null;
+  let size: GrainSizeId | null = null;
   let dust: boolean = PAPER_SHADER.defaultDust;
   let scratch: boolean = PAPER_SHADER.defaultScratch;
   let double: boolean = PAPER_SHADER.defaultDouble;
+  let dustLevel: number = PAPER_SHADER.defaultDustLevel;
+  let scratchLevel: number = PAPER_SHADER.defaultScratchLevel;
   try {
+    const g = localStorage.getItem(PAPER_SHADER.grainStorageKey);
+    if (g === 'off' || g === 'subtle' || g === 'editorial' || g === 'tactile') grain = g;
+    const sz = localStorage.getItem(PAPER_SHADER.grainSizeStorageKey);
+    if (sz && sz in GRAIN_SIZES) size = sz as GrainSizeId;
     const d = localStorage.getItem(PAPER_SHADER.dustStorageKey);
     if (d === 'on' || d === 'off') dust = d === 'on';
+    const dl = localStorage.getItem(PAPER_SHADER.dustLevelStorageKey);
+    if (dl != null && Number.isFinite(Number(dl))) dustLevel = clampLevel(Number(dl));
+    else if (dust) dustLevel = 55;
+    if (d == null && dl != null) dust = dustLevel > 0;
     const s = localStorage.getItem(PAPER_SHADER.scratchStorageKey);
     if (s === 'on' || s === 'off') scratch = s === 'on';
+    const sl = localStorage.getItem(PAPER_SHADER.scratchLevelStorageKey);
+    if (sl != null && Number.isFinite(Number(sl))) scratchLevel = clampLevel(Number(sl));
+    else if (scratch) scratchLevel = 45;
+    if (s == null && sl != null) scratch = scratchLevel > 0;
     const dbl = localStorage.getItem(PAPER_SHADER.doubleStorageKey);
     if (dbl === 'on' || dbl === 'off') double = dbl === 'on';
   } catch {
@@ -459,8 +632,21 @@ export function bootPaperGrainExtras(): void {
   }
 
   const root = document.documentElement;
+  if (grain) root.setAttribute('data-grain', grain);
+  if (size) root.dataset.grainSize = size;
   root.dataset.grainDust = dust ? 'on' : 'off';
   root.dataset.grainScratch = scratch ? 'on' : 'off';
   root.dataset.grainDouble = double ? 'on' : 'off';
-  if (activeHandle) activeHandle.setOptions({ dust, scratch, double });
+  root.dataset.grainDustLevel = String(dustLevel);
+  root.dataset.grainScratchLevel = String(scratchLevel);
+  if (activeHandle) {
+    activeHandle.setOptions({
+      size: size ?? undefined,
+      dust,
+      scratch,
+      double,
+      dustLevel,
+      scratchLevel,
+    });
+  }
 }
