@@ -625,6 +625,110 @@
   --ds-paper-opacity: calc(1 * var(--ds-grain-multiplier));
 }
 
+/* Extended papers — cinzas e ocre médio (não substituem Soft Slate / Soft Butter) */
+[data-surface="ash"] {
+  color-scheme: light;
+  --ds-surface-name: "Pale Ash";
+  --ds-bg: #E2DFD8; --ds-surface-1: #D6D3CC; --ds-surface-2: #C8C5BE; --ds-surface-3: #BAB7B0;
+  --ds-highlight: #F4F1EA; --ds-fg: #141413; --ds-fg-secondary: #2C2B28; --ds-fg-muted: #5A5852; --ds-fg-subtle: #706E68;
+  --ds-accent: #141413; --ds-accent-hover: #2C2B28; --ds-accent-fg: #E2DFD8;
+  --ds-inverted-bg: #141413; --ds-inverted-surface: #2C2B28; --ds-inverted-fg: #F4F1EA; --ds-inverted-muted: #C8C5BE; --ds-inverted-border: #5A5852;
+  --ds-spine-1: #E8E5DE; --ds-spine-2: #D4D1CA; --ds-spine-3: #C2BFB8;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="stone"] {
+  color-scheme: light;
+  --ds-surface-name: "Stone Gray";
+  --ds-bg: #8E8B84; --ds-surface-1: #827F78; --ds-surface-2: #76736C; --ds-surface-3: #6A6760;
+  --ds-highlight: #C8C5BE; --ds-fg: #141413; --ds-fg-secondary: #242320; --ds-fg-muted: #2C2B28; --ds-fg-subtle: #3A3834;
+  --ds-accent: #141413; --ds-accent-hover: #242320; --ds-accent-fg: #8E8B84;
+  --ds-inverted-bg: #141413; --ds-inverted-surface: #242320; --ds-inverted-fg: #C8C5BE; --ds-inverted-muted: #76736C; --ds-inverted-border: #2C2B28;
+  --ds-spine-1: #9A978F; --ds-spine-2: #827F78; --ds-spine-3: #6E6B64;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="clay"] {
+  color-scheme: light;
+  --ds-surface-name: "Field Ochre";
+  --ds-bg: #B39A6E; --ds-surface-1: #A78E64; --ds-surface-2: #9A825A; --ds-surface-3: #8C764E;
+  --ds-highlight: #E6D8BC; --ds-fg: #1A1610; --ds-fg-secondary: #2E2818; --ds-fg-muted: #3A3018; --ds-fg-subtle: #4A3E28;
+  --ds-accent: #1A1610; --ds-accent-hover: #2E2818; --ds-accent-fg: #B39A6E;
+  --ds-inverted-bg: #1A1610; --ds-inverted-surface: #2E2818; --ds-inverted-fg: #E6D8BC; --ds-inverted-muted: #9A825A; --ds-inverted-border: #3A3018;
+  --ds-spine-1: #C2A87C; --ds-spine-2: #A89064; --ds-spine-3: #947E54;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+
+/* Extended inks — papéis escuros, mesma gramática do Obsidian */
+[data-surface="navy"],
+[data-surface="mocha"],
+[data-surface="pine"],
+[data-surface="umber"],
+[data-surface="charcoal"] {
+  color-scheme: dark;
+  --ds-signal-support: #4ADE80;
+  --ds-signal-caution: #FBBF24;
+  --ds-signal-refute: #F87171;
+  --ds-signal-info: #60A5FA;
+  --ds-organic-olive: #98AE7B;
+  --ds-organic-sky: #85B6CC;
+  --ds-organic-coral: #E08D74;
+  --ds-organic-ochre: #D9B16C;
+  --ds-organic-slate: #97A4B5;
+  --ds-image-blend: normal;
+  --ds-paper-blend: screen;
+  --ds-paper-filter: invert(1);
+  --ds-paper-opacity: calc(1 * var(--ds-grain-multiplier));
+  --ds-shadow-popover: none;
+  --ds-shadow-raised: none;
+}
+[data-surface="navy"] {
+  --ds-surface-name: "Navy Ink";
+  --ds-bg: #1C3142; --ds-surface-1: #243848; --ds-surface-2: #2E4454; --ds-surface-3: #3A5060;
+  --ds-highlight: rgba(243, 246, 246, 0.08);
+  --ds-fg: #F3F6F6; --ds-fg-secondary: #D5DEE3; --ds-fg-muted: #A8B6BE; --ds-fg-subtle: #7E909A;
+  --ds-accent: #F3F6F6; --ds-accent-hover: #D5DEE3; --ds-accent-fg: #1C3142;
+  --ds-inverted-bg: #F3F6F6; --ds-inverted-surface: #D5DEE3; --ds-inverted-fg: #1C3142; --ds-inverted-muted: #3A5060; --ds-inverted-border: #A8B6BE;
+  --ds-spine-1: #1A2C3A; --ds-spine-2: #152430; --ds-spine-3: #2A3E4C;
+}
+[data-surface="mocha"] {
+  --ds-surface-name: "Mocha Ink";
+  --ds-bg: #3A2A22; --ds-surface-1: #463228; --ds-surface-2: #523C30; --ds-surface-3: #5E463A;
+  --ds-highlight: rgba(246, 241, 236, 0.08);
+  --ds-fg: #F6F1EC; --ds-fg-secondary: #E4D8D0; --ds-fg-muted: #C4B2A6; --ds-fg-subtle: #9A887C;
+  --ds-accent: #F6F1EC; --ds-accent-hover: #E4D8D0; --ds-accent-fg: #3A2A22;
+  --ds-inverted-bg: #F6F1EC; --ds-inverted-surface: #E4D8D0; --ds-inverted-fg: #3A2A22; --ds-inverted-muted: #5E463A; --ds-inverted-border: #C4B2A6;
+  --ds-spine-1: #32241E; --ds-spine-2: #2A1E18; --ds-spine-3: #4A342C;
+}
+[data-surface="pine"] {
+  --ds-surface-name: "Pine Ink";
+  --ds-bg: #1E3328; --ds-surface-1: #264034; --ds-surface-2: #2E4A3C; --ds-surface-3: #385646;
+  --ds-highlight: rgba(242, 246, 243, 0.08);
+  --ds-fg: #F2F6F3; --ds-fg-secondary: #D4E0D8; --ds-fg-muted: #A8BAAE; --ds-fg-subtle: #7E9486;
+  --ds-accent: #F2F6F3; --ds-accent-hover: #D4E0D8; --ds-accent-fg: #1E3328;
+  --ds-inverted-bg: #F2F6F3; --ds-inverted-surface: #D4E0D8; --ds-inverted-fg: #1E3328; --ds-inverted-muted: #385646; --ds-inverted-border: #A8BAAE;
+  --ds-spine-1: #1A2C22; --ds-spine-2: #14241C; --ds-spine-3: #2A4034;
+}
+[data-surface="umber"] {
+  --ds-surface-name: "Deep Ochre";
+  --ds-bg: #4E3E24; --ds-surface-1: #5C4A2C; --ds-surface-2: #6A5634; --ds-surface-3: #78623C;
+  --ds-highlight: rgba(247, 243, 234, 0.08);
+  --ds-fg: #F7F3EA; --ds-fg-secondary: #E6DCC8; --ds-fg-muted: #C4B496; --ds-fg-subtle: #9A8A70;
+  --ds-accent: #F7F3EA; --ds-accent-hover: #E6DCC8; --ds-accent-fg: #4E3E24;
+  --ds-inverted-bg: #F7F3EA; --ds-inverted-surface: #E6DCC8; --ds-inverted-fg: #4E3E24; --ds-inverted-muted: #78623C; --ds-inverted-border: #C4B496;
+  --ds-spine-1: #44361E; --ds-spine-2: #3A2E18; --ds-spine-3: #5C4A2C;
+}
+[data-surface="charcoal"] {
+  --ds-surface-name: "Charcoal";
+  --ds-bg: #3E3C38; --ds-surface-1: #4A4844; --ds-surface-2: #565450; --ds-surface-3: #64625C;
+  --ds-highlight: rgba(244, 242, 236, 0.08);
+  --ds-fg: #F4F2EC; --ds-fg-secondary: #E0DDD6; --ds-fg-muted: #B8B4AC; --ds-fg-subtle: #8E8A82;
+  --ds-accent: #F4F2EC; --ds-accent-hover: #E0DDD6; --ds-accent-fg: #3E3C38;
+  --ds-inverted-bg: #F4F2EC; --ds-inverted-surface: #E0DDD6; --ds-inverted-fg: #3E3C38; --ds-inverted-muted: #64625C; --ds-inverted-border: #B8B4AC;
+  --ds-spine-1: #36342F; --ds-spine-2: #2E2C28; --ds-spine-3: #4A4844;
+}
+
 /* --------------------------------------------------------------------------
    3. REGRAS & ESTADOS DERIVADOS DINAMICAMENTE VIA color-mix() (Single-Ink)
    -------------------------------------------------------------------------- */
@@ -642,6 +746,17 @@
 
   /* Superfícies translúcidas (chrome translúcido + papel tingido) */
   --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 82%, transparent);
+
+  /* Vozes tipográficas — padrão = os três passos de tinta já existentes */
+  --ds-type-primary-ink: var(--ds-fg);
+  --ds-type-secondary-ink: var(--ds-fg-secondary);
+  --ds-type-tertiary-ink: var(--ds-fg-muted);
+  --ds-type-primary-alpha: 1;
+  --ds-type-secondary-alpha: 1;
+  --ds-type-tertiary-alpha: 1;
+  --ds-type-primary: color-mix(in srgb, var(--ds-type-primary-ink) calc(var(--ds-type-primary-alpha) * 100%), transparent);
+  --ds-type-secondary: color-mix(in srgb, var(--ds-type-secondary-ink) calc(var(--ds-type-secondary-alpha) * 100%), transparent);
+  --ds-type-tertiary: color-mix(in srgb, var(--ds-type-tertiary-ink) calc(var(--ds-type-tertiary-alpha) * 100%), transparent);
   --ds-glass-control: color-mix(in srgb, var(--ds-highlight) 38%, transparent);
   --ds-glass-control-hover: color-mix(in srgb, var(--ds-highlight) 58%, transparent);
 
@@ -755,7 +870,12 @@ html[data-grain-size="coarse"] .ds-paper-grain-layer,
 html[data-grain-size="chunky"] .ds-paper-grain-layer {
   image-rendering: auto;
 }
-html[data-surface="obsidian"] .ds-paper-grain-layer {
+html[data-surface="obsidian"] .ds-paper-grain-layer,
+html[data-surface="navy"] .ds-paper-grain-layer,
+html[data-surface="mocha"] .ds-paper-grain-layer,
+html[data-surface="pine"] .ds-paper-grain-layer,
+html[data-surface="umber"] .ds-paper-grain-layer,
+html[data-surface="charcoal"] .ds-paper-grain-layer {
   filter: invert(1);
   opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1) * 0.92);
 }
@@ -953,5 +1073,24 @@ button, [role="button"], [role="tab"], .ds-chip, .ds-drag-handle {
 }
 [data-plotter][data-hairline] [data-plotter-role="guide"] {
   stroke-dasharray: 2 3;
+  opacity: 1;
+}
+/* Solids stay opaque. Plotter role opacity must not punch holes through a body.
+   Depth is the fill token; only the contour uses stroke-opacity. */
+[data-plotter][data-hairline] [data-hairline-solid] {
+  opacity: 1;
+  fill-opacity: 1;
+  stroke: none;
+}
+[data-plotter][data-hairline] [data-hairline-stroke] {
+  opacity: 1;
+  fill: none;
+}
+[data-plotter][data-hairline] [data-hairline-stroke="rest"] { stroke-width: 0.45; }
+[data-plotter][data-hairline] [data-hairline-stroke="active"] { stroke-width: 0.65; }
+[data-plotter][data-hairline] [data-hairline-stroke="crease"] { stroke-width: 0.4; }
+[data-plotter][data-hairline][data-plotter-isolate] [data-hairline-solid] {
+  opacity: 1;
+  fill-opacity: 1;
 }
 

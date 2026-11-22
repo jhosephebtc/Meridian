@@ -15,7 +15,7 @@ Follows **Pasquale Vitiello's** [`pasqualevitiello/plotter`](https://github.com/
 - **Calibrated stroke & point scale (`vector-effect="non-scaling-stroke"`):**
   - Plotter blueprints (`src/plotter-svg.ts` & `[data-plotter]` in `src/tokens.css`): unit stroke `1` where hierarchy comes exclusively from **opacity** and **dash patterns** (`data-plotter-role`).
   - Components Lab / UI charts (`src/components-lab.css` `.ml-svg`): `--ml-primary: 1.5px`, `--ml-secondary: 1.15px`, `--ml-guide: 0.7px`, dot marks `r: 2px`, labels `10–11px` without stroke (`stroke="none"`).
-- **Transparent shapes (`fill="none"`):** Only a single named selection/intersection may carry `fill-opacity: 0.055` (`highlightFillOpacity`).
+- **Transparent shapes (`fill="none"`):** Only a single named selection/intersection may carry `fill-opacity: 0.055` (`highlightFillOpacity`). That exception is Plotter-only. Hairline solid faces stay opaque surface tokens (rule 06 in [`meridian-hairline-figure`](../meridian-hairline-figure/SKILL.md)).
 - **Discreet, non-stroked labels (`plotterLabelSvg`):** weight `400`, `stroke="none"`, `0.72` opacity for names (`11px`), `0.50` for values (`10.5px`). Dimension lines leave a clean label gap (`labelClearance: 3u`, end slashes `8u`).
 - **Open 45° arrowheads (`plotterArrowheadPath`):** `leg = 6`, `angleDeg = 45`.
 - **Canonical canvases & locked 1:1:**
@@ -52,7 +52,7 @@ Set `data-plotter-isolate="<role>"` on `[data-plotter]` to dim non-matching laye
 
 ## 4. Pairing with `meridian-hairline-figure` & `meridian-gridlines`
 
-- **2:1 Isometric Companion ([`meridian-hairline-figure`](../meridian-hairline-figure/SKILL.md)):** Use Plotter (`560 × 440` or `400 × 400`) for orthographic blueprints, globes, and technical dials; use Hairline (`400 × 320`, 2:1 isometric rounded solids with opaque `var(--ds-bg)` back-to-front occlusion and rest-pose hit testing) when building interactive isometric objects. Tag Hairline silhouettes with `data-plotter-role="primary"` and creases with `data-plotter-role="secondary"` so `data-plotter-isolate` highlights both grammars uniformly.
+- **2:1 Isometric Companion ([`meridian-hairline-figure`](../meridian-hairline-figure/SKILL.md)):** Use Plotter (`560 × 440` or `400 × 400`) for orthographic blueprints, globes, and technical dials; use Hairline (`400 × 320`, 2:1 isometric rounded solids, rest-pose hit testing) for interactive isometric objects. Hairline faces are opaque surface steps (`--ds-bg` → `--ds-surface-1` → `--ds-surface-2` / `--ds-surface-3`); only strokes fade — do not fill them with a single `var(--ds-bg)` or with role `opacity`. Tag silhouettes `data-plotter-role="primary"` and creases `secondary`. `data-plotter-isolate` may dim strokes; it must not ghost a filled face.
 - **Alignment Audit ([`meridian-gridlines`](../meridian-gridlines/SKILL.md)):** After assembling headers, telemetry toolbars, and instrument cards around Plotter plates, verify horizontal edges and vertical row centers with `window.__gridlines()`.
 
 ---

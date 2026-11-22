@@ -10,7 +10,9 @@
  *  03. reach    — Clamped elevation within the 400x320 viewBox frame
  *  04. accent   — Ultra-thin foreground stroke highlight (0.65 / 0.45 / 0.4 non-scaling-stroke)
  *  05. rest     — Designed asymmetric rest composition (never flat)
- *  06. honesty  — Back-to-front painter occlusion with opaque var(--ds-bg) solids
+ *  06. honesty  — Back-to-front painter occlusion. Solids are opaque surface
+ *     tokens (bg / surface-1 / surface-2 / surface-3 cap). Stroke opacity
+ *     never lives on a group that also paints a fill.
  *  07. cost     — Sleeps idle / offscreen via IntersectionObserver + reduced-motion snap
  *  08. clock    — Spring k=100, c=18, m=1 for continuous pointer response
  *  09. radius   — Silhouette hull of top+base rings + open front-facing inner crease arc
@@ -57,6 +59,16 @@ const PRESET_LABEL: Record<HairlinePreset, string> = {
 };
 
 const SWITCH_TAGS = ['tokens', 'grain', 'motion', 'plotter', 'hairline', 'gridlines'] as const;
+
+/**
+ * Opaque Single-Ink solids. Depth is which surface, never alpha.
+ * Far skirt = bg, recessed tray = surface-1, near body = surface-2, front cap = surface-3.
+ * On obsidian the same steps lighten off the ground.
+ */
+const FILL_BACK = 'var(--ds-bg)';
+const FILL_MID = 'var(--ds-surface-1)';
+const FILL_NEAR = 'var(--ds-surface-2)';
+const FILL_CAP = 'var(--ds-surface-3)';
 
 function isoProj(x: number, y: number, z: number, scale = 32, baseY = 178): [number, number] {
   return [200 + (x - y) * scale, baseY + (x + y) * (scale * 0.5) - z * 22];
@@ -152,6 +164,27 @@ function ringAt(ring: RingSample[], z: number, scale: number, baseY: number): Ar
   return ring.map((q) => isoProj(q.u, q.v, z, scale, baseY));
 }
 
+let activeToothId = 'hl-tooth';
+
+function toothDefs(id: string): string {
+  // Ink specks in the same color as the stroke. The face under this pattern
+  // stays an opaque surface token; transparent gaps show that face, not the drawing behind it.
+  return (
+    `<defs><pattern id="${id}" width="22" height="22" patternUnits="userSpaceOnUse">` +
+    `<rect x="3" y="5" width="1.15" height="1.15" fill="currentColor" opacity="0.28"/>` +
+    `<rect x="14" y="15" width="0.9" height="0.9" fill="currentColor" opacity="0.18"/>` +
+    `</pattern></defs>`
+  );
+}
+
+function solidPath(d: string, fill: string): string {
+  if (!d) return '';
+  return (
+    `<path data-hairline-solid="" data-plotter-role="primary" d="${d}" fill="${fill}" fill-opacity="1" stroke="none"/>` +
+    `<path data-hairline-tooth="" d="${d}" fill="url(#${activeToothId})" fill-opacity="1" stroke="none"/>`
+  );
+}
+
 function prismMarkup(
   outerRing: RingSample[],
   innerRing: RingSample[],
@@ -160,22 +193,28 @@ function prismMarkup(
   scale: number,
   baseY: number,
   strokeW: string,
-  creaseOp = '0.26',
+  creaseOp = '0.24',
   coreRing?: RingSample[],
+  hullFill = FILL_NEAR,
+  capFill = FILL_CAP,
+  strokeOp = '0.32',
 ): string {
   const topPts = ringAt(outerRing, z1, scale, baseY);
   const botPts = ringAt(outerRing, z0, scale, baseY);
   const sil = pathClosed(hull2d(topPts.concat(botPts)));
+  const cap = pathClosed(topPts);
   const creasePts = ringAt(frontRun(innerRing), z1, scale, baseY);
   const crease = pathOpen(creasePts);
   const core = coreRing ? pathClosed(ringAt(coreRing, z1, scale, baseY)) : '';
   return (
-    `<path data-plotter-role="primary" d="${sil}" fill="var(--ds-bg)" stroke="currentColor" stroke-width="${strokeW}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>` +
+    solidPath(sil, hullFill) +
+    solidPath(cap, capFill) +
+    `<path data-hairline-stroke="${Number(strokeOp) > 0.5 ? 'active' : 'rest'}" data-plotter-role="primary" d="${sil}" fill="none" stroke="currentColor" stroke-width="${strokeW}" stroke-opacity="${strokeOp}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>` +
     (crease
-      ? `<path data-plotter-role="secondary" d="${crease}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="${creaseOp}"/>`
+      ? `<path data-hairline-stroke="crease" data-plotter-role="secondary" d="${crease}" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="${creaseOp}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>`
       : '') +
     (core
-      ? `<path data-plotter-role="secondary" d="${core}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity="${creaseOp}"/>`
+      ? `<path data-hairline-stroke="crease" data-plotter-role="secondary" d="${core}" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="${creaseOp}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>`
       : '')
   );
 }
@@ -199,14 +238,10 @@ function buildSteppedPlinth(
   const inner2 = rrectRing(-(u2 - 0.12), -(v2 - 0.12), u2 - 0.12, v2 - 0.12, Math.max(0.06, r2 - 0.05), 4);
   const well = pathClosed(ringAt(inner2, zStep2, scale, baseY));
   return (
-    `<g opacity="0.34">` +
-    prismMarkup(outer1, inner1, 0, zStep1, scale, baseY, '0.45', '0.22') +
-    `</g>` +
-    `<g opacity="0.42">` +
-    prismMarkup(outer2, inner2, zStep1, zStep2, scale, baseY, '0.45', '0.24') +
-    `<path data-plotter-role="secondary" d="${well}" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" opacity="0.18"/>` +
-    extraInnerMarkup +
-    `</g>`
+    prismMarkup(outer1, inner1, 0, zStep1, scale, baseY, '0.45', '0.24', undefined, FILL_BACK, FILL_BACK, '0.32') +
+    prismMarkup(outer2, inner2, zStep1, zStep2, scale, baseY, '0.45', '0.24', undefined, FILL_MID, FILL_MID, '0.32') +
+    `<path data-hairline-stroke="crease" data-plotter-role="secondary" d="${well}" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.24" vector-effect="non-scaling-stroke"/>` +
+    extraInnerMarkup
   );
 }
 
@@ -258,7 +293,7 @@ function buildPresetSolids(preset: HairlinePreset): {
     const axisH = [isoProj(-2.65, 0, 0, scale, baseY), isoProj(2.65, 0, 0, scale, baseY)];
     const axisV = [isoProj(0, -2.65, 0, scale, baseY), isoProj(0, 2.65, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
       `<line x1="${axisH[0][0].toFixed(1)}" y1="${axisH[0][1].toFixed(1)}" x2="${axisH[1][0].toFixed(1)}" y2="${axisH[1][1].toFixed(1)}"/>` +
       `<line x1="${axisV[0][0].toFixed(1)}" y1="${axisV[0][1].toFixed(1)}" x2="${axisV[1][0].toFixed(1)}" y2="${axisV[1][1].toFixed(1)}"/>` +
       `</g>`;
@@ -298,7 +333,7 @@ function buildPresetSolids(preset: HairlinePreset): {
     const axisH = [isoProj(-2.55, 0, 0, scale, baseY), isoProj(2.55, 0, 0, scale, baseY)];
     const axisV = [isoProj(0, -2.55, 0, scale, baseY), isoProj(0, 2.55, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
       `<line x1="${axisH[0][0].toFixed(1)}" y1="${axisH[0][1].toFixed(1)}" x2="${axisH[1][0].toFixed(1)}" y2="${axisH[1][1].toFixed(1)}"/>` +
       `<line x1="${axisV[0][0].toFixed(1)}" y1="${axisV[0][1].toFixed(1)}" x2="${axisV[1][0].toFixed(1)}" y2="${axisV[1][1].toFixed(1)}"/>` +
       `<line x1="200" y1="54" x2="200" y2="262"/>` +
@@ -351,7 +386,7 @@ function buildPresetSolids(preset: HairlinePreset): {
     const l0 = isoProj(-2.55, 2.55, 0, scale, baseY);
     const l1 = isoProj(2.55, -2.55, 0, scale, baseY);
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
       `<line x1="${r0[0].toFixed(1)}" y1="${r0[1].toFixed(1)}" x2="${r1[0].toFixed(1)}" y2="${r1[1].toFixed(1)}"/>` +
       `<line x1="${l0[0].toFixed(1)}" y1="${l0[1].toFixed(1)}" x2="${l1[0].toFixed(1)}" y2="${l1[1].toFixed(1)}"/>` +
       `<line x1="200" y1="54" x2="200" y2="264"/>` +
@@ -381,7 +416,11 @@ function buildPresetSolids(preset: HairlinePreset): {
             scale,
             baseY,
             '0.45',
-            '0.22',
+            '0.24',
+            undefined,
+            FILL_MID,
+            FILL_NEAR,
+            '0.32',
           ),
         );
         const zRest = idx === 2 ? 0.56 : 0.84 + ((r + c) % 2) * 0.08;
@@ -410,7 +449,7 @@ function buildPresetSolids(preset: HairlinePreset): {
     const trayMarkup = buildSteppedPlinth(2.04, 1.48, 0.32, 0.16, trayZ, scale, baseY, collars.join(''));
     const mid = [isoProj(-2.35, 0, 0, scale, baseY), isoProj(2.35, 0, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
       `<line x1="${mid[0][0].toFixed(1)}" y1="${mid[0][1].toFixed(1)}" x2="${mid[1][0].toFixed(1)}" y2="${mid[1][1].toFixed(1)}"/>` +
       `</g>`;
     return { solids, restLead: 2, maxReach: 1.55, scale, baseY, guideMarkup, trayMarkup };
@@ -453,7 +492,7 @@ function buildPresetSolids(preset: HairlinePreset): {
     const trayMarkup = buildSteppedPlinth(2.26, 1.66, 0.3, 0.14, plinthZ, scale, baseY, slots.join(''));
     const axis = [isoProj(-2.55, 0, 0, scale, baseY), isoProj(2.55, 0, 0, scale, baseY)];
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
       `<line x1="${axis[0][0].toFixed(1)}" y1="${axis[0][1].toFixed(1)}" x2="${axis[1][0].toFixed(1)}" y2="${axis[1][1].toFixed(1)}"/>` +
       `</g>`;
     return { solids, restLead: 3, maxReach: 2.15, scale, baseY, guideMarkup, trayMarkup };
@@ -497,7 +536,7 @@ function buildPresetSolids(preset: HairlinePreset): {
     const d0 = isoProj(-2.55, -2.55, 0, scale, baseY);
     const d1 = isoProj(2.55, 2.55, 0, scale, baseY);
     const guideMarkup =
-      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+      `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
       `<line x1="${d0[0].toFixed(1)}" y1="${d0[1].toFixed(1)}" x2="${d1[0].toFixed(1)}" y2="${d1[1].toFixed(1)}"/>` +
       `</g>`;
     return { solids, restLead: 24, maxReach: 1.95, scale, baseY, guideMarkup, trayMarkup };
@@ -533,7 +572,7 @@ function buildPresetSolids(preset: HairlinePreset): {
   const d0 = isoProj(-2.45, 0, 0, scale, baseY);
   const d1 = isoProj(2.45, 0, 0, scale, baseY);
   const guideMarkup =
-    `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" opacity="0.18">` +
+    `<g data-plotter-role="guide" fill="none" stroke="currentColor" stroke-width="0.4" vector-effect="non-scaling-stroke" stroke-dasharray="2 3.5" stroke-opacity="0.18">` +
     `<line x1="${d0[0].toFixed(1)}" y1="${d0[1].toFixed(1)}" x2="${d1[0].toFixed(1)}" y2="${d1[1].toFixed(1)}"/>` +
     `</g>`;
   return { solids, restLead: 3, maxReach: 2.35, scale, baseY, guideMarkup, trayMarkup };
@@ -546,6 +585,8 @@ export function mountHairlineFigure(
 ): () => void {
   if (!svg) return () => {};
   svg.setAttribute('data-hairline', '');
+  if (!svg.id) svg.id = `hairline-${preset}-${Math.random().toString(36).slice(2, 7)}`;
+  activeToothId = `${svg.id}-tooth`;
 
   const { solids, restLead, maxReach, scale, baseY, guideMarkup, trayMarkup } = buildPresetSolids(preset);
   const drawOrder = solids
@@ -561,22 +602,34 @@ export function mountHairlineFigure(
 
   function render(): void {
     if (!svg) return;
+    activeToothId = `${svg.id || 'hairline'}-tooth`;
     const lead = activeIdx >= 0 ? activeIdx : pinnedIdx >= 0 ? pinnedIdx : restLead;
-    let html = guideMarkup + (trayMarkup ?? '');
+    let html = toothDefs(activeToothId) + guideMarkup + (trayMarkup ?? '');
     for (const idx of drawOrder) {
       const s = solids[idx];
       const isActive = idx === lead;
       const zBot = s.thickness != null ? Math.max(0.24, s.z - s.thickness) : s.z0;
       const pip = isoProj(s.cx, s.cy, s.z, scale, baseY);
-      const gOp = isActive ? '0.92' : '0.34';
+      const strokeOp = isActive ? '0.92' : '0.32';
       const primaryW = isActive ? '0.65' : '0.45';
 
-      html += `<g opacity="${gOp}">`;
-      html += prismMarkup(s.outerRing, s.innerRing, zBot, s.z, scale, baseY, primaryW, isActive ? '0.32' : '0.22', s.coreRing);
+      html += prismMarkup(
+        s.outerRing,
+        s.innerRing,
+        zBot,
+        s.z,
+        scale,
+        baseY,
+        primaryW,
+        '0.24',
+        s.coreRing,
+        FILL_NEAR,
+        FILL_CAP,
+        strokeOp,
+      );
       if (isActive) {
         html += `<circle data-plotter-role="primary" cx="${pip[0].toFixed(1)}" cy="${pip[1].toFixed(1)}" r="1.15" fill="currentColor" stroke="none"/>`;
       }
-      html += `</g>`;
     }
     svg.innerHTML = html;
   }

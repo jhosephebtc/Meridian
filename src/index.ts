@@ -9,4 +9,5 @@ export * from './page-enter.ts';
 export * from './plotter-svg.ts';
 export * from './hairline-figure.ts';
 export * from './atelier-engine.ts';
+export * from './painterly-shader.ts';
 export * from './timeline.ts';

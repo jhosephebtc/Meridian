@@ -14,9 +14,11 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
   - Tints: `--ds-bg-tint-subtle` (`4.5%`), `--ds-bg-tint-muted` (`8.5%`), `--ds-bg-tint-active` (`12%`).
   - Translucent chrome: `--ds-chrome-bg` (`82%` `--ds-bg`).
   - Why: derived values stay harmonically locked across all 13 light/tinted/dark papers without duplicating component color themes.
-- **Official 13 Surfaces (`SURFACES` / `SURFACE_SPECTRUM` in `src/tokens.ts`, `[data-surface]` in `src/tokens.css`):**
+- **Official surfaces (`SURFACES` / `SURFACE_SPECTRUM` in `src/tokens.ts`, `[data-surface]` in `src/tokens.css`):**
   - Core & Archival: `ivory` (`#FAF9F5` / `#141413`, 17.6:1), `paper` (`#FFFFFF` / `#0A0A0A`, 19.8:1), `aqua` (`#A4CED0` / `#171614`, 10.4:1), `terracotta` (`#EDBB99` / `#171614`, 10.4:1), `obsidian` (`#0E0E0D` / `#FAF9F5`, 18.4:1).
   - Soft Chromatic: `blush` (`#E8C4C0`), `apricot` (`#E8C8A8`), `butter` (`#E8D9A8`), `sage` (`#B8C5A8`), `mist` (`#C5D4CE`), `sky` (`#B0C8D6`), `slate` (`#B5BFC9`), `lilac` (`#C9C0D8`).
+  - Extended papers: `ash` Pale Ash (`#E2DFD8`), `stone` Stone Gray (`#8E8B84`), `clay` Field Ochre (`#B39A6E`).
+  - Extended inks: `navy` Navy Ink (`#1C3142`), `mocha` Mocha Ink (`#3A2A22`), `pine` Pine Ink (`#1E3328`), `umber` Deep Ochre (`#4E3E24`), `charcoal` Charcoal (`#3E3C38`).
 - **Never use neon accents, purple-on-dark gradients, or decorative drop shadows.**
   - `--ds-shadow-raised: none` and `--ds-shadow-popover: none`. In `rnElevation`, `flat` and `raised` return `{ elevation: 0, shadowOpacity: 0 }`; only `modal` carries structural elevation.
 
@@ -35,6 +37,7 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
   3. **Technical Mono** (`Geist Mono`): eyebrows (`letter-spacing: 0.06em`), coordinates, table numbers, telemetry, code — **always `font-variant-numeric: tabular-nums` (`tnum`)**.
 - **Optical discipline:** `font-kerning: normal` + `font-feature-settings: "kern" 1, "liga" 1, "calt" 1` on body/headings; constrain long-form prose to `max-width: 65ch` (`--ds-max-prose`).
 - **Build hierarchy via scale contrast and voice switch, never heavy weights or boxed noise.**
+- **Type roles** (`--ds-type-primary`, `--ds-type-secondary`, `--ds-type-tertiary`) default to `--ds-fg`, `--ds-fg-secondary` and `--ds-fg-muted` at opacity `1`. The system-page menu may retint each role with palette inks (Obsidian Dark and the dark tones, or muted ink) and the steps `100` / `78` / `56`.
 
 ## 4. Dual-Radius & Materiality
 
@@ -88,7 +91,7 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
   - Radial / Gann / environmental dials lock `aspect-ratio: 1 / 1` (`viewBox="0 0 400 400"`) — never `preserveAspectRatio="none"`.
   - Canonical technical illustrations compose in `560 × 440`; support didactic isolation (`data-plotter-isolate`).
 - **Hairline Isometric Figures (`skills/meridian-hairline-figure/SKILL.md`):**
-  - Pair with Plotter for pointer-responsive **2:1 isometric rounded solids** (`400 × 320`, opaque `fill="var(--ds-bg)"` back-to-front painter occlusion, zero vertical box corners, 1 dim inner crease, hit testing strictly on rest pose, `700ms cubic-bezier(0.32, 0.72, 0, 1)` discrete / spring `k 100 · c 18` continuous, external Mono telemetry only).
+  - Pair with Plotter for pointer-responsive **2:1 isometric rounded solids** (`400 × 320`; strokes may use reduced opacity; every solid face stays opaque, no fill alpha; depth is the surface token — far/outer tray `--ds-bg`, mid/inner `--ds-surface-1`, near solid that must occlude `--ds-surface-2`, cap in front `--ds-surface-3`; a front solid must not reveal strokes behind it; zero vertical box corners, 1 dim inner crease, hit testing strictly on rest pose, `700ms cubic-bezier(0.32, 0.72, 0, 1)` discrete / spring `k 100 · c 18` continuous, external Mono telemetry only).
 - **Gridlines Alignment Policy (`skills/meridian-gridlines/SKILL.md` & `probe.js`):**
   - Audit headers, nav rails, menus, sidebars, toolbars, cards, and tables with `window.__gridlines()` at `1440px` and `390px`.
   - Fix alignment outliers (`> 1px` off dominant ink line or vertical center) at container padding / shared CSS tokens — never with per-item `margin-left` hacks or by distorting approved hit areas (`>= 44px`).

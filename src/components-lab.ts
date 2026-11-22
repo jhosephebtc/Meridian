@@ -245,7 +245,8 @@ function demoDial(kind = 'dial'): HTMLElement {
           <circle data-plotter-role="guide" cx="60" cy="58" r="53" fill="none" stroke="currentColor"/>
           ${ticks}
           <!-- 3D Cylindrical Platter Skirt + Knurled Vertical Ribs -->
-          <path data-plotter-role="secondary" d="M 29.5 56 L 29.5 61 A 30.5 30.5 0 0 0 90.5 61 L 90.5 56 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.65"/>
+          <path data-hairline-solid="" data-plotter-role="primary" d="M 29.5 56 L 29.5 61 A 30.5 30.5 0 0 0 90.5 61 L 90.5 56 Z" fill="var(--ds-surface-1)" fill-opacity="1" stroke="none"/>
+          <path data-hairline-stroke="rest" data-plotter-role="primary" d="M 29.5 56 L 29.5 61 A 30.5 30.5 0 0 0 90.5 61 L 90.5 56 Z" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
           ${Array.from({ length: 13 }, (_, i) => {
             const a = (Math.PI * (i + 1)) / 14;
             const x = 60 - Math.cos(a) * 30.5;
@@ -254,9 +255,10 @@ function demoDial(kind = 'dial'): HTMLElement {
             return `<line data-plotter-role="secondary" x1="${x.toFixed(1)}" y1="${yTop.toFixed(1)}" x2="${x.toFixed(1)}" y2="${yBot.toFixed(1)}" stroke="currentColor" opacity="0.28"/>`;
           }).join('')}
           <!-- Main 3D Circular Platter -->
-          <circle data-plotter-role="primary" cx="60" cy="56" r="30.5" fill="var(--ds-bg)" stroke="currentColor"/>
+          <circle data-hairline-solid="" data-plotter-role="primary" cx="60" cy="56" r="30.5" fill="var(--ds-surface-2)" fill-opacity="1" stroke="none"/>
+          <circle data-hairline-stroke="rest" data-plotter-role="primary" cx="60" cy="56" r="30.5" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
           <!-- Open Front Chamfer Crease -->
-          <path data-plotter-role="secondary" d="M 34 56 A 26 26 0 0 0 86 56" fill="none" stroke="currentColor" opacity="0.32"/>
+          <path data-hairline-stroke="crease" data-plotter-role="secondary" d="M 34 56 A 26 26 0 0 0 86 56" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.24"/>
           ${kind === 'camera-dial' || kind === 'camera-wheel' ? '<circle data-plotter-role="guide" cx="60" cy="58" r="17" fill="none" stroke="currentColor"/>' : ''}
           <g class="ml-dial-knob">
             <line data-plotter-role="primary" x1="60" y1="45" x2="60" y2="31" stroke="currentColor"/>
@@ -940,11 +942,13 @@ function demoCompass(kind = 'compass'): HTMLElement {
 
   // 3D Cylindrical Hairline Bezel (extruded lower cylinder wall + top plate + open front chamfer crease)
   const bezelHairline = `
-    <circle data-plotter-role="guide" cx="80" cy="78" r="69" fill="none" stroke="currentColor"/>
-    <path data-plotter-role="primary" d="M 14.5 78 L 14.5 83 A 65.5 65.5 0 0 0 145.5 83 L 145.5 78 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.72"/>
-    <circle data-plotter-role="primary" cx="80" cy="78" r="65.5" fill="var(--ds-bg)" stroke="currentColor"/>
-    <path data-plotter-role="secondary" d="M 18.5 78 A 61.5 61.5 0 0 0 141.5 78" fill="none" stroke="currentColor" opacity="0.32"/>
-    <circle data-plotter-role="secondary" cx="80" cy="78" r="61.5" fill="none" stroke="currentColor" opacity="0.26"/>
+    <circle data-plotter-role="guide" cx="80" cy="78" r="69" fill="none" stroke="currentColor" stroke-opacity="0.18"/>
+    <path data-hairline-solid="" data-plotter-role="primary" d="M 14.5 78 L 14.5 83 A 65.5 65.5 0 0 0 145.5 83 L 145.5 78 Z" fill="var(--ds-surface-1)" fill-opacity="1" stroke="none"/>
+    <path data-hairline-stroke="rest" data-plotter-role="primary" d="M 14.5 78 L 14.5 83 A 65.5 65.5 0 0 0 145.5 83 L 145.5 78 Z" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
+    <circle data-hairline-solid="" data-plotter-role="primary" cx="80" cy="78" r="65.5" fill="var(--ds-surface-2)" fill-opacity="1" stroke="none"/>
+    <circle data-hairline-stroke="rest" data-plotter-role="primary" cx="80" cy="78" r="65.5" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
+    <path data-hairline-stroke="crease" data-plotter-role="secondary" d="M 18.5 78 A 61.5 61.5 0 0 0 141.5 78" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.24"/>
+    <circle data-hairline-stroke="crease" data-plotter-role="secondary" cx="80" cy="78" r="61.5" fill="none" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.24"/>
   `;
 
   if (kind === 'weather-instrument') {
@@ -1144,7 +1148,8 @@ function demoCompass(kind = 'compass'): HTMLElement {
         ${bezelHairline}
         ${ticks36}
         <circle data-plotter-role="secondary" cx="80" cy="80" r="46" fill="none" stroke="currentColor" opacity="0.38"/>
-        <circle data-plotter-role="secondary" cx="80" cy="80" r="24" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
+        <circle data-hairline-solid="" data-plotter-role="primary" cx="80" cy="80" r="24" fill="var(--ds-surface-2)" fill-opacity="1" stroke="none"/>
+        <circle data-hairline-stroke="rest" data-plotter-role="primary" cx="80" cy="80" r="24" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
         <path data-plotter-role="primary" d="M 80 16 L 77 11 L 83 11 Z" fill="var(--ds-bg)" stroke="currentColor"/>
         ${spokes}
         <path data-plotter-role="guide" d="M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)} L ${pts[2].x.toFixed(1)} ${pts[2].y.toFixed(1)} L ${pts[4].x.toFixed(1)} ${pts[4].y.toFixed(1)} Z" fill="none" stroke="currentColor"/>
@@ -1400,8 +1405,10 @@ function demoSvgInstrument(kind: string): HTMLElement {
         </defs>
         <circle data-plotter-role="guide" cx="110" cy="67" r="59" fill="none" stroke="currentColor"/>
         <!-- 3D Cylindrical Bezel Wall -->
-        <path data-plotter-role="primary" d="M 54.5 67 L 54.5 72 A 55.5 55.5 0 0 0 165.5 72 L 165.5 67 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.72"/>
-        <circle data-plotter-role="primary" cx="110" cy="67" r="55.5" fill="var(--ds-bg)" stroke="currentColor"/>
+        <path data-hairline-solid="" data-plotter-role="primary" d="M 54.5 67 L 54.5 72 A 55.5 55.5 0 0 0 165.5 72 L 165.5 67 Z" fill="var(--ds-surface-1)" fill-opacity="1" stroke="none"/>
+        <path data-hairline-stroke="rest" data-plotter-role="primary" d="M 54.5 67 L 54.5 72 A 55.5 55.5 0 0 0 165.5 72 L 165.5 67 Z" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
+        <circle data-hairline-solid="" data-plotter-role="primary" cx="110" cy="67" r="55.5" fill="var(--ds-surface-2)" fill-opacity="1" stroke="none"/>
+        <circle data-hairline-stroke="rest" data-plotter-role="primary" cx="110" cy="67" r="55.5" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
         <path data-plotter-role="secondary" d="M 59 67 A 51 51 0 0 0 161 67" fill="none" stroke="currentColor" opacity="0.3"/>
         <circle data-plotter-role="secondary" cx="110" cy="67" r="45" fill="none" stroke="currentColor" opacity="0.36"/>
         ${bankTicks}
@@ -1485,8 +1492,10 @@ function demoSvgInstrument(kind: string): HTMLElement {
         <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${gy.toFixed(1)}" r="1" fill="currentColor" stroke="none"/>
         <!-- 3D Solar Orb + Corona Ring -->
         <circle data-plotter-role="secondary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="10.5" fill="none" stroke="currentColor" opacity="0.35"/>
-        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${(sy + 1.2).toFixed(1)}" r="5.6" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
-        <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="5.6" fill="var(--ds-bg)" stroke="currentColor"/>
+        <circle data-hairline-solid="" data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${(sy + 1.2).toFixed(1)}" r="5.6" fill="var(--ds-surface-2)" fill-opacity="1" stroke="none"/>
+        <circle data-hairline-stroke="rest" data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${(sy + 1.2).toFixed(1)}" r="5.6" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
+        <circle data-hairline-solid="" data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="5.6" fill="var(--ds-surface-3)" fill-opacity="1" stroke="none"/>
+        <circle data-hairline-stroke="rest" data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="5.6" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
         <circle data-plotter-role="primary" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="1.4" fill="currentColor" stroke="none"/>
         <text x="16" y="124">E</text>
         <text x="110" y="127" text-anchor="middle">SOUTH · 3D HORIZON</text>
@@ -1576,15 +1585,15 @@ function demoSvgInstrument(kind: string): HTMLElement {
         const h = Math.round(18 + lv * 58);
         const yTop = 86 - h;
         const isHi = i === activeCol;
-        const isMajor = i % 3 === 0;
-        const role = isHi ? 'primary' : 'secondary';
         return `
           <!-- Recessed 3D Slot -->
           <rect data-plotter-role="guide" x="${x}" y="18" width="10" height="72" rx="5" fill="none" stroke="currentColor"/>
           <!-- 3D Extruded Lower Cylinder Skirt -->
-          <rect data-plotter-role="${role}" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '0.9' : '0.45'}"/>
+          <rect data-hairline-solid="" data-plotter-role="primary" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="var(--ds-surface-1)" fill-opacity="1" stroke="none"/>
+          <rect data-hairline-stroke="${isHi ? 'active' : 'rest'}" data-plotter-role="primary" x="${x}" y="${yTop + 3.5}" width="10" height="${h}" rx="5" fill="none" stroke="currentColor" stroke-width="${isHi ? '0.65' : '0.45'}" stroke-opacity="${isHi ? '0.92' : '0.32'}"/>
           <!-- 3D Raised Top Capsule Face -->
-          <rect data-plotter-role="${role}" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="var(--ds-bg)" stroke="currentColor" opacity="${isHi ? '1' : isMajor ? '0.78' : '0.58'}"/>
+          <rect data-hairline-solid="" data-plotter-role="primary" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="${isHi ? 'var(--ds-surface-3)' : 'var(--ds-surface-2)'}" fill-opacity="1" stroke="none"/>
+          <rect data-hairline-stroke="${isHi ? 'active' : 'rest'}" data-plotter-role="primary" x="${x}" y="${yTop}" width="10" height="${h}" rx="5" fill="none" stroke="currentColor" stroke-width="${isHi ? '0.65' : '0.45'}" stroke-opacity="${isHi ? '0.92' : '0.32'}"/>
           <!-- Front Chamfer Crease -->
           <line data-plotter-role="secondary" x1="${x + 2.5}" y1="${yTop + 4}" x2="${x + 7.5}" y2="${yTop + 4}" stroke="currentColor" opacity="0.35"/>
           ${isHi ? `<circle data-plotter-role="primary" cx="${x + 5}" cy="${yTop + 8.5}" r="1.3" fill="currentColor" stroke="none"/>` : ''}
@@ -1594,7 +1603,8 @@ function demoSvgInstrument(kind: string): HTMLElement {
     svg.innerHTML = `
       <path data-plotter-role="secondary" d="M 12 10 H 64 M 176 10 H 228" fill="none" stroke="currentColor" opacity="0.45"/>
       <!-- 3D Base Plinth -->
-      <path data-plotter-role="secondary" d="M 10 92 L 10 95.5 L 230 95.5 L 230 92 Z" fill="var(--ds-bg)" stroke="currentColor" opacity="0.5"/>
+      <path data-hairline-solid="" data-plotter-role="primary" d="M 10 92 L 10 95.5 L 230 95.5 L 230 92 Z" fill="var(--ds-surface-1)" fill-opacity="1" stroke="none"/>
+      <path data-hairline-stroke="rest" data-plotter-role="primary" d="M 10 92 L 10 95.5 L 230 95.5 L 230 92 Z" fill="none" stroke="currentColor" stroke-width="0.45" stroke-opacity="0.32"/>
       ${cols}
     `;
     const pct = Math.round(baseLevels[activeCol]! * 100);

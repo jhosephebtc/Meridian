@@ -886,7 +886,13 @@ html, body {
 [data-plotter][data-hairline] [data-plotter-role="primary"] { stroke-width: 0.65; }
 [data-plotter][data-hairline] [data-plotter-role="secondary"] { stroke-width: 0.45; }
 [data-plotter][data-hairline] [data-plotter-role="secondary"][stroke-width="0.4"] { stroke-width: 0.4; }
-[data-plotter][data-hairline] [data-plotter-role="guide"] { stroke-width: 0.4; stroke-dasharray: 2 3.5; }
+[data-plotter][data-hairline] [data-plotter-role="guide"] { stroke-width: 0.4; stroke-dasharray: 2 3.5; opacity: 1; }
+[data-plotter][data-hairline] [data-hairline-solid] { opacity: 1; fill-opacity: 1; stroke: none; }
+[data-plotter][data-hairline] [data-hairline-stroke] { opacity: 1; fill: none; }
+[data-plotter][data-hairline] [data-hairline-stroke="rest"] { stroke-width: 0.45; }
+[data-plotter][data-hairline] [data-hairline-stroke="active"] { stroke-width: 0.65; }
+[data-plotter][data-hairline] [data-hairline-stroke="crease"] { stroke-width: 0.4; }
+[data-plotter][data-hairline][data-plotter-isolate] [data-hairline-solid] { opacity: 1; fill-opacity: 1; }
 
 .gann-plot-draw {
   stroke-dasharray: 1200;

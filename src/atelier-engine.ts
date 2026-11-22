@@ -354,8 +354,10 @@ export class MeridianAtelier {
     const layers = opts.layers ?? 32;
     const subdivisions = opts.subdivisions ?? 5;
     const bleed = opts.bleed ?? 0.38;
-    const layerAlpha =
-      opts.layerAlpha ?? (this.theme.scheme === 'dark' ? 0.028 : 0.018);
+    const layerAlpha = Math.max(
+      opts.layerAlpha ?? (this.theme.scheme === 'dark' ? 0.05 : 0.04),
+      this.theme.scheme === 'dark' ? 0.04 : 0.034,
+    );
     const wetEdgeRing = opts.wetEdgeRing ?? true;
 
     const rgb = hexToRgb(hexColor);
@@ -376,33 +378,107 @@ export class MeridianAtelier {
     if (wetEdgeRing) {
       const edgeRing = this.deformPolygon(baseDeformed, 3, bleed * 0.2);
       const closed = [...edgeRing, edgeRing[0]!];
-      this.backend.strokePolyline(closed, fillHex, 1.15, Math.min(0.22, layerAlpha * 6));
+      this.backend.strokePolyline(closed, fillHex, 2.1, Math.min(0.46, layerAlpha * 8));
       const pigmentEdge = this.deformPolygon(baseDeformed, 2, bleed * 0.12);
       this.backend.strokePolyline(
         [...pigmentEdge, pigmentEdge[0]!],
         fillHex,
-        0.7,
-        Math.min(0.16, layerAlpha * 4.5),
+        1.15,
+        Math.min(0.32, layerAlpha * 6),
       );
+    }
+
+    // Interior pigment blooms. Flat multiply coats read as a tint; a few
+    // anisotropic dabs put wash variation on the face of the wash itself.
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    for (const p of basePolygon) {
+      if (p.x < minX) minX = p.x;
+      if (p.y < minY) minY = p.y;
+      if (p.x > maxX) maxX = p.x;
+      if (p.y > maxY) maxY = p.y;
+    }
+    const bw = maxX - minX;
+    const bh = maxY - minY;
+    if (bw > 22 && bh > 22) {
+      const blooms = bw * bh > 14000 ? 5 : 3;
+      const rad = Math.max(6, Math.min(bw, bh) * 0.13);
+      const dabAlpha = this.theme.scheme === 'dark' ? 0.34 : 0.28;
+      for (let b = 0; b < blooms; b++) {
+        const cx = this.noise.random(minX + bw * 0.2, maxX - bw * 0.2);
+        const cy = this.noise.random(minY + bh * 0.2, maxY - bh * 0.2);
+        this.anisotropicGouacheDab(cx, cy, rad, hexColor, { alpha: dabAlpha, bristles: 4 });
+      }
     }
 
     this.backend.setCompositeMode('source-over');
   }
 
   /**
+   * 1B. STRUCTURE TENSOR & ANISOTROPIC KUWAHARA DAB (Maxime Heckel / Kyprianidis)
+   * Computes local 2D FBM structure tensor orientation φ and anisotropy A, then stamps
+   * stretched elliptical gouache/watercolor brush dabs aligned along the flow tangent.
+   */
+  public sampleStructureTensor(x: number, y: number, scale = 0.008): { phi: number; anisotropy: number } {
+    const eps = 4;
+    const sx = this.noise.fbm2D((x + eps) * scale, y * scale, 2) - this.noise.fbm2D((x - eps) * scale, y * scale, 2);
+    const sy = this.noise.fbm2D(x * scale, (y + eps) * scale, 2) - this.noise.fbm2D(x * scale, (y - eps) * scale, 2);
+    const E = sx * sx;
+    const G = sy * sy;
+    const F = sx * sy;
+    const disc = Math.sqrt(Math.max(0, (E - G) * (E - G) + 4 * F * F));
+    const l1 = 0.5 * (E + G + disc);
+    const l2 = 0.5 * (E + G - disc);
+    const phi = Math.atan2(-F, l1 - E);
+    const anisotropy = l1 + l2 > 1e-6 ? (l1 - l2) / (l1 + l2) : 0.35;
+    return { phi, anisotropy: clamp(anisotropy, 0.15, 0.95) };
+  }
+
+  public anisotropicGouacheDab(
+    x: number,
+    y: number,
+    radius: number,
+    hexColor: string,
+    opts: { anisotropy?: number; phi?: number; alpha?: number; bristles?: number } = {},
+  ): void {
+    const tensor = this.sampleStructureTensor(x, y);
+    const phi = opts.phi ?? tensor.phi;
+    const A = opts.anisotropy ?? tensor.anisotropy;
+    const stretch = 1 + A * 1.35;
+    const rx = radius * stretch;
+    const ry = Math.max(1.2, radius / stretch);
+    const baseAlpha = opts.alpha ?? (this.theme.scheme === 'dark' ? 0.24 : 0.18);
+    const bristles = opts.bristles ?? 3;
+    const rgb = hexToRgb(hexColor);
+    const col = rgbaString(rgb, 1);
+
+    this.backend.setCompositeMode(this.pigmentComposite);
+    for (let b = 0; b < bristles; b++) {
+      const off = (b - (bristles - 1) / 2) * (ry * 0.42);
+      const bx = x - Math.sin(phi) * off;
+      const by = y + Math.cos(phi) * off;
+      this.backend.fillEllipse(bx, by, rx * (1 - b * 0.08), ry * 0.72, phi, col, baseAlpha * (0.85 + 0.3 * this.noise.random()));
+    }
+    this.backend.setCompositeMode('source-over');
+  }
+
+  /**
    * Grão de papel algodão (overlay tátil, pré-bake no setup)
    */
-  public paperGrainOverlay(density = 0.35, alpha = 0.045): void {
+  public paperGrainOverlay(density = 0.55, alpha = 0.12): void {
     const { width: w, height: h } = this.backend;
     const rgb = hexToRgb(this.theme.fg);
-    const dots = Math.floor(w * h * density * 0.012);
+    const ink = Math.max(alpha, this.theme.scheme === 'dark' ? 0.14 : 0.11);
+    const dots = Math.floor(w * h * density * 0.008);
     this.backend.setCompositeMode(this.pigmentComposite);
     for (let i = 0; i < dots; i++) {
       const x = this.noise.random(0, w);
       const y = this.noise.random(0, h);
-      const n = this.noise.noise2D(x * 0.08, y * 0.08);
-      if (n < 0.42) continue;
-      this.backend.fillDot(x, y, this.noise.random(0.25, 0.85), rgbaString(rgb, 1), alpha * n);
+      const n = this.noise.noise2D(x * 0.05, y * 0.05);
+      if (n < 0.38) continue;
+      this.backend.fillDot(x, y, this.noise.random(1.1, 2.4), rgbaString(rgb, 1), ink * (0.55 + 0.45 * n));
     }
     this.backend.setCompositeMode('source-over');
   }
