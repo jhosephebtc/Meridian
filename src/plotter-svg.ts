@@ -260,14 +260,20 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
 
   const els: string[] = [];
 
-  // 1. Eixos ortogonais externos (centerline) + limbo azimutal graduado a cada 15° (Plotter × Hairline)
-  const ext = 28;
-  els.push(`<line x1="${(cx - R - ext).toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(cx + R + ext).toFixed(1)}" y2="${cy.toFixed(1)}" data-plotter-role="centerline" fill="none"/>`);
-  els.push(`<line x1="${cx.toFixed(1)}" y1="${(cy - R - ext).toFixed(1)}" x2="${cx.toFixed(1)}" y2="${(cy + R + ext).toFixed(1)}" data-plotter-role="centerline" fill="none"/>`);
-
-  // 2. Anel orbital externo proposto + escalas Hairline a cada 15°
+  // 1. Eixos ortogonais externos sólidos + fundo Hairline translúcido da esfera
+  const ext = 26;
   const ringR = R + 16;
-  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${ringR.toFixed(1)}" data-plotter-role="proposed" fill="none"/>`);
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${ringR.toFixed(1)}" fill="var(--ds-surface-1)" fill-opacity="0.45" stroke="none"/>`);
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${R.toFixed(1)}" fill="var(--ds-surface-2)" fill-opacity="0.62" stroke="none"/>`);
+  els.push(`<circle cx="${(cx - R * 0.14).toFixed(1)}" cy="${(cy - R * 0.14).toFixed(1)}" r="${(R * 0.76).toFixed(1)}" fill="var(--ds-bg)" fill-opacity="0.38" stroke="none"/>`);
+
+  els.push(`<line x1="${(cx - R - ext).toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(cx - R - 5).toFixed(1)}" y2="${cy.toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
+  els.push(`<line x1="${(cx + R + 5).toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(cx + R + ext).toFixed(1)}" y2="${cy.toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
+  els.push(`<line x1="${cx.toFixed(1)}" y1="${(cy - R - ext).toFixed(1)}" x2="${cx.toFixed(1)}" y2="${(cy - R - 5).toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
+  els.push(`<line x1="${cx.toFixed(1)}" y1="${(cy + R + 5).toFixed(1)}" x2="${cx.toFixed(1)}" y2="${(cy + R + ext).toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.34" fill="none"/>`);
+
+  // 2. Limbo orbital externo sólido + escalas azimutais a cada 15° (Plotter × Hairline)
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${ringR.toFixed(1)}" data-plotter-role="guide" fill="none"/>`);
   for (let deg = 0; deg < 360; deg += 15) {
     const a = (deg * Math.PI) / 180;
     const major = deg % 45 === 0;
@@ -278,44 +284,36 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
     );
   }
 
-  // 3. Paralelos e meridianos (hemisfério oculto tracejado `hidden` atrás + `guide`/`centerline` na frente)
+  // 3. Paralelos e meridianos frontais sólidos (Equador & Greenwich em secondary; grade em guide)
   for (const lat of [-60, -30, 0, 30, 60]) {
     let frontPts: string[] = [];
-    let backPts: string[] = [];
-    const role = lat === 0 ? 'centerline' : 'guide';
+    const role = lat === 0 ? 'secondary' : 'guide';
     for (let lon = -180; lon <= 180; lon += 5) {
       const p = projectOrthographic(lat, lon, rotLon, tiltLat, cx, cy, R);
       if (p.visible) {
-        if (backPts.length > 1) els.push(`<polyline points="${backPts.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
-        backPts = [];
         frontPts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
       } else {
         if (frontPts.length > 1) els.push(`<polyline points="${frontPts.join(' ')}" data-plotter-role="${role}" fill="none"/>`);
         frontPts = [];
-        backPts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
       }
     }
     if (frontPts.length > 1) els.push(`<polyline points="${frontPts.join(' ')}" data-plotter-role="${role}" fill="none"/>`);
-    if (backPts.length > 1) els.push(`<polyline points="${backPts.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
   }
 
   for (let lon = -180; lon < 180; lon += 30) {
     let frontPts: string[] = [];
-    let backPts: string[] = [];
+    const prime = lon === 0;
+    const role = prime ? 'secondary' : 'guide';
     for (let lat = -84; lat <= 84; lat += 5) {
       const p = projectOrthographic(lat, lon, rotLon, tiltLat, cx, cy, R);
       if (p.visible) {
-        if (backPts.length > 1) els.push(`<polyline points="${backPts.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
-        backPts = [];
         frontPts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
       } else {
-        if (frontPts.length > 1) els.push(`<polyline points="${frontPts.join(' ')}" data-plotter-role="guide" fill="none"/>`);
+        if (frontPts.length > 1) els.push(`<polyline points="${frontPts.join(' ')}" data-plotter-role="${role}" fill="none"/>`);
         frontPts = [];
-        backPts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
       }
     }
-    if (frontPts.length > 1) els.push(`<polyline points="${frontPts.join(' ')}" data-plotter-role="guide" fill="none"/>`);
-    if (backPts.length > 1) els.push(`<polyline points="${backPts.join(' ')}" data-plotter-role="hidden" fill="none"/>`);
+    if (frontPts.length > 1) els.push(`<polyline points="${frontPts.join(' ')}" data-plotter-role="${role}" fill="none"/>`);
   }
 
   // 4. Pontilhado Continental 81k em micro-pontos densos (0.45px–0.88px em escala Hairline)
@@ -326,12 +324,12 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
       const p = projectOrthographic(lat, lon, rotLon, tiltLat, cx, cy, R);
       if (!p.visible) continue;
       const dotR = 0.44 + p.z * 0.42;
-      const op = (0.18 + p.z * 0.56).toFixed(2);
+      const op = (0.24 + p.z * 0.58).toFixed(2);
       els.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${dotR.toFixed(2)}" fill="currentColor" stroke="none" fill-opacity="${op}" data-plotter-role="secondary"/>`);
     }
   }
 
-  // 5. Arco geodésico real entre estações visíveis (transfer 4 6 + seta aberta sólida 6u)
+  // 5. Arco geodésico real entre estações visíveis (único traço tracejado de transferência 4 6 + seta aberta)
   const visibleStations = stations
     .map((s) => ({ ...s, proj: projectOrthographic(s.lat, s.lon, rotLon, tiltLat, cx, cy, R) }))
     .filter((s) => s.proj.z > 0.14);
@@ -349,7 +347,7 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
       if (pr.visible) geoPts.push({ x: pr.x, y: pr.y });
     }
     if (geoPts.length >= 2) {
-      els.push(`<polyline points="${geoPts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(' ')}" data-plotter-role="transfer" fill="none"/>`);
+      els.push(`<polyline points="${geoPts.map((pt) => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(' ')}" data-plotter-role="transfer" stroke-opacity="0.52" fill="none"/>`);
       const prev = geoPts[geoPts.length - 2];
       const end = geoPts[geoPts.length - 1];
       const ang = Math.atan2(end.y - prev.y, end.x - prev.x);
@@ -357,20 +355,20 @@ export function renderPlottedGlobeSvg(opts: PlottedGlobeOptions = {}): string {
     }
   }
 
-  // 6. Contorno duplo Hairline da esfera (borda principal nítida + bisel interno 0.4px)
-  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${R.toFixed(1)}" data-plotter-role="primary" data-hairline-stroke="active" stroke-opacity="0.72" fill="none"/>`);
-  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(R - 3.5).toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.16" fill="none"/>`);
+  // 6. Contorno duplo Hairline da esfera (borda principal sólida + bisel interno 0.4px)
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${R.toFixed(1)}" data-plotter-role="primary" data-hairline-stroke="active" stroke-opacity="0.82" fill="none"/>`);
+  els.push(`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(R - 4.5).toFixed(1)}" data-plotter-role="secondary" stroke-opacity="0.22" fill="none"/>`);
 
-  // 7. Marcadores de estação Hairline (alvos concêntricos + callout silencioso Plotter)
+  // 7. Marcadores de estação Hairline (pin sobre papel + alvos concêntricos sólidos)
   visibleStations.slice(0, 2).forEach((s, idx) => {
     const side = s.proj.x >= cx ? 1 : -1;
     const elbowX = cx + side * (R + 30);
     const elbowY = s.proj.y + (idx === 0 ? -18 : 20);
     const tailX = elbowX + side * 26;
 
-    els.push(`<circle cx="${s.proj.x.toFixed(1)}" cy="${s.proj.y.toFixed(1)}" r="1.9" fill="currentColor" fill-opacity="0.78" stroke="none" data-plotter-role="primary"/>`);
-    els.push(`<circle cx="${s.proj.x.toFixed(1)}" cy="${s.proj.y.toFixed(1)}" r="5.5" fill="none" data-plotter-role="secondary"/>`);
-    els.push(`<circle cx="${s.proj.x.toFixed(1)}" cy="${s.proj.y.toFixed(1)}" r="9.0" fill="none" data-plotter-role="proposed"/>`);
+    els.push(`<circle cx="${s.proj.x.toFixed(1)}" cy="${s.proj.y.toFixed(1)}" r="5.5" fill="var(--ds-bg)" fill-opacity="0.72" data-plotter-role="secondary" stroke-opacity="0.48"/>`);
+    els.push(`<circle cx="${s.proj.x.toFixed(1)}" cy="${s.proj.y.toFixed(1)}" r="1.9" fill="currentColor" fill-opacity="0.82" stroke="none" data-plotter-role="primary"/>`);
+    els.push(`<circle cx="${s.proj.x.toFixed(1)}" cy="${s.proj.y.toFixed(1)}" r="9.0" fill="none" data-plotter-role="guide"/>`);
     els.push(`<polyline points="${s.proj.x.toFixed(1)},${s.proj.y.toFixed(1)} ${elbowX.toFixed(1)},${elbowY.toFixed(1)} ${tailX.toFixed(1)},${elbowY.toFixed(1)}" data-plotter-role="leader" fill="none"/>`);
     els.push(plotterLabelSvg(tailX + side * 6, elbowY - 2, s.name, 'name', side > 0 ? 'start' : 'end'));
     els.push(plotterLabelSvg(tailX + side * 6, elbowY + 11, s.metric, 'value', side > 0 ? 'start' : 'end'));
