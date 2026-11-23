@@ -5239,7 +5239,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       max-width: 100%;
     }
     .nasa-ht-swatch {
@@ -5269,21 +5269,30 @@
     }
     .nasa-ht-sliders-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 10px 16px;
-      padding-top: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px 18px;
+      padding-top: 10px;
       border-top: 1px solid var(--ds-rule);
     }
     .nasa-ht-slider-item {
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
     .nasa-ht-slider-head {
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
+    }
+    .nasa-ht-rot-presets {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
     }
     .nasa-grid {
       display: grid;
@@ -5295,9 +5304,9 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      padding: 16px;
-      border-radius: var(--ds-radius-card);
-      border: var(--ds-hairline, 1px) solid var(--ds-border);
+      padding: 0;
+      border-radius: 0;
+      border: 0;
       background: transparent;
     }
     .nasa-card--split {
@@ -5357,7 +5366,7 @@
       aspect-ratio: 4 / 3;
       border-radius: var(--ds-radius-squircle);
       overflow: hidden;
-      border: var(--ds-hairline, 1px) solid var(--ds-border);
+      border: 0;
       background: transparent;
     }
     .nasa-card--tall .nasa-frame { aspect-ratio: 3 / 4; }
@@ -5426,6 +5435,15 @@
     }
     main section[data-ds-hidden="true"] {
       display: none !important;
+    }
+    @media (max-width: 1023px) {
+      main#topo > section[data-ds-hidden="true"] {
+        display: block !important;
+      }
+      main#topo [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
   </style>
 </head>
@@ -7745,6 +7763,9 @@
                 <span data-home="nasa.ht.shaderLabel">Paper Halftone Shader</span>
                 <span class="mono" data-nasa-ht-badge style="font-size:10px; opacity:0.85;">OFF</span>
               </button>
+              <button type="button" id="nasa-ht-antimoire" class="btn btn-sm btn-tertiary btn-pill" data-home="nasa.ht.antiMoire">Preset Anti-Moiré</button>
+              <button type="button" id="nasa-ht-mipmaps" class="btn btn-sm btn-primary btn-pill" aria-pressed="true" data-home="nasa.ht.mipmaps">Mipmaps Trilinear</button>
+              <button type="button" id="nasa-ht-dpr" class="btn btn-sm btn-primary btn-pill" aria-pressed="true"><span data-home="nasa.ht.dprLabel">Amostragem</span> <span class="mono" data-nasa-ht-dpr-badge style="font-size:10px;">2×</span></button>
               <span style="width:1px; height:14px; background:var(--ds-rule); margin:0 2px;" aria-hidden="true"></span>
               <span class="eyebrow" style="margin:0;" data-home="nasa.ht.invertLabel">Invertido:</span>
               <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-ht-invert="false" aria-pressed="true" data-home="nasa.ht.normal">Normal</button>
@@ -7769,7 +7790,7 @@
               <button type="button" class="btn btn-sm btn-pill btn-primary" data-nasa-ht-color-mode="original" aria-pressed="true" data-home="nasa.ht.colorOriginal">Colorido</button>
               <button type="button" class="btn btn-sm btn-pill btn-tertiary" data-nasa-ht-color-mode="mono" aria-pressed="false" data-home="nasa.ht.colorDot">Cor do Ponto</button>
             </div>
-            <div id="nasa-ht-swatches" class="nasa-ht-swatches-wrap" style="flex:1 1 320px;"></div>
+            <div id="nasa-ht-swatches" class="nasa-ht-swatches-wrap"></div>
             <input type="color" id="nasa-ht-color" class="nasa-color-picker" value="#141413" aria-label="Cor personalizada do ponto" />
           </div>
 
@@ -7822,6 +7843,36 @@
               <input type="range" id="nasa-ht-gsize" class="ds-trans-range" min="0.05" max="1.00" step="0.05" value="0.28" />
             </label>
 
+            <div class="nasa-ht-slider-item">
+              <label for="nasa-ht-rotation" class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.rotLabel">Ângulo:</span>
+                <output class="mono tabular" id="nasa-ht-rotation-out" style="font-size:11px;">15°</output>
+              </label>
+              <input type="range" id="nasa-ht-rotation" class="ds-trans-range" min="0" max="180" step="1.5" value="15" />
+              <div class="nasa-ht-rot-presets">
+                <button type="button" class="btn btn-sm btn-tertiary" style="padding:1px 6px; min-height:19px; font-size:10px;" data-nasa-ht-rot="0">0°</button>
+                <button type="button" class="btn btn-sm btn-primary" style="padding:1px 6px; min-height:19px; font-size:10px;" data-nasa-ht-rot="15">15°</button>
+                <button type="button" class="btn btn-sm btn-tertiary" style="padding:1px 6px; min-height:19px; font-size:10px;" data-nasa-ht-rot="22.5">22.5°</button>
+                <button type="button" class="btn btn-sm btn-tertiary" style="padding:1px 6px; min-height:19px; font-size:10px;" data-nasa-ht-rot="45">45°</button>
+              </div>
+            </div>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.scaleLabel">Escala:</span>
+                <output class="mono tabular" id="nasa-ht-scale-out" style="font-size:11px;">1.00×</output>
+              </div>
+              <input type="range" id="nasa-ht-scale" class="ds-trans-range" min="0.50" max="2.00" step="0.05" value="1.00" />
+            </label>
+
+            <label class="nasa-ht-slider-item">
+              <div class="nasa-ht-slider-head">
+                <span class="eyebrow" style="margin:0;" data-home="nasa.ht.blurLabel">Pré-Filtro Blur:</span>
+                <output class="mono tabular" id="nasa-ht-blur-out" style="font-size:11px;">0.4px</output>
+              </div>
+              <input type="range" id="nasa-ht-blur" class="ds-trans-range" min="0" max="3.0" step="0.1" value="0.4" />
+            </label>
+
             <label class="nasa-ht-slider-item">
               <div class="nasa-ht-slider-head">
                 <span class="eyebrow" style="margin:0;" data-home="nasa.ht.opacityLabel">Opacidade:</span>
@@ -7848,7 +7899,7 @@
                   <summary><span data-home="nasa.c1.acc1.sum">Telemetria de Voo &amp; Lente</span> <span class="ds-acc-meta">70MM</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c1.acc1.body">Hasselblad 500EL com lente Zeiss Planar 80mm f/2.8 · filme Kodak Ektachrome SO-368 70mm · 07 de dezembro de 1972 · tripulação Cernan, Evans e Schmitt.</div></div>
                 </details>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c1.acc2.sum">Leitura Editorial &amp; Superfície</span> <span class="ds-acc-meta">ALBEDO</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c1.acc2.body">Primeiro registro completo iluminado do disco planetário em missão tripulada; a suavização de saturação e opacidade integra a placa ao grão global da página.</div></div>
                 </details>
@@ -7867,11 +7918,11 @@
               <h3 class="nasa-card-title" data-home="nasa.c2.title">Artemis · Nascer da Terra</h3>
               <p class="nasa-card-desc" data-home="nasa.c2.desc">O disco azulado emerge acima do horizonte cinzento da Lua, contrastando a camada atmosférica contra o vácuo profundo em recorte vertical 3:4.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c2.acc1.sum">Parâmetros Orbitais</span> <span class="ds-acc-meta">CISLUNAR</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc1.body">Distância cislunar ~380.000 km · contraste de limbo elevado ideal para testar retícula Halftone Hex com tamanho de ponto fino (0.10–0.16).</div></div>
                 </details>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c2.acc2.sum">Notas de Diagramação</span> <span class="ds-acc-meta">GRID 5</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc2.body">Proporção retrato vertical equilibra o bloco panorâmico da Apollo 17 ao lado, criando ritmo de coluna assimétrica 7 + 5.</div></div>
                 </details>
@@ -7890,11 +7941,11 @@
               <h3 class="nasa-card-title" data-home="nasa.c3.title">Órbita Baixa · Limbo Atmosférico</h3>
               <p class="nasa-card-desc" data-home="nasa.c3.desc">Registro oblíquo pela ISS a 400 km de altitude exibindo a estreita faixa azul de espalhamento Rayleigh ao longo do terminador planetário.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c3.acc1.sum">Dados da Expedição 35</span> <span class="ds-acc-meta">51.6°</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c3.acc1.body">Cúpula de observação orbital · inclinação 51,6° · velocidade orbital 7,66 km/s (um nascer do sol a cada 90 minutos).</div></div>
                 </details>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c3.acc2.sum">Estudo em Halftone Gooey/Soft</span> <span class="ds-acc-meta">SHADER</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c3.acc2.body">O gradiente contínuo do terminador revela transições suaves quando avaliado no modo Textura Soft ou Invertido sobre papel escuro.</div></div>
                 </details>
@@ -7918,7 +7969,7 @@
                 <summary><span data-home="nasa.c4.acc1.sum">Sensores &amp; Meteorologia STS-65</span> <span class="ds-acc-meta">CAT 5</span></summary>
                 <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c4.acc1.body">18 de julho de 1994 · pressão central mínima ~948 hPa · ventos sustentados Categoria 5 fotografados em janela perpendicular à órbita.</div></div>
               </details>
-              <details class="ds-acc-item" data-anim="closed">
+              <details class="ds-acc-item" open data-anim="open">
                 <summary><span data-home="nasa.c4.acc2.sum">Dinâmica de Retícula Espiral</span> <span class="ds-acc-meta">INK</span></summary>
                 <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c4.acc2.body">As bandas espirais funcionam como teste natural de anisotropia visual e contraste em modo monocromático com cor do ponto customizada.</div></div>
               </details>
@@ -7936,11 +7987,11 @@
               <h3 class="nasa-card-title" data-home="nasa.c5.title">Expedição 40 · Correntes &amp; Nuvens</h3>
               <p class="nasa-card-desc" data-home="nasa.c5.desc">Mapeamento de estratocúmulos e fronteira costeira usado no acompanhamento de aerossóis, albedo oceânico e padrões de vento em larga escala.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c5.acc1.sum">Instrumentação Orbital</span> <span class="ds-acc-meta">TELE</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c5.acc1.body">Registro de 10 de agosto de 2014 · lente teleobjetiva de alta resolução através do vidro óptico de quartzo da ISS.</div></div>
                 </details>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c5.acc2.sum">Preservação &amp; Albedo</span> <span class="ds-acc-meta">86% OP</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c5.acc2.body">Altas luzes de nuvens refletem o papel Ivory/Paper sem estourar o branco quando a opacidade da chapa é calibrada em 86%.</div></div>
                 </details>
@@ -7959,7 +8010,7 @@
                   <summary><span data-home="nasa.c6.acc1.sum">Sistema Óptico de Engenharia</span> <span class="ds-acc-meta">OPNAV</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c6.acc1.body">Câmera acoplada à ponta do painel solar da espaçonave Orion (Optical Navigation Camera) em trajetória além da órbita lunar.</div></div>
                 </details>
-                <details class="ds-acc-item" data-anim="closed">
+                <details class="ds-acc-item" open data-anim="open">
                   <summary><span data-home="nasa.c6.acc2.sum">Linhagem Arquivística 1968–2026</span> <span class="ds-acc-meta">ARCHIVE</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c6.acc2.body">Retoma a gramática visual do primeiro Earthrise, agora reprocessável ao vivo em malha quadrada ou hexagonal pelo shader Paper.</div></div>
                 </details>
@@ -8086,16 +8137,19 @@
     <div class="nav-rail-group">
       <div class="eyebrow" data-home="rail.sections">Seções nesta página</div>
       <nav class="nav-rail-list" aria-label="Seções do Design System" data-i18n-attr="aria-label:nav.sections">
-        <button type="button" data-nav-target="historia" data-home="rail.sec.historia">01 · História</button>
-        <button type="button" data-nav-target="cores" data-home="rail.sec.cores">02 · Superfícies</button>
+        <button type="button" data-nav-target="historia" data-home="rail.sec.historia">00 · História</button>
+        <button type="button" data-nav-target="cores" data-home="rail.sec.cores">01 · Superfícies &amp; 26 Cores</button>
         <button type="button" data-nav-target="tokens" data-home="rail.sec.tokens">Tokens</button>
-        <button type="button" data-nav-target="tipografia" data-home="rail.sec.tipografia">03 · Tipografia</button>
-        <button type="button" data-nav-target="interacoes" data-home="rail.sec.interacoes">04 · Motion</button>
-        <button type="button" data-nav-target="editorial" data-home="rail.sec.editorial">05 · Editorial</button>
-        <button type="button" data-nav-target="cronologia" data-home="rail.sec.cronologia">06 · Lifeline</button>
-        <button type="button" data-nav-target="svg-viz" data-home="rail.sec.svg">07 · SVG 1:1</button>
-        <button type="button" data-nav-target="atelier" data-home="rail.sec.atelier">08 · Atelier TS</button>
+        <button type="button" data-nav-target="tipografia" data-home="rail.sec.tipografia">02 · Tipografia</button>
+        <button type="button" data-nav-target="interacoes" data-home="rail.sec.interacoes">03 · Motion</button>
+        <button type="button" data-nav-target="editorial" data-home="rail.sec.editorial">04 · Editorial</button>
+        <button type="button" data-nav-target="cronologia" data-home="rail.sec.cronologia">05 · Lifeline</button>
+        <button type="button" data-nav-target="svg-viz" data-home="rail.sec.svg">06 · SVG 1:1</button>
+        <button type="button" data-nav-target="atelier" data-home="rail.sec.atelier">07 · Atelier TS</button>
+        <button type="button" data-nav-target="painterly-studio" data-home="rail.sec.painterly">08 · Studio Shaders</button>
         <button type="button" data-nav-target="habilidades" data-home="skills.railItem">09 · Habilidades &amp; Craft</button>
+        <button type="button" data-nav-target="nasa-orbital" data-home="rail.sec.nasa">10 · Arquivo NASA</button>
+        <button type="button" id="rail-open-drawer" data-home="rail.tokens">Copiar Tokens &amp; Config ↗</button>
       </nav>
     </div>
 
@@ -8156,10 +8210,12 @@
               <button class="cliptabs-btn" data-code-tab="css" data-active="true">tokens.css</button>
               <button class="cliptabs-btn" data-code-tab="ts">tokens.ts</button>
               <button class="cliptabs-btn" data-code-tab="atelier">atelier.ts</button>
+              <button class="cliptabs-btn" data-code-tab="preset">preset.json</button>
               <div class="cliptabs-overlay" aria-hidden="true">
                 <span>tokens.css</span>
                 <span>tokens.ts</span>
                 <span>atelier.ts</span>
+                <span>preset.json</span>
               </div>
             </div>
           </div>
@@ -8576,67 +8632,174 @@
         }
       }
 
+      function collectFullPreferences() {
+        const m = SURFACE_META[state.surface] || SURFACE_META.ivory;
+        const lang = (() => {
+          try { return localStorage.getItem('meridian-lang') || document.documentElement.lang || 'pt'; } catch { return 'pt'; }
+        })();
+        const ht = window.__MERIDIAN_HALFTONE__ || null;
+        return {
+          surface: state.surface,
+          surfaceName: m.name,
+          contrast: m.contrast,
+          palette: {
+            bg: m.bg,
+            surface1: m.s1,
+            surface2: m.s2,
+            surface3: m.s3,
+            fg: m.fg,
+            fgMuted: m.muted,
+          },
+          mode: state.mode,
+          signals: state.signals,
+          lang,
+          typography: {
+            primary: { tone: typeState.primary.tone, hex: typeInkHex(typeState.primary.tone, 'primary'), opacity: typeState.primary.opacity },
+            secondary: { tone: typeState.secondary.tone, hex: typeInkHex(typeState.secondary.tone, 'secondary'), opacity: typeState.secondary.opacity },
+            tertiary: { tone: typeState.tertiary.tone, hex: typeInkHex(typeState.tertiary.tone, 'tertiary'), opacity: typeState.tertiary.opacity },
+          },
+          grain: {
+            intensity: state.grain,
+            size: state.grainSize,
+            opacity: Number(state.grainOpacity.toFixed(2)),
+            dust: state.grainDust,
+            dustLevel: Number(document.documentElement.dataset.grainDustLevel || 0),
+            scratch: state.grainScratch,
+            scratchLevel: Number(document.documentElement.dataset.grainScratchLevel || 0),
+            double: state.grainDouble,
+          },
+          nasaHalftone: ht ? {
+            enabled: ht.enabled,
+            originalColors: ht.originalColors,
+            dotColor: ht.dotColor,
+            type: ht.type,
+            grid: ht.grid,
+            size: ht.size,
+            radius: ht.radius,
+            contrast: ht.contrast,
+            rotation: ht.rotation,
+            scale: ht.scale,
+            grainMixer: ht.grainMixer,
+            grainOverlay: ht.grainOverlay,
+            grainSize: ht.grainSize,
+            opacity: ht.opacity,
+            inverted: ht.inverted,
+            mipmaps: ht.mipmaps,
+            antiMoireBlur: ht.antiMoireBlur,
+            pixelRatio: ht.pixelRatio,
+          } : null,
+        };
+      }
+
       function renderDrawerCode() {
-        const m = SURFACE_META[state.surface];
+        const cfg = collectFullPreferences();
+        const m = cfg.palette;
         const modeLabel = state.mode === 'technical' ? 'Técnico Pro' : 'B2C Invisível';
         const grainLabel = ({ off: 'Off', subtle: 'Suave', editorial: 'Editorial', tactile: 'Tátil' })[state.grain] || state.grain;
         document.getElementById('drawer-surface-title').textContent =
-          `${m.name} — superfície ativa com paridade CSS, React Native e Atelier TS.`;
-        document.getElementById('drawer-surface-eyebrow').textContent = `Tokens · ${m.name}`;
-        document.getElementById('drawer-pill-surface').textContent = m.name.split(' ')[0];
+          `${cfg.surfaceName} — superfície ativa, vozes tipográficas, Dust & Scratches e shaders prontos para reuso.`;
+        document.getElementById('drawer-surface-eyebrow').textContent = `Tokens · ${cfg.surfaceName}`;
+        document.getElementById('drawer-pill-surface').textContent = cfg.surfaceName.split(' ')[0];
         document.getElementById('drawer-pill-mode').textContent = modeLabel;
         document.getElementById('drawer-pill-grain').textContent = grainLabel;
+
         const out = document.getElementById('drawer-code-output');
+        const tp = cfg.typography;
+        const gr = cfg.grain;
+        const ht = cfg.nasaHalftone;
+
         if (state.drawerLang === 'css') {
-          out.textContent = `/* Meridian tokens.css — [data-surface="${state.surface}"] */
-[data-surface="${state.surface}"] {
+          const typeLines = [
+            tp.primary.tone !== 'surface' ? `  --ds-type-primary-ink: ${tp.primary.hex};` : `  /* --ds-type-primary-ink: inherits --ds-fg (${m.fg}) */`,
+            `  --ds-type-primary-alpha: ${(tp.primary.opacity / 100).toFixed(2)};`,
+            tp.secondary.tone !== 'surface' ? `  --ds-type-secondary-ink: ${tp.secondary.hex};` : `  /* --ds-type-secondary-ink: inherits --ds-fg-secondary */`,
+            `  --ds-type-secondary-alpha: ${(tp.secondary.opacity / 100).toFixed(2)};`,
+            tp.tertiary.tone !== 'surface' ? `  --ds-type-tertiary-ink: ${tp.tertiary.hex};` : `  /* --ds-type-tertiary-ink: inherits --ds-fg-muted */`,
+            `  --ds-type-tertiary-alpha: ${(tp.tertiary.opacity / 100).toFixed(2)};`,
+          ].join('\n');
+
+          out.textContent = `/* Meridian Complete Preferences · Drop-in CSS + HTML attributes
+   <html lang="${cfg.lang}" data-surface="${cfg.surface}" data-mode="${cfg.mode}" data-signals="${cfg.signals}"
+         data-grain="${gr.intensity}" data-grain-size="${gr.size}" data-grain-dust="${gr.dust ? 'on' : 'off'}"
+         data-grain-dust-level="${gr.dustLevel}" data-grain-scratch="${gr.scratch ? 'on' : 'off'}"
+         data-grain-scratch-level="${gr.scratchLevel}" data-grain-double="${gr.double ? 'on' : 'off'}"> */
+:root,
+[data-surface="${cfg.surface}"] {
   --ds-bg: ${m.bg};
-  --ds-surface-1: ${m.s1};
-  --ds-surface-2: ${m.s2};
-  --ds-surface-3: ${m.s3};
+  --ds-surface-1: ${m.surface1};
+  --ds-surface-2: ${m.surface2};
+  --ds-surface-3: ${m.surface3};
   --ds-fg: ${m.fg};
-  --ds-fg-muted: ${m.muted};
-  --ds-rule: color-mix(in srgb, var(--ds-fg) 7%, transparent);
-  --ds-border: color-mix(in srgb, var(--ds-fg) 8%, transparent);
-  --ds-paper-blend: ${DARK_SURFACES.has(state.surface) ? 'screen' : 'multiply'};
+  --ds-fg-muted: ${m.fgMuted};
+  --ds-rule: color-mix(in srgb, var(--ds-fg) 9%, transparent);
+  --ds-border: color-mix(in srgb, var(--ds-fg) 9%, transparent);
+  --ds-paper-blend: ${DARK_SURFACES.has(cfg.surface) ? 'screen' : 'multiply'};
+  --ds-grain-opacity: ${gr.opacity};
+${typeLines}
   --ds-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ds-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-}`;
+}${ht ? `
+
+/* Active NASA Paper Halftone Preset (enabled: ${ht.enabled}) */
+:root {
+  --nasa-ht-type: '${ht.type}';
+  --nasa-ht-grid: '${ht.grid}';
+  --nasa-ht-dot-color: ${ht.originalColors ? 'original' : ht.dotColor};
+  --nasa-ht-size: ${ht.size};
+  --nasa-ht-radius: ${ht.radius};
+  --nasa-ht-contrast: ${ht.contrast};
+  --nasa-ht-rotation: ${ht.rotation}deg;
+  --nasa-ht-scale: ${ht.scale};
+  --nasa-ht-blur: ${ht.antiMoireBlur}px;
+  --nasa-ht-mipmaps: ${ht.mipmaps};
+}` : ''}`;
         } else if (state.drawerLang === 'ts') {
-          out.textContent = `// Meridian tokens.ts — React Native / Expo / Web
-import { getSurfaceTheme, MOTION } from '@meridian/design-system';
+          out.textContent = `// Meridian Complete Configuration · TypeScript / React Native / Web
+import { getSurfaceTheme, MOTION, mountPaperGrain, setPaperGrainOpacity, setPaperGrainDustLevel, setPaperGrainScratchLevel } from '@meridian/design-system';
 
-const theme = getSurfaceTheme('${state.surface}', '${state.signals}');
-// bg: '${m.bg}' · fg: '${m.fg}' · contrast: '${m.contrast}'
+export const MERIDIAN_PREFERENCES = ${JSON.stringify(cfg, null, 2)} as const;
 
-// Reanimated 4 (UI Thread — nunca setState por frame!)
-export const sheetSpring = MOTION.springs.sheet;
-// { duration: 300, dampingRatio: 0.8, overshootClamping: false }
+export const theme = getSurfaceTheme('${cfg.surface}', '${cfg.signals}');
 
-export const pressScale = MOTION.gesture.pressScale; // 0.97`;
+// Boot exact PaperGrain + Dust & Scratches on mount:
+mountPaperGrain({
+  size: '${gr.size}',
+  dust: ${gr.dust},
+  dustLevel: ${gr.dustLevel},
+  scratch: ${gr.scratch},
+  scratchLevel: ${gr.scratchLevel},
+  double: ${gr.double},
+});
+setPaperGrainOpacity(${gr.opacity});`;
+        } else if (state.drawerLang === 'preset') {
+          const storage = {
+            'meridian-surface': cfg.surface,
+            'meridian-lang': cfg.lang,
+            'meridian-type-config': typeState,
+            'meridian-grain': gr.intensity,
+            'meridian-grain-size': gr.size,
+            'meridian-grain-opacity-v2': String(gr.opacity),
+            'meridian-grain-dust': gr.dust ? 'on' : 'off',
+            'meridian-grain-dust-level': String(gr.dustLevel),
+            'meridian-grain-scratch': gr.scratch ? 'on' : 'off',
+            'meridian-grain-scratch-level': String(gr.scratchLevel),
+            'meridian-grain-double': gr.double ? 'on' : 'off',
+          };
+          out.textContent = `// Paste in another Meridian project's console or bootstrap to clone exact settings:
+const MERIDIAN_CLONE_PRESET = ${JSON.stringify({ preferences: cfg, localStorage: storage }, null, 2)};`;
         } else {
-          out.textContent = `// Meridian atelier-engine.ts — 100% TypeScript (Zero p5.js!)
-import {
-  runMeridianSketch,
-  createEconWatercolorSketch,
-  createCrayonCollageSketch,
-} from '@meridian/design-system/atelier-engine';
+          out.textContent = `// Meridian atelier-engine.ts — Configured with current surface, typography ink & grain
+import { runMeridianSketch, createEconWatercolorSketch } from '@meridian/design-system/atelier-engine';
 
-// Web Canvas 2D (ou RN Skia via AtelierDrawingBackend)
 const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
-  surface: '${state.surface}',
-  signalStyle: '${state.signals}',
+  surface: '${cfg.surface}',
+  signalStyle: '${cfg.signals}',
+  inkHex: '${tp.primary.hex}',
+  grain: { intensity: '${gr.intensity}', size: '${gr.size}', opacity: ${gr.opacity}, dustLevel: ${gr.dustLevel}, scratchLevel: ${gr.scratchLevel} },
   seed: 20261120,
   maxFrames: 92,
-  respectReducedMotion: true, // pausa offscreen & reduz movimento
-});
-
-// Primitivas disponíveis no callback draw(atelier, frame):
-// atelier.watercolorWash(poly, hex, { layers: 22, bleed: 0.34 })
-// atelier.brushFillRect(x, y, w, h, progress, hex, 'watercolor')
-// atelier.graphitePencil(path, hex, { grade: '4B', pressure: 0.9 })
-// atelier.waxCrayon(path, hex, { thickness: 12, tooth: 0.52 })
-// atelier.inkBrush(path, hex, { width: 7, bristles: 9, dryness: 0.36 })`;
+  respectReducedMotion: true,
+});`;
         }
       }
 
@@ -8656,6 +8819,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         document.getElementById('grain-blend-readout').textContent =
           `${GRAIN_LABELS[state.grain].toLowerCase()} · ${opacityPct}% · ${(GRAIN_SIZE_LABELS[state.grainSize] || 'Médio').toLowerCase()} · ${extras}`;
         document.getElementById('meta-theme-color').setAttribute('content', m.bg);
+        if (document.getElementById('drawer-panel')?.dataset.open === 'true' && typeof renderDrawerCode === 'function') renderDrawerCode();
       }
 
       function syncSurfaceMenuTrigger(surfaceId) {
@@ -8763,6 +8927,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         });
         try { localStorage.setItem('meridian-type-config', JSON.stringify(typeState)); } catch {}
         syncTypeMenu();
+        if (typeof renderDrawerCode === 'function') renderDrawerCode();
       }
 
       function renderTypeMenu() {
@@ -9416,18 +9581,34 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       navRailBackdrop?.addEventListener('click', () => setNavRail(false));
 
       /* Header: seções inline ≥1024px · hambúrguer abaixo — fecha rail ao expandir */
+      let lastDesktopTab = 'overview';
+      document.getElementById('rail-open-drawer')?.addEventListener('click', () => {
+        setNavRail(false);
+        setDrawer(true);
+      });
+      window.addEventListener('meridian:halftone', () => {
+        if (typeof renderDrawerCode === 'function') renderDrawerCode();
+      });
+      window.addEventListener('meridian:lang', () => {
+        if (typeof renderDrawerCode === 'function') renderDrawerCode();
+      });
+
       const topbarNavMq = window.matchMedia('(min-width: 1024px)');
       const syncTopbarNavMode = () => {
         const inline = topbarNavMq.matches;
         document.documentElement.dataset.topbarNav = inline ? 'inline' : 'drawer';
         if (inline) {
           setNavRail(false);
+          if (typeof selectDsTab === 'function') selectDsTab(lastDesktopTab || 'overview', false);
           requestAnimationFrame(() => {
             const mainNav = document.querySelector('[data-cliptabs="main-nav"]');
             const active = mainNav?.querySelector('[data-active="true"]')
               || mainNav?.querySelector('[data-nav-target]');
             if (mainNav && active) updateClipTabs(mainNav, active);
           });
+        } else {
+          // Mobile: keep complete full page accessible in scroll + warm up canvases
+          if (typeof selectDsTab === 'function') selectDsTab('all', false);
         }
       };
       if (typeof topbarNavMq.addEventListener === 'function') {
@@ -9435,7 +9616,6 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       } else {
         topbarNavMq.addListener(syncTopbarNavMode);
       }
-      syncTopbarNavMode();
 
       const grainBtn = document.getElementById('btn-grain-popover');
       const grainDirectBtn = document.getElementById('btn-grain-direct');
@@ -9598,9 +9778,15 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
         const navBtn = e.target.closest('[data-nav-target]');
         if (navBtn) {
-          const target = document.getElementById(navBtn.dataset.navTarget);
+          const id = navBtn.dataset.navTarget;
+          const target = document.getElementById(id);
+          const targetSec = target?.closest('section[data-tab-group]');
+          const primaryTab = (targetSec?.dataset.tabGroup || '').split(/\s+/)[0];
+          if (primaryTab && typeof selectDsTab === 'function' && window.innerWidth >= 1024) {
+            selectDsTab(primaryTab, false);
+          }
           markSectionNav(navBtn);
-          if (target) target.scrollIntoView({ behavior: 'smooth' });
+          if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 40);
           if (navBtn.dataset.navTarget === 'atelier' && typeof restartAtelier === 'function') {
             // Espera o scroll pousar para o reveal rodar visível
             window.setTimeout(() => restartAtelier(false, { forcePlay: true }), 420);
@@ -9774,7 +9960,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       const topbar = document.getElementById('topbar');
       const progressBar = document.getElementById('scroll-progress');
       const mainNav = document.querySelector('[data-cliptabs="main-nav"]');
-      const sectionIds = ['historia', 'cores', 'tokens', 'tipografia', 'interacoes', 'editorial', 'cronologia', 'svg-viz', 'atelier', 'habilidades'];
+      const sectionIds = ['historia', 'cores', 'tokens', 'tipografia', 'interacoes', 'editorial', 'cronologia', 'svg-viz', 'atelier', 'painterly-studio', 'habilidades', 'nasa-orbital'];
 
       function markSectionNav(activeBtn) {
         if (!activeBtn) return;
@@ -11659,13 +11845,22 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       const initialHash = window.location.hash.slice(1);
       const hashGroups = initialHash ? document.getElementById(initialHash)?.closest('section[data-tab-group]')?.dataset.tabGroup : null;
       const hashTab = hashGroups ? hashGroups.split(/\s+/)[0] : null;
-      selectDsTab(hashTab || 'overview', false);
+      lastDesktopTab = hashTab || 'overview';
 
+      const prevSelectDsTab = selectDsTab;
+      // Track explicit desktop tab picks without overwriting lastDesktopTab when mobile forces 'all'
+      document.addEventListener('click', (ev) => {
+        const b = ev.target.closest('[data-ds-tab]');
+        if (b?.dataset.dsTab) lastDesktopTab = b.dataset.dsTab;
+      }, true);
+
+      syncTopbarNavMode();
       applySurface(state.surface, false);
       renderLifeline();
       renderPlottedGlobe();
       restartAtelier(false);
       setTimeout(initAllClipTabs, 60);
+      void prevSelectDsTab;
     })();
   </script>
   <script type="module" src="./src/i18n-boot.ts"></script>
