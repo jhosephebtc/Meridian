@@ -37,7 +37,11 @@
       <button class="ds-burger gann-burger" id="gann-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gann-rail">
         <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <a class="gann-brand" href="./gann.html">W.D. Gann</a>
+      <a class="gann-brand" href="./gann.html">
+        <span class="meridian-brand-wordmark">Meridian</span>
+        <span class="meridian-brand-sep" aria-hidden="true"></span>
+        <span class="meridian-brand-edition">W.D. Gann</span>
+      </a>
 
       <nav class="gann-nav-center" aria-label="Seções">
         <a data-nav href="#origem" data-i18n="gann.nav.origem">Origem</a>
@@ -107,20 +111,31 @@
   </aside>
 
   <main class="gann-shell">
-    <!-- Hero: só prosa — placa vive no aside direito (padrão Arquival) -->
+    <!-- Hero: Masthead assimétrico (1.3fr | 0.7fr) + Ficha Arquival -->
     <section class="gann-hero" aria-labelledby="gann-hero-title">
-      <div class="gann-prose">
-        <p class="gann-eyebrow" data-i18n="gann.eyebrow">Dossiê arquivístico · 1878–1955</p>
-        <h1 class="gann-title" id="gann-hero-title" data-i18n="gann.title">William&nbsp;Delbert&nbsp;Gann</h1>
-        <p class="gann-lead" data-i18n="gann.lead">
-          Trader, autor e geometrista de mercado — a trajetória que liga o&nbsp;algodão do&nbsp;Texas ao&nbsp;papel quadriculado de&nbsp;Wall&nbsp;Street.
-        </p>
-        <div class="gann-pill-row">
-          <span class="gann-pill" data-tone="solid">Single-Ink</span>
-          <span class="gann-pill">HalfTone</span>
-          <span class="gann-pill">Plotter D2</span>
-          <span class="gann-pill">Arquival</span>
+      <div class="gann-masthead">
+        <div class="gann-prose">
+          <p class="gann-eyebrow" data-i18n="gann.eyebrow">Dossiê arquivístico · 1878–1955</p>
+          <h1 class="gann-title" id="gann-hero-title" data-i18n="gann.title">William&nbsp;Delbert&nbsp;Gann</h1>
+          <p class="gann-lead" data-i18n="gann.lead">
+            Trader, autor e geometrista de mercado — a trajetória que liga o&nbsp;algodão do&nbsp;Texas ao&nbsp;papel quadriculado de&nbsp;Wall&nbsp;Street.
+          </p>
+          <div class="gann-pill-row">
+            <span class="gann-pill" data-tone="solid">Single-Ink</span>
+            <span class="gann-pill">HalfTone</span>
+            <span class="gann-pill">Plotter D2</span>
+            <span class="gann-pill">Arquival</span>
+          </div>
         </div>
+        <aside class="gann-colophon" aria-label="Ficha do dossiê">
+          <div class="gann-eyebrow" style="margin-bottom:8px;">DOSSIÊ ARCHIVAL · SÉRIE 1878–1955</div>
+          <dl class="gann-colophon-grid">
+            <div><dt>Formato</dt><dd>Leitor · 3 Colunas</dd></div>
+            <div><dt>Seções</dt><dd>01 Origem → 05 Legado</dd></div>
+            <div><dt>Gravuras</dt><dd>HalfTone + Plotter D2</dd></div>
+            <div><dt>Escala</dt><dd>1×1 (45°) · Square of 9</dd></div>
+          </dl>
+        </aside>
       </div>
     </section>
 
@@ -338,6 +353,41 @@
       </aside>
     </div>
   </main>
+
+  <footer class="ds-editorial-footer" aria-label="Rodapé Dossiê W.D. Gann">
+    <div class="ds-ef-inner">
+      <div class="ds-ef-top">
+        <span class="ds-ef-tag">Dossiê Arquivístico · W.D. Gann · 1878–1955</span>
+        <p class="ds-ef-mantra" data-ef-i18n="footerMantra">“Isso ajuda os navegadores a encontrar seu caminho?”</p>
+        <button type="button" class="ds-ef-top-btn" data-scroll-top data-ef-i18n="footerBackTop">Voltar ao topo ↑</button>
+      </div>
+
+      <nav class="ds-ef-rail" aria-label="Ecossistema Meridian">
+        <a class="ds-ef-link" href="./index.html"><span class="ds-ef-idx">01</span><span data-ef-i18n="footerSystem">Sistema</span></a>
+        <a class="ds-ef-link" href="./preview.html"><span class="ds-ef-idx">02</span><span data-ef-i18n="footerStudio">Studio Preview</span></a>
+        <a class="ds-ef-link" href="./components.html"><span class="ds-ef-idx">03</span><span data-ef-i18n="footerLab">Components Lab</span></a>
+        <a class="ds-ef-link" href="./manifesto.html"><span class="ds-ef-idx">04</span><span data-ef-i18n="footerManifesto">Manifesto</span></a>
+        <a class="ds-ef-link" href="./historia.html"><span class="ds-ef-idx">05</span><span data-ef-i18n="footerFarol">O Farol e o Meridiano</span></a>
+        <a class="ds-ef-link" href="./gann.html" aria-current="page"><span class="ds-ef-idx">06</span><span data-ef-i18n="footerGann">Dossiê W.D. Gann</span></a>
+        <a class="ds-ef-link" href="./index.html#svg-viz"><span class="ds-ef-idx">07</span><span data-ef-i18n="footerPlotter">Gramática Plotter</span></a>
+        <a class="ds-ef-link" href="./index.html#atelier"><span class="ds-ef-idx">08</span><span data-ef-i18n="footerAtelier">Atelier TS</span></a>
+        <a class="ds-ef-link" href="./index.html#nasa-orbital"><span class="ds-ef-idx">09</span><span data-ef-i18n="footerNasa">Arquivo NASA</span></a>
+      </nav>
+
+      <div class="ds-ef-wordmark-wrap">
+        <a href="./gann.html" class="ds-ef-wordmark" aria-label="Meridian — Dossiê W.D. Gann">Meridian</a>
+      </div>
+
+      <div class="ds-ef-bottom">
+        <span>HalfTone Paper Shaders · Plotter D2 · Hairline 2:1 · Single-Ink</span>
+        <div class="ds-ef-bottom-links">
+          <a href="./historia.html">O Farol ↗</a>
+          <a href="./manifesto.html">Manifesto ↗</a>
+          <a href="./index.html">Design System ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   </div>
   <script type="module" src="./src/gann-app.ts"></script>

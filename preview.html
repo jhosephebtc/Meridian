@@ -33,12 +33,14 @@
     <!-- ================= TOPBAR TRANSLÚCIDA ================= -->
     <header class="ds-topbar" id="app-topbar">
       <a href="./preview.html" class="brand-mark">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.45"/>
-          <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1.2"/>
-          <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.15"/>
+          <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1"/>
+          <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1"/>
         </svg>
-        <span class="brand-title" data-i18n="prev.studio">Meridian Studio</span>
+        <span class="meridian-brand-wordmark">Meridian</span>
+        <span class="meridian-brand-sep" aria-hidden="true"></span>
+        <span class="meridian-brand-edition" data-i18n="prev.studio">Studio</span>
       </a>
 
       <!-- Clip-Path Seamless Workspace Switcher -->
@@ -189,16 +191,20 @@
       <div class="workspace-view" id="view-today">
         <section class="app-hero">
           <div class="app-wrap hero-split">
-            <div>
-              <div class="ds-eyebrow" data-prev="today.eyebrow">São Paulo · 20 Nov 2026 · Modo Invisível B2C</div>
-              <h1 class="ds-h1" style="margin:10px 0 14px;" data-prev="today.title">Manhã limpa, vento ameno e&nbsp;pico solar às&nbsp;13h</h1>
-              <p class="ds-lead" style="margin-bottom:22px;" data-prev-html="today.lead">
-                Resumo editorial diário gerado por <strong>clima, qualidade do ar e pólen</strong> — sem ruído visual nem jargão técnico, priorizando decisões práticas para sua rotina.
-              </p>
-              <div style="display:flex; flex-wrap:wrap; gap:10px;">
-                <button class="ds-btn ds-btn-primary" id="btn-replay-hero-art" data-prev="today.repaint">↻ Repintar Aquarela</button>
-                <button class="ds-btn ds-btn-pill ds-btn-secondary" data-jump-view="dossier" data-prev="today.openDossier">Abrir Raio-X do Endereço →</button>
-                <button class="ds-btn ds-btn-pill ds-btn-tertiary" data-jump-view="observatory" data-prev="today.openObs">Modo Técnico Pro</button>
+            <div class="hero-intro-grid">
+              <div>
+                <div class="ds-eyebrow" data-prev="today.eyebrow">São Paulo · 20 Nov 2026 · Modo Invisível B2C</div>
+                <h1 class="ds-h1" style="margin:10px 0 0;" data-prev="today.title">Manhã limpa, vento ameno e&nbsp;pico solar às&nbsp;13h</h1>
+              </div>
+              <div>
+                <p class="ds-lead" style="margin:0 0 20px; font-size:clamp(1.05rem, 1.45vw, 1.28rem);" data-prev-html="today.lead">
+                  Resumo editorial diário gerado por <strong>clima, qualidade do ar e pólen</strong> — sem ruído visual nem jargão técnico, priorizando decisões práticas para sua rotina.
+                </p>
+                <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                  <button class="ds-btn ds-btn-primary" id="btn-replay-hero-art" data-prev="today.repaint">↻ Repintar Aquarela</button>
+                  <button class="ds-btn ds-btn-pill ds-btn-secondary" data-jump-view="dossier" data-prev="today.openDossier">Abrir Raio-X do Endereço →</button>
+                  <button class="ds-btn ds-btn-pill ds-btn-tertiary" data-jump-view="observatory" data-prev="today.openObs">Modo Técnico Pro</button>
+                </div>
               </div>
             </div>
 
@@ -235,7 +241,7 @@
         </div>
 
         <!-- Bússola Ambiental 1:1 + Lifeline 24h -->
-        <section class="section-pad">
+        <section class="section-pad" data-band="tinted">
           <div class="app-wrap two-col-app">
             <div class="panel-surface">
               <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;">
@@ -590,60 +596,63 @@
       </div>
     </main>
 
-    <!-- ================= FOOTER (Meridian: marca | acordeões | missão) ================= -->
-    <footer class="ds-footer" aria-label="Rodapé Meridian Studio">
-      <div class="ds-footer-grid">
-        <div class="ds-footer-brand">
-          <a class="ds-footer-logo" href="./preview.html">Meridian</a>
-          <span class="ds-footer-ver" data-prev="footer.ver">Studio · prévia real · v1.5</span>
+    <!-- ================= FOOTER EDITORIAL MONUMENTAL (4 Faixas · ref. milor.si) ================= -->
+    <footer class="ds-editorial-footer" aria-label="Rodapé Meridian Studio">
+      <div class="ds-ef-inner">
+        <div class="ds-ef-top">
+          <span class="ds-ef-tag" data-prev="footer.ver">Meridian Studio · prévia real · v1.5</span>
+          <p class="ds-ef-mantra" data-ef-i18n="footerMantra">“Isso ajuda os navegadores a encontrar seu caminho?”</p>
+          <button type="button" class="ds-ef-top-btn" data-scroll-top data-ef-i18n="footerBackTop">Voltar ao topo ↑</button>
         </div>
-        <nav class="ds-footer-nav" aria-label="Áreas do Studio">
-          <details class="ds-footer-acc">
-            <summary><span data-prev="footer.accWork">Workspaces</span> <svg class="ds-footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-            <div class="ds-footer-acc-panel">
-              <a href="#" data-view="today" data-prev="tab.today">Edição de Hoje (B2C)</a>
-              <a href="#" data-view="dossier" data-prev="tab.dossier">Dossiê Endereço (#11)</a>
-              <a href="#" data-view="observatory" data-prev="tab.observatory">Observatório Pro (81k + Gann)</a>
-            </div>
-          </details>
-          <details class="ds-footer-acc">
-            <summary><span data-prev="footer.accSys">Sistema</span> <svg class="ds-footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-            <div class="ds-footer-acc-panel">
-              <a href="./index.html">Showcase Design System</a>
-              <a href="./components.html">Components Lab (90)</a>
-              <a href="./gann.html">Dossiê W.D. Gann</a>
-              <span>PaperGrain · HalfTone · Plotter</span>
-            </div>
-          </details>
-          <details class="ds-footer-acc">
-            <summary><span data-prev="footer.accKeys">Atalhos</span> <svg class="ds-footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-            <div class="ds-footer-acc-panel">
-              <span>⌘K / / — paleta 0ms</span>
-              <span data-prev="footer.shortcut2">1–9 / 0 — superfícies · M — modo</span>
-            </div>
-          </details>
+
+        <nav class="ds-ef-rail" aria-label="Ecossistema Meridian">
+          <a class="ds-ef-link" href="./index.html"><span class="ds-ef-idx">01</span><span data-ef-i18n="footerSystem">Sistema</span></a>
+          <a class="ds-ef-link" href="./preview.html" aria-current="page"><span class="ds-ef-idx">02</span><span data-ef-i18n="footerStudio">Studio Preview</span></a>
+          <a class="ds-ef-link" href="./components.html"><span class="ds-ef-idx">03</span><span data-ef-i18n="footerLab">Components Lab</span></a>
+          <a class="ds-ef-link" href="./manifesto.html"><span class="ds-ef-idx">04</span><span data-ef-i18n="footerManifesto">Manifesto</span></a>
+          <a class="ds-ef-link" href="./historia.html"><span class="ds-ef-idx">05</span><span data-ef-i18n="footerFarol">O Farol e o Meridiano</span></a>
+          <a class="ds-ef-link" href="./gann.html"><span class="ds-ef-idx">06</span><span data-ef-i18n="footerGann">Dossiê W.D. Gann</span></a>
+          <a class="ds-ef-link" href="./index.html#svg-viz"><span class="ds-ef-idx">07</span><span data-ef-i18n="footerPlotter">Gramática Plotter</span></a>
+          <a class="ds-ef-link" href="./index.html#atelier"><span class="ds-ef-idx">08</span><span data-ef-i18n="footerAtelier">Atelier TS</span></a>
+          <a class="ds-ef-link" href="./index.html#nasa-orbital"><span class="ds-ef-idx">09</span><span data-ef-i18n="footerNasa">Arquivo NASA</span></a>
         </nav>
-        <div class="ds-footer-aside">
-          <div class="ds-footer-aside-block">
-            <h3 data-prev="footer.missionH">Nossa missão</h3>
-            <p data-prev="footer.missionP">Prévia real do Meridian em Vite + TypeScript + CSS puro — o mesmo motor Single-Ink e linhagem Deimos, Kowalski, Plotter, Paper Design &amp; Jhosephe UI.</p>
+
+        <div class="ds-ef-columns" aria-label="Áreas do Studio">
+          <div class="ds-ef-col">
+            <div class="ds-ef-col-title" data-prev="footer.accWork">Workspaces</div>
+            <a href="#" data-view="today" data-prev="tab.today">Edição de Hoje (B2C)</a>
+            <a href="#" data-view="dossier" data-prev="tab.dossier">Dossiê Endereço (#11)</a>
+            <a href="#" data-view="observatory" data-prev="tab.observatory">Observatório Pro (81k + Gann)</a>
           </div>
-          <div class="ds-footer-aside-block">
-            <h3 data-prev="footer.openH">Abrir</h3>
-            <div class="ds-footer-ext">
-              <a href="./index.html">Documentação DS <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
-              <a href="./components.html">Components Lab <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
-              <a href="./manifesto.html">Manifesto <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
-              <a href="./historia.html">O Farol <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
-              <a href="./gann.html">Dossiê Gann <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
-              <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ <span class="ds-footer-ext-arrow" aria-hidden="true">↗</span></a>
-            </div>
+          <div class="ds-ef-col">
+            <div class="ds-ef-col-title" data-prev="footer.accSys">Motores Ativos</div>
+            <span>atelier-engine.ts · Aquarela &amp; Lápis</span>
+            <span>plotter-svg.ts · Globo 81k 1:1</span>
+            <span>paper-grain.ts · Canvas Procedural</span>
+          </div>
+          <div class="ds-ef-col">
+            <div class="ds-ef-col-title" data-prev="footer.accKeys">Atalhos</div>
+            <span>⌘K / / — paleta instantânea 0ms</span>
+            <span data-prev="footer.shortcut2">1–9 / 0 — superfícies · M — modo</span>
+          </div>
+          <div class="ds-ef-col">
+            <div class="ds-ef-col-title" data-prev="footer.missionH">Nossa Missão</div>
+            <span data-prev="footer.missionP">Prévia real do Meridian em Vite + TypeScript + CSS puro sobre o motor Single-Ink.</span>
           </div>
         </div>
-      </div>
-      <div class="ds-footer-meta">
-        <span>Deimos / Evil Rabbit · Emil Kowalski · Plotter · Hairline · Gridlines · Paper Shaders · Jhosephe UI</span>
-        <span>Single-Ink · 13 Superfícies · PaperGrain canvas</span>
+
+        <div class="ds-ef-wordmark-wrap">
+          <a href="./preview.html" class="ds-ef-wordmark" aria-label="Meridian Studio">Meridian</a>
+        </div>
+
+        <div class="ds-ef-bottom">
+          <span>Deimos / Evil Rabbit · Emil Kowalski · Plotter · Hairline · Gridlines · Paper Shaders · Jhosephe UI</span>
+          <div class="ds-ef-bottom-links">
+            <a href="./index.html">Design System ↗</a>
+            <a href="./components.html">Components Lab (90) ↗</a>
+            <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ ↗</a>
+          </div>
+        </div>
       </div>
     </footer>
   </div>

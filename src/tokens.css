@@ -20,50 +20,62 @@
   --ds-font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --ds-font-mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Monaco, Consolas, monospace;
 
-  /* Escala Tipográfica Fluida (Geist Serif — peso 400 + kerning óptico) */
-  --ds-text-mega: clamp(3.25rem, 8vw, 6.25rem);        /* 52px → 100px */
-  --ds-text-h1: clamp(2.375rem, 4.8vw, 4.5rem);        /* 38px → 72px  */
-  --ds-text-h2: clamp(1.75rem, 2.6vw, 2.375rem);       /* 28px → 38px  */
-  --ds-text-h3: clamp(1.375rem, 1.9vw, 1.75rem);       /* 22px → 28px  */
-  --ds-text-h4: 1.375rem;                              /* 22px         */
-  --ds-text-lead: clamp(1.25rem, 2vw, 1.75rem);        /* 20px → 28px  */
-  --ds-text-metric: clamp(2.5rem, 4.6vw, 4.25rem);     /* 40px → 68px  */
+  /* Escala Tipográfica Fluida (Geist Serif — peso 400 + kerning óptico, calibrada ref. Milor) */
+  --ds-text-mega: clamp(2.85rem, 6.4vw, 5.5rem);        /* 45.6px → 88px  */
+  --ds-text-h1: clamp(2.25rem, 4.5vw, 4.15rem);         /* 36px → 66.4px  */
+  --ds-text-h2: clamp(1.85rem, 3.1vw, 2.85rem);         /* 29.6px → 45.6px */
+  --ds-text-h3: clamp(1.35rem, 1.85vw, 1.75rem);        /* 21.6px → 28px  */
+  --ds-text-h4: 1.25rem;                                /* 20px           */
+  --ds-text-lead: clamp(1.15rem, 1.75vw, 1.5rem);       /* 18.4px → 24px  */
+  --ds-text-metric: clamp(2.5rem, 4.6vw, 4.25rem);      /* 40px → 68px    */
 
-  /* Escala Funcional (Geist Sans & Mono) */
-  --ds-text-body-lg: 1.0625rem;                        /* 17px — prosa enciclopédica */
-  --ds-text-body-md: 0.9375rem;                        /* 15px — UI / cards padrão   */
-  --ds-text-body-sm: 0.84375rem;                       /* 13.5px — sidebar / fatos   */
-  --ds-text-ui-md: 0.8125rem;                          /* 13px — botões / tabs       */
-  --ds-text-mono-md: 0.8125rem;                        /* 13px — dados / códigos     */
-  --ds-text-mono-sm: 0.75rem;                          /* 12px — metadados / fontes  */
-  --ds-text-mono-xs: 0.6875rem;                        /* 11px — badges / tags       */
-  --ds-text-mono-micro: 0.625rem;                      /* 10px — citações / eixos    */
+  /* Escala Funcional (Geist Sans & Mono — variável 100..900) */
+  --ds-text-body-lg: 1.03125rem;                        /* 16.5px — prosa enciclopédica */
+  --ds-text-body-md: 0.9375rem;                         /* 15px — UI / cards padrão     */
+  --ds-text-body-sm: 0.875rem;                          /* 14px — apoio editorial / lead */
+  --ds-text-ui-md: 0.8125rem;                           /* 13px — botões / tabs         */
+  --ds-text-nav: 0.78125rem;                            /* 12.5px — masthead / índice   */
+  --ds-text-mono-md: 0.8125rem;                         /* 13px — dados / códigos       */
+  --ds-text-mono-sm: 0.75rem;                           /* 12px — metadados / fontes    */
+  --ds-text-mono-xs: 0.65625rem;                        /* 10.5px — eyebrows / tags     */
+  --ds-text-mono-micro: 0.625rem;                       /* 10px — citações / eixos      */
+
+  /* Pesos Tipográficos Variáveis Contidos (Quiet Luxury — zero negrito pesado 600/700) */
+  --ds-weight-display: 400;                             /* Geist Serif — sempre 400     */
+  --ds-weight-light: 340;                               /* Descrições, subtítulos, cards */
+  --ds-weight-prose: 360;                               /* Prosa enciclopédica longa    */
+  --ds-weight-nav: 380;                                 /* Navegação masthead / TOC     */
+  --ds-weight-regular: 400;                             /* Inputs / base funcional      */
+  --ds-weight-ui: 450;                                  /* Botões, cliptabs, nav ativo  */
+  --ds-weight-emphasis: 500;                            /* Micro-ênfase / strong sutil  */
+  --ds-weight-mono: 360;                                /* Telemetria, códigos, índices */
+  --ds-weight-eyebrow: 400;                             /* Eyebrows caixa-alta          */
 
   /*
-   * Leading & Tracking — calibração Geist
-   * Serif: ópticamente alta (hairlines) → leading um pouco mais aberto que Instrument.
-   * Sans: métricas generosas → tracking levemente negativo no corpo; mono com + leve.
+   * Leading & Tracking — calibração Geist × Milor Editorial
+   * Serif: contraste por escala + tracking negativo preciso; Sans variável leve com entrelinha respirada.
    */
-  --ds-lh-mega: 0.96;
-  --ds-lh-display: 1.08;
-  --ds-lh-heading: 1.2;
-  --ds-lh-lead: 1.34;
+  --ds-lh-mega: 1.01;
+  --ds-lh-display: 1.06;
+  --ds-lh-heading: 1.13;
+  --ds-lh-lead: 1.42;
   --ds-lh-metric: 1;
-  --ds-lh-body-lg: 1.58;
-  --ds-lh-body: 1.5;
+  --ds-lh-body-lg: 1.66;
+  --ds-lh-body: 1.6;
   --ds-lh-ui: 1.35;
-  --ds-lh-mono: 1.45;
+  --ds-lh-mono: 1.48;
 
-  --ds-tracking-mega: -0.03em;
-  --ds-tracking-display: -0.022em;
-  --ds-tracking-heading: -0.014em;
-  --ds-tracking-lead: -0.011em;
+  --ds-tracking-mega: -0.036em;
+  --ds-tracking-display: -0.03em;
+  --ds-tracking-heading: -0.022em;
+  --ds-tracking-lead: -0.014em;
   --ds-tracking-metric: -0.028em;
-  --ds-tracking-body: -0.006em;
-  --ds-tracking-ui: -0.01em;
+  --ds-tracking-body: -0.003em;
+  --ds-tracking-nav: 0.022em;
+  --ds-tracking-ui: 0.006em;
   --ds-tracking-normal: 0em;
-  --ds-tracking-mono: 0.01em;
-  --ds-tracking-eyebrow: 0.06em;
+  --ds-tracking-mono: 0.015em;
+  --ds-tracking-eyebrow: 0.07em;
 
   /* Espaçamento Base (Múltiplos de 4px) */
   --ds-space-1: 4px;
@@ -83,25 +95,29 @@
   --ds-stack-tight: 6px;
   --ds-stack-snug: 10px;
   --ds-stack-md: 16px;
-  --ds-stack-loose: 28px;
-  --ds-stack-xl: 40px;
-  --ds-block-gap: 1.05em;                              /* margem entre <p> na prosa */
-  --ds-title-gap: 0.4em;                               /* folga após título serif */
-  --ds-section-y: clamp(3.5rem, 7vw, 6rem);            /* padding vertical de seção */
+  --ds-stack-loose: 32px;
+  --ds-stack-xl: 48px;
+  --ds-block-gap: 1.08em;                               /* margem entre <p> na prosa */
+  --ds-title-gap: 0.38em;                               /* folga após título serif   */
+  --ds-section-y: clamp(3.75rem, 6.8vw, 6.5rem);        /* padding vertical de seção */
 
-  /* Grid & Layout Containers */
-  --ds-max-wide: 1440px;                               /* Galeria / Masonry editorial */
-  --ds-max-editorial: 1280px;                          /* Leitor 3 colunas Arquival     */
-  --ds-max-prose: 65ch;                                /* guia tipográfico (~65 chars) */
-  --ds-gutter-mobile: 16px;
-  --ds-gutter-tablet: 24px;
-  --ds-gutter-desktop: 32px;                         /* Arquival reader gap (≥1100px) */
-  --ds-topbar-height: 58px;
-  /* Leitor 3 colunas — proporções proporções arquivais: 152 · fluid · 264 */
-  --ds-toc-width: 148px;
-  --ds-aside-width: 280px;
-  --ds-reader-gap: 28px;
-  --ds-hairline: 1px;                                /* espessura; sutileza vem da opacidade */
+  /* Grid & Layout Containers Unificados (Header ↔ Conteúdo ↔ Footer) */
+  --ds-shell-max: 1440px;                               /* Moldura máxima unificada  */
+  --ds-shell-gutter: clamp(20px, 4vw, 64px);            /* Gutter externo unificado  */
+  --ds-grid-gap: clamp(20px, 2.2vw, 30px);              /* Gap modular entre colunas */
+  --ds-intro-gap: clamp(28px, 6vw, 96px);               /* Gap assimétrico intro 1.2:1 */
+  --ds-max-wide: var(--ds-shell-max);                   /* Galeria / Masonry editorial */
+  --ds-max-editorial: var(--ds-shell-max);              /* Leitor 3 colunas Arquival   */
+  --ds-max-prose: 64ch;                                 /* guia tipográfico (~64 chars) */
+  --ds-gutter-mobile: 20px;
+  --ds-gutter-tablet: 28px;
+  --ds-gutter-desktop: 30px;                            /* Arquival reader gap         */
+  --ds-topbar-height: 62px;
+  /* Leitor 3 colunas — proporções arquivais: 164 · fluid · 288 */
+  --ds-toc-width: 164px;
+  --ds-aside-width: 288px;
+  --ds-reader-gap: clamp(28px, 3vw, 44px);
+  --ds-hairline: 1px;                                   /* espessura; sutileza vem da opacidade */
 
   /* Sistema Dual-Radius (Pills + Squircles & editorial Meridian Plates) */
   --ds-radius-none: 0px;
@@ -178,7 +194,7 @@
 
   /* Densidade & Padding */
   --ds-density: 1;
-  --ds-section-pad: clamp(44px, 6vw, 84px);
+  --ds-section-pad: clamp(56px, 6.8vw, 104px);
 }
 
 /* --------------------------------------------------------------------------
@@ -855,17 +871,17 @@
 [data-mode="invisible"] {
   --ds-density: 1;
   --ds-card-pad: 24px;
-  --ds-section-pad: clamp(48px, 6.5vw, 88px);
+  --ds-section-pad: clamp(56px, 6.8vw, 104px);
   --ds-prose-size: var(--ds-text-body-lg);
-  --ds-stack-loose: 28px;
+  --ds-stack-loose: 32px;
 }
 
 [data-mode="technical"] {
   --ds-density: 0.82;
-  --ds-card-pad: 14px;
-  --ds-section-pad: clamp(28px, 3.2vw, 48px);
+  --ds-card-pad: 16px;
+  --ds-section-pad: clamp(32px, 3.6vw, 52px);
   --ds-prose-size: var(--ds-text-body-md);
-  --ds-stack-loose: 16px;
+  --ds-stack-loose: 20px;
 }
 
 html[data-mode="technical"] .eyebrow {

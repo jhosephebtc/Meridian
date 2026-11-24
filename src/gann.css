@@ -15,6 +15,7 @@ html, body {
   color: var(--ds-fg);
   background-color: var(--ds-bg);
   font-family: var(--ds-font-sans);
+  font-weight: var(--ds-weight-prose, 360);
 }
 
 .gann-skip {
@@ -255,28 +256,70 @@ html, body {
   line-height: 1.5;
 }
 
-/* ---- Page shell + leitor Arquival 3 colunas ---- */
+/* ---- Page shell + leitor Arquival 3 colunas (Moldura 1440px unificada) ---- */
 .gann-shell {
-  max-width: 1320px;
+  width: 100%;
+  max-width: var(--ds-shell-max, 1440px);
   margin: 0 auto;
-  padding: 0 clamp(20px, 4.8vw, 72px) 80px;
-}
-
-@media (max-width: 820px) {
-  .gann-shell {
-    padding-inline: 16px;
-  }
+  padding: 0 var(--ds-shell-gutter, clamp(20px, 4vw, 64px)) clamp(64px, 7vw, 104px);
+  box-sizing: border-box;
 }
 
 .gann-hero {
-  padding: clamp(32px, 6vw, 56px) 0 clamp(16px, 2.5vw, 28px);
+  padding: clamp(40px, 5.8vw, 76px) 0 clamp(24px, 3.2vw, 40px);
+  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule);
+  margin-bottom: clamp(28px, 3.5vw, 44px);
   display: flex;
   flex-direction: column;
   gap: 0;
   width: 100%;
 }
 .gann-hero .gann-prose {
-  max-width: 42rem;
+  max-width: 44rem;
+}
+
+.gann-masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: end;
+}
+
+@media (min-width: 900px) {
+  .gann-masthead {
+    grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+    gap: clamp(28px, 4vw, 56px);
+  }
+}
+
+.gann-colophon {
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule-strong);
+  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule-strong);
+  padding: 16px 0;
+}
+
+.gann-colophon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
+  margin: 0;
+}
+
+.gann-colophon-grid dt {
+  font-family: var(--ds-font-mono);
+  font-size: 9.5px;
+  font-weight: var(--ds-weight-mono, 360);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-fg-muted);
+}
+
+.gann-colophon-grid dd {
+  margin: 3px 0 0;
+  font-family: var(--ds-font-sans);
+  font-size: 13px;
+  font-weight: var(--ds-weight-regular, 400);
+  color: var(--ds-fg);
 }
 
 .gann-reader {
@@ -402,18 +445,18 @@ html, body {
 }
 
 /* 3 colunas só com largura suficiente — evita aside esmagada/cropada */
-@media (min-width: 1200px) {
+@media (min-width: 1180px) {
   .gann-reader {
     grid-template-columns:
-      var(--ds-toc-width)
+      var(--ds-toc-width, 164px)
       minmax(0, 1fr)
-      minmax(var(--ds-aside-width), var(--ds-aside-width));
-    gap: var(--ds-reader-gap, 28px);
+      minmax(var(--ds-aside-width, 288px), var(--ds-aside-width, 288px));
+    gap: var(--ds-reader-gap, clamp(28px, 3vw, 44px));
   }
   .gann-reader-toc {
     display: block;
     position: sticky;
-    top: calc(var(--ds-topbar-height) + 16px);
+    top: 116px;
     align-self: start;
     min-width: 0;
   }
@@ -427,7 +470,7 @@ html, body {
     box-shadow:
       -1px 0 0 0 var(--ds-rule),
       1px 0 0 0 var(--ds-rule);
-    padding-inline: clamp(18px, 2vw, 28px);
+    padding-inline: clamp(22px, 2.6vw, 38px);
     min-width: 0;
   }
   .gann-reader-aside {
@@ -435,11 +478,11 @@ html, body {
     padding-top: 0;
     border-top: 0;
     position: sticky;
-    top: calc(var(--ds-topbar-height) + 16px);
+    top: 116px;
     align-self: start;
-    min-width: var(--ds-aside-width);
-    width: var(--ds-aside-width);
-    max-width: var(--ds-aside-width);
+    min-width: var(--ds-aside-width, 288px);
+    width: var(--ds-aside-width, 288px);
+    max-width: var(--ds-aside-width, 288px);
     overflow: visible;
     overflow-wrap: break-word;
     box-sizing: border-box;
@@ -454,7 +497,7 @@ html, body {
   }
 }
 
-@media (min-width: 960px) and (max-width: 1199px) {
+@media (min-width: 960px) and (max-width: 1179px) {
   .gann-reader {
     grid-template-columns: var(--ds-toc-width) minmax(0, 1fr);
     gap: var(--ds-reader-gap, 28px);
@@ -498,6 +541,7 @@ html, body {
 .gann-eyebrow {
   font-family: var(--ds-font-mono);
   font-size: 10.5px;
+  font-weight: var(--ds-weight-eyebrow, 400);
   letter-spacing: var(--ds-tracking-eyebrow);
   text-transform: uppercase;
   color: var(--ds-fg-muted);
@@ -506,10 +550,11 @@ html, body {
 
 .gann-title {
   font-family: var(--ds-font-display);
-  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  font-size: var(--ds-text-h1);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: var(--ds-tracking-mega);
+  font-synthesis-weight: none;
+  line-height: var(--ds-lh-display, 1.06);
+  letter-spacing: var(--ds-tracking-display, -0.03em);
   margin: 0 0 16px;
   max-width: 18ch;
   text-wrap: balance;
@@ -520,12 +565,13 @@ html, body {
 
 .gann-lead {
   font-family: var(--ds-font-display);
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-size: clamp(1.12rem, 1.75vw, 1.4rem);
   font-weight: 400;
-  line-height: 1.45;
-  letter-spacing: var(--ds-tracking-heading);
+  font-synthesis-weight: none;
+  line-height: 1.44;
+  letter-spacing: var(--ds-tracking-lead, -0.014em);
   color: var(--ds-fg-secondary);
-  max-width: 46ch;
+  max-width: 48ch;
   margin: 0;
   text-wrap: pretty;
   hyphens: manual;
@@ -534,9 +580,10 @@ html, body {
 }
 
 .gann-prose {
-  max-width: 62ch;
+  max-width: 64ch;
   font-size: var(--ds-text-body-lg);
-  line-height: var(--ds-lh-body-lg);
+  font-weight: var(--ds-weight-prose, 360);
+  line-height: var(--ds-lh-body-lg, 1.66);
   letter-spacing: var(--ds-tracking-body);
   text-wrap: pretty;
   hyphens: manual;
@@ -663,12 +710,12 @@ html, body {
 /* ---- Sections / Arquival cards ---- */
 .gann-section {
   padding: 0;
-  margin-top: 36px;
-  padding-top: 28px;
+  margin-top: 48px;
+  padding-top: 36px;
   border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 .gann-section:first-child {
   margin-top: 0;
@@ -681,17 +728,18 @@ html, body {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 0;
 }
 .gann-section-head h2 {
   font-family: var(--ds-font-display);
-  font-size: clamp(1.5rem, 2.8vw, 2.05rem);
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
   font-weight: 400;
-  letter-spacing: var(--ds-tracking-display);
+  font-synthesis-weight: none;
+  letter-spacing: var(--ds-tracking-heading, -0.022em);
   margin: 0;
   max-width: 28ch;
-  line-height: 1.2;
+  line-height: 1.14;
   text-wrap: balance;
   hyphens: none;
   word-break: normal;
@@ -744,6 +792,7 @@ html, body {
 .gann-label {
   font-family: var(--ds-font-mono);
   font-size: 10.5px;
+  font-weight: var(--ds-weight-eyebrow, 400);
   letter-spacing: var(--ds-tracking-eyebrow);
   text-transform: uppercase;
   color: var(--ds-fg-muted);
@@ -751,16 +800,20 @@ html, body {
 }
 
 .gann-card h3 {
-  font-family: var(--ds-font-sans);
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--ds-font-display);
+  font-size: clamp(1.25rem, 1.65vw, 1.45rem);
+  font-weight: 400;
+  font-synthesis-weight: none;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
   margin: 0;
 }
 .gann-card p {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--ds-fg-muted);
+  font-size: 15px;
+  font-weight: var(--ds-weight-prose, 360);
+  line-height: 1.66;
+  color: var(--ds-fg-secondary);
 }
 
 .gann-evidence {

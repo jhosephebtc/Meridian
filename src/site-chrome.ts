@@ -48,6 +48,17 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     typeHeading: 'Cor & Opacidade de Texto',
     surfaceInk: 'Tinta da superfície',
     mutedInk: 'Tinta suavizada',
+    footerMantra: '“Isso ajuda os navegadores a encontrar seu caminho?”',
+    footerBackTop: 'Voltar ao topo ↑',
+    footerSystem: 'Sistema',
+    footerStudio: 'Studio Preview',
+    footerLab: 'Components Lab',
+    footerManifesto: 'Manifesto',
+    footerFarol: 'O Farol e o Meridiano',
+    footerGann: 'Dossiê W.D. Gann',
+    footerPlotter: 'Gramática Plotter',
+    footerAtelier: 'Atelier TS',
+    footerNasa: 'Arquivo NASA',
   },
   en: {
     navAria: 'Meridian global navigation',
@@ -80,6 +91,17 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     typeHeading: 'Text Color & Opacity',
     surfaceInk: 'Surface ink',
     mutedInk: 'Muted ink',
+    footerMantra: '“Does this help navigators find their way?”',
+    footerBackTop: 'Back to top ↑',
+    footerSystem: 'System',
+    footerStudio: 'Studio Preview',
+    footerLab: 'Components Lab',
+    footerManifesto: 'Manifesto',
+    footerFarol: 'The Lighthouse & Meridian',
+    footerGann: 'W.D. Gann Dossier',
+    footerPlotter: 'Plotter Grammar',
+    footerAtelier: 'Atelier TS',
+    footerNasa: 'NASA Archive',
   },
   es: {
     navAria: 'Navegación global Meridian',
@@ -112,6 +134,17 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     typeHeading: 'Color y Opacidad de Texto',
     surfaceInk: 'Tinta de superficie',
     mutedInk: 'Tinta suave',
+    footerMantra: '“¿Esto ayuda a los navegantes a encontrar su camino?”',
+    footerBackTop: 'Volver arriba ↑',
+    footerSystem: 'Sistema',
+    footerStudio: 'Studio Preview',
+    footerLab: 'Components Lab',
+    footerManifesto: 'Manifiesto',
+    footerFarol: 'El Faro y el Meridiano',
+    footerGann: 'Dosier W.D. Gann',
+    footerPlotter: 'Gramática Plotter',
+    footerAtelier: 'Atelier TS',
+    footerNasa: 'Archivo NASA',
   },
   fr: {
     navAria: 'Navigation globale Meridian',
@@ -144,6 +177,17 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     typeHeading: 'Couleur & Opacité du Texte',
     surfaceInk: 'Encre de surface',
     mutedInk: 'Encre atténuée',
+    footerMantra: '« Cela aide-t-il les navigateurs à trouver leur chemin ? »',
+    footerBackTop: 'Haut de page ↑',
+    footerSystem: 'Système',
+    footerStudio: 'Studio Preview',
+    footerLab: 'Components Lab',
+    footerManifesto: 'Manifeste',
+    footerFarol: 'Le Phare et le Méridien',
+    footerGann: 'Dossier W.D. Gann',
+    footerPlotter: 'Grammaire Plotter',
+    footerAtelier: 'Atelier TS',
+    footerNasa: 'Archive NASA',
   },
 };
 
@@ -441,7 +485,7 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
   header.querySelector('#global-grain-anchor')?.remove();
   header.querySelector('#global-type-anchor')?.remove();
 
-  // 1. Links globais idênticos ao Sistema (Sistema · Studio · Lab · Arquivo ▾)
+  // 1. Links globais à esquerda no masthead 1fr-auto-1fr (Sistema · Studio · Lab · Arquivo ▾)
   const nav = document.createElement('nav');
   nav.className = 'meridian-unified-nav';
   nav.setAttribute('aria-label', t.navAria);
@@ -462,11 +506,27 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
     </div>
   `;
   const brand = header.querySelector('.brand-mark, .gann-brand');
-  if (brand && brand.nextSibling) header.insertBefore(nav, brand.nextSibling);
+  if (brand) header.insertBefore(nav, brand);
   else header.prepend(nav);
 
-  // 2. Controles globais no canto direito: 21 Superfícies + Grão/Dust&Scratches + Aa Tipo
-  const rightContainer = header.querySelector('.lab-topbar-actions, .topbar-right') || header;
+  // 2. Controles globais agrupados na coluna direita (1fr justify-self:end)
+  let rightContainer = header.querySelector<HTMLElement>('.lab-topbar-actions, .topbar-right, .meridian-chrome-actions');
+  if (!rightContainer) {
+    rightContainer = document.createElement('div');
+    rightContainer.className = 'meridian-chrome-actions';
+    Array.from(header.children).forEach((child) => {
+      if (
+        child === nav
+        || child.classList.contains('gann-brand')
+        || child.classList.contains('gann-burger')
+        || child.classList.contains('gann-nav-center')
+      ) {
+        return;
+      }
+      rightContainer?.appendChild(child);
+    });
+    header.appendChild(rightContainer);
+  }
 
   // Oculta seletores legados redundantes sem quebrar event listeners das páginas
   rightContainer.querySelectorAll<HTMLElement>('.menu-anchor, .popover-wrap').forEach((wrap) => {
@@ -597,6 +657,14 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
   });
 }
 
+function syncEditorialFooterI18n(): void {
+  const t = CHROME_I18N[currentChromeLang()];
+  document.querySelectorAll<HTMLElement>('[data-ef-i18n]').forEach((el) => {
+    const key = el.dataset.efI18n;
+    if (key && t[key]) el.textContent = t[key];
+  });
+}
+
 export function bindSiteChrome(): void {
   if (document.documentElement.dataset.siteChrome === 'on') return;
   document.documentElement.dataset.siteChrome = 'on';
@@ -612,10 +680,12 @@ export function bindSiteChrome(): void {
   } catch { /* ignore */ }
 
   injectUnifiedSubpageChrome(typeCfg);
+  syncEditorialFooterI18n();
   hydrateGitHubStars();
 
   window.addEventListener('meridian:lang', () => {
     injectUnifiedSubpageChrome(typeCfg);
+    syncEditorialFooterI18n();
   });
 
   window.addEventListener('meridian:grain', () => {
@@ -654,6 +724,14 @@ export function bindSiteChrome(): void {
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null;
     if (!target) return;
+
+    const scrollTopBtn = target.closest<HTMLElement>('[data-scroll-top]');
+    if (scrollTopBtn) {
+      event.preventDefault();
+      const instant = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: instant ? 'auto' : 'smooth' });
+      return;
+    }
 
     const globalSurf = target.closest<HTMLElement>('[data-global-surface]');
     if (globalSurf?.dataset.globalSurface) {

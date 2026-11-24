@@ -4,15 +4,20 @@
    ========================================================================== */
 
 .lab-shell {
+  width: 100%;
+  max-width: var(--ds-shell-max, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  grid-template-columns: 224px minmax(0, 1fr);
+  column-gap: clamp(28px, 3.2vw, 48px);
   min-height: calc(100dvh - var(--ds-topbar-height));
-  padding-top: 0;
 }
 
 #lab-topbar {
-  padding-left: var(--ds-stack-md);
-  padding-right: var(--ds-stack-md);
+  padding-left: var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
+  padding-right: var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
 }
 
 #lab-burger {
@@ -24,11 +29,9 @@
   top: var(--ds-topbar-height);
   align-self: start;
   height: calc(100dvh - var(--ds-topbar-height));
-  padding: var(--ds-stack-md) var(--ds-stack-md) var(--ds-stack-xl);
+  padding: clamp(28px, 3.5vw, 44px) 20px clamp(40px, 5vw, 64px) 0;
   border-right: var(--ds-hairline) solid var(--ds-rule);
   overflow: auto;
-  /* respiro para a scrollbar hairline afastada da borda */
-  padding-right: calc(var(--ds-stack-md) + 4px);
 }
 
 .lab-sidebar .ds-eyebrow {
@@ -85,6 +88,7 @@
   text-align: left;
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-ui-md);
+  font-weight: var(--ds-weight-nav, 380);
   letter-spacing: var(--ds-tracking-ui);
   color: var(--ds-fg-muted);
   padding: 8px 10px;
@@ -99,12 +103,14 @@
 .lab-cat-count {
   font-family: var(--ds-font-mono);
   font-size: 10px;
+  font-weight: var(--ds-weight-mono, 360);
   font-variant-numeric: tabular-nums;
   color: var(--ds-fg-subtle);
 }
 
 .lab-cat-btn[data-active="true"] {
   color: var(--ds-fg);
+  font-weight: var(--ds-weight-ui, 450);
   background: var(--ds-bg-tint-subtle);
 }
 
@@ -118,15 +124,26 @@
 }
 
 .lab-main {
-  padding: var(--ds-stack-loose) clamp(16px, 3vw, 40px) var(--ds-stack-xl);
-  /* margem mínima da scrollbar vs borda direita */
-  padding-right: max(clamp(16px, 3vw, 40px), 12px);
+  padding: clamp(28px, 3.5vw, 48px) 0 clamp(56px, 6vw, 88px);
   min-width: 0;
 }
 
 .lab-hero {
-  max-width: 52rem;
-  margin-bottom: var(--ds-stack-xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 20px clamp(28px, 4.5vw, 64px);
+  align-items: end;
+  max-width: none;
+  padding-bottom: clamp(24px, 3vw, 36px);
+  border-bottom: var(--ds-hairline) solid var(--ds-rule);
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+@media (max-width: 1020px) {
+  .lab-hero {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 .lab-hero h1 {
@@ -136,15 +153,17 @@
   font-synthesis-weight: none;
   line-height: var(--ds-lh-display);
   letter-spacing: var(--ds-tracking-display);
-  margin: var(--ds-stack-tight) 0 var(--ds-stack-snug);
+  margin: var(--ds-stack-tight) 0 0;
 }
 
 .lab-hero p {
   margin: 0;
-  max-width: 58ch;
+  max-width: 54ch;
   color: var(--ds-fg-secondary);
-  line-height: var(--ds-lh-body-lg);
-  letter-spacing: var(--ds-tracking-body);
+  font-size: var(--ds-text-body-sm);
+  font-weight: var(--ds-weight-light, 340);
+  line-height: 1.64;
+  letter-spacing: 0.002em;
 }
 
 .lab-install-banner {
@@ -207,8 +226,8 @@
 
 .lab-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
+  gap: clamp(20px, 2.2vw, 28px);
   align-items: stretch;
 }
 
@@ -258,7 +277,7 @@
 .lab-card-meta h3 {
   margin: 0;
   font-family: var(--ds-font-display);
-  font-size: 1.2rem;
+  font-size: 1.28rem;
   font-weight: 400;
   font-synthesis-weight: none;
   letter-spacing: var(--ds-tracking-heading);
@@ -268,7 +287,8 @@
 .lab-card-meta p {
   margin: 0;
   font-size: var(--ds-text-body-sm);
-  line-height: var(--ds-lh-body);
+  font-weight: var(--ds-weight-light, 340);
+  line-height: 1.6;
   color: var(--ds-fg-muted);
 }
 
@@ -312,7 +332,7 @@
   color: var(--ds-fg);
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-ui-md);
-  font-weight: 500;
+  font-weight: var(--ds-weight-ui, 450);
   letter-spacing: var(--ds-tracking-ui);
   min-height: 40px;
   padding: 0 18px;
@@ -2284,11 +2304,14 @@
 .lab-drawer[data-open="true"] { transform: translateX(0); pointer-events: auto; }
 
 @media (max-width: 860px) {
-  .lab-shell { grid-template-columns: 1fr; }
+  .lab-shell {
+    grid-template-columns: 1fr;
+    padding-inline: var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
+  }
   .lab-sidebar {
     position: static;
     height: auto;
-    padding: 8px 16px;
+    padding: 10px 0;
     border-right: 0;
     border-bottom: var(--ds-hairline) solid var(--ds-rule);
     display: flex;
@@ -2297,6 +2320,9 @@
     align-items: center;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+  .lab-main {
+    padding: 24px 0 56px;
   }
   .lab-sidebar::-webkit-scrollbar { display: none; }
   .lab-sidebar .ds-eyebrow,

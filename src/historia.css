@@ -201,7 +201,7 @@
 /* ---- Diagramação Jornal / Revista de 3 Colunas (Historia Page) ---- */
 .historia-page .gann-shell,
 .historia-page .gann-chrome-inner {
-  max-width: 1320px;
+  max-width: var(--ds-shell-max, 1440px);
 }
 
 .historia-masthead {
@@ -213,40 +213,42 @@
 
 @media (min-width: 900px) {
   .historia-masthead {
-    grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
-    gap: clamp(24px, 3vw, 48px);
+    grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+    gap: clamp(28px, 4vw, 56px);
   }
 }
 
 .historia-colophon {
-  border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
-  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule);
-  padding: 14px 0;
+  border-top: var(--ds-hairline, 1px) solid var(--ds-rule-strong);
+  border-bottom: var(--ds-hairline, 1px) solid var(--ds-rule-strong);
+  padding: 16px 0;
 }
 
 .historia-colophon-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 16px;
+  gap: 12px 18px;
   margin: 0;
 }
 
 .historia-colophon-grid dt {
   font-family: var(--ds-font-mono);
   font-size: 9.5px;
+  font-weight: var(--ds-weight-mono, 360);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ds-fg-muted);
 }
 
 .historia-colophon-grid dd {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   font-family: var(--ds-font-sans);
-  font-size: 12.5px;
+  font-size: 13px;
+  font-weight: var(--ds-weight-regular, 400);
   color: var(--ds-fg);
 }
 
 .historia-page .gann-card.gann-prose {
-  max-width: 62ch;
+  max-width: 64ch;
   width: 100%;
 }

@@ -38,7 +38,11 @@
       <button class="ds-burger gann-burger" id="gann-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gann-rail">
         <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <a class="gann-brand" href="./historia.html" data-i18n="hist.brand">O Farol</a>
+      <a class="gann-brand" href="./historia.html">
+        <span class="meridian-brand-wordmark">Meridian</span>
+        <span class="meridian-brand-sep" aria-hidden="true"></span>
+        <span class="meridian-brand-edition" data-i18n="hist.brand">O Farol</span>
+      </a>
 
       <nav class="gann-nav-center" aria-label="Seções">
         <a data-nav href="#oceano" data-i18n="hist.nav.oceano">Oceano</a>
@@ -498,6 +502,41 @@
       </aside>
     </div>
   </main>
+
+  <footer class="ds-editorial-footer" aria-label="Rodapé O Farol e o Meridiano">
+    <div class="ds-ef-inner">
+      <div class="ds-ef-top">
+        <span class="ds-ef-tag">Ensaio Ilustrado · O Farol e o Meridiano</span>
+        <p class="ds-ef-mantra" data-ef-i18n="footerMantra">“Isso ajuda os navegadores a encontrar seu caminho?”</p>
+        <button type="button" class="ds-ef-top-btn" data-scroll-top data-ef-i18n="footerBackTop">Voltar ao topo ↑</button>
+      </div>
+
+      <nav class="ds-ef-rail" aria-label="Ecossistema Meridian">
+        <a class="ds-ef-link" href="./index.html"><span class="ds-ef-idx">01</span><span data-ef-i18n="footerSystem">Sistema</span></a>
+        <a class="ds-ef-link" href="./preview.html"><span class="ds-ef-idx">02</span><span data-ef-i18n="footerStudio">Studio Preview</span></a>
+        <a class="ds-ef-link" href="./components.html"><span class="ds-ef-idx">03</span><span data-ef-i18n="footerLab">Components Lab</span></a>
+        <a class="ds-ef-link" href="./manifesto.html"><span class="ds-ef-idx">04</span><span data-ef-i18n="footerManifesto">Manifesto</span></a>
+        <a class="ds-ef-link" href="./historia.html" aria-current="page"><span class="ds-ef-idx">05</span><span data-ef-i18n="footerFarol">O Farol e o Meridiano</span></a>
+        <a class="ds-ef-link" href="./gann.html"><span class="ds-ef-idx">06</span><span data-ef-i18n="footerGann">Dossiê W.D. Gann</span></a>
+        <a class="ds-ef-link" href="./index.html#svg-viz"><span class="ds-ef-idx">07</span><span data-ef-i18n="footerPlotter">Gramática Plotter</span></a>
+        <a class="ds-ef-link" href="./index.html#atelier"><span class="ds-ef-idx">08</span><span data-ef-i18n="footerAtelier">Atelier TS</span></a>
+        <a class="ds-ef-link" href="./index.html#nasa-orbital"><span class="ds-ef-idx">09</span><span data-ef-i18n="footerNasa">Arquivo NASA</span></a>
+      </nav>
+
+      <div class="ds-ef-wordmark-wrap">
+        <a href="./historia.html" class="ds-ef-wordmark" aria-label="Meridian — O Farol e o Meridiano">Meridian</a>
+      </div>
+
+      <div class="ds-ef-bottom">
+        <span>7 Gravuras Plotter D2 · Leitor Arquival 3 Colunas · Single-Ink</span>
+        <div class="ds-ef-bottom-links">
+          <a href="./manifesto.html">Manifesto ↗</a>
+          <a href="./gann.html">Dossiê Gann ↗</a>
+          <a href="./index.html">Design System ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   </div>
   <script type="module" src="./src/historia-app.ts"></script>

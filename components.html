@@ -35,13 +35,15 @@
     <button class="ds-burger" id="lab-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="lab-rail">
       <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
-    <a href="./components.html" class="brand-mark" style="display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none">
+    <a href="./components.html" class="brand-mark" style="display:inline-flex;align-items:center;gap:10px;color:inherit;text-decoration:none">
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1"/>
+        <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.15"/>
         <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1"/>
         <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1"/>
       </svg>
-      <span class="brand-title" style="font-family:var(--ds-font-display);font-size:1.15rem;letter-spacing:var(--ds-tracking-heading)">Meridian <span class="lab-brand-sub">Components</span></span>
+      <span class="meridian-brand-wordmark">Meridian</span>
+      <span class="meridian-brand-sep" aria-hidden="true"></span>
+      <span class="meridian-brand-edition lab-brand-sub">Lab · 90</span>
     </a>
     <div class="lab-topbar-actions" style="margin-left:auto;display:flex;align-items:center;gap:8px">
       <div data-lang-slot></div>
@@ -110,17 +112,21 @@
 
     <main class="lab-main" id="lab-main">
       <header class="lab-hero">
-        <div class="ds-eyebrow" id="lab-hero-eyebrow">Components Lab · v1.5 · 90 componentes</div>
-        <h1 id="lab-hero-title">Componentes em linha tátil para sentir — e instalar</h1>
-        <p id="lab-hero-desc">
-          Catálogo expandido do Meridian: 90 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único Hairline × Plotter. Abra qualquer componente para ver a demonstração isolada e o prompt de instalação.
-        </p>
-        <div class="lab-install-banner">
-          <span class="ds-eyebrow" style="margin:0">Registry</span>
-          <code id="lab-registry-cmd">npx shadcn@latest add https://meridian-olive-phi.vercel.app/r/registry.json</code>
-          <div class="lab-banner-actions">
-            <button type="button" class="ml-btn" id="lab-copy-registry">Copy</button>
-            <button type="button" class="ml-btn ml-btn-primary" id="lab-copy-system-prompt">Copiar prompt do sistema</button>
+        <div>
+          <div class="ds-eyebrow" id="lab-hero-eyebrow">Components Lab · v1.5 · 90 componentes</div>
+          <h1 id="lab-hero-title">Componentes em linha tátil para sentir — e instalar</h1>
+        </div>
+        <div>
+          <p id="lab-hero-desc">
+            Catálogo expandido do Meridian: 90 controles, menus, modais, sheets, drawers, pickers, tabelas, gráficos e instrumentos em traço único Hairline × Plotter. Abra qualquer componente para ver a demonstração isolada e o prompt de instalação.
+          </p>
+          <div class="lab-install-banner">
+            <span class="ds-eyebrow" style="margin:0">Registry</span>
+            <code id="lab-registry-cmd">npx shadcn@latest add https://meridian-olive-phi.vercel.app/r/registry.json</code>
+            <div class="lab-banner-actions">
+              <button type="button" class="ml-btn" id="lab-copy-registry">Copy</button>
+              <button type="button" class="ml-btn ml-btn-primary" id="lab-copy-system-prompt">Copiar prompt do sistema</button>
+            </div>
           </div>
         </div>
       </header>
@@ -137,6 +143,41 @@
       <section class="lab-detail" id="lab-detail" hidden aria-live="polite"></section>
     </main>
   </div>
+
+  <footer class="ds-editorial-footer ds-page-enter" aria-label="Rodapé Meridian Components Lab">
+    <div class="ds-ef-inner">
+      <div class="ds-ef-top">
+        <span class="ds-ef-tag">Meridian Components Lab · 90 Itens · Registry shadcn</span>
+        <p class="ds-ef-mantra" data-ef-i18n="footerMantra">“Isso ajuda os navegadores a encontrar seu caminho?”</p>
+        <button type="button" class="ds-ef-top-btn" data-scroll-top data-ef-i18n="footerBackTop">Voltar ao topo ↑</button>
+      </div>
+
+      <nav class="ds-ef-rail" aria-label="Ecossistema Meridian">
+        <a class="ds-ef-link" href="./index.html"><span class="ds-ef-idx">01</span><span data-ef-i18n="footerSystem">Sistema</span></a>
+        <a class="ds-ef-link" href="./preview.html"><span class="ds-ef-idx">02</span><span data-ef-i18n="footerStudio">Studio Preview</span></a>
+        <a class="ds-ef-link" href="./components.html" aria-current="page"><span class="ds-ef-idx">03</span><span data-ef-i18n="footerLab">Components Lab</span></a>
+        <a class="ds-ef-link" href="./manifesto.html"><span class="ds-ef-idx">04</span><span data-ef-i18n="footerManifesto">Manifesto</span></a>
+        <a class="ds-ef-link" href="./historia.html"><span class="ds-ef-idx">05</span><span data-ef-i18n="footerFarol">O Farol e o Meridiano</span></a>
+        <a class="ds-ef-link" href="./gann.html"><span class="ds-ef-idx">06</span><span data-ef-i18n="footerGann">Dossiê W.D. Gann</span></a>
+        <a class="ds-ef-link" href="./index.html#svg-viz"><span class="ds-ef-idx">07</span><span data-ef-i18n="footerPlotter">Gramática Plotter</span></a>
+        <a class="ds-ef-link" href="./index.html#atelier"><span class="ds-ef-idx">08</span><span data-ef-i18n="footerAtelier">Atelier TS</span></a>
+        <a class="ds-ef-link" href="./index.html#nasa-orbital"><span class="ds-ef-idx">09</span><span data-ef-i18n="footerNasa">Arquivo NASA</span></a>
+      </nav>
+
+      <div class="ds-ef-wordmark-wrap">
+        <a href="./components.html" class="ds-ef-wordmark" aria-label="Meridian Components Lab">Meridian</a>
+      </div>
+
+      <div class="ds-ef-bottom">
+        <span>90 Tactile Line Components · Hairline × Plotter · Single-Ink</span>
+        <div class="ds-ef-bottom-links">
+          <a href="./r/registry.json">registry.json ↗</a>
+          <a href="./index.html">Design System ↗</a>
+          <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script type="module" src="./src/components-lab.ts"></script>
   <script type="module">

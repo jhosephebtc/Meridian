@@ -37,7 +37,11 @@
       <button class="ds-burger gann-burger" id="gann-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gann-rail">
         <span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <a class="gann-brand" href="./manifesto.html">Manifesto</a>
+      <a class="gann-brand" href="./manifesto.html">
+        <span class="meridian-brand-wordmark">Meridian</span>
+        <span class="meridian-brand-sep" aria-hidden="true"></span>
+        <span class="meridian-brand-edition">Manifesto</span>
+      </a>
 
       <nav class="gann-nav-center" aria-label="Seções">
         <a data-nav href="#preambulo" data-i18n="man.nav.pre">Preâmbulo</a>
@@ -113,19 +117,30 @@
 
   <main class="gann-shell">
     <section class="gann-hero" aria-labelledby="manifesto-hero-title">
-      <div class="gann-prose">
-        <p class="gann-eyebrow" data-i18n="man.eyebrow">Documento fundador · Meridian Design System</p>
-        <h1 class="gann-title" id="manifesto-hero-title" data-i18n="man.title">Manifesto Meridian</h1>
-        <p class="gann-lead" data-i18n="man.lead">
-          Não perseguimos atenção. Mantemos direção —
-          uma linha invisível entre o cotidiano calmo e o rigor que se pode auditar.
-        </p>
-        <div class="gann-pill-row">
-          <span class="gann-pill" data-tone="solid">Single-Ink</span>
-          <span class="gann-pill">Arquival</span>
-          <span class="gann-pill">Plotter D2</span>
-          <span class="gann-pill">Referência</span>
+      <div class="gann-masthead">
+        <div class="gann-prose">
+          <p class="gann-eyebrow" data-i18n="man.eyebrow">Documento fundador · Meridian Design System</p>
+          <h1 class="gann-title" id="manifesto-hero-title" data-i18n="man.title">Manifesto Meridian</h1>
+          <p class="gann-lead" data-i18n="man.lead">
+            Não perseguimos atenção. Mantemos direção —
+            uma linha invisível entre o cotidiano calmo e o rigor que se pode auditar.
+          </p>
+          <div class="gann-pill-row">
+            <span class="gann-pill" data-tone="solid">Single-Ink</span>
+            <span class="gann-pill">Arquival</span>
+            <span class="gann-pill">Plotter D2</span>
+            <span class="gann-pill">Referência</span>
+          </div>
         </div>
+        <aside class="gann-colophon" aria-label="Ficha do manifesto">
+          <div class="gann-eyebrow" style="margin-bottom:8px;">CÂNONE FUNDADOR · PRINCÍPIOS I–VII</div>
+          <dl class="gann-colophon-grid">
+            <div><dt>Documento</dt><dd>Preâmbulo + 7 Teses</dd></div>
+            <div><dt>Motor</dt><dd>Single-Ink · 26 Papéis</dd></div>
+            <div><dt>Gravuras</dt><dd>8 Placas Plotter D2</dd></div>
+            <div><dt>Critério</dt><dd>A Pergunta na Placa</dd></div>
+          </dl>
+        </aside>
       </div>
     </section>
 
@@ -459,6 +474,41 @@
       </aside>
     </div>
   </main>
+
+  <footer class="ds-editorial-footer" aria-label="Rodapé Manifesto Meridian">
+    <div class="ds-ef-inner">
+      <div class="ds-ef-top">
+        <span class="ds-ef-tag">Documento Fundador · Manifesto Meridian</span>
+        <p class="ds-ef-mantra" data-ef-i18n="footerMantra">“Isso ajuda os navegadores a encontrar seu caminho?”</p>
+        <button type="button" class="ds-ef-top-btn" data-scroll-top data-ef-i18n="footerBackTop">Voltar ao topo ↑</button>
+      </div>
+
+      <nav class="ds-ef-rail" aria-label="Ecossistema Meridian">
+        <a class="ds-ef-link" href="./index.html"><span class="ds-ef-idx">01</span><span data-ef-i18n="footerSystem">Sistema</span></a>
+        <a class="ds-ef-link" href="./preview.html"><span class="ds-ef-idx">02</span><span data-ef-i18n="footerStudio">Studio Preview</span></a>
+        <a class="ds-ef-link" href="./components.html"><span class="ds-ef-idx">03</span><span data-ef-i18n="footerLab">Components Lab</span></a>
+        <a class="ds-ef-link" href="./manifesto.html" aria-current="page"><span class="ds-ef-idx">04</span><span data-ef-i18n="footerManifesto">Manifesto</span></a>
+        <a class="ds-ef-link" href="./historia.html"><span class="ds-ef-idx">05</span><span data-ef-i18n="footerFarol">O Farol e o Meridiano</span></a>
+        <a class="ds-ef-link" href="./gann.html"><span class="ds-ef-idx">06</span><span data-ef-i18n="footerGann">Dossiê W.D. Gann</span></a>
+        <a class="ds-ef-link" href="./index.html#svg-viz"><span class="ds-ef-idx">07</span><span data-ef-i18n="footerPlotter">Gramática Plotter</span></a>
+        <a class="ds-ef-link" href="./index.html#atelier"><span class="ds-ef-idx">08</span><span data-ef-i18n="footerAtelier">Atelier TS</span></a>
+        <a class="ds-ef-link" href="./index.html#nasa-orbital"><span class="ds-ef-idx">09</span><span data-ef-i18n="footerNasa">Arquivo NASA</span></a>
+      </nav>
+
+      <div class="ds-ef-wordmark-wrap">
+        <a href="./manifesto.html" class="ds-ef-wordmark" aria-label="Meridian — Manifesto">Meridian</a>
+      </div>
+
+      <div class="ds-ef-bottom">
+        <span>8 Gravuras Plotter D2 · Cânone Single-Ink · Geist Serif 400</span>
+        <div class="ds-ef-bottom-links">
+          <a href="./historia.html">O Farol ↗</a>
+          <a href="./gann.html">Dossiê Gann ↗</a>
+          <a href="./index.html">Design System ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   </div>
   <script type="module" src="./src/manifesto-app.ts"></script>
