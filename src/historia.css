@@ -201,10 +201,7 @@
 /* ---- Diagramação Jornal / Revista de 3 Colunas (Historia Page) ---- */
 .historia-page .gann-shell,
 .historia-page .gann-chrome-inner {
-  max-width: var(--ds-max-wide, 1280px);
-}
-.historia-page .gann-chrome-inner {
-  padding-inline: clamp(16px, 4vw, 32px);
+  max-width: 1320px;
 }
 
 .historia-masthead {

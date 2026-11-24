@@ -568,6 +568,7 @@
     }
     .ds-page-enter {
       opacity: 0;
+      transform-origin: 50% 0;
       transform: scale(var(--ds-enter-scale)) translateY(12px);
       transition: opacity var(--ds-duration-reveal) var(--ds-ease-editorial), transform var(--ds-duration-reveal) var(--ds-ease-editorial);
     }
@@ -1459,6 +1460,11 @@
 
     @media (max-width: 560px) {
       .topbar-ctrl-mid:not(.topbar-keep-mobile) { display: none !important; }
+      .topbar-controls { gap: 8px; }
+      #btn-grain-direct { display: none; }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner { padding: 6px 16px 0; }
     }
 
     .topbar-cta-short { display: none; }
@@ -1890,7 +1896,7 @@
     }
     
     .hero-grid > :first-child {
-      max-width: 42rem;
+      max-width: 48rem;
     }
     .hero-specimen-card {
       border: var(--ds-hairline, 1px) solid var(--ds-border);
@@ -8435,8 +8441,8 @@
           }, 40);
         };
         const kick = () => requestAnimationFrame(() => requestAnimationFrame(go));
-        if (document.readyState === 'complete') kick();
-        else window.addEventListener('load', kick, { once: true });
+        if (document.readyState !== 'loading') kick();
+        else document.addEventListener('DOMContentLoaded', kick, { once: true });
       })();
 
 

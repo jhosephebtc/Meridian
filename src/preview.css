@@ -15,9 +15,9 @@
 
 .app-wrap {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 clamp(16px, 3vw, 44px);
+  padding: 0 clamp(20px, 4.8vw, 72px);
 }
 
 /* Header & Brand */
@@ -45,11 +45,6 @@
 }
 
 @media (max-width: 600px) {
-  .ds-topbar {
-    padding-left: 12px;
-    padding-right: 12px;
-    gap: 6px;
-  }
   .brand-mark {
     gap: 6px;
     min-width: 0;
@@ -535,6 +530,30 @@
 
 .audit-table {
   min-width: 560px;
+}
+
+@media (max-width: 720px) {
+  .preview-status-inner {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+  }
+  .preview-status-inner::-webkit-scrollbar {
+    display: none;
+  }
+  .preview-status-group {
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+@supports (-moz-appearance: none) {
+  @media (max-width: 720px) {
+    .preview-status-inner {
+      scrollbar-width: none;
+    }
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

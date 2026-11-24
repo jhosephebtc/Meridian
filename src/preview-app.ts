@@ -374,9 +374,11 @@ function renderEnvCompass(): void {
   }
 
   const aRad = ((cur.h * 15 - 90) * Math.PI) / 180;
+  const x0 = cx + Math.cos(aRad) * 54;
+  const y0 = cy + Math.sin(aRad) * 54;
   const nx = cx + Math.cos(aRad) * (R - 42);
   const ny = cy + Math.sin(aRad) * (R - 42);
-  out += `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="${t.fg}" stroke-width="1.5" stroke-dasharray="3 3"/>`;
+  out += `<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="${t.fg}" stroke-width="1.5" stroke-dasharray="3 3"/>`;
   out += `<circle cx="${nx.toFixed(1)}" cy="${ny.toFixed(1)}" r="4.5" fill="${t.fg}"/>`;
   out += `<text x="${cx}" y="${cy - 8}" text-anchor="middle" fill="${t.fgMuted}" font-family="Geist Mono, ui-monospace, monospace" font-size="10">AQI</text>`;
   out += `<text x="${cx}" y="${cy + 20}" text-anchor="middle" fill="${t.fg}" font-family="Geist Serif, Georgia, serif" font-size="34">${cur.aqi}</text>`;

@@ -53,6 +53,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  #lab-topbar .lab-brand-sub {
+    display: none;
+  }
   #lab-topbar .lab-topbar-actions {
     gap: 4px;
     flex-wrap: nowrap;
@@ -2285,14 +2288,26 @@
   .lab-sidebar {
     position: static;
     height: auto;
+    padding: 8px 16px;
     border-right: 0;
     border-bottom: var(--ds-hairline) solid var(--ds-rule);
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-wrap: nowrap;
+    gap: 6px;
     align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  .lab-cat { flex-direction: row; flex-wrap: wrap; margin: 0; }
+  .lab-sidebar::-webkit-scrollbar { display: none; }
+  .lab-sidebar .ds-eyebrow,
+  .lab-sidebar .ds-mono { display: none; }
+  .lab-cat { flex-direction: row; flex-wrap: nowrap; gap: 4px; margin: 0; }
+  .lab-cat-btn { white-space: nowrap; flex-shrink: 0; }
+}
+@supports (-moz-appearance: none) {
+  @media (max-width: 860px) {
+    .lab-sidebar { scrollbar-width: none; }
+  }
 }
 
 @keyframes ml-draw-line {

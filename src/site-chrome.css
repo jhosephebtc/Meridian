@@ -328,7 +328,7 @@
 #app-topbar.ds-topbar {
   height: auto !important;
   min-height: 52px;
-  padding: 8px clamp(16px, 3vw, 44px) 0 !important;
+  padding: 8px max(clamp(20px, 4.8vw, 72px), calc(50% - 660px + clamp(20px, 4.8vw, 72px))) 0 !important;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -364,9 +364,23 @@
 
 @media (max-width: 820px) {
   .gann-chrome-inner {
-    padding: 8px 14px !important;
+    padding: 8px 16px !important;
     gap: 6px 8px !important;
     flex-wrap: nowrap !important;
+  }
+  #app-topbar.ds-topbar {
+    padding: 8px 16px 0 !important;
+  }
+  #lab-topbar.ds-topbar {
+    padding: 8px 16px 0 !important;
+    gap: 6px !important;
+  }
+  #lab-topbar .lab-topbar-actions {
+    gap: 4px !important;
+  }
+  #lab-topbar .site-menu-btn {
+    padding: 5px 4px !important;
+    gap: 3px !important;
   }
   .gann-chrome-inner .gann-nav-center {
     display: none !important;

@@ -18,6 +18,6 @@ export function markPageReady(options: { delayMs?: number } = {}): void {
 
   const kick = () => requestAnimationFrame(() => requestAnimationFrame(reveal));
 
-  if (document.readyState === 'complete') kick();
-  else window.addEventListener('load', kick, { once: true });
+  if (document.readyState !== 'loading') kick();
+  else document.addEventListener('DOMContentLoaded', kick, { once: true });
 }
