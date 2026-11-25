@@ -1078,7 +1078,7 @@
       justify-content: space-between;
     }
 
-    @media (min-width: 960px) {
+    @media (min-width: 1120px) {
       .topbar-row-main {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -1148,12 +1148,43 @@
     }
 
     .topbar-row-nav {
-      min-height: 40px;
+      min-height: 42px;
       padding: 0;
       border-top: 1px solid var(--ds-rule);
-      justify-content: center;
-      gap: 4px clamp(14px, 1.8vw, 26px);
-      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px 18px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+    .topbar-nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px clamp(12px, 1.4vw, 22px);
+      min-width: 0;
+      flex-wrap: nowrap;
+    }
+    .topbar-nav-examples {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px 14px;
+      flex-shrink: 0;
+    }
+    .topbar-nav-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--ds-rule-strong, var(--ds-rule));
+      margin-right: 2px;
+    }
+    .topbar-nav-examples-label {
+      font-family: var(--ds-font-mono);
+      font-size: 11px;
+      color: var(--ds-type-tertiary, var(--ds-fg-muted));
+      white-space: nowrap;
+    }
+    .topbar-example-link {
+      font-size: 12px;
+      color: var(--ds-type-secondary);
     }
     .topbar-nav-links {
       display: flex;
@@ -1501,17 +1532,48 @@
       .topbar-ctrl-wide { display: inline-flex; align-items: center; }
     }
 
-    /* Desktop: nav inferior inline · hambúrguer some */
-    @media (min-width: 1024px) {
+    /* Desktop (>=1120px): masthead + abas & exemplos inline · hambúrguer some */
+    @media (min-width: 1120px) {
       .topbar-nav-wrap { display: flex; }
       .ds-burger { display: none !important; }
     }
 
-    /* < 1024: hambúrguer para navegação de seções */
-    @media (max-width: 1023px) {
-      .topbar-nav-wrap { display: none !important; }
-      .ds-burger { display: grid; }
-      .topbar-row-nav { display: none; }
+    /* < 1120px: espaço menor — consolida header + abas + exemplos no hambúrguer superior direito */
+    @media (max-width: 1119px) {
+      .topbar-row-main {
+        display: flex !important;
+        justify-content: space-between !important;
+      }
+      .site-places,
+      .topbar-nav-wrap,
+      .topbar-row-nav,
+      .topbar-controls > .site-gh-star,
+      .topbar-controls > .popover-anchor > button,
+      .topbar-controls > .menu-anchor > button {
+        display: none !important;
+      }
+      .topbar-controls {
+        margin-left: auto;
+        gap: 0;
+      }
+      .ds-burger {
+        display: grid !important;
+        margin-left: auto;
+      }
+      .popover,
+      .popover.surface-menu,
+      .header-menu.meridian-prefs-popover {
+        position: fixed !important;
+        top: calc(env(safe-area-inset-top, 0px) + 64px) !important;
+        left: 12px !important;
+        right: 12px !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: 720px !important;
+        margin-inline: auto !important;
+        max-height: calc(100dvh - 88px - env(safe-area-inset-bottom, 0px)) !important;
+        z-index: 150 !important;
+      }
     }
 
     @media (max-width: 900px) {
@@ -5532,7 +5594,11 @@
     .popover.meridian-surface-studio-popover { width: min(492px, calc(100vw - 24px)); max-width: min(520px, calc(100vw - 24px)); max-height: min(80vh, 560px); overflow-y: auto; overflow-x: hidden; padding: 12px; }
     .popover.meridian-type-studio-popover { width: min(820px, calc(100vw - 28px)); max-width: min(840px, calc(100vw - 28px)); max-height: min(84vh, 660px); overflow-y: auto; overflow-x: hidden; padding: 14px 16px; }
     .popover.meridian-type-studio-popover #type-menu-scroll { max-height: none; overflow: visible; padding: 0; }
-    .header-menu.meridian-prefs-popover { min-width: min(490px, calc(100vw - 24px)); max-width: min(520px, calc(100vw - 24px)); padding: 14px; }
+    .header-menu.meridian-prefs-popover { width: min(640px, calc(100vw - 24px)); min-width: min(620px, calc(100vw - 24px)); max-width: min(680px, calc(100vw - 24px)); padding: 18px 20px; overflow-x: hidden; overflow-y: auto; }
+    #btn-mode-toggle { color: var(--ds-fg) !important; text-decoration: none !important; }
+    .nav-rail-ctrl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+    .nav-rail-ctrl-btn { appearance: none; border: 1px solid var(--ds-border); background: var(--ds-bg-tint-subtle); color: var(--ds-fg); font-family: var(--ds-font-sans); font-size: 12px; font-weight: 450; padding: 9px 10px; border-radius: 9px; text-align: center; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .nav-rail-lang .ds-lang { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; }
   </style>
   <link rel="stylesheet" href="./src/site-chrome.css" />
   <script>try{var s=localStorage.getItem('meridian-surface'),m=localStorage.getItem('meridian-mode');if(s)document.documentElement.setAttribute('data-surface',s);if(m)document.documentElement.setAttribute('data-mode',m);}catch(e){}</script>
@@ -5572,6 +5638,13 @@
         </a>
 
         <div class="topbar-controls">
+          <a class="site-gh-star" href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer" aria-label="Dar estrela ao Meridian no GitHub" data-i18n-attr="aria-label:nav.githubAria,title:nav.githubAria">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            <svg class="site-gh-star-ico" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.6 9.95 5.55l4.35.63-3.15 3.07.74 4.33L8 11.53 4.11 13.58l.74-4.33L1.7 6.18l4.35-.63L8 1.6Z"/></svg>
+            <span class="site-gh-star-label" data-i18n="nav.star">Estrelar</span>
+            <span class="site-gh-star-count" data-gh-stars hidden></span>
+          </a>
+
           <div class="popover-anchor" id="surface-menu-anchor">
             <button class="topbar-link surface-menu-trigger" id="btn-surface-menu" type="button" aria-expanded="false" aria-controls="surface-menu" data-tip="Atmosfera cromática">
               <span class="surface-menu-swatch" id="surface-menu-swatch" style="background:#FAF9F5"></span>
@@ -5632,30 +5705,24 @@
                   <div class="meridian-studio-sublabel" style="margin-top:0;" data-i18n="lang.label">Idioma</div>
                   <div data-lang-slot aria-label="Idioma" data-menu-keep></div>
 
-                  <div class="meridian-studio-sublabel" style="margin-top:10px;">Modo &amp; ações</div>
+                  <div class="meridian-studio-sublabel">Modo &amp; ações</div>
                   <button class="header-menu-item" id="btn-mode-toggle" type="button" aria-pressed="false" data-menu-keep>
-                    <span class="blur-morph" id="mode-label" data-i18n="top.mode">B2C Invisível</span>
+                    <span>Modo</span>
+                    <span class="kbd-hint blur-morph" id="mode-label" data-i18n="top.mode">B2C Invisível</span>
                   </button>
                   <button class="header-menu-item" id="btn-open-cmdk" type="button"><span data-home="top.cmdk">Paleta</span> <span class="kbd-hint">⌘K</span></button>
-                  <button class="header-menu-item" id="btn-open-drawer" type="button" data-i18n="top.tokens">Tokens</button>
+                  <button class="header-menu-item" id="btn-open-drawer" type="button"><span data-i18n="top.tokens">Tokens</span> <span class="kbd-hint">↗</span></button>
 
-                  <div class="meridian-studio-sublabel" data-home="grain.signals" style="margin-top:10px;">Estilo de Sinais</div>
-                  <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:5px; margin-bottom:10px;">
+                  <div class="meridian-studio-sublabel" data-home="grain.signals">Estilo de Sinais</div>
+                  <div class="meridian-prefs-seg-2" style="margin-bottom:0;">
                     <button class="btn btn-sm btn-primary" data-set-signals="chromatic" data-home="grain.chromatic">Cromático</button>
                     <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome" data-home="grain.mono">Monocromo</button>
                   </div>
-
-                  <a class="site-gh-star" href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer" aria-label="Dar estrela ao Meridian no GitHub" data-i18n-attr="aria-label:nav.githubAria,title:nav.githubAria">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                    <svg class="site-gh-star-ico" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.6 9.95 5.55l4.35.63-3.15 3.07.74 4.33L8 11.53 4.11 13.58l.74-4.33L1.7 6.18l4.35-.63L8 1.6Z"/></svg>
-                    <span class="site-gh-star-label" data-i18n="nav.star">Estrelar</span>
-                    <span class="site-gh-star-count" data-gh-stars hidden></span>
-                  </a>
                 </div>
 
                 <div class="meridian-prefs-col meridian-prefs-grain-col" id="grain-popover">
                   <div class="meridian-studio-sublabel" style="margin-top:0;" data-home="grain.intensity">Grão &amp; textura do papel</div>
-                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:10px;">
+                  <div class="meridian-prefs-seg-4">
                     <button class="btn btn-sm btn-tertiary" data-set-grain="off">Off</button>
                     <button class="btn btn-sm btn-tertiary" data-set-grain="subtle" data-home="grain.subtle">Suave</button>
                     <button class="btn btn-sm btn-primary" data-set-grain="editorial">Edit.</button>
@@ -5683,19 +5750,19 @@
                     <input id="grain-scratch-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de riscos (Scratches)" style="flex:1;" />
                   </div>
                   <div class="meridian-studio-sublabel" data-home="grain.size">Tamanho do grão</div>
-                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:10px;">
+                  <div class="meridian-prefs-seg-4">
                     <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine" data-home="grain.fine">Fino</button>
                     <button class="btn btn-sm btn-primary" data-set-grain-size="medium" data-home="grain.medium">Médio</button>
                     <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse" data-home="grain.coarse">Grosso</button>
                     <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky" data-home="grain.chunky">Grumo</button>
                   </div>
                   <div class="meridian-studio-sublabel" data-home="grain.layers">Camadas extras</div>
-                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-bottom:8px;">
+                  <div class="meridian-prefs-seg-3" style="margin-bottom:8px;">
                     <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-dust aria-pressed="false" data-home="grain.dust">Dust</button>
                     <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-scratch aria-pressed="false" data-home="grain.scratch">Scratch</button>
                     <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-double aria-pressed="false" data-home="grain.double">Duplo</button>
                   </div>
-                  <div class="mono" style="font-size:10px; color:var(--ds-type-tertiary); line-height:1.4;">
+                  <div class="mono" style="font-size:10.5px; color:var(--ds-fg); opacity:0.72; padding-top:8px; border-top:1px solid var(--ds-rule); line-height:1.4;">
                     <span id="grain-blend-readout">edit. · 100% · médio</span>
                   </div>
                 </div>
@@ -5710,15 +5777,24 @@
       </div>
 
       <nav class="topbar-row topbar-row-nav topbar-nav-wrap" data-cliptabs="main-nav" aria-label="Abas do Design System">
-        <button class="topbar-link" type="button" data-ds-tab="overview" data-active="true" data-home="nav.tab.overview">Geral &amp; História</button>
-        <button class="topbar-link" type="button" data-ds-tab="foundations" data-i18n="nav.foundations">Fundamentos</button>
-        <button class="topbar-link" type="button" data-ds-tab="motion" data-i18n="nav.motion">Motion</button>
-        <button class="topbar-link" type="button" data-ds-tab="editorial" data-home="nav.tab.editorial">Editorial</button>
-        <button class="topbar-link" type="button" data-ds-tab="plotter" data-home="nav.tab.plotter">Plotter &amp; 81k</button>
-        <button class="topbar-link" type="button" data-ds-tab="atelier" data-home="nav.tab.atelier">Atelier &amp; GPU</button>
-        <button class="topbar-link" type="button" data-ds-tab="nasa" data-home="nav.tab.nasa">Arquivo NASA</button>
-        <button class="topbar-link" type="button" data-ds-tab="skills" data-home="nav.tab.skills">Skills</button>
-        <button class="topbar-link" type="button" data-ds-tab="all" data-home="nav.tab.all">Ver Tudo</button>
+        <div class="topbar-nav-tabs">
+          <button class="topbar-link" type="button" data-ds-tab="overview" data-active="true" data-home="nav.tab.overview">Geral</button>
+          <button class="topbar-link" type="button" data-ds-tab="historia" data-home="nav.tab.historia">História</button>
+          <button class="topbar-link" type="button" data-ds-tab="motion" data-i18n="nav.motion">Motion</button>
+          <button class="topbar-link" type="button" data-ds-tab="editorial" data-home="nav.tab.editorial">Editorial</button>
+          <button class="topbar-link" type="button" data-ds-tab="plotter" data-home="nav.tab.plotter">Plotter &amp; 81k</button>
+          <button class="topbar-link" type="button" data-ds-tab="atelier" data-home="nav.tab.atelier">Atelier &amp; GPU</button>
+          <button class="topbar-link" type="button" data-ds-tab="nasa" data-home="nav.tab.nasa">Arquivo NASA</button>
+          <button class="topbar-link" type="button" data-ds-tab="skills" data-home="nav.tab.skills">Skills</button>
+          <button class="topbar-link" type="button" data-ds-tab="all" data-home="nav.tab.all">Ver Tudo</button>
+        </div>
+        <div class="topbar-nav-examples" aria-label="Exemplos e dossiês">
+          <span class="topbar-nav-sep" aria-hidden="true"></span>
+          <span class="topbar-nav-examples-label" data-home="nav.examples">Exemplos</span>
+          <a class="topbar-link topbar-example-link" href="./gann.html" data-i18n="nav.gann">W.D. Gann</a>
+          <a class="topbar-link topbar-example-link" href="./historia.html" data-i18n="nav.farol">O Farol</a>
+          <a class="topbar-link topbar-example-link" href="./manifesto.html" data-i18n="nav.manifesto">Manifesto</a>
+        </div>
       </nav>
     </div>
 
@@ -5836,7 +5912,7 @@
     </section>
 
     <!-- ================= 00. HISTÓRIA — O FAROL E O MERIDIANO ================= -->
-    <section class="section-block" id="historia" data-tab-group="overview" data-band="tinted">
+    <section class="section-block" id="historia" data-tab-group="historia" data-band="tinted">
       <div class="container-wide">
         <div class="historia-layout">
           <article class="historia-essay">
@@ -5919,7 +5995,7 @@
     </section>
 
     <!-- ================= 01. SUPERFÍCIES & MOTOR SINGLE-INK ================= -->
-    <section class="section-block" id="cores" data-tab-group="overview foundations">
+    <section class="section-block" id="cores" data-tab-group="overview">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -5977,7 +6053,7 @@
     </section>
 
     <!-- ================= TOKENS · ATLAS ================= -->
-    <section class="section-block" id="tokens" data-tab-group="foundations" data-band="tinted">
+    <section class="section-block" id="tokens" data-tab-group="overview" data-band="tinted">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6046,7 +6122,7 @@
     </section>
 
     <!-- ================= 02. TIPOGRAFIA EM 3 VOZES ================= -->
-    <section class="section-block" id="tipografia" data-tab-group="foundations">
+    <section class="section-block" id="tipografia" data-tab-group="overview">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -8214,23 +8290,36 @@
     <div class="nav-rail-lang" data-lang-slot></div>
 
     <div class="nav-rail-group">
-      <div class="eyebrow" data-home="rail.dest">Destinos</div>
+      <div class="eyebrow" data-home="rail.controls">Controles do Header</div>
+      <div class="nav-rail-ctrl-grid">
+        <button type="button" class="nav-rail-ctrl-btn" data-rail-open-pop="surface">Superfície</button>
+        <button type="button" class="nav-rail-ctrl-btn" data-rail-open-pop="type">Aa Tipo</button>
+        <button type="button" class="nav-rail-ctrl-btn" data-rail-open-pop="prefs" data-i18n="nav.shortcuts">Preferências</button>
+        <button type="button" class="nav-rail-ctrl-btn" data-rail-open-pop="cmdk">Paleta ⌘K</button>
+      </div>
+      <a class="nav-rail-ctrl-btn" href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer" style="margin-top:6px;">
+        <span>GitHub · Meridian</span><span>★ ↗</span>
+      </a>
+    </div>
+
+    <div class="nav-rail-group">
+      <div class="eyebrow" data-home="rail.dest">Páginas &amp; Exemplos</div>
       <nav class="nav-rail-list" aria-label="Páginas">
         <a href="./components.html" data-primary>Components Lab ↗</a>
         <a href="./preview.html" data-home="rail.preview">Prévia de App ↗</a>
-        <a href="./manifesto.html" data-i18n="footer.manifesto">Manifesto ↗</a>
-        <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
         <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
+        <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
+        <a href="./manifesto.html" data-i18n="footer.manifesto">Manifesto ↗</a>
         <a href="./index.html#topo" data-home="rail.home">Design System · topo</a>
-        <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ ↗</a>
       </nav>
     </div>
 
     <div class="nav-rail-group">
       <div class="eyebrow" data-home="rail.sections">Seções nesta página</div>
       <nav class="nav-rail-list" aria-label="Seções do Design System" data-i18n-attr="aria-label:nav.sections">
-        <button type="button" data-nav-target="historia" data-home="rail.sec.historia">00 · História</button>
-        <button type="button" data-nav-target="cores" data-home="rail.sec.cores">01 · Superfícies &amp; 26 Cores</button>
+        <button type="button" data-nav-target="topo" data-home="rail.overview">00 · Geral &amp; Fundamentos</button>
+        <button type="button" data-nav-target="historia" data-home="rail.sec.historia">00 · História (O Farol)</button>
+        <button type="button" data-nav-target="cores" data-home="rail.sec.cores">01 · Superfícies &amp; Cores</button>
         <button type="button" data-nav-target="tokens" data-home="rail.sec.tokens">Tokens</button>
         <button type="button" data-nav-target="tipografia" data-home="rail.sec.tipografia">02 · Tipografia</button>
         <button type="button" data-nav-target="interacoes" data-home="rail.sec.interacoes">03 · Motion</button>
@@ -8504,7 +8593,7 @@
           }
         };
 
-        paintPaperGrain();
+        window.requestAnimationFrame(paintPaperGrain);
         let resizeTimer = 0;
         window.addEventListener('resize', () => {
           window.clearTimeout(resizeTimer);
@@ -9116,7 +9205,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (announce) showToast(`Intensidade: ${GRAIN_LABELS[preset]}`);
       }
 
-      function applyGrainSize(sizeId, { announce = true } = {}) {
+      function applyGrainSize(sizeId, { announce = true, paint = true } = {}) {
         if (!GRAIN_SIZES[sizeId]) return;
         state.grainSize = sizeId;
         document.documentElement.dataset.grainSize = sizeId;
@@ -9125,7 +9214,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           btn.classList.toggle('btn-primary', btn.dataset.setGrainSize === sizeId);
           btn.classList.toggle('btn-tertiary', btn.dataset.setGrainSize !== sizeId);
         });
-        paintPaperGrain();
+        if (paint) paintPaperGrain();
         updateTelemetry();
         if (announce) showToast(`Tamanho do grão: ${GRAIN_SIZE_LABELS[sizeId]}`);
       }
@@ -9159,7 +9248,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         });
       }
 
-      function applyGrainDustLevel(raw, { announce = false } = {}) {
+      function applyGrainDustLevel(raw, { announce = false, paint = true } = {}) {
         const lv = Math.max(0, Math.min(100, Math.round(Number(raw) || 0)));
         const on = lv > 0;
         state.grainDust = on;
@@ -9174,12 +9263,12 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (dr) { dr.value = String(lv); syncRangeTrackFill(dr); }
         if (dv) dv.textContent = `${lv}%`;
         syncGrainLayerBtn('[data-set-grain-dust]', on);
-        paintPaperGrain();
+        if (paint) paintPaperGrain();
         updateTelemetry();
         if (announce) showToast(`Poeira (Dust): ${lv}%`);
       }
 
-      function applyGrainScratchLevel(raw, { announce = false } = {}) {
+      function applyGrainScratchLevel(raw, { announce = false, paint = true } = {}) {
         const lv = Math.max(0, Math.min(100, Math.round(Number(raw) || 0)));
         const on = lv > 0;
         state.grainScratch = on;
@@ -9194,7 +9283,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (sr) { sr.value = String(lv); syncRangeTrackFill(sr); }
         if (sv) sv.textContent = `${lv}%`;
         syncGrainLayerBtn('[data-set-grain-scratch]', on);
-        paintPaperGrain();
+        if (paint) paintPaperGrain();
         updateTelemetry();
         if (announce) showToast(`Riscos (Scratches): ${lv}%`);
       }
@@ -9209,12 +9298,12 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         applyGrainScratchLevel(on ? (cur > 0 ? cur : 45) : 0, { announce });
       }
 
-      function applyGrainDouble(on, { announce = true } = {}) {
+      function applyGrainDouble(on, { announce = true, paint = true } = {}) {
         state.grainDouble = !!on;
         document.documentElement.dataset.grainDouble = on ? 'on' : 'off';
         try { localStorage.setItem(GRAIN_DOUBLE_KEY, on ? 'on' : 'off'); } catch (_) {}
         syncGrainLayerBtn('[data-set-grain-double]', on);
-        paintPaperGrain();
+        if (paint) paintPaperGrain();
         updateTelemetry();
         if (announce) showToast(`Grão duplo: ${on ? 'ON' : 'OFF'}`);
       }
@@ -9245,11 +9334,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           if (savedDouble === 'on' || savedDouble === 'off') dbl = savedDouble === 'on';
         } catch (_) {}
         if (grain) applyGrain(grain, { announce: false });
-        if (size) applyGrainSize(size, { announce: false });
+        if (size) applyGrainSize(size, { announce: false, paint: false });
         applyGrainOpacity(Math.round(opacity * 100));
-        applyGrainDustLevel(dustLevel, { announce: false });
-        applyGrainScratchLevel(scratchLevel, { announce: false });
-        applyGrainDouble(dbl, { announce: false });
+        applyGrainDustLevel(dustLevel, { announce: false, paint: false });
+        applyGrainScratchLevel(scratchLevel, { announce: false, paint: false });
+        applyGrainDouble(dbl, { announce: false, paint: false });
       })();
 
       function applySignals(sig) {
@@ -9740,7 +9829,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (typeof renderDrawerCode === 'function') renderDrawerCode();
       });
 
-      const topbarNavMq = window.matchMedia('(min-width: 1024px)');
+      const topbarNavMq = window.matchMedia('(min-width: 1120px)');
       const syncTopbarNavMode = () => {
         const inline = topbarNavMq.matches;
         document.documentElement.dataset.topbarNav = inline ? 'inline' : 'drawer';
@@ -9758,6 +9847,20 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           if (typeof selectDsTab === 'function') selectDsTab('all', false);
         }
       };
+
+      document.querySelectorAll('[data-rail-open-pop]').forEach((btn) => {
+        btn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const kind = btn.dataset.railOpenPop;
+          setNavRail(false);
+          setTimeout(() => {
+            if (kind === 'surface') document.getElementById('btn-surface-menu')?.click();
+            else if (kind === 'type') document.getElementById('btn-type-menu')?.click();
+            else if (kind === 'prefs') document.getElementById('btn-shortcuts')?.click();
+            else if (kind === 'cmdk') setCmdk(true);
+          }, 20);
+        });
+      });
       if (typeof topbarNavMq.addEventListener === 'function') {
         topbarNavMq.addEventListener('change', syncTopbarNavMode);
       } else {
@@ -9939,7 +10042,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           const target = document.getElementById(id);
           const targetSec = target?.closest('section[data-tab-group]');
           const primaryTab = (targetSec?.dataset.tabGroup || '').split(/\s+/)[0];
-          if (primaryTab && typeof selectDsTab === 'function' && window.innerWidth >= 1024) {
+          if (primaryTab && typeof selectDsTab === 'function' && window.innerWidth >= 1120) {
             selectDsTab(primaryTab, false);
           }
           markSectionNav(navBtn);
@@ -10161,7 +10264,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         tiltLat: 15,
         isolate: 'all',
         spinning: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-        inView: true,
+        inView: false,
         dragging: false,
         lastX: 0,
         lastY: 0,
@@ -11579,6 +11682,8 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       function restartAtelier(announce = false, opts = {}) {
         const forcePlay = opts.forcePlay === true;
+        const atelierSec = document.getElementById('atelier');
+        if (atelierSec?.dataset.tabHidden === 'true' && !forcePlay) return;
         cancelAnimationFrame(atelierState.raf);
         atelierState.raf = 0;
         aNoise = new AtelierNoise(atelierState.seed);

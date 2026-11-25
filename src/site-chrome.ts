@@ -145,6 +145,12 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     footerPlotter: 'Gramática Plotter',
     footerAtelier: 'Atelier TS',
     footerNasa: 'Arquivo NASA',
+    headerControls: 'Controles do Header',
+    drawerTitle: 'Menu Meridian',
+    drawerPages: 'Páginas',
+    drawerExamples: 'Exemplos & Arquivo',
+    drawerOnPage: 'Nesta página',
+    closeMenu: 'Fechar ×',
   },
   en: {
     navAria: 'Meridian global navigation',
@@ -232,6 +238,12 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     footerPlotter: 'Plotter Grammar',
     footerAtelier: 'Atelier TS',
     footerNasa: 'NASA Archive',
+    headerControls: 'Header Controls',
+    drawerTitle: 'Meridian Menu',
+    drawerPages: 'Pages',
+    drawerExamples: 'Examples & Archive',
+    drawerOnPage: 'On this page',
+    closeMenu: 'Close ×',
   },
   es: {
     navAria: 'Navegación global Meridian',
@@ -319,6 +331,12 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     footerPlotter: 'Gramática Plotter',
     footerAtelier: 'Atelier TS',
     footerNasa: 'Archivo NASA',
+    headerControls: 'Controles del Header',
+    drawerTitle: 'Menú Meridian',
+    drawerPages: 'Páginas',
+    drawerExamples: 'Ejemplos y Archivo',
+    drawerOnPage: 'En esta página',
+    closeMenu: 'Cerrar ×',
   },
   fr: {
     navAria: 'Navigation globale Meridian',
@@ -406,6 +424,12 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     footerPlotter: 'Grammaire Plotter',
     footerAtelier: 'Atelier TS',
     footerNasa: 'Archive NASA',
+    headerControls: 'Contrôles d\'en-tête',
+    drawerTitle: 'Menu Méridien',
+    drawerPages: 'Pages',
+    drawerExamples: 'Exemples & Archive',
+    drawerOnPage: 'Sur cette page',
+    closeMenu: 'Fermer ×',
   },
 };
 
@@ -694,9 +718,9 @@ function buildGrainPopoverHtml(t: Record<string, string>): string {
   ];
   return `
     <div class="meridian-studio-sublabel" style="margin-top:0;">${t.intensity}</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;">
+    <div class="meridian-prefs-seg-4">
       ${intensities.map((it) => `
-        <button type="button" class="header-menu-item" data-global-grain="${it.id}" aria-pressed="${curInt === it.id ? 'true' : 'false'}" style="justify-content:center;padding:5px 4px;font-size:11.5px;" data-menu-keep>${it.label}</button>
+        <button type="button" class="header-menu-item" data-global-grain="${it.id}" aria-pressed="${curInt === it.id ? 'true' : 'false'}" data-menu-keep>${it.label}</button>
       `).join('')}
     </div>
 
@@ -716,9 +740,9 @@ function buildGrainPopoverHtml(t: Record<string, string>): string {
     </div>
 
     <div class="meridian-studio-sublabel">${t.grainSize}</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;">
+    <div class="meridian-prefs-seg-4">
       ${sizes.map((sz) => `
-        <button type="button" class="header-menu-item" data-global-grain-size="${sz.id}" aria-pressed="${curSize === sz.id ? 'true' : 'false'}" style="justify-content:center;padding:5px 4px;font-size:11.5px;" data-menu-keep>${sz.label}</button>
+        <button type="button" class="header-menu-item" data-global-grain-size="${sz.id}" aria-pressed="${curSize === sz.id ? 'true' : 'false'}" data-menu-keep>${sz.label}</button>
       `).join('')}
     </div>
 
@@ -869,6 +893,7 @@ function injectUnifiedSubpageChrome(): void {
   header.querySelector('#global-grain-anchor')?.remove();
   header.querySelector('#global-type-anchor')?.remove();
   header.querySelector('#global-prefs-anchor')?.remove();
+  header.querySelector('#meridian-mobile-burger')?.remove();
 
   // 1. Left column in 1fr-auto-1fr masthead
   const nav = document.createElement('nav');
@@ -913,15 +938,19 @@ function injectUnifiedSubpageChrome(): void {
     header.appendChild(rightContainer);
   }
 
-  // Hide legacy redundant controls in rightContainer (keep DOM nodes alive for listeners!)
+  // Hide legacy redundant controls in rightContainer (keep .site-gh-star directly visible in header!)
   Array.from(rightContainer.children).forEach((el) => {
     const h = el as HTMLElement;
-    if (h.classList.contains('menu-anchor') || h.classList.contains('popover-wrap') || h.hasAttribute('data-lang-slot') || h.classList.contains('site-gh-star')) {
+    if (h.classList.contains('menu-anchor') || h.classList.contains('popover-wrap') || h.hasAttribute('data-lang-slot')) {
       if (!h.id?.startsWith('global-')) {
         h.classList.add('meridian-legacy-hidden');
       }
     }
   });
+  if (ghStar) {
+    ghStar.classList.remove('meridian-legacy-hidden');
+    rightContainer.prepend(ghStar);
+  }
 
   const labelShort = customBg
     ? customBg
@@ -973,25 +1002,24 @@ function injectUnifiedSubpageChrome(): void {
           <div class="meridian-prefs-lang-host" data-prefs-lang-host></div>
 
           <div class="meridian-studio-sublabel">${t.prefsMode}</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div class="meridian-prefs-seg-2" style="margin-bottom:5px;">
             <button type="button" class="meridian-filter-pill" data-global-mode="invisible" aria-pressed="true" data-menu-keep>${t.modeB2c}</button>
             <button type="button" class="meridian-filter-pill" data-global-mode="technical" aria-pressed="false" data-menu-keep>${t.modeTech}</button>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px;">
+          <div class="meridian-prefs-seg-2">
             <button type="button" class="meridian-filter-pill" data-global-signals="chromatic" aria-pressed="true" data-menu-keep>${t.sigChroma}</button>
             <button type="button" class="meridian-filter-pill" data-global-signals="monochrome" aria-pressed="false" data-menu-keep>${t.sigMono}</button>
           </div>
 
           <div class="meridian-studio-sublabel">${t.prefsActions}</div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            ${hasCmdk ? `<button type="button" class="header-menu-item" data-global-cmdk>${t.paletteCmdk} <span class="mono" style="font-size:10.5px;opacity:0.65;">⌘K</span></button>` : ''}
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            ${hasCmdk ? `<button type="button" class="header-menu-item" data-global-cmdk><span>${t.paletteCmdk}</span><span class="meridian-prefs-pill-tag">⌘K</span></button>` : ''}
             ${hasLayout ? `
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+              <div class="meridian-prefs-seg-2" style="margin-bottom:0;">
                 <button type="button" class="meridian-filter-pill" data-global-layout="masthead" aria-pressed="true" data-menu-keep>${t.layoutHeader}</button>
                 <button type="button" class="meridian-filter-pill" data-global-layout="rail" aria-pressed="false" data-menu-keep>${t.layoutRail}</button>
               </div>
             ` : ''}
-            <div class="meridian-prefs-star-host" data-prefs-star-host></div>
           </div>
         </div>
 
@@ -1003,21 +1031,140 @@ function injectUnifiedSubpageChrome(): void {
     </div>
   `;
 
-  // Move live [data-lang-slot] and .site-gh-star inside the Preferences modal so listeners/counts stay 100% intact and topbar stays ultra-clean!
   if (langSlot) {
     langSlot.classList.remove('meridian-legacy-hidden');
     langSlot.setAttribute('data-menu-keep', '');
     prefsAnchor.querySelector('[data-prefs-lang-host]')?.appendChild(langSlot);
   }
-  if (ghStar) {
-    ghStar.classList.remove('meridian-legacy-hidden');
-    prefsAnchor.querySelector('[data-prefs-star-host]')?.appendChild(ghStar);
-  }
 
   rightContainer.append(surfAnchor, typeAnchor, prefsAnchor);
+
+  // Unified Top-Right Hamburger for compact/tablet/mobile (< 1120px)
+  const mobileBurger = document.createElement('button');
+  mobileBurger.type = 'button';
+  mobileBurger.className = 'ds-burger';
+  mobileBurger.id = 'meridian-mobile-burger';
+  mobileBurger.setAttribute('aria-label', t.drawerTitle);
+  mobileBurger.setAttribute('aria-expanded', 'false');
+  mobileBurger.setAttribute('aria-controls', 'meridian-mobile-drawer');
+  mobileBurger.innerHTML = '<span class="ds-burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>';
+  header.appendChild(mobileBurger);
+
+  buildSubpageMobileDrawer(pageName, t, langSlot, ghStar, hasCmdk);
   syncSubpagePrefsControls();
   hydrateStudioRangeTracks(rightContainer);
   bindGrainRangeListeners(prefsAnchor);
+}
+
+function buildSubpageMobileDrawer(
+  pageName: string,
+  t: Record<string, string>,
+  langSlot: HTMLElement | null,
+  ghStar: HTMLElement | null,
+  hasCmdk: boolean,
+): void {
+  document.getElementById('meridian-mobile-drawer')?.remove();
+  document.getElementById('meridian-drawer-backdrop')?.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'meridian-drawer-backdrop';
+  backdrop.id = 'meridian-drawer-backdrop';
+  backdrop.dataset.open = 'false';
+
+  const drawer = document.createElement('aside');
+  drawer.className = 'meridian-mobile-drawer';
+  drawer.id = 'meridian-mobile-drawer';
+  drawer.dataset.open = 'false';
+  drawer.setAttribute('role', 'dialog');
+  drawer.setAttribute('aria-modal', 'true');
+  drawer.setAttribute('aria-label', t.drawerTitle);
+
+  const curLang = currentChromeLang();
+  const pageSectionLinks: string[] = [];
+  document.querySelectorAll<HTMLAnchorElement>('.gann-nav-center a').forEach((a) => {
+    const href = a.getAttribute('href') || '#';
+    const lbl = a.textContent?.trim() || '';
+    if (lbl) pageSectionLinks.push(`<a class="meridian-drawer-link" href="${href}">${lbl}</a>`);
+  });
+  document.querySelectorAll<HTMLButtonElement>('#app-topbar .ds-cliptabs-btn').forEach((b) => {
+    const view = b.dataset.view || '';
+    const lbl = b.textContent?.trim() || '';
+    if (lbl && view) {
+      pageSectionLinks.push(`<button type="button" class="meridian-drawer-link" data-drawer-click-view="${view}">${lbl}</button>`);
+    }
+  });
+  if (pageName === 'components.html') {
+    document.querySelectorAll<HTMLButtonElement>('#lab-cat-nav .lab-cat-btn').forEach((b) => {
+      const lbl = b.querySelector('span')?.textContent?.trim() || b.textContent?.trim() || '';
+      if (lbl) {
+        pageSectionLinks.push(`<button type="button" class="meridian-drawer-link" data-drawer-click-labcat="${lbl.replace(/"/g, '&quot;')}">${lbl}</button>`);
+      }
+    });
+  }
+
+  const ghHref = (ghStar as HTMLAnchorElement | null)?.getAttribute('href') || 'https://github.com/jhosephebtc/Meridian';
+
+  drawer.innerHTML = `
+    <div class="meridian-drawer-head">
+      <span class="meridian-drawer-title">${t.drawerTitle}</span>
+      <button type="button" class="meridian-drawer-close" id="meridian-drawer-close">${t.closeMenu}</button>
+    </div>
+
+    ${langSlot ? `
+      <div class="meridian-drawer-sec">
+        <div class="meridian-drawer-sec-title">${t.prefsLang}</div>
+        <div class="meridian-prefs-seg-4" style="margin-bottom:0;">
+          ${(['pt', 'en', 'es', 'fr'] as const).map((code) => `
+            <button type="button" class="meridian-drawer-action" data-drawer-lang="${code}" aria-pressed="${curLang === code ? 'true' : 'false'}" style="${curLang === code ? 'background:var(--ds-fg);color:var(--ds-bg);border-color:var(--ds-fg);font-weight:500;' : ''}">${code.toUpperCase()}</button>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
+
+    <div class="meridian-drawer-sec">
+      <div class="meridian-drawer-sec-title">${t.headerControls}</div>
+      <div class="meridian-drawer-ctrl-grid">
+        <button type="button" class="meridian-drawer-action" data-drawer-open-anchor="global-surface-anchor">${t.filterAll === 'All' ? 'Surface' : 'Superfície'}</button>
+        <button type="button" class="meridian-drawer-action" data-drawer-open-anchor="global-type-anchor">Aa ${t.typeLabel}</button>
+        <button type="button" class="meridian-drawer-action" data-drawer-open-anchor="global-prefs-anchor">${t.prefsLabel}</button>
+        ${hasCmdk ? `<button type="button" class="meridian-drawer-action" data-global-cmdk>${t.paletteCmdk} ⌘K</button>` : `<a class="meridian-drawer-action" href="${ghHref}" target="_blank" rel="noopener noreferrer">GitHub ★ ↗</a>`}
+      </div>
+      ${hasCmdk ? `<a class="meridian-drawer-action" href="${ghHref}" target="_blank" rel="noopener noreferrer" style="margin-top:4px;"><span>GitHub · Meridian</span><span>★ ↗</span></a>` : ''}
+    </div>
+
+    <div class="meridian-drawer-sec">
+      <div class="meridian-drawer-sec-title">${t.drawerPages}</div>
+      <a class="meridian-drawer-link" href="./index.html"${pageName === 'index.html' ? ' aria-current="page"' : ''}>${t.system}</a>
+      <a class="meridian-drawer-link" href="./preview.html"${pageName === 'preview.html' ? ' aria-current="page"' : ''}>${t.studio}</a>
+      <a class="meridian-drawer-link" href="./components.html"${pageName === 'components.html' ? ' aria-current="page"' : ''}>${t.lab}</a>
+    </div>
+
+    <div class="meridian-drawer-sec">
+      <div class="meridian-drawer-sec-title">${t.drawerExamples}</div>
+      <a class="meridian-drawer-link" href="./gann.html"${pageName === 'gann.html' ? ' aria-current="page"' : ''}>${t.gann}</a>
+      <a class="meridian-drawer-link" href="./historia.html"${pageName === 'historia.html' ? ' aria-current="page"' : ''}>${t.farol}</a>
+      <a class="meridian-drawer-link" href="./manifesto.html"${pageName === 'manifesto.html' ? ' aria-current="page"' : ''}>${t.manifesto}</a>
+    </div>
+
+    ${pageSectionLinks.length > 0 ? `
+      <div class="meridian-drawer-sec">
+        <div class="meridian-drawer-sec-title">${t.drawerOnPage}</div>
+        ${pageSectionLinks.join('')}
+      </div>
+    ` : ''}
+  `;
+
+  document.body.append(backdrop, drawer);
+}
+
+function setSubpageDrawerOpen(open: boolean): void {
+  const drawer = document.getElementById('meridian-mobile-drawer');
+  const backdrop = document.getElementById('meridian-drawer-backdrop');
+  const burger = document.getElementById('meridian-mobile-burger');
+  if (!drawer || !backdrop) return;
+  drawer.dataset.open = open ? 'true' : 'false';
+  backdrop.dataset.open = open ? 'true' : 'false';
+  burger?.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
 function syncEditorialFooterI18n(): void {
@@ -1243,9 +1390,60 @@ export function bindSiteChrome(): void {
       return;
     }
 
+    if (target.closest('#meridian-mobile-burger')) {
+      const drawer = document.getElementById('meridian-mobile-drawer');
+      closeHeaderMenus();
+      setSubpageDrawerOpen(drawer?.dataset.open !== 'true');
+      return;
+    }
+    if (target.closest('#meridian-drawer-close') || target.closest('#meridian-drawer-backdrop')) {
+      setSubpageDrawerOpen(false);
+      return;
+    }
+    const drawerOpenAnchor = target.closest<HTMLElement>('[data-drawer-open-anchor]');
+    if (drawerOpenAnchor?.dataset.drawerOpenAnchor) {
+      setSubpageDrawerOpen(false);
+      const anchor = document.getElementById(drawerOpenAnchor.dataset.drawerOpenAnchor);
+      const menu = anchor?.querySelector<HTMLElement>(':scope > .header-menu');
+      const btn = anchor?.querySelector<HTMLElement>('[data-menu-toggle]');
+      if (menu) {
+        closeHeaderMenus();
+        menu.dataset.open = 'true';
+        btn?.setAttribute('aria-expanded', 'true');
+      }
+      return;
+    }
+    const drawerLangBtn = target.closest<HTMLElement>('[data-drawer-lang]');
+    if (drawerLangBtn?.dataset.drawerLang) {
+      const realBtn = document.querySelector<HTMLButtonElement>(`[data-lang-slot] button[data-lang="${drawerLangBtn.dataset.drawerLang}"]`);
+      realBtn?.click();
+      setSubpageDrawerOpen(false);
+      return;
+    }
+    const drawerViewBtn = target.closest<HTMLElement>('[data-drawer-click-view]');
+    if (drawerViewBtn?.dataset.drawerClickView) {
+      document.querySelector<HTMLButtonElement>(`#app-topbar .ds-cliptabs-btn[data-view="${drawerViewBtn.dataset.drawerClickView}"]`)?.click();
+      setSubpageDrawerOpen(false);
+      return;
+    }
+    const drawerLabCatBtn = target.closest<HTMLElement>('[data-drawer-click-labcat]');
+    if (drawerLabCatBtn?.dataset.drawerClickLabcat) {
+      const want = drawerLabCatBtn.dataset.drawerClickLabcat;
+      document.querySelectorAll<HTMLButtonElement>('#lab-cat-nav .lab-cat-btn').forEach((b) => {
+        const lbl = b.querySelector('span')?.textContent?.trim() || b.textContent?.trim() || '';
+        if (lbl === want) b.click();
+      });
+      setSubpageDrawerOpen(false);
+      return;
+    }
+    if (target.closest('.meridian-mobile-drawer a')) {
+      setSubpageDrawerOpen(false);
+    }
+
     const gCmdkBtn = target.closest<HTMLElement>('[data-global-cmdk]');
     if (gCmdkBtn) {
       closeHeaderMenus();
+      setSubpageDrawerOpen(false);
       (document.getElementById('btn-cmdk') || document.getElementById('lab-open-cmdk'))?.click();
       return;
     }
@@ -1292,7 +1490,13 @@ export function bindSiteChrome(): void {
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeHeaderMenus();
+    if (event.key === 'Escape') {
+      closeHeaderMenus();
+      setSubpageDrawerOpen(false);
+    }
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1120) setSubpageDrawerOpen(false);
   });
 }
 
