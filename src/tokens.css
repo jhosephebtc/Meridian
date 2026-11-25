@@ -37,7 +37,7 @@
   --ds-text-nav: 0.78125rem;                            /* 12.5px — masthead / índice   */
   --ds-text-mono-md: 0.8125rem;                         /* 13px — dados / códigos       */
   --ds-text-mono-sm: 0.75rem;                           /* 12px — metadados / fontes    */
-  --ds-text-mono-xs: 0.65625rem;                        /* 10.5px — eyebrows / tags     */
+  --ds-text-mono-xs: 0.6875rem;                        /* 10.5px — eyebrows / tags     */
   --ds-text-mono-micro: 0.625rem;                       /* 10px — citações / eixos      */
 
   /* Pesos Tipográficos Variáveis Contidos (Quiet Luxury — zero negrito pesado 600/700) */
@@ -75,7 +75,7 @@
   --ds-tracking-ui: 0.006em;
   --ds-tracking-normal: 0em;
   --ds-tracking-mono: 0.015em;
-  --ds-tracking-eyebrow: 0.07em;
+  --ds-tracking-eyebrow: 0em;
 
   /* Espaçamento Base (Múltiplos de 4px) */
   --ds-space-1: 4px;
@@ -675,6 +675,116 @@
   --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
   --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
 }
+[data-surface="alabaster"] {
+  color-scheme: light;
+  --ds-surface-name: "Alabaster Silk";
+  --ds-bg: #F6F5F0; --ds-surface-1: #EEECE5; --ds-surface-2: #E3E0D7; --ds-surface-3: #D6D2C7;
+  --ds-highlight: #FFFFFF; --ds-fg: #131312; --ds-fg-secondary: #2D2C29; --ds-fg-muted: #5B5954; --ds-fg-subtle: #75736C;
+  --ds-accent: #131312; --ds-accent-hover: #2D2C29; --ds-accent-fg: #F6F5F0;
+  --ds-inverted-bg: #131312; --ds-inverted-surface: #2D2C29; --ds-inverted-fg: #FFFFFF; --ds-inverted-muted: #E3E0D7; --ds-inverted-border: #5B5954;
+  --ds-spine-1: #EFECE5; --ds-spine-2: #E3E0D7; --ds-spine-3: #D5D1C6;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.88 * var(--ds-grain-multiplier));
+}
+[data-surface="linen"] {
+  color-scheme: light;
+  --ds-surface-name: "Raw Linen";
+  --ds-bg: #EFECE4; --ds-surface-1: #E6E2D8; --ds-surface-2: #DAD5C9; --ds-surface-3: #CCC6B8;
+  --ds-highlight: #FAF8F3; --ds-fg: #161513; --ds-fg-secondary: #2F2D29; --ds-fg-muted: #5A564F; --ds-fg-subtle: #736E66;
+  --ds-accent: #161513; --ds-accent-hover: #2F2D29; --ds-accent-fg: #EFECE4;
+  --ds-inverted-bg: #161513; --ds-inverted-surface: #2F2D29; --ds-inverted-fg: #FAF8F3; --ds-inverted-muted: #DAD5C9; --ds-inverted-border: #5A564F;
+  --ds-spine-1: #E8E4DA; --ds-spine-2: #DAD5C9; --ds-spine-3: #CCC6B8;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="parchment"] {
+  color-scheme: light;
+  --ds-surface-name: "Vellum Parchment";
+  --ds-bg: #ECE5D5; --ds-surface-1: #E2DAC7; --ds-surface-2: #D5CCB7; --ds-surface-3: #C6BCA5;
+  --ds-highlight: #F8F4EA; --ds-fg: #191612; --ds-fg-secondary: #332D25; --ds-fg-muted: #5B5245; --ds-fg-subtle: #726859;
+  --ds-accent: #191612; --ds-accent-hover: #332D25; --ds-accent-fg: #ECE5D5;
+  --ds-inverted-bg: #191612; --ds-inverted-surface: #332D25; --ds-inverted-fg: #F8F4EA; --ds-inverted-muted: #D5CCB7; --ds-inverted-border: #5B5245;
+  --ds-spine-1: #E5DEC9; --ds-spine-2: #D5CCB7; --ds-spine-3: #C4B9A2;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.92 * var(--ds-grain-multiplier));
+}
+[data-surface="oat"] {
+  color-scheme: light;
+  --ds-surface-name: "Warm Oat";
+  --ds-bg: #E4DDD0; --ds-surface-1: #DAD2C3; --ds-surface-2: #CDC4B3; --ds-surface-3: #BEB4A1;
+  --ds-highlight: #F5F1E9; --ds-fg: #181613; --ds-fg-secondary: #312D27; --ds-fg-muted: #575148; --ds-fg-subtle: #6E675C;
+  --ds-accent: #181613; --ds-accent-hover: #312D27; --ds-accent-fg: #E4DDD0;
+  --ds-inverted-bg: #181613; --ds-inverted-surface: #312D27; --ds-inverted-fg: #F5F1E9; --ds-inverted-muted: #CDC4B3; --ds-inverted-border: #575148;
+  --ds-spine-1: #DDD5C7; --ds-spine-2: #CDC4B3; --ds-spine-3: #BEB4A1;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="sand"] {
+  color-scheme: light;
+  --ds-surface-name: "Dune Sand";
+  --ds-bg: #DDD2BE; --ds-surface-1: #D2C6B0; --ds-surface-2: #C4B79F; --ds-surface-3: #B4A68D;
+  --ds-highlight: #F3ECE0; --ds-fg: #1A1611; --ds-fg-secondary: #332C22; --ds-fg-muted: #564B3B; --ds-fg-subtle: #6B5E4C;
+  --ds-accent: #1A1611; --ds-accent-hover: #332C22; --ds-accent-fg: #DDD2BE;
+  --ds-inverted-bg: #1A1611; --ds-inverted-surface: #332C22; --ds-inverted-fg: #F3ECE0; --ds-inverted-muted: #C4B79F; --ds-inverted-border: #564B3B;
+  --ds-spine-1: #D6C9B3; --ds-spine-2: #C4B79F; --ds-spine-3: #B4A68D;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.92 * var(--ds-grain-multiplier));
+}
+[data-surface="pearl"] {
+  color-scheme: light;
+  --ds-surface-name: "Cool Pearl";
+  --ds-bg: #EEF0F2; --ds-surface-1: #E4E7EA; --ds-surface-2: #D7DCE0; --ds-surface-3: #C8CFD5;
+  --ds-highlight: #FFFFFF; --ds-fg: #111417; --ds-fg-secondary: #272D33; --ds-fg-muted: #525B64; --ds-fg-subtle: #6B7580;
+  --ds-accent: #111417; --ds-accent-hover: #272D33; --ds-accent-fg: #EEF0F2;
+  --ds-inverted-bg: #111417; --ds-inverted-surface: #272D33; --ds-inverted-fg: #FFFFFF; --ds-inverted-muted: #D7DCE0; --ds-inverted-border: #525B64;
+  --ds-spine-1: #E6E9EC; --ds-spine-2: #D7DCE0; --ds-spine-3: #C8CFD5;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.86 * var(--ds-grain-multiplier));
+}
+[data-surface="rosewater"] {
+  color-scheme: light;
+  --ds-surface-name: "Rosewater Clay";
+  --ds-bg: #E5CFCB; --ds-surface-1: #DBC3BF; --ds-surface-2: #CCB2AE; --ds-surface-3: #BCA09C;
+  --ds-highlight: #F7ECEA; --ds-fg: #1B1414; --ds-fg-secondary: #322626; --ds-fg-muted: #5A4645; --ds-fg-subtle: #6F5857;
+  --ds-accent: #1B1414; --ds-accent-hover: #322626; --ds-accent-fg: #E5CFCB;
+  --ds-inverted-bg: #1B1414; --ds-inverted-surface: #322626; --ds-inverted-fg: #F7ECEA; --ds-inverted-muted: #CCB2AE; --ds-inverted-border: #5A4645;
+  --ds-spine-1: #DFC7C3; --ds-spine-2: #CCB2AE; --ds-spine-3: #BCA09C;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="chamomile"] {
+  color-scheme: light;
+  --ds-surface-name: "Chamomile Cream";
+  --ds-bg: #EAE0BE; --ds-surface-1: #E0D5B0; --ds-surface-2: #D2C69F; --ds-surface-3: #C2B58D;
+  --ds-highlight: #F8F3E2; --ds-fg: #191710; --ds-fg-secondary: #302C1E; --ds-fg-muted: #585139; --ds-fg-subtle: #6D6549;
+  --ds-accent: #191710; --ds-accent-hover: #302C1E; --ds-accent-fg: #EAE0BE;
+  --ds-inverted-bg: #191710; --ds-inverted-surface: #302C1E; --ds-inverted-fg: #F8F3E2; --ds-inverted-muted: #D2C69F; --ds-inverted-border: #585139;
+  --ds-spine-1: #E4D9B5; --ds-spine-2: #D2C69F; --ds-spine-3: #C2B58D;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="celadon"] {
+  color-scheme: light;
+  --ds-surface-name: "Celadon Glaze";
+  --ds-bg: #C7D8CC; --ds-surface-1: #BCCEBF; --ds-surface-2: #ACBFB0; --ds-surface-3: #9BB0A0;
+  --ds-highlight: #EAF2EC; --ds-fg: #131915; --ds-fg-secondary: #232F27; --ds-fg-muted: #3E5145; --ds-fg-subtle: #506558;
+  --ds-accent: #131915; --ds-accent-hover: #232F27; --ds-accent-fg: #C7D8CC;
+  --ds-inverted-bg: #131915; --ds-inverted-surface: #232F27; --ds-inverted-fg: #EAF2EC; --ds-inverted-muted: #ACBFB0; --ds-inverted-border: #3E5145;
+  --ds-spine-1: #D2E1D6; --ds-spine-2: #B5C8B9; --ds-spine-3: #A1B6A6;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
+[data-surface="fjord"] {
+  color-scheme: light;
+  --ds-surface-name: "Fjord Mist";
+  --ds-bg: #BECAD4; --ds-surface-1: #B2BECA; --ds-surface-2: #A1AFBC; --ds-surface-3: #8F9FAD;
+  --ds-highlight: #E6ECF1; --ds-fg: #12171B; --ds-fg-secondary: #222B32; --ds-fg-muted: #3C4B57; --ds-fg-subtle: #4E5F6C;
+  --ds-accent: #12171B; --ds-accent-hover: #222B32; --ds-accent-fg: #BECAD4;
+  --ds-inverted-bg: #12171B; --ds-inverted-surface: #222B32; --ds-inverted-fg: #E6ECF1; --ds-inverted-muted: #A1AFBC; --ds-inverted-border: #3C4B57;
+  --ds-spine-1: #CAD4DD; --ds-spine-2: #ABB8C4; --ds-spine-3: #97A6B4;
+  --ds-image-blend: multiply; --ds-paper-blend: multiply; --ds-paper-filter: none;
+  --ds-paper-opacity: calc(0.9 * var(--ds-grain-multiplier));
+}
 
 /* Extended inks — papéis escuros, mesma gramática do Obsidian */
 [data-surface="navy"],
@@ -686,7 +796,11 @@
 [data-surface="graphite"],
 [data-surface="moss"],
 [data-surface="prune"],
-[data-surface="espresso"] {
+[data-surface="espresso"],
+[data-surface="indigo"],
+[data-surface="petrol"],
+[data-surface="bordeaux"],
+[data-surface="velvet"] {
   color-scheme: dark;
   --ds-signal-support: #4ADE80;
   --ds-signal-caution: #FBBF24;
@@ -794,35 +908,79 @@
   --ds-inverted-bg: #F6F2EE; --ds-inverted-surface: #DCD5CE; --ds-inverted-fg: #1D1815; --ds-inverted-muted: #3B322C; --ds-inverted-border: #A89E96;
   --ds-spine-1: #191512; --ds-spine-2: #14100E; --ds-spine-3: #29221E;
 }
+[data-surface="indigo"] {
+  --ds-surface-name: "Midnight Indigo";
+  --ds-bg: #151A26; --ds-surface-1: #1D2332; --ds-surface-2: #262E40; --ds-surface-3: #313B50;
+  --ds-highlight: rgba(241, 244, 248, 0.08);
+  --ds-fg: #F1F4F8; --ds-fg-secondary: #D3DAE4; --ds-fg-muted: #9CA8B8; --ds-fg-subtle: #758294;
+  --ds-accent: #F1F4F8; --ds-accent-hover: #D3DAE4; --ds-accent-fg: #151A26;
+  --ds-inverted-bg: #F1F4F8; --ds-inverted-surface: #D3DAE4; --ds-inverted-fg: #151A26; --ds-inverted-muted: #313B50; --ds-inverted-border: #9CA8B8;
+  --ds-spine-1: #121722; --ds-spine-2: #0E121B; --ds-spine-3: #22293A;
+}
+[data-surface="petrol"] {
+  --ds-surface-name: "Deep Petrol";
+  --ds-bg: #132429; --ds-surface-1: #1A2F35; --ds-surface-2: #233B42; --ds-surface-3: #2D4951;
+  --ds-highlight: rgba(239, 245, 246, 0.08);
+  --ds-fg: #EFF5F6; --ds-fg-secondary: #D0DFE2; --ds-fg-muted: #9AB0B5; --ds-fg-subtle: #738A90;
+  --ds-accent: #EFF5F6; --ds-accent-hover: #D0DFE2; --ds-accent-fg: #132429;
+  --ds-inverted-bg: #EFF5F6; --ds-inverted-surface: #D0DFE2; --ds-inverted-fg: #132429; --ds-inverted-muted: #2D4951; --ds-inverted-border: #9AB0B5;
+  --ds-spine-1: #101F24; --ds-spine-2: #0C181C; --ds-spine-3: #1F363D;
+}
+[data-surface="bordeaux"] {
+  --ds-surface-name: "Bordeaux Noir";
+  --ds-bg: #241518; --ds-surface-1: #2E1C20; --ds-surface-2: #3A2429; --ds-surface-3: #472E34;
+  --ds-highlight: rgba(246, 240, 241, 0.08);
+  --ds-fg: #F6F0F1; --ds-fg-secondary: #DFD2D5; --ds-fg-muted: #B09DA1; --ds-fg-subtle: #877478;
+  --ds-accent: #F6F0F1; --ds-accent-hover: #DFD2D5; --ds-accent-fg: #241518;
+  --ds-inverted-bg: #F6F0F1; --ds-inverted-surface: #DFD2D5; --ds-inverted-fg: #241518; --ds-inverted-muted: #472E34; --ds-inverted-border: #B09DA1;
+  --ds-spine-1: #1F1215; --ds-spine-2: #180E10; --ds-spine-3: #342025;
+}
+[data-surface="velvet"] {
+  --ds-surface-name: "Carbon Pitch";
+  --ds-bg: #080808; --ds-surface-1: #111110; --ds-surface-2: #1B1B19; --ds-surface-3: #272724;
+  --ds-highlight: rgba(247, 246, 242, 0.08);
+  --ds-fg: #F7F6F2; --ds-fg-secondary: #DBD9D2; --ds-fg-muted: #A2A099; --ds-fg-subtle: #787770;
+  --ds-accent: #F7F6F2; --ds-accent-hover: #DBD9D2; --ds-accent-fg: #080808;
+  --ds-inverted-bg: #F7F6F2; --ds-inverted-surface: #DBD9D2; --ds-inverted-fg: #080808; --ds-inverted-muted: #272724; --ds-inverted-border: #A2A099;
+  --ds-spine-1: #121211; --ds-spine-2: #0C0C0B; --ds-spine-3: #1E1E1C;
+}
 
 /* --------------------------------------------------------------------------
    3. REGRAS & ESTADOS DERIVADOS DINAMICAMENTE VIA color-mix() (Single-Ink)
    -------------------------------------------------------------------------- */
 :root,
 [data-surface] {
-  --ds-bg-tint-subtle: color-mix(in srgb, var(--ds-fg) 4.5%, var(--ds-bg));
-  --ds-bg-tint-muted: color-mix(in srgb, var(--ds-fg) 8.5%, var(--ds-bg));
-  --ds-bg-tint-active: color-mix(in srgb, var(--ds-fg) 12%, var(--ds-bg));
+  --ds-structural-ink: var(--ds-fg);
+  --ds-rule-alpha: 9%;
+  --ds-rule-strong-alpha: 12%;
 
-  /* Hairlines Arquival: 10% rule / 16% strong / 10% border — mais sutis que 11–26% */
-  --ds-rule: color-mix(in srgb, var(--ds-fg) 9%, transparent);
-  --ds-rule-strong: color-mix(in srgb, var(--ds-fg) 12%, transparent);
-  --ds-border: color-mix(in srgb, var(--ds-fg) 9%, transparent);
-  --ds-border-strong: color-mix(in srgb, var(--ds-fg) 12%, transparent);
+  --ds-bg-tint-subtle: color-mix(in srgb, var(--ds-structural-ink) 4.5%, var(--ds-bg));
+  --ds-bg-tint-muted: color-mix(in srgb, var(--ds-structural-ink) 8.5%, var(--ds-bg));
+  --ds-bg-tint-active: color-mix(in srgb, var(--ds-structural-ink) 12%, var(--ds-bg));
+
+  /* Hairlines Arquival parametrizadas (--ds-rule-alpha) */
+  --ds-rule: color-mix(in srgb, var(--ds-structural-ink) var(--ds-rule-alpha), transparent);
+  --ds-rule-strong: color-mix(in srgb, var(--ds-structural-ink) var(--ds-rule-strong-alpha), transparent);
+  --ds-border: color-mix(in srgb, var(--ds-structural-ink) var(--ds-rule-alpha), transparent);
+  --ds-border-strong: color-mix(in srgb, var(--ds-structural-ink) var(--ds-rule-strong-alpha), transparent);
 
   /* Superfícies translúcidas (chrome translúcido + papel tingido) */
-  --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 82%, transparent);
+  --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 84%, transparent);
 
-  /* Vozes tipográficas — padrão = os três passos de tinta já existentes */
+  /* Vozes tipográficas, botões & destaques sincronizados em todas as páginas */
   --ds-type-primary-ink: var(--ds-fg);
   --ds-type-secondary-ink: var(--ds-fg-secondary);
   --ds-type-tertiary-ink: var(--ds-fg-muted);
   --ds-type-primary-alpha: 1;
   --ds-type-secondary-alpha: 1;
   --ds-type-tertiary-alpha: 1;
-  --ds-type-primary: color-mix(in srgb, var(--ds-type-primary-ink) calc(var(--ds-type-primary-alpha) * 100%), transparent);
-  --ds-type-secondary: color-mix(in srgb, var(--ds-type-secondary-ink) calc(var(--ds-type-secondary-alpha) * 100%), transparent);
-  --ds-type-tertiary: color-mix(in srgb, var(--ds-type-tertiary-ink) calc(var(--ds-type-tertiary-alpha) * 100%), transparent);
+  --ds-type-primary: var(--ds-fg);
+  --ds-type-secondary: var(--ds-fg-secondary);
+  --ds-type-tertiary: var(--ds-fg-muted);
+  --ds-btn-primary-bg: var(--ds-accent);
+  --ds-btn-primary-fg: var(--ds-accent-fg);
+  --ds-btn-secondary-fg: var(--ds-fg);
+  --ds-type-accent: var(--ds-fg);
   --ds-glass-control: color-mix(in srgb, var(--ds-highlight) 38%, transparent);
   --ds-glass-control-hover: color-mix(in srgb, var(--ds-highlight) 58%, transparent);
 
@@ -886,8 +1044,8 @@
 
 html[data-mode="technical"] .eyebrow {
   font-family: var(--ds-font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: var(--ds-tracking-mono);
+  text-transform: none;
 }
 html[data-mode="technical"] [data-b2c-only] { display: none !important; }
 html[data-mode="invisible"] [data-tech-only] { display: none !important; }
@@ -946,7 +1104,12 @@ html[data-surface="basalt"] .ds-paper-grain-layer,
 html[data-surface="graphite"] .ds-paper-grain-layer,
 html[data-surface="moss"] .ds-paper-grain-layer,
 html[data-surface="prune"] .ds-paper-grain-layer,
-html[data-surface="espresso"] .ds-paper-grain-layer {
+html[data-surface="espresso"] .ds-paper-grain-layer,
+html[data-surface="indigo"] .ds-paper-grain-layer,
+html[data-surface="petrol"] .ds-paper-grain-layer,
+html[data-surface="bordeaux"] .ds-paper-grain-layer,
+html[data-surface="velvet"] .ds-paper-grain-layer,
+html[data-custom-scheme="dark"] .ds-paper-grain-layer {
   filter: invert(1);
   opacity: calc(var(--ds-paper-opacity) * var(--ds-grain-opacity, 1) * 0.92);
 }

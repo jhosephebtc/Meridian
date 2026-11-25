@@ -4,6 +4,7 @@
  */
 import './site-chrome';
 import { PAPER_SHADER } from './tokens';
+import { bootMeridianThemeSync, setGlobalSurface } from './theme-sync';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n } from './i18n';
@@ -279,16 +280,6 @@ function syncCurrentNav(): void {
   });
 }
 
-function setChroma(id: ChromaId): void {
-  document.documentElement.dataset.surface = id;
-  localStorage.setItem('meridian-manifesto-chroma', id);
-  document.querySelectorAll<HTMLButtonElement>('[data-chroma]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.chroma === id ? 'true' : 'false');
-  });
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', cssVar('--ds-bg', '#141413'));
-}
-
 function mountPlots(): void {
   const map: Record<string, (el: HTMLElement) => void> = {
     'plot-eixo': (el) => renderEixo(el, false),
@@ -309,6 +300,7 @@ function mountPlots(): void {
 }
 
 function init(): void {
+  const { surface: syncedSurface } = bootMeridianThemeSync();
   initI18n();
   mountPaperGrain({
     seed: 20241121,
@@ -320,11 +312,11 @@ function init(): void {
   const saved = (localStorage.getItem('meridian-manifesto-layout') as LayoutMode | null) ?? 'masthead';
   setLayout(saved === 'rail' ? 'rail' : 'masthead');
 
-  const savedChroma = (localStorage.getItem('meridian-manifesto-chroma') as ChromaId | null) ?? 'obsidian';
-  document.documentElement.dataset.surface = savedChroma;
   document.querySelectorAll<HTMLButtonElement>('[data-chroma]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.chroma === savedChroma ? 'true' : 'false');
-    btn.addEventListener('click', () => setChroma(btn.dataset.chroma as ChromaId));
+    btn.setAttribute('aria-pressed', btn.dataset.chroma === syncedSurface ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      if (btn.dataset.chroma) setGlobalSurface(btn.dataset.chroma);
+    });
   });
 
   document.querySelectorAll<HTMLButtonElement>('[data-layout-pick]').forEach((btn) => {

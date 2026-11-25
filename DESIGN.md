@@ -33,11 +33,12 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
 
 - **Three voices only (`src/fonts.css`, `TYPOGRAPHY` in `src/tokens.ts`):**
   1. **Display Serif** (`Geist Serif`): `mega`, `h1`, `h2`, `h3`, `h4`, `lead`, `metric` — **always weight `400`** with `font-synthesis-weight: none`. Never bold serif display titles.
-  2. **Functional Sans** (`Geist`): prose and UI controls (`body-lg`, `body-md`, `body-sm`, `ui-md` at `500`).
-  3. **Technical Mono** (`Geist Mono`): eyebrows (`letter-spacing: 0.06em`), coordinates, table numbers, telemetry, code — **always `font-variant-numeric: tabular-nums` (`tnum`)**.
+  2. **Functional Sans** (`Geist`): prose and UI controls with restrained variable weights (`340` descriptions, `360` prose, `380` navigation, `450` UI controls, `500` micro-emphasis — zero `600`/`700` bolds).
+  3. **Technical Mono** (`Geist Mono`): kickers/eyebrows (`letter-spacing: 0em`, natural sentence case), coordinates, table numbers, telemetry, code — **always `font-variant-numeric: tabular-nums` (`tnum`)**.
+- **Anti-Slop Typography Rule (Zero Spaced All-Caps):** Never combine `text-transform: uppercase` with wide positive tracking (`0.05em–0.12em`) on eyebrows, kickers, table headers, colophons, badges, or buttons. Use calm sentence case with tight/neutral tracking (`0em` to `-0.005em`).
 - **Optical discipline:** `font-kerning: normal` + `font-feature-settings: "kern" 1, "liga" 1, "calt" 1` on body/headings; constrain long-form prose to `max-width: 65ch` (`--ds-max-prose`).
 - **Build hierarchy via scale contrast and voice switch, never heavy weights or boxed noise.**
-- **Type roles** (`--ds-type-primary`, `--ds-type-secondary`, `--ds-type-tertiary`) default to `--ds-fg`, `--ds-fg-secondary` and `--ds-fg-muted` at opacity `1`. The system-page menu may retint each role with palette inks (Obsidian Dark and the dark tones, or muted ink) and the steps `100` / `78` / `56`.
+- **Synchronized 7-Role Type & Button Engine (`src/theme-sync.ts`):** `primary`, `secondary`, `tertiary`, `buttonPrimaryFg`, `buttonPrimaryBg`, `buttonSecondaryFg`, and `accent` (+ `ruleOpacity`) cascade across all 40 Single-Ink surfaces (+ custom ground) and persist/sync across every page on entry and in real time across open tabs.
 
 ## 4. Dual-Radius & Materiality
 

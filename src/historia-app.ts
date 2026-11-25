@@ -4,6 +4,7 @@
  */
 import './site-chrome';
 import { PAPER_SHADER } from './tokens';
+import { bootMeridianThemeSync, setGlobalSurface } from './theme-sync';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n, getLang, t, type Lang } from './i18n';
@@ -397,16 +398,6 @@ function syncCurrentNav(): void {
   });
 }
 
-function setChroma(id: ChromaId): void {
-  document.documentElement.dataset.surface = id;
-  localStorage.setItem('meridian-historia-chroma', id);
-  document.querySelectorAll<HTMLButtonElement>('[data-chroma]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.chroma === id ? 'true' : 'false');
-  });
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', cssVar('--ds-bg', '#FAF9F5'));
-}
-
 function mountPlots(): void {
   const map: Record<string, (el: HTMLElement) => void> = {
     'plot-horizonte': renderHorizonte,
@@ -436,6 +427,7 @@ function syncHistoriaLang(lang: Lang = getLang()): void {
 }
 
 function init(): void {
+  const { surface: syncedSurface } = bootMeridianThemeSync();
   initI18n();
   syncHistoriaLang();
   window.addEventListener('meridian:lang', ((e: CustomEvent<{ lang: Lang }>) => {
@@ -452,11 +444,11 @@ function init(): void {
   const saved = (localStorage.getItem('meridian-historia-layout') as LayoutMode | null) ?? 'masthead';
   setLayout(saved === 'rail' ? 'rail' : 'masthead');
 
-  const savedChroma = (localStorage.getItem('meridian-historia-chroma') as ChromaId | null) ?? 'ivory';
-  document.documentElement.dataset.surface = savedChroma;
   document.querySelectorAll<HTMLButtonElement>('[data-chroma]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.chroma === savedChroma ? 'true' : 'false');
-    btn.addEventListener('click', () => setChroma(btn.dataset.chroma as ChromaId));
+    btn.setAttribute('aria-pressed', btn.dataset.chroma === syncedSurface ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      if (btn.dataset.chroma) setGlobalSurface(btn.dataset.chroma);
+    });
   });
 
   document.querySelectorAll<HTMLButtonElement>('[data-layout-pick]').forEach((btn) => {

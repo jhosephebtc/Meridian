@@ -151,10 +151,15 @@ html, body {
   padding: 8px 12px;
   border-radius: 9999px;
 }
-.gann-nav-center a:hover,
 .gann-nav-center a[aria-current="true"] {
   color: var(--ds-fg);
   background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .gann-nav-center a:hover {
+    color: var(--ds-fg);
+    background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+  }
 }
 
 .gann-ds-link {
@@ -165,7 +170,7 @@ html, body {
   padding-bottom: 1px;
   white-space: nowrap;
 }
-.gann-ds-link:hover { color: var(--ds-fg); }
+@media (hover: hover) and (pointer: fine) { .gann-ds-link:hover { color: var(--ds-fg); } }
 
 /* Layout modes */
 [data-layout="masthead"] .gann-nav-center { display: flex; }
@@ -226,7 +231,7 @@ html, body {
   cursor: pointer;
   padding: 6px 12px;
 }
-.gann-rail-close:hover { color: var(--ds-fg); }
+@media (hover: hover) and (pointer: fine) { .gann-rail-close:hover { color: var(--ds-fg); } }
 
 .gann-rail-nav {
   display: flex;
@@ -241,10 +246,15 @@ html, body {
   padding: 11px 12px;
   border-radius: 10px;
 }
-.gann-rail-nav a:hover,
 .gann-rail-nav a[aria-current="true"] {
   background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
   color: var(--ds-fg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .gann-rail-nav a:hover {
+    background: color-mix(in srgb, var(--ds-fg) 7%, transparent);
+    color: var(--ds-fg);
+  }
 }
 
 .gann-rail-meta {
@@ -309,8 +319,8 @@ html, body {
   font-family: var(--ds-font-mono);
   font-size: 9.5px;
   font-weight: var(--ds-weight-mono, 360);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0em;
+  text-transform: none;
   color: var(--ds-fg-muted);
 }
 
@@ -543,7 +553,7 @@ html, body {
   font-size: 10.5px;
   font-weight: var(--ds-weight-eyebrow, 400);
   letter-spacing: var(--ds-tracking-eyebrow);
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--ds-fg-muted);
   margin: 0 0 12px;
 }
@@ -794,7 +804,7 @@ html, body {
   font-size: 10.5px;
   font-weight: var(--ds-weight-eyebrow, 400);
   letter-spacing: var(--ds-tracking-eyebrow);
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--ds-fg-muted);
   margin: 0 0 6px;
 }
@@ -919,8 +929,8 @@ html, body {
   bottom: 12px;
   font-family: var(--ds-font-mono);
   font-size: 10px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  letter-spacing: 0em;
+  text-transform: none;
   color: var(--ds-fg-muted);
   background: color-mix(in srgb, var(--ds-bg) 80%, transparent);
   padding: 5px 8px;

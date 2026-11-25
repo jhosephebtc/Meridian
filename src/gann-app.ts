@@ -13,6 +13,7 @@ import {
   getShaderColorFromString,
 } from '@paper-design/shaders';
 import { HALFTONE, PAPER_SHADER } from './tokens';
+import { bootMeridianThemeSync, setGlobalSurface } from './theme-sync';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain';
 import { markPageReady } from './page-enter';
 import { initI18n } from './i18n';
@@ -311,18 +312,13 @@ async function remountHalftones(): Promise<void> {
   }
 }
 
-function setChroma(id: ChromaId): void {
-  document.documentElement.dataset.surface = id;
-  localStorage.setItem('meridian-gann-chroma', id);
-  document.querySelectorAll<HTMLButtonElement>('[data-chroma]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.chroma === id ? 'true' : 'false');
-  });
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', cssVar('--ds-bg', '#EDBB99'));
+function setChroma(id: string): void {
+  setGlobalSurface(id);
   void remountHalftones();
 }
 
 function init(): void {
+  const { surface: syncedSurface } = bootMeridianThemeSync();
   initI18n();
   mountPaperGrain({
     seed: 18780606,
@@ -334,11 +330,18 @@ function init(): void {
   const saved = (localStorage.getItem('meridian-gann-layout') as LayoutMode | null) ?? 'masthead';
   setLayout(saved === 'rail' ? 'rail' : 'masthead');
 
-  const savedChroma = (localStorage.getItem('meridian-gann-chroma') as ChromaId | null) ?? 'terracotta';
-  document.documentElement.dataset.surface = savedChroma;
   document.querySelectorAll<HTMLButtonElement>('[data-chroma]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.chroma === savedChroma ? 'true' : 'false');
-    btn.addEventListener('click', () => setChroma(btn.dataset.chroma as ChromaId));
+    btn.setAttribute('aria-pressed', btn.dataset.chroma === syncedSurface ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      if (btn.dataset.chroma) setChroma(btn.dataset.chroma);
+    });
+  });
+
+  window.addEventListener('meridian:surface', () => {
+    void remountHalftones();
+  });
+  window.addEventListener('meridian:type', () => {
+    void remountHalftones();
   });
 
   document.querySelectorAll<HTMLButtonElement>('[data-layout-pick]').forEach((btn) => {

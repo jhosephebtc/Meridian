@@ -1,4 +1,5 @@
 import './site-chrome';
+import { bootMeridianThemeSync, setGlobalSurface } from './theme-sync.ts';
 import { mountPaperGrain, bootPaperGrainExtras } from './paper-grain.ts';
 import { markPageReady } from './page-enter.ts';
 import { createTimeline } from './timeline.ts';
@@ -3483,7 +3484,7 @@ function renderSidebar(): void {
 function initChrome(): void {
   document.querySelectorAll<HTMLButtonElement>('[data-surface-pick]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.documentElement.dataset.surface = btn.dataset.surfacePick!;
+      if (btn.dataset.surfacePick) setGlobalSurface(btn.dataset.surfacePick);
     });
   });
 
@@ -3516,6 +3517,7 @@ function initChrome(): void {
 }
 
 function init(): void {
+  bootMeridianThemeSync();
   const lang = initI18n();
   mountPaperGrain({ seed: 20261120 });
   bootPaperGrainExtras();

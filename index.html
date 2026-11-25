@@ -20,8 +20,8 @@
   <meta name="twitter:image" content="https://meridian-olive-phi.vercel.app/plates/compass-rose.png" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.svg" />
-  <link rel="stylesheet" href="./src/site-chrome.css" />
   <title>Meridian — Sistema visual, motion e gramática plotter</title>
+  <link rel="stylesheet" href="./src/tokens.css" />
   <style>
     /* ========================================================================
        MERIDIAN DESIGN SYSTEM — v1.4.1 (Self-Contained Pure CSS Showcase)
@@ -55,51 +55,66 @@
       --ds-font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --ds-font-mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Monaco, Consolas, monospace;
 
-      --ds-text-mega: clamp(3rem, 7.6vw, 6rem);
-      --ds-text-h1: clamp(2.35rem, 4.8vw, 4.35rem);
-      --ds-text-h2: clamp(1.7rem, 2.5vw, 2.35rem);
-      --ds-text-h3: clamp(1.3rem, 1.8vw, 1.7rem);
-      --ds-text-lead: clamp(1.15rem, 1.7vw, 1.48rem);
+      --ds-text-mega: clamp(2.85rem, 6.4vw, 5.5rem);
+      --ds-text-h1: clamp(2.25rem, 4.5vw, 4.15rem);
+      --ds-text-h2: clamp(1.85rem, 3.1vw, 2.85rem);
+      --ds-text-h3: clamp(1.35rem, 1.85vw, 1.75rem);
+      --ds-text-lead: clamp(1.15rem, 1.75vw, 1.5rem);
       --ds-text-metric: clamp(2.4rem, 4.4vw, 3.85rem);
 
       --ds-text-body-lg: 1.03125rem;
       --ds-text-body-md: 0.9375rem;
-      --ds-text-body-sm: 0.84375rem;
+      --ds-text-body-sm: 0.875rem;
       --ds-text-ui-md: 0.8125rem;
+      --ds-text-nav: 0.78125rem;
       --ds-text-mono-md: 0.8125rem;
       --ds-text-mono-sm: 0.75rem;
-      --ds-text-mono-xs: 0.6875rem;
+      --ds-text-mono-xs: 0.65625rem;
       --ds-text-mono-micro: 0.625rem;
 
-      --ds-lh-mega: 0.96;
-      --ds-lh-display: 1.08;
-      --ds-lh-heading: 1.2;
-      --ds-lh-lead: 1.34;
-      --ds-lh-metric: 1;
-      --ds-lh-body-lg: 1.58;
-      --ds-lh-body: 1.5;
-      --ds-lh-ui: 1.35;
-      --ds-lh-mono: 1.45;
+      --ds-weight-display: 400;
+      --ds-weight-light: 340;
+      --ds-weight-prose: 360;
+      --ds-weight-nav: 380;
+      --ds-weight-regular: 400;
+      --ds-weight-ui: 450;
+      --ds-weight-emphasis: 500;
+      --ds-weight-mono: 360;
+      --ds-weight-eyebrow: 400;
 
-      --ds-tracking-mega: -0.03em;
-      --ds-tracking-display: -0.022em;
-      --ds-tracking-heading: -0.014em;
-      --ds-tracking-lead: -0.011em;
+      --ds-lh-mega: 1.01;
+      --ds-lh-display: 1.06;
+      --ds-lh-heading: 1.13;
+      --ds-lh-lead: 1.42;
+      --ds-lh-metric: 1;
+      --ds-lh-body-lg: 1.66;
+      --ds-lh-body: 1.6;
+      --ds-lh-ui: 1.35;
+      --ds-lh-mono: 1.48;
+
+      --ds-tracking-mega: -0.036em;
+      --ds-tracking-display: -0.03em;
+      --ds-tracking-heading: -0.022em;
+      --ds-tracking-lead: -0.014em;
       --ds-tracking-metric: -0.028em;
-      --ds-tracking-body: -0.006em;
-      --ds-tracking-ui: -0.01em;
+      --ds-tracking-body: -0.003em;
+      --ds-tracking-nav: 0.022em;
+      --ds-tracking-ui: 0.006em;
       --ds-tracking-normal: 0em;
-      --ds-tracking-mono: 0.01em;
-      --ds-tracking-eyebrow: 0.06em;
+      --ds-tracking-mono: 0.015em;
+      --ds-tracking-eyebrow: 0.07em;
 
       --ds-stack-tight: 6px;
       --ds-stack-snug: 10px;
       --ds-stack-md: 16px;
-      --ds-stack-loose: 28px;
-      --ds-stack-xl: 40px;
-      --ds-block-gap: 1.05em;
-      --ds-title-gap: 0.4em;
-      --ds-section-y: clamp(3.5rem, 7vw, 6rem);
+      --ds-stack-loose: 32px;
+      --ds-stack-xl: 48px;
+      --ds-block-gap: 1.08em;
+      --ds-title-gap: 0.38em;
+      --ds-section-y: clamp(3.75rem, 6.8vw, 6.5rem);
+      --ds-shell-max: 1440px;
+      --ds-shell-gutter: clamp(20px, 4vw, 64px);
+      --ds-intro-gap: clamp(28px, 6vw, 96px);
 
       --ds-radius-none: 0px;
       --ds-radius-plate: 4px;
@@ -591,15 +606,20 @@
       --ds-aside-width: 264px;
       --ds-reader-gap: 32px;
       --ds-chrome-bg: color-mix(in srgb, var(--ds-bg) 84%, transparent);
+      --ds-structural-ink: var(--ds-fg);
       --ds-type-primary-ink: var(--ds-fg);
       --ds-type-secondary-ink: var(--ds-fg-secondary);
       --ds-type-tertiary-ink: var(--ds-fg-muted);
       --ds-type-primary-alpha: 1;
       --ds-type-secondary-alpha: 1;
       --ds-type-tertiary-alpha: 1;
-      --ds-type-primary: color-mix(in srgb, var(--ds-type-primary-ink) calc(var(--ds-type-primary-alpha) * 100%), transparent);
-      --ds-type-secondary: color-mix(in srgb, var(--ds-type-secondary-ink) calc(var(--ds-type-secondary-alpha) * 100%), transparent);
-      --ds-type-tertiary: color-mix(in srgb, var(--ds-type-tertiary-ink) calc(var(--ds-type-tertiary-alpha) * 100%), transparent);
+      --ds-type-primary: var(--ds-fg);
+      --ds-type-secondary: var(--ds-fg-secondary);
+      --ds-type-tertiary: var(--ds-fg-muted);
+      --ds-btn-primary-bg: var(--ds-accent);
+      --ds-btn-primary-fg: var(--ds-accent-fg);
+      --ds-btn-secondary-fg: var(--ds-fg);
+      --ds-type-accent: var(--ds-fg);
       --ds-pattern-diagonal: repeating-linear-gradient(
         -45deg,
         color-mix(in srgb, var(--ds-fg) 13%, transparent) 0px,
@@ -636,15 +656,15 @@
 
     [data-mode="invisible"] {
       --ds-density: 1;
-      --ds-section-pad: clamp(48px, 6vw, 84px);
-      --ds-card-pad: 22px;
-      --ds-stack-loose: 28px;
+      --ds-section-pad: clamp(56px, 6.8vw, 104px);
+      --ds-card-pad: 24px;
+      --ds-stack-loose: 32px;
       --ds-prose-size: var(--ds-text-body-lg);
     }
 
     [data-mode="technical"] {
       --ds-density: 0.82;
-      --ds-section-pad: clamp(28px, 3.2vw, 48px);
+      --ds-section-pad: clamp(32px, 3.6vw, 52px);
       --ds-card-pad: 18px;
       --ds-stack-loose: 22px;
       --ds-prose-size: var(--ds-text-body-md);
@@ -656,8 +676,8 @@
     }
     html[data-mode="technical"] .eyebrow {
       font-family: var(--ds-font-mono);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
     }
     html[data-mode="technical"] .section-title {
       font-size: clamp(1.35rem, 2.2vw, 1.75rem);
@@ -749,6 +769,7 @@
       color: var(--ds-type-primary);
       font-family: var(--ds-font-sans);
       font-size: var(--ds-text-body-md);
+      font-weight: var(--ds-weight-prose, 360);
       line-height: var(--ds-lh-body);
       letter-spacing: var(--ds-tracking-body);
       font-kerning: normal;
@@ -758,6 +779,10 @@
       transition:
         background-color var(--ds-duration-base) var(--ds-ease-out),
         color var(--ds-duration-base) var(--ds-ease-out);
+    }
+
+    strong, b {
+      font-weight: var(--ds-weight-emphasis, 500);
     }
 
     /* Paper grain — canvas overlay (data-URL em CSS sumia em vários browsers) */
@@ -881,6 +906,7 @@
     .tabular { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
     .mono {
       font-family: var(--ds-font-mono);
+      font-weight: var(--ds-weight-mono, 360);
       font-variant-numeric: tabular-nums;
       letter-spacing: var(--ds-tracking-mono);
       line-height: var(--ds-lh-mono);
@@ -896,30 +922,29 @@
     .eyebrow {
       font-family: var(--ds-font-mono);
       font-size: var(--ds-text-mono-xs);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-weight: var(--ds-weight-eyebrow, 400);
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-type-tertiary);
     }
 
-    /* ---------------- LAYOUT CONTAINERS ---------------- */
-    .container-wide {
-      width: 100%;
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 0 clamp(24px, 4.8vw, 72px);
-    }
-
+    /* ---------------- LAYOUT CONTAINERS UNIFICADOS (1440px + shell gutter) ---------------- */
+    .container-wide,
     .container-editorial {
       width: 100%;
-      max-width: 1180px;
+      max-width: var(--ds-shell-max, 1440px);
       margin: 0 auto;
-      padding: 0 clamp(16px, 3vw, 40px);
+      padding: 0 var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
     }
 
     .section-block {
       padding: var(--ds-section-pad) 0;
       border-top: var(--ds-hairline, 1px) solid var(--ds-rule);
       scroll-margin-top: 118px;
+    }
+
+    .section-block[data-band="tinted"] {
+      background-color: color-mix(in srgb, var(--ds-surface-1) 58%, var(--ds-bg));
     }
 
     /* Müller-Brockmann × Vignelli Canon: ink-bearing optical alignment & visible 12-col modular grid toggle ('G') */
@@ -939,13 +964,13 @@
     body.mb-grid-on .mb-grid-overlay { opacity: 1; }
     .mb-grid-overlay .mb-grid-wrap {
       width: 100%;
-      max-width: 1320px;
+      max-width: var(--ds-shell-max, 1440px);
       height: 100%;
       margin: 0 auto;
-      padding: 0 clamp(24px, 4.8vw, 72px);
+      padding: 0 var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 20px;
+      gap: 24px;
       box-sizing: border-box;
       background-image: linear-gradient(
         to bottom,
@@ -965,21 +990,29 @@
       .mb-grid-overlay .mb-grid-col:nth-child(n+5) { display: none; }
     }
 
+    /* Section Header Assimétrico (ref. Milor: 1.18fr | 1fr alinhados na base) */
     .section-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: var(--ds-stack-md) var(--ds-stack-loose);
-      margin-bottom: var(--ds-stack-loose);
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+      align-items: end;
+      gap: 16px var(--ds-intro-gap, clamp(28px, 6vw, 96px));
+      margin-bottom: clamp(32px, 4vw, 48px);
     }
     .section-header > div:first-child {
-      flex: 1 1 min(100%, 280px);
       min-width: 0;
     }
     .section-header > .cliptabs {
-      flex: 0 0 auto;
+      justify-self: end;
       max-width: 100%;
+    }
+    @media (max-width: 900px) {
+      .section-header {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .section-header > .cliptabs {
+        justify-self: start;
+      }
     }
 
     .section-title {
@@ -994,18 +1027,18 @@
     }
 
     .section-desc {
-      max-width: 54ch;
+      max-width: 48ch;
       margin: 0;
-      color: var(--ds-type-tertiary);
+      color: var(--ds-type-secondary);
       font-size: var(--ds-text-body-sm);
-      line-height: var(--ds-lh-body);
-      letter-spacing: var(--ds-tracking-body);
+      font-weight: var(--ds-weight-light, 340);
+      line-height: 1.64;
+      letter-spacing: 0.002em;
       text-wrap: pretty;
     }
 
-    /* ---------------- STICKY TRANSLUCENT TOPBAR ---------------- */
+    /* ---------------- STICKY TRANSLUCENT TOPBAR (Masthead 1fr auto 1fr) ---------------- */
     :root {
-      /* Abaixo disso: hambúrguer. Acima: cliptabs inline no header. */
       --ds-bp-topbar-nav: 1024px;
     }
 
@@ -1017,17 +1050,16 @@
       background-color: var(--ds-chrome-bg);
       backdrop-filter: blur(18px) saturate(135%);
       -webkit-backdrop-filter: blur(18px) saturate(135%);
-      border-bottom: 1px solid transparent;
+      border-bottom: 1px solid var(--ds-rule);
       transition:
         background-color var(--ds-duration-base) var(--ds-ease-out),
         border-color var(--ds-duration-fast) ease;
     }
-    /* Conteúdo alinhado ao container — duas faixas (atalhos + nav) */
     .topbar-inner {
       width: 100%;
-      max-width: 1320px;
+      max-width: var(--ds-shell-max, 1440px);
       margin: 0 auto;
-      padding: 6px clamp(24px, 4.8vw, 72px) 0;
+      padding: 0 var(--ds-shell-gutter, clamp(20px, 4vw, 64px));
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -1042,8 +1074,30 @@
     }
 
     .topbar-row-main {
-      min-height: 48px;
+      min-height: 62px;
       justify-content: space-between;
+    }
+
+    @media (min-width: 960px) {
+      .topbar-row-main {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        column-gap: clamp(16px, 2vw, 32px);
+      }
+      .topbar-row-main > .site-places {
+        grid-column: 1;
+        justify-self: start;
+      }
+      .topbar-row-main > .brand-link {
+        grid-column: 2;
+        justify-self: center;
+      }
+      .topbar-row-main > .topbar-controls {
+        grid-column: 3;
+        justify-self: end;
+        margin-left: 0;
+      }
     }
 
     .topbar-row-tools {
@@ -1053,7 +1107,6 @@
       flex-wrap: wrap;
     }
 
-    /* Links de texto no header — sem chips contornados */
     .topbar-link {
       appearance: none;
       display: inline-flex;
@@ -1061,12 +1114,14 @@
       gap: 6px;
       border: 0;
       background: transparent;
-      padding: 4px 2px;
+      padding: 6px 2px;
+      min-height: 32px;
       margin: 0;
       font-family: var(--ds-font-sans);
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 1.2;
+      font-size: var(--ds-text-nav, 12.5px);
+      font-weight: var(--ds-weight-nav, 380);
+      letter-spacing: var(--ds-tracking-nav, 0.022em);
+      line-height: 1;
       color: var(--ds-fg-muted);
       text-decoration: none;
       cursor: pointer;
@@ -1081,10 +1136,12 @@
     .topbar-link[data-active="true"],
     .topbar-link[aria-current="page"] {
       color: var(--ds-fg);
+      font-weight: var(--ds-weight-ui, 450);
+      box-shadow: inset 0 -1px 0 var(--ds-fg);
     }
     .topbar-link-strong {
       color: var(--ds-fg);
-      font-weight: 600;
+      font-weight: var(--ds-weight-ui, 450);
     }
     @media (hover: hover) and (pointer: fine) {
       .topbar-link:hover { color: var(--ds-fg); }
@@ -1092,26 +1149,27 @@
 
     .topbar-row-nav {
       min-height: 40px;
-      padding: 4px 0 10px;
+      padding: 0;
       border-top: 1px solid var(--ds-rule);
-      justify-content: flex-start;
-      gap: 4px 18px;
+      justify-content: center;
+      gap: 4px clamp(14px, 1.8vw, 26px);
       flex-wrap: wrap;
     }
     .topbar-nav-links {
       display: flex;
       align-items: center;
+      justify-content: center;
       flex-wrap: wrap;
-      gap: 4px 18px;
+      gap: 4px clamp(14px, 1.8vw, 26px);
       width: 100%;
     }
     .topbar-nav-links .topbar-link[data-active="true"] {
       color: var(--ds-fg);
-      box-shadow: inset 0 -1.5px 0 0 var(--ds-fg);
+      box-shadow: inset 0 -1px 0 0 var(--ds-fg);
     }
 
     .topbar[data-scrolled="true"] {
-      border-bottom-color: var(--ds-rule);
+      border-bottom-color: var(--ds-rule-strong);
     }
 
     .scroll-progress {
@@ -1130,7 +1188,7 @@
     .brand-link {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       text-decoration: none;
       color: var(--ds-fg);
       flex-shrink: 0;
@@ -1138,8 +1196,10 @@
 
     .brand-wordmark {
       font-family: var(--ds-font-display);
-      font-size: 20px;
-      letter-spacing: -0.015em;
+      font-size: clamp(23px, 2vw, 28px);
+      font-weight: 400;
+      font-synthesis-weight: none;
+      letter-spacing: -0.036em;
       line-height: 1;
     }
 
@@ -1464,7 +1524,7 @@
       #btn-grain-direct { display: none; }
     }
     @media (max-width: 640px) {
-      .topbar-inner { padding: 6px 16px 0; }
+      .topbar-inner { padding: 0 var(--ds-shell-gutter, clamp(20px, 4vw, 64px)); }
     }
 
     .topbar-cta-short { display: none; }
@@ -1573,8 +1633,8 @@
     .type-role-label {
       font-family: var(--ds-font-mono);
       font-size: 10px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-fg);
     }
     .type-role-sample {
@@ -1590,8 +1650,8 @@
       padding: 6px 10px 2px;
       font-family: var(--ds-font-mono);
       font-size: 10px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-fg-muted);
     }
     .type-opacity-row {
@@ -2228,8 +2288,8 @@
     .combo-kicker {
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-type-tertiary);
     }
     .combo-title {
@@ -2488,8 +2548,8 @@
     .spec-table th {
       font-family: var(--ds-font-mono);
       font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      text-transform: none;
+      letter-spacing: 0em;
       color: var(--ds-fg-muted);
       font-weight: 500;
       box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--ds-fg) 9%, transparent);
@@ -2715,7 +2775,7 @@
       fill: currentColor;
       font-family: var(--ds-font-mono, ui-monospace, monospace);
       font-size: 9px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0em;
       opacity: 0.7;
     }
     .historia-ambient-motif .ha-constellation-drift {
@@ -2858,7 +2918,7 @@
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
       letter-spacing: var(--ds-tracking-eyebrow);
-      text-transform: uppercase;
+      text-transform: none;
       color: var(--ds-fg-muted);
     }
     .historia-essay-title {
@@ -2945,7 +3005,7 @@
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
       letter-spacing: var(--ds-tracking-eyebrow);
-      text-transform: uppercase;
+      text-transform: none;
       color: var(--ds-fg-muted);
     }
     .historia-plaque blockquote {
@@ -3045,16 +3105,19 @@
 
     .card-title {
       font-family: var(--ds-font-display);
-      font-size: 23px;
-      line-height: 1.26;
-      letter-spacing: -0.004em;
-      word-spacing: 0.02em;
+      font-size: clamp(1.32rem, 1.7vw, 1.55rem);
+      font-weight: 400;
+      font-synthesis-weight: none;
+      line-height: 1.2;
+      letter-spacing: -0.018em;
       margin: 6px 0 2px;
     }
 
     .card-desc {
       margin: 0;
       font-size: 14px;
+      font-weight: var(--ds-weight-light, 340);
+      line-height: 1.62;
       color: var(--ds-type-secondary);
       max-width: 58ch;
       text-wrap: pretty;
@@ -3410,7 +3473,7 @@
 
     .lifeline-node[aria-pressed="true"] .lifeline-year {
       color: var(--ds-fg);
-      font-weight: 600;
+      font-weight: var(--ds-weight-emphasis, 500);
     }
 
     /* 3D Tactile Dossier Shelf (Arquival) */
@@ -3592,7 +3655,7 @@
     .plotter-dial {
       font-family: var(--ds-font-mono);
       font-size: 10px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0em;
       fill: var(--ds-fg-muted);
       stroke: none;
     }
@@ -3949,16 +4012,18 @@
     .drawer-label {
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-fg-muted);
       margin: 0 0 6px;
     }
 
     .drawer-card-title {
-      font-family: var(--ds-font-sans);
-      font-size: 15px;
-      font-weight: 600;
+      font-family: var(--ds-font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-synthesis-weight: none;
+      letter-spacing: -0.018em;
       margin: 0;
       color: var(--ds-fg);
     }
@@ -4041,7 +4106,7 @@
       background-color: var(--ds-inverted-bg);
       color: var(--ds-inverted-fg);
       border: 1px solid var(--ds-inverted-border);
-      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.3);
+      box-shadow: none;
       font-size: 12.5px;
       opacity: 0;
       transform: translateY(100%) scale(0.96);
@@ -4072,8 +4137,8 @@
       font-family: var(--ds-font-sans);
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-inverted-fg);
       text-decoration: none;
       line-height: 1.2;
@@ -4081,7 +4146,7 @@
     .footer-ver {
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0em;
       color: var(--ds-inverted-muted);
     }
     .footer-nav {
@@ -4406,7 +4471,7 @@
       font-family: var(--ds-font-mono);
       font-size: 10px;
       letter-spacing: 0.04em;
-      text-transform: uppercase;
+      text-transform: none;
       padding: 3px 8px;
       border-radius: var(--ds-radius-pill);
       background: color-mix(in srgb, var(--ds-bg) 88%, transparent);
@@ -5021,8 +5086,8 @@
     .skill-card-tag {
       font-family: var(--ds-font-mono);
       font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      text-transform: none;
+      letter-spacing: 0em;
       padding: 2px 7px;
       border-radius: 9999px;
       border: 1px solid var(--ds-rule);
@@ -5118,8 +5183,8 @@
     .credit-card-role {
       font-family: var(--ds-font-mono);
       font-size: 10.5px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0em;
+      text-transform: none;
       color: var(--ds-fg-muted);
     }
     .credit-card-note {
@@ -5462,25 +5527,19 @@
         transform: none !important;
       }
     }
+    .popover.meridian-surface-studio-popover { width: min(320px, calc(100vw - 24px)); padding: 10px; }
+    .popover.meridian-type-studio-popover { width: min(364px, calc(100vw - 24px)); padding: 12px; }
+    .popover.meridian-type-studio-popover #type-menu-scroll { max-height: none; overflow: visible; padding: 0; }
   </style>
+  <link rel="stylesheet" href="./src/site-chrome.css" />
 </head>
 <body>
   <div class="ds-page-veil" aria-hidden="false"></div>
 
-  <!-- ================= STICKY TRANSLUCENT TOPBAR ================= -->
+  <!-- ================= STICKY TRANSLUCENT TOPBAR (Masthead 1fr auto 1fr) ================= -->
   <header class="topbar" id="topbar">
     <div class="topbar-inner">
       <div class="topbar-row topbar-row-main">
-        <a href="#topo" class="brand-link">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.45"/>
-            <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1.2"/>
-            <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1.2"/>
-          </svg>
-          <span class="brand-wordmark">Meridian</span>
-          <span class="brand-ver">v1.5</span>
-        </a>
-
         <nav class="site-places" aria-label="Páginas">
           <a class="topbar-link" href="./index.html" aria-current="page" data-i18n="nav.system">Sistema</a>
           <a class="topbar-link" href="./preview.html" data-i18n="nav.studio">Studio</a>
@@ -5497,6 +5556,16 @@
             </div>
           </div>
         </nav>
+
+        <a href="#topo" class="brand-link">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.15"/>
+            <ellipse cx="10" cy="10" rx="4.2" ry="8.25" stroke="currentColor" stroke-width="1"/>
+            <line x1="1.75" y1="10" x2="18.25" y2="10" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <span class="brand-wordmark">Meridian</span>
+          <span class="brand-ver">v1.5</span>
+        </a>
 
         <div class="topbar-controls">
           <div class="popover-anchor" id="surface-menu-anchor">
@@ -5680,7 +5749,7 @@
               Um meridiano visual entre o&nbsp;cotidiano calmo e&nbsp;o&nbsp;rigor técnico: papel tátil, uma só tinta, navegação sem latência — para React&nbsp;Native, Web em&nbsp;CSS puro e&nbsp;SVG&nbsp;1:1.
             </p>
             <p style="font-size:13.5px; line-height:1.58; color:var(--ds-type-secondary); max-width:54ch; margin:-12px 0 20px;" data-home="hero.colophon">
-              Construído sobre grade modular 12×8px, traço Hairline 0.65px, 21 atmosferas Single-Ink persistidas entre páginas e 90 componentes auditáveis.
+              Construído sobre grade modular 12×8px, traço Hairline 0.65px, 40 atmosferas Single-Ink persistidas entre páginas e 90 componentes auditáveis.
             </p>
             <div class="btn-row">
               <a href="./components.html" class="btn btn-primary" data-i18n="hero.lab">Abrir Components Lab ↗</a>
@@ -5696,10 +5765,37 @@
               <a href="./gann.html" class="topbar-link" data-i18n="hero.gann">Dossiê W.D. Gann ↗</a>
             </nav>
             <div class="mode-banner" role="status" data-tech-only>
-              <span>MODO TÉCNICO PRO · camadas auditáveis · cópia dual · densidade 0.82</span>
+              <span>Modo técnico Pro · camadas auditáveis · cópia dual · densidade 0.82</span>
               <span class="tabular" id="mode-banner-meta">ledger · cycles · JSON</span>
             </div>
           </div>
+
+          <aside class="hero-colophon-card" aria-label="Ficha técnica e estado ao vivo">
+            <div class="eyebrow" style="margin:0;">Ficha Arquitetônica · Estado Vivo</div>
+            <div class="hero-telemetry" style="border-top:0; padding-top:0;">
+              <div class="telemetry-cell">
+                <span class="eyebrow" style="font-size:9.5px;">Superfície Ativa</span>
+                <span class="telemetry-val tabular" id="tel-surface">Ivory Editorial</span>
+              </div>
+              <div class="telemetry-cell">
+                <span class="eyebrow" style="font-size:9.5px;">Contraste WCAG</span>
+                <span class="telemetry-val tabular" id="tel-contrast">17.6:1 (AAA)</span>
+              </div>
+              <div class="telemetry-cell">
+                <span class="eyebrow" style="font-size:9.5px;">Ground · Single Ink</span>
+                <span class="telemetry-val tabular" id="tel-hex">#FAF9F5 · #141413</span>
+              </div>
+              <div class="telemetry-cell">
+                <span class="eyebrow" style="font-size:9.5px;">PaperGrain Canvas</span>
+                <span class="telemetry-val tabular" id="tel-grain">Editorial · 100% · Médio</span>
+              </div>
+            </div>
+            <nav class="hero-colophon-links" aria-label="Dossiês fundadores">
+              <a href="./manifesto.html"><span><span class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary); margin-right:8px;">01</span>Manifesto Meridian</span><span aria-hidden="true">↗</span></a>
+              <a href="./historia.html"><span><span class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary); margin-right:8px;">02</span>O Farol e o Meridiano</span><span aria-hidden="true">↗</span></a>
+              <a href="./gann.html"><span><span class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary); margin-right:8px;">03</span>Dossiê W.D. Gann</span><span aria-hidden="true">↗</span></a>
+            </nav>
+          </aside>
         </div>
 
         <!-- 5 Edition Plates: Click any to transform the entire living page -->
@@ -5744,7 +5840,7 @@
     </section>
 
     <!-- ================= 00. HISTÓRIA — O FAROL E O MERIDIANO ================= -->
-    <section class="section-block" id="historia" data-tab-group="overview">
+    <section class="section-block" id="historia" data-tab-group="overview" data-band="tinted">
       <div class="container-wide">
         <div class="historia-layout">
           <article class="historia-essay">
@@ -5885,7 +5981,7 @@
     </section>
 
     <!-- ================= TOKENS · ATLAS ================= -->
-    <section class="section-block" id="tokens" data-tab-group="foundations">
+    <section class="section-block" id="tokens" data-tab-group="foundations" data-band="tinted">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6014,19 +6110,19 @@
         </div>
 
         <div class="type-block">
-          <div class="eyebrow" data-home="type.weights.eyebrow">Rampa de peso · variável real</div>
-          <p class="type-note" data-home-html="type.weights.note">Sans e mono são fontes variáveis.<br>A rampa da interface vai de 300 a 700.<br>Não há negrito sintético.<br>O serif fica fora dessa rampa.</p>
+          <div class="eyebrow" data-home="type.weights.eyebrow">Rampa de peso · variável contida (Quiet Luxury)</div>
+          <p class="type-note" data-home-html="type.weights.note">Sans e mono são fontes variáveis (100–900), calibradas entre 340 e 500 para eliminar negritos pesados (600–700).<br>A hierarquia nasce da escala e tracking negativo de <code>Geist Serif</code> fixo em 400.<br>Não há negrito sintético em nenhuma superfície.</p>
           <div class="weight-ramp">
-            <div class="weight-cell"><div class="weight-meta">300 · Light</div><p class="weight-sample" style="font-weight:300" data-home="type.weight.sample">Meridiano</p></div>
-            <div class="weight-cell"><div class="weight-meta">400 · Regular</div><p class="weight-sample" style="font-weight:400" data-home="type.weight.sample">Meridiano</p></div>
-            <div class="weight-cell"><div class="weight-meta">500 · Medium</div><p class="weight-sample" style="font-weight:500" data-home="type.weight.sample">Meridiano</p></div>
-            <div class="weight-cell"><div class="weight-meta">600 · Semibold</div><p class="weight-sample" style="font-weight:600" data-home="type.weight.sample">Meridiano</p></div>
-            <div class="weight-cell"><div class="weight-meta">700 · Bold</div><p class="weight-sample" style="font-weight:700" data-home="type.weight.sample">Meridiano</p></div>
+            <div class="weight-cell"><div class="weight-meta">340 · Editorial Light</div><p class="weight-sample" style="font-weight:340" data-home="type.weight.sample">Meridiano</p></div>
+            <div class="weight-cell"><div class="weight-meta">360 · Archival Prose</div><p class="weight-sample" style="font-weight:360" data-home="type.weight.sample">Meridiano</p></div>
+            <div class="weight-cell"><div class="weight-meta">380 · Masthead Nav</div><p class="weight-sample" style="font-weight:380" data-home="type.weight.sample">Meridiano</p></div>
+            <div class="weight-cell"><div class="weight-meta">450 · Tactile UI</div><p class="weight-sample" style="font-weight:450" data-home="type.weight.sample">Meridiano</p></div>
+            <div class="weight-cell"><div class="weight-meta">500 · Micro Emphasis</div><p class="weight-sample" style="font-weight:500" data-home="type.weight.sample">Meridiano</p></div>
           </div>
           <div class="weight-ramp weight-ramp-mono" style="margin-top:8px;">
-            <div class="weight-cell"><div class="weight-meta">Mono 400</div><p class="weight-sample" style="font-weight:400">AQI 28 · −23.5505°</p></div>
-            <div class="weight-cell"><div class="weight-meta">Mono 500 · eyebrow</div><p class="weight-sample" style="font-weight:500">SQ9 63.75° · TIER A</p></div>
-            <div class="weight-cell"><div class="weight-meta">Mono 600 · ênfase</div><p class="weight-sample" style="font-weight:600">LEDGER · 180ms</p></div>
+            <div class="weight-cell"><div class="weight-meta">Mono 360 · telemetria</div><p class="weight-sample" style="font-weight:360">AQI 28 · −23.5505°</p></div>
+            <div class="weight-cell"><div class="weight-meta">Mono 400 · eyebrow</div><p class="weight-sample" style="font-weight:400">SQ9 63.75° · TIER A</p></div>
+            <div class="weight-cell"><div class="weight-meta">Mono 460 · ativo</div><p class="weight-sample" style="font-weight:460">LEDGER · 180ms</p></div>
           </div>
         </div>
 
@@ -6056,7 +6152,7 @@
     </section>
 
     <!-- ================= 03. NAVEGAÇÃO, DUAL-RADIUS & EMIL KOWALSKI LAB ================= -->
-    <section class="section-block" id="interacoes" data-tab-group="motion">
+    <section class="section-block" id="interacoes" data-tab-group="motion" data-band="tinted">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -6283,7 +6379,7 @@
         <!-- Inverted Stark Contrast Strip (Meridian) -->
         <div class="inverted-strip">
           <div>
-            <div class="mono" data-home="motion.inv.kicker" style="font-size:11px; opacity:0.7; letter-spacing:0.08em; text-transform:uppercase;">Banda Estrutural Invertida · Linhagem Editorial</div>
+            <div class="mono" data-home="motion.inv.kicker" style="font-size:11px; opacity:0.7; letter-spacing: 0em; text-transform: none;">Banda Estrutural Invertida · Linhagem Editorial</div>
             <div class="serif" data-home="motion.inv.title" style="font-size:26px; line-height:1.15; margin-top:4px;">Contraste seco sem depender de gradientes neon</div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -6572,7 +6668,7 @@
     </section>
 
     <!-- ================= 05. LIFELINE ARRASTÁVEL 1:1 & ESTANTE 3D DE DOSSIÊS ================= -->
-    <section class="section-block" id="cronologia" data-tab-group="editorial">
+    <section class="section-block" id="cronologia" data-tab-group="editorial" data-band="tinted">
       <div class="container-wide">
         <div class="section-header">
           <div>
@@ -8043,89 +8139,72 @@
     </section>
   </main>
 
-  <!-- ================= FOOTER EDITORIAL (Meridian: marca | acordeões | missão) ================= -->
-  <footer class="site-footer" aria-label="Rodapé Meridian">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="footer-logo" href="#topo">Meridian</a>
-        <span class="footer-ver">Design System · v1.5</span>
+  <!-- ================= FOOTER EDITORIAL MONUMENTAL (4 Faixas · ref. milor.si) ================= -->
+  <footer class="ds-editorial-footer" aria-label="Rodapé Meridian">
+    <div class="ds-ef-inner">
+      <div class="ds-ef-top">
+        <span class="ds-ef-tag">Meridian Design System · v1.5</span>
+        <p class="ds-ef-mantra" data-ef-i18n="footerMantra">“Isso ajuda os navegadores a encontrar seu caminho?”</p>
+        <button type="button" class="ds-ef-top-btn" data-scroll-top data-ef-i18n="footerBackTop">Voltar ao topo ↑</button>
       </div>
 
-      <nav class="footer-nav" aria-label="Índice do sistema">
-        <details class="footer-acc">
-          <summary><span data-home="footer.acc.system">Sistema</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="footer-acc-panel">
-            <button type="button" data-nav-target="historia" data-i18n="hist.title">O Farol e o Meridiano</button>
-            <button type="button" data-nav-target="cores" data-home="footer.sys.surfaces">Superfícies Single-Ink</button>
-            <button type="button" data-nav-target="tokens" data-home="footer.sys.tokens">Atlas de tokens</button>
-            <button type="button" data-nav-target="tipografia" data-home="footer.sys.type">Tipografia 3 vozes</button>
-            <button type="button" data-nav-target="interacoes" data-home="footer.sys.motion">Motion &amp; Frequency Gate</button>
-          </div>
-        </details>
-        <details class="footer-acc">
-          <summary><span data-home="footer.acc.editorial">Editorial</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="footer-acc-panel">
-            <button type="button" data-nav-target="editorial" data-home="footer.ed.reader">Leitor 3 colunas</button>
-            <button type="button" data-nav-target="cronologia" data-home="footer.ed.lifeline">Lifeline &amp; estante</button>
-            <button type="button" data-nav-target="svg-viz" data-home="footer.ed.svg">Plotter SVG 1:1</button>
-            <button type="button" data-nav-target="atelier" data-home="footer.ed.atelier">Atelier generativo</button>
-            <button type="button" data-nav-target="habilidades" data-home="skills.footerEd">Habilidades &amp; Craft</button>
-          </div>
-        </details>
-        <details class="footer-acc">
-          <summary><span data-home="footer.acc.artifacts">Artefatos</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="footer-acc-panel">
-            <span>DESIGN_SYSTEM.md</span>
-            <span>tokens.css · components.css</span>
-            <span>tokens.ts · paper-grain.ts</span>
-            <span>atelier-engine.ts · plotter-svg.ts</span>
-            <span>DESIGN.md · AGENTS.md · skills/</span>
-          </div>
-        </details>
-        <details class="footer-acc">
-          <summary><span data-home="footer.acc.shortcuts">Atalhos</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="footer-acc-panel">
-            <span data-home="footer.hotkey.1">⌘K / / — paleta instantânea</span>
-            <span data-home="footer.hotkey.2">1–8 — trocar superfície</span>
-            <span data-home="footer.hotkey.3">M — modo B2C / técnico</span>
-          </div>
-        </details>
-        <details class="footer-acc">
-          <summary><span data-home="footer.acc.commitments">Compromissos</span> <svg class="footer-chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="footer-acc-panel">
-            <span data-home="footer.commit.1">PaperGrain canvas — sem data-URL</span>
-            <span data-home="footer.commit.2">Scrollbar hairline · overlay sem blur</span>
-            <span data-home="footer.commit.3">Zero transition:all · zero ease-in</span>
-            <span data-home="footer.commit.4">100% TypeScript estrito</span>
-          </div>
-        </details>
+      <nav class="ds-ef-rail" aria-label="Ecossistema Meridian">
+        <a class="ds-ef-link" href="./index.html" aria-current="page"><span class="ds-ef-idx">01</span><span data-ef-i18n="footerSystem">Sistema</span></a>
+        <a class="ds-ef-link" href="./preview.html"><span class="ds-ef-idx">02</span><span data-ef-i18n="footerStudio">Studio Preview</span></a>
+        <a class="ds-ef-link" href="./components.html"><span class="ds-ef-idx">03</span><span data-ef-i18n="footerLab">Components Lab</span></a>
+        <a class="ds-ef-link" href="./manifesto.html"><span class="ds-ef-idx">04</span><span data-ef-i18n="footerManifesto">Manifesto</span></a>
+        <a class="ds-ef-link" href="./historia.html"><span class="ds-ef-idx">05</span><span data-ef-i18n="footerFarol">O Farol e o Meridiano</span></a>
+        <a class="ds-ef-link" href="./gann.html"><span class="ds-ef-idx">06</span><span data-ef-i18n="footerGann">Dossiê W.D. Gann</span></a>
+        <button type="button" class="ds-ef-link" data-nav-target="svg-viz"><span class="ds-ef-idx">07</span><span data-ef-i18n="footerPlotter">Gramática Plotter</span></button>
+        <button type="button" class="ds-ef-link" data-nav-target="atelier"><span class="ds-ef-idx">08</span><span data-ef-i18n="footerAtelier">Atelier TS</span></button>
+        <button type="button" class="ds-ef-link" data-nav-target="nasa-orbital"><span class="ds-ef-idx">09</span><span data-ef-i18n="footerNasa">Arquivo NASA</span></button>
       </nav>
 
-      <div class="footer-aside">
-        <div class="footer-aside-block">
-          <h3 data-home="footer.mission.h">Nossa missão</h3>
-          <p data-home="footer.mission.p">
-            Meridian une o cotidiano calmo e o rigor auditável num motor Single-Ink — papel tátil, uma tinta, navegação sem latência.
-          </p>
+      <div class="ds-ef-columns" aria-label="Índice rápido do sistema">
+        <div class="ds-ef-col">
+          <div class="ds-ef-col-title" data-home="footer.acc.system">Fundamentos</div>
+          <button type="button" data-nav-target="historia" data-i18n="hist.title">O Farol e o Meridiano</button>
+          <button type="button" data-nav-target="cores" data-home="footer.sys.surfaces">40 Superfícies Single-Ink</button>
+          <button type="button" data-nav-target="tokens" data-home="footer.sys.tokens">Atlas de Tokens CSS &amp; TS</button>
+          <button type="button" data-nav-target="tipografia" data-home="footer.sys.type">Tipografia em 3 Vozes</button>
+          <button type="button" data-nav-target="interacoes" data-home="footer.sys.motion">Motion &amp; Frequency Gate</button>
         </div>
-        <div class="footer-aside-block">
-          <h3 data-home="footer.open">Abrir</h3>
-          <div class="footer-ext">
-            <a href="./preview.html">Meridian Studio <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-            <a href="./components.html">Components Lab <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-            <a href="./manifesto.html" data-i18n="footer.manifesto">Manifesto ↗</a>
-            <a href="./historia.html" data-i18n="footer.farol">O Farol e o Meridiano ↗</a>
-            <a href="./gann.html" data-i18n="footer.gann">Dossiê W.D. Gann ↗</a>
-            <a href="#btn-open-drawer" id="footer-open-tokens">Tokens CSS &amp; TS <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-            <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ <span class="footer-ext-arrow" aria-hidden="true">↗</span></a>
-          </div>
+        <div class="ds-ef-col">
+          <div class="ds-ef-col-title" data-home="footer.acc.editorial">Arquitetura &amp; Estúdios</div>
+          <button type="button" data-nav-target="editorial" data-home="footer.ed.reader">Galeria &amp; Leitor 3 Colunas</button>
+          <button type="button" data-nav-target="cronologia" data-home="footer.ed.lifeline">Lifeline 1:1 &amp; Estante 3D</button>
+          <button type="button" data-nav-target="svg-viz" data-home="footer.ed.svg">Globo 81k &amp; Instrumentos</button>
+          <button type="button" data-nav-target="painterly-studio">Painterly GPU Shaders</button>
+          <button type="button" data-nav-target="habilidades" data-home="skills.footerEd">Skills, Taste &amp; Linhagem</button>
+        </div>
+        <div class="ds-ef-col">
+          <div class="ds-ef-col-title" data-home="footer.acc.commitments">Compromissos de Craft</div>
+          <span data-home="footer.commit.1">PaperGrain canvas · zero data-URL</span>
+          <span data-home="footer.commit.2">Scrollbar hairline · dim sem blur</span>
+          <span data-home="footer.commit.3">Zero transition:all · zero ease-in</span>
+          <span data-home="footer.commit.4">Geist Serif 400 · pesos contidos 340–500</span>
+        </div>
+        <div class="ds-ef-col">
+          <div class="ds-ef-col-title" data-home="footer.acc.shortcuts">Atalhos &amp; Exportação</div>
+          <span data-home="footer.hotkey.1">⌘K / / — paleta instantânea (0ms)</span>
+          <span data-home="footer.hotkey.2">G — grade modular 12 colunas</span>
+          <span data-home="footer.hotkey.3">M — alternar modo B2C / Técnico</span>
+          <a href="#btn-open-drawer" id="footer-open-tokens">Exportar Tokens CSS &amp; TS ↗</a>
         </div>
       </div>
-    </div>
 
-    <div class="footer-meta">
-      <span>Single-Ink · PaperGrain · HalfTone · Plotter × Hairline · Gridlines</span>
-      <span>CSS puro · TypeScript · React Native / Skia · SVG 1:1</span>
+      <div class="ds-ef-wordmark-wrap">
+        <a href="#topo" class="ds-ef-wordmark" aria-label="Meridian — voltar ao início">Meridian</a>
+      </div>
+
+      <div class="ds-ef-bottom">
+        <span>Single-Ink · PaperGrain · HalfTone · Plotter × Hairline · Gridlines</span>
+        <div class="ds-ef-bottom-links">
+          <a href="./components.html">90 Componentes shadcn ↗</a>
+          <a href="./preview.html">Studio Preview ↗</a>
+          <a href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer">GitHub ★ ↗</a>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -8487,10 +8566,24 @@
         moss:       { name: 'Moss Shadow',      bg: '#171C19', s1: '#1E2521', s2: '#27302B', s3: '#323D36', fg: '#F2F5F3', muted: '#9BA59F', contrast: '16.5:1 (AAA)', blend: 'screen + invert(1)' },
         prune:      { name: 'Muted Eggplant',   bg: '#1B171D', s1: '#231E26', s2: '#2D2730', s3: '#38313C', fg: '#F4F2F5', muted: '#A49DA8', contrast: '16.3:1 (AAA)', blend: 'screen + invert(1)' },
         espresso:   { name: 'Smoked Umber',     bg: '#1D1815', s1: '#26201C', s2: '#302823', s3: '#3B322C', fg: '#F6F2EE', muted: '#A89E96', contrast: '16.1:1 (AAA)', blend: 'screen + invert(1)' },
+        alabaster:  { name: 'Alabaster Silk',   bg: '#F6F5F0', s1: '#EEECE5', s2: '#E3E0D7', s3: '#D6D2C7', fg: '#131312', muted: '#5B5954', contrast: '17.3:1 (AAA)', blend: 'multiply' },
+        linen:      { name: 'Raw Linen',        bg: '#EFECE4', s1: '#E6E2D8', s2: '#DAD5C9', s3: '#CCC6B8', fg: '#161513', muted: '#5A564F', contrast: '15.6:1 (AAA)', blend: 'multiply' },
+        parchment:  { name: 'Vellum Parchment', bg: '#ECE5D5', s1: '#E2DAC7', s2: '#D5CCB7', s3: '#C6BCA5', fg: '#191612', muted: '#5B5245', contrast: '14.3:1 (AAA)', blend: 'multiply' },
+        oat:        { name: 'Warm Oat',         bg: '#E4DDD0', s1: '#DAD2C3', s2: '#CDC4B3', s3: '#BEB4A1', fg: '#181613', muted: '#575148', contrast: '13.3:1 (AAA)', blend: 'multiply' },
+        sand:       { name: 'Dune Sand',        bg: '#DDD2BE', s1: '#D2C6B0', s2: '#C4B79F', s3: '#B4A68D', fg: '#1A1611', muted: '#564B3B', contrast: '11.6:1 (AAA)', blend: 'multiply' },
+        pearl:      { name: 'Cool Pearl',       bg: '#EEF0F2', s1: '#E4E7EA', s2: '#D7DCE0', s3: '#C8CFD5', fg: '#111417', muted: '#525B64', contrast: '16.6:1 (AAA)', blend: 'multiply' },
+        rosewater:  { name: 'Rosewater Clay',   bg: '#E5CFCB', s1: '#DBC3BF', s2: '#CCB2AE', s3: '#BCA09C', fg: '#1B1414', muted: '#5A4645', contrast: '10.6:1 (AAA)', blend: 'multiply' },
+        chamomile:  { name: 'Chamomile Cream',  bg: '#EAE0BE', s1: '#E0D5B0', s2: '#D2C69F', s3: '#C2B58D', fg: '#191710', muted: '#585139', contrast: '12.6:1 (AAA)', blend: 'multiply' },
+        celadon:    { name: 'Celadon Glaze',    bg: '#C7D8CC', s1: '#BCCEBF', s2: '#ACBFB0', s3: '#9BB0A0', fg: '#131915', muted: '#3E5145', contrast: '10.5:1 (AAA)', blend: 'multiply' },
+        fjord:      { name: 'Fjord Mist',       bg: '#BECAD4', s1: '#B2BECA', s2: '#A1AFBC', s3: '#8F9FAD', fg: '#12171B', muted: '#3C4B57', contrast: '9.8:1 (AAA)', blend: 'multiply' },
+        indigo:     { name: 'Midnight Indigo',  bg: '#151A26', s1: '#1D2332', s2: '#262E40', s3: '#313B50', fg: '#F1F4F8', muted: '#9CA8B8', contrast: '15.5:1 (AAA)', blend: 'screen + invert(1)' },
+        petrol:     { name: 'Deep Petrol',      bg: '#132429', s1: '#1A2F35', s2: '#233B42', s3: '#2D4951', fg: '#EFF5F6', muted: '#9AB0B5', contrast: '14.1:1 (AAA)', blend: 'screen + invert(1)' },
+        bordeaux:   { name: 'Bordeaux Noir',    bg: '#241518', s1: '#2E1C20', s2: '#3A2429', s3: '#472E34', fg: '#F6F0F1', muted: '#B09DA1', contrast: '14.9:1 (AAA)', blend: 'screen + invert(1)' },
+        velvet:     { name: 'Carbon Pitch',     bg: '#080808', s1: '#111110', s2: '#1B1B19', s3: '#272724', fg: '#F7F6F2', muted: '#A2A099', contrast: '19.3:1 (AAA)', blend: 'screen + invert(1)' },
       };
 
-      const SURFACE_ORDER = ['ivory', 'paper', 'blush', 'apricot', 'butter', 'sage', 'mist', 'aqua', 'sky', 'slate', 'lilac', 'terracotta', 'ash', 'stone', 'clay', 'navy', 'mocha', 'pine', 'umber', 'charcoal', 'basalt', 'graphite', 'moss', 'prune', 'espresso', 'obsidian'];
-      const DARK_SURFACES = new Set(['obsidian', 'navy', 'mocha', 'pine', 'umber', 'charcoal', 'basalt', 'graphite', 'moss', 'prune', 'espresso']);
+      const SURFACE_ORDER = ['ivory', 'alabaster', 'paper', 'pearl', 'linen', 'parchment', 'oat', 'sand', 'ash', 'blush', 'rosewater', 'apricot', 'terracotta', 'butter', 'chamomile', 'clay', 'sage', 'celadon', 'mist', 'aqua', 'sky', 'fjord', 'slate', 'lilac', 'stone', 'charcoal', 'umber', 'mocha', 'bordeaux', 'pine', 'petrol', 'navy', 'indigo', 'prune', 'espresso', 'graphite', 'moss', 'basalt', 'obsidian', 'velvet'];
+      const DARK_SURFACES = new Set(['obsidian', 'navy', 'mocha', 'pine', 'umber', 'charcoal', 'basalt', 'graphite', 'moss', 'prune', 'espresso', 'indigo', 'petrol', 'bordeaux', 'velvet']);
       const GRAIN_LABELS = { off: 'Off', subtle: 'Suave', editorial: 'Editorial', tactile: 'Tátil' };
 
       const state = {
@@ -8635,7 +8728,7 @@
             return `
               <button type="button" class="surface-study-card" data-set-surface="${id}" aria-pressed="${active ? 'true' : 'false'}" style="background:${sm.bg}; color:${sm.fg};">
                 <div class="surface-study-top">
-                  <span>${num} · ${id.toUpperCase()}</span>
+                  <span>${num} · ${id}</span>
                   <span>${sm.contrast}</span>
                 </div>
                 <div class="surface-study-name">${sm.name}</div>
@@ -8848,11 +8941,18 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         if (label) label.textContent = meta.name.replace(/^(Soft |Signature |Warm )/, '').split(' ')[0];
       }
 
-      function applySurface(surfaceId, announce = true) {
+      let _inSurfaceSync = false;
+      function applySurface(surfaceId, announce = true, fromGlobalEvent = false) {
         if (!SURFACE_META[surfaceId]) return;
         state.surface = surfaceId;
-        try { localStorage.setItem('meridian-surface', surfaceId); } catch {}
-        document.documentElement.setAttribute('data-surface', surfaceId);
+        if (!fromGlobalEvent && window.__MERIDIAN_THEME__?.setGlobalSurface) {
+          _inSurfaceSync = true;
+          window.__MERIDIAN_THEME__.setGlobalSurface(surfaceId);
+          _inSurfaceSync = false;
+        } else {
+          try { localStorage.setItem('meridian-surface', surfaceId); } catch {}
+          document.documentElement.setAttribute('data-surface', surfaceId);
+        }
         document.querySelectorAll('[data-set-surface]').forEach(el => {
           el.setAttribute('aria-pressed', el.dataset.setSurface === surfaceId ? 'true' : 'false');
         });
@@ -8864,10 +8964,32 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         renderGannSvg();
         renderEnvSvg();
         if (typeof restartAtelier === 'function') restartAtelier(false);
-        window.dispatchEvent(new CustomEvent('meridian:surface', { detail: { surfaceId } }));
-        applyTypeRoles();
+        if (!fromGlobalEvent && !window.__MERIDIAN_THEME__?.setGlobalSurface) {
+          window.dispatchEvent(new CustomEvent('meridian:surface', { detail: { surface: surfaceId, surfaceId } }));
+        }
         if (announce) showToast(`Atmosfera: ${SURFACE_META[surfaceId].name}`);
       }
+
+      window.addEventListener('meridian:surface', (ev) => {
+        if (_inSurfaceSync) return;
+        const next = ev.detail?.surface || ev.detail?.surfaceId;
+        if (next && SURFACE_META[next] && next !== state.surface) {
+          applySurface(next, false, true);
+        } else {
+          updateTelemetry();
+          renderDrawerCode();
+        }
+      });
+      window.addEventListener('meridian:type', () => {
+        try {
+          const saved = JSON.parse(localStorage.getItem('meridian-type-config') || '{}');
+          if (saved.primary) typeState.primary = saved.primary;
+          if (saved.secondary) typeState.secondary = saved.secondary;
+          if (saved.tertiary) typeState.tertiary = saved.tertiary;
+        } catch {}
+        updateTelemetry();
+        renderDrawerCode();
+      });
 
       const TYPE_ROLES = [
         { id: 'primary', label: 'Primária', key: 'type.role.primary' },
@@ -8890,11 +9012,18 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         { id: 'muted', key: 'type.ink.muted', name: 'Tinta suave' },
       ];
       const TYPE_OPACITY = [100, 78, 56];
-      const typeState = {
-        primary: { tone: 'surface', opacity: 100 },
-        secondary: { tone: 'surface', opacity: 100 },
-        tertiary: { tone: 'surface', opacity: 100 },
-      };
+      const typeState = (() => {
+        const base = {
+          primary: { tone: 'surface', opacity: 100 },
+          secondary: { tone: 'surface', opacity: 100 },
+          tertiary: { tone: 'surface', opacity: 100 },
+        };
+        try {
+          const raw = JSON.parse(localStorage.getItem('meridian-type-config') || 'null');
+          if (raw && typeof raw === 'object') return { ...base, ...raw };
+        } catch {}
+        return base;
+      })();
 
       function cssToken(name) {
         return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -8921,7 +9050,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
             const swatch = btn.querySelector('.surface-menu-swatch');
             const meta = btn.querySelector('.surface-menu-item-meta');
             if (swatch && hex) swatch.style.background = hex;
-            if (meta && hex) meta.textContent = hex.toUpperCase();
+            if (meta && hex) meta.textContent = hex;
           }
         });
         document.querySelectorAll('[data-type-opacity]').forEach((btn) => {
@@ -8932,6 +9061,11 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       }
 
       function applyTypeRoles() {
+        if (window.__MERIDIAN_THEME__?.applyTypeConfigToDom) {
+          const full = window.__MERIDIAN_THEME__.readTypeConfig();
+          window.__MERIDIAN_THEME__.applyTypeConfigToDom({ ...full, primary: typeState.primary, secondary: typeState.secondary, tertiary: typeState.tertiary });
+          return;
+        }
         const root = document.documentElement;
         TYPE_ROLES.forEach((role) => {
           const choice = typeState[role.id];
@@ -8963,7 +9097,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         syncTypeMenu();
       }
 
-      renderTypeMenu();
+      if (!window.__MERIDIAN_THEME__) renderTypeMenu();
 
       function syncRangeTrackFill(input) {
         if (!input) return;
@@ -9792,6 +9926,14 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
         const toastBtn = e.target.closest('[data-toast]');
         if (toastBtn) { showToast(toastBtn.dataset.toast); return; }
+
+        const topBtn = e.target.closest('[data-scroll-top]');
+        if (topBtn) {
+          e.preventDefault();
+          const instant = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: instant ? 'auto' : 'smooth' });
+          return;
+        }
 
         const navBtn = e.target.closest('[data-nav-target]');
         if (navBtn) {

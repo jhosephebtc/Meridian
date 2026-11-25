@@ -1,5 +1,33 @@
-/** Barra e personalização global unificadas — todas as páginas compartilham Sistema · Studio · Lab · Arquivo, 21 superfícies, Grão/Dust & Scratches e Aa Tipo. */
-import { GRAIN_SIZES, type GrainPreset, type GrainSizeId } from './tokens';
+/**
+ * Barra masthead unificada + Estúdio Global de Atmosfera (40 superfícies + cor livre)
+ * & Hierarquia Tipográfica Completa (Primário, Secundário, Terciário, Botões 1º/2º, Destaques & Bordas).
+ * Sincroniza automaticamente a seleção de entrada e mudanças entre todas as 6 páginas e abas abertas.
+ */
+import {
+  GRAIN_SIZES,
+  SURFACES,
+  SURFACE_SPECTRUM,
+  TYPE_INKS,
+  type GrainPreset,
+  type GrainSizeId,
+  type SurfaceId,
+  type TypeRoleId,
+} from './tokens';
+import {
+  DEFAULT_TYPE_CONFIG,
+  ROLE_ORDER,
+  applyTypeConfigToDom,
+  bootMeridianThemeSync,
+  contrastRatioString,
+  getActiveBaseColors,
+  getCustomGroundHex,
+  isValidSurfaceId,
+  readTypeConfig,
+  resolveRoleHex,
+  setGlobalCustomGround,
+  setGlobalSurface,
+  type MeridianTypeConfig,
+} from './theme-sync';
 import {
   getPaperGrainDustLevel,
   getPaperGrainIntensity,
@@ -15,6 +43,17 @@ import {
 } from './paper-grain';
 
 type ChromeLang = 'pt' | 'en' | 'es' | 'fr';
+type SurfaceFilterGroup = 'all' | 'light' | 'chromatic' | 'dark';
+
+const LIGHT_EDITORIAL_IDS = new Set<SurfaceId>([
+  'ivory', 'alabaster', 'paper', 'pearl', 'linen', 'parchment', 'oat', 'sand', 'ash',
+]);
+
+function getSurfaceGroup(id: SurfaceId): 'light' | 'chromatic' | 'dark' {
+  if (SURFACES[id].scheme === 'dark') return 'dark';
+  if (LIGHT_EDITORIAL_IDS.has(id)) return 'light';
+  return 'chromatic';
+}
 
 const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
   pt: {
@@ -26,28 +65,55 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     manifesto: 'Manifesto',
     farol: 'O Farol e o Meridiano',
     gann: 'Dossiê W.D. Gann',
-    surfaceTitle: 'Atmosfera e cor de fundo (26 superfícies)',
+    surfaceTitle: 'Atmosfera e cor de fundo (40 superfícies + cor livre)',
+    filterAll: 'Todas',
+    filterLight: 'Claras',
+    filterChromatic: 'Cromáticas',
+    filterDark: 'Escuras',
+    customGround: 'Fundo personalizado',
+    resetGround: 'Papel padrão',
     grain: 'Grão',
-    grainTitle: 'Papel, Dust & Scratches em toda a página',
+    grainTitle: 'Papel, poeira e riscos em toda a página',
     intensity: 'Intensidade',
     off: 'Off',
     subtle: 'Suave',
     editorial: 'Edit.',
     tactile: 'Tátil',
     opacity: 'Opacidade',
-    dust: 'Dust (Poeira)',
-    scratches: 'Scratches (Riscos)',
-    grainSize: 'Tamanho do grão',
+    dust: 'Poeira (Dust)',
+    scratches: 'Riscos (Scratches)',
+    grainSize: 'Escala do grão',
     fine: 'Fino',
     medium: 'Médio',
     coarse: 'Grosso',
     chunky: 'Grumo',
     doubleLayer: 'Grão duplo (fibra + micro)',
-    typeLabel: 'Tipo',
-    typeTitle: 'Tinta e opacidade tipográfica',
-    typeHeading: 'Cor & Opacidade de Texto',
-    surfaceInk: 'Tinta da superfície',
-    mutedInk: 'Tinta suavizada',
+    typeLabel: 'Tipo & Cores',
+    typeTitle: 'Hierarquia de cores e opacidade de textos e botões',
+    typeHeading: 'Vozes, botões e opacidade',
+    role_primary: 'Primário',
+    role_secondary: 'Secundário',
+    role_tertiary: 'Terciário',
+    role_buttonPrimaryFg: 'Botão 1º · texto',
+    role_buttonPrimaryBg: 'Botão 1º · fundo',
+    role_buttonSecondaryFg: 'Botão 2º · texto',
+    role_accent: 'Links & destaques',
+    roleDesc_primary: 'Títulos em Geist Serif, wordmarks e prosa principal',
+    roleDesc_secondary: 'Leads, subtítulos, descrições de seção e navegação',
+    roleDesc_tertiary: 'Metadados, legendas, índices, kickers e telemetria',
+    roleDesc_buttonPrimaryFg: 'Texto sobre botões primários e abas ativas',
+    roleDesc_buttonPrimaryBg: 'Cor de preenchimento de botões primários e cliptabs',
+    roleDesc_buttonSecondaryFg: 'Texto de botões secundários, ghost, chips e ações',
+    roleDesc_accent: 'Links inline, claims pontilhados, indicadores e barras',
+    surfaceInk: 'Automático da superfície',
+    mutedInk: 'Suavizado da superfície',
+    customInk: 'Cor livre',
+    groupDarkInks: 'Tintas escuras & minerais',
+    groupEditorialInks: 'Tintas editoriais cromáticas',
+    groupLightInks: 'Tintas claras & marfim (p/ fundos escuros)',
+    ruleAlpha: 'Intensidade de fios & bordas',
+    resetAllType: 'Restaurar cores da atmosfera',
+    sampleWord: 'Meridiano · 123',
     footerMantra: '“Isso ajuda os navegadores a encontrar seu caminho?”',
     footerBackTop: 'Voltar ao topo ↑',
     footerSystem: 'Sistema',
@@ -69,7 +135,13 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     manifesto: 'Manifesto',
     farol: 'The Lighthouse & Meridian',
     gann: 'W.D. Gann Dossier',
-    surfaceTitle: 'Surface atmosphere & background (26 surfaces)',
+    surfaceTitle: 'Surface atmosphere & background (40 surfaces + custom)',
+    filterAll: 'All',
+    filterLight: 'Light',
+    filterChromatic: 'Chromatic',
+    filterDark: 'Dark',
+    customGround: 'Custom background',
+    resetGround: 'Preset paper',
     grain: 'Grain',
     grainTitle: 'Page-wide Paper Grain, Dust & Scratches',
     intensity: 'Intensity',
@@ -80,17 +152,38 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     opacity: 'Opacity',
     dust: 'Dust',
     scratches: 'Scratches',
-    grainSize: 'Grain size',
+    grainSize: 'Grain scale',
     fine: 'Fine',
     medium: 'Medium',
     coarse: 'Coarse',
     chunky: 'Chunky',
     doubleLayer: 'Double grain (fiber + micro)',
-    typeLabel: 'Type',
-    typeTitle: 'Text ink color and opacity',
-    typeHeading: 'Text Color & Opacity',
-    surfaceInk: 'Surface ink',
-    mutedInk: 'Muted ink',
+    typeLabel: 'Type & Ink',
+    typeTitle: 'Text, button & link color and opacity hierarchy',
+    typeHeading: 'Voices, buttons & opacity',
+    role_primary: 'Primary',
+    role_secondary: 'Secondary',
+    role_tertiary: 'Tertiary',
+    role_buttonPrimaryFg: 'Primary btn · text',
+    role_buttonPrimaryBg: 'Primary btn · fill',
+    role_buttonSecondaryFg: 'Secondary btn · text',
+    role_accent: 'Links & accents',
+    roleDesc_primary: 'Geist Serif headings, wordmarks, and body prose',
+    roleDesc_secondary: 'Leads, subtitles, section intros, and navigation',
+    roleDesc_tertiary: 'Metadata, captions, indices, kickers, and telemetry',
+    roleDesc_buttonPrimaryFg: 'Text inside primary buttons and active clip-tabs',
+    roleDesc_buttonPrimaryBg: 'Fill color of primary buttons and active clip-tabs',
+    roleDesc_buttonSecondaryFg: 'Text of secondary, ghost, pill, and toolbar buttons',
+    roleDesc_accent: 'Inline links, dotted claims, indicators, and progress',
+    surfaceInk: 'Automatic from surface',
+    mutedInk: 'Surface muted ink',
+    customInk: 'Custom color',
+    groupDarkInks: 'Dark & mineral inks',
+    groupEditorialInks: 'Chromatic editorial inks',
+    groupLightInks: 'Light & ivory inks (for dark grounds)',
+    ruleAlpha: 'Hairline & border intensity',
+    resetAllType: 'Restore atmosphere defaults',
+    sampleWord: 'Meridian · 123',
     footerMantra: '“Does this help navigators find their way?”',
     footerBackTop: 'Back to top ↑',
     footerSystem: 'System',
@@ -112,28 +205,55 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     manifesto: 'Manifiesto',
     farol: 'El Faro y el Meridiano',
     gann: 'Dosier W.D. Gann',
-    surfaceTitle: 'Atmósfera cromática y fondo (26 superficies)',
+    surfaceTitle: 'Atmósfera y color de fondo (40 superficies + libre)',
+    filterAll: 'Todas',
+    filterLight: 'Claras',
+    filterChromatic: 'Cromáticas',
+    filterDark: 'Oscuras',
+    customGround: 'Fondo personalizado',
+    resetGround: 'Papel base',
     grain: 'Grano',
-    grainTitle: 'Grano, Dust y Scratches en toda la página',
+    grainTitle: 'Grano, polvo y rayas en toda la página',
     intensity: 'Intensidad',
     off: 'Off',
     subtle: 'Suave',
     editorial: 'Edit.',
     tactile: 'Táctil',
     opacity: 'Opacidad',
-    dust: 'Dust (Polvo)',
-    scratches: 'Scratches (Rayas)',
-    grainSize: 'Tamaño del grano',
+    dust: 'Polvo (Dust)',
+    scratches: 'Rayas (Scratches)',
+    grainSize: 'Escala del grano',
     fine: 'Fino',
     medium: 'Medio',
     coarse: 'Grueso',
     chunky: 'Grumo',
     doubleLayer: 'Doble grano (fibra + micro)',
-    typeLabel: 'Tipo',
-    typeTitle: 'Tinta y opacidad tipográfica',
-    typeHeading: 'Color y Opacidad de Texto',
-    surfaceInk: 'Tinta de superficie',
-    mutedInk: 'Tinta suave',
+    typeLabel: 'Tipo y Tinta',
+    typeTitle: 'Jerarquía de color y opacidad de textos y botones',
+    typeHeading: 'Voces, botones y opacidad',
+    role_primary: 'Primario',
+    role_secondary: 'Secundario',
+    role_tertiary: 'Terciario',
+    role_buttonPrimaryFg: 'Botón 1º · texto',
+    role_buttonPrimaryBg: 'Botón 1º · fondo',
+    role_buttonSecondaryFg: 'Botón 2º · texto',
+    role_accent: 'Enlaces y acentos',
+    roleDesc_primary: 'Títulos en Geist Serif, marcas y prosa principal',
+    roleDesc_secondary: 'Entradillas, subtítulos, descripciones y navegación',
+    roleDesc_tertiary: 'Metadatos, leyendas, índices y telemetría',
+    roleDesc_buttonPrimaryFg: 'Texto sobre botones primarios y pestañas activas',
+    roleDesc_buttonPrimaryBg: 'Relleno de botones primarios y pestañas activas',
+    roleDesc_buttonSecondaryFg: 'Texto de botones secundarios, ghost y acciones',
+    roleDesc_accent: 'Enlaces, citas punteadas, indicadores y barras',
+    surfaceInk: 'Automático de superficie',
+    mutedInk: 'Tinta suave de superficie',
+    customInk: 'Color libre',
+    groupDarkInks: 'Tintas oscuras y minerales',
+    groupEditorialInks: 'Tintas editoriales cromáticas',
+    groupLightInks: 'Tintas claras y marfil (fondos oscuros)',
+    ruleAlpha: 'Intensidad de líneas y bordes',
+    resetAllType: 'Restaurar colores de atmósfera',
+    sampleWord: 'Meridiano · 123',
     footerMantra: '“¿Esto ayuda a los navegantes a encontrar su camino?”',
     footerBackTop: 'Volver arriba ↑',
     footerSystem: 'Sistema',
@@ -155,9 +275,15 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     manifesto: 'Manifeste',
     farol: 'Le Phare et le Méridien',
     gann: 'Dossier W.D. Gann',
-    surfaceTitle: 'Atmosphère et couleur de fond (26 surfaces)',
+    surfaceTitle: 'Atmosphère et fond (40 surfaces + couleur libre)',
+    filterAll: 'Toutes',
+    filterLight: 'Claires',
+    filterChromatic: 'Chromatiques',
+    filterDark: 'Sombres',
+    customGround: 'Fond personnalisé',
+    resetGround: 'Papier standard',
     grain: 'Grain',
-    grainTitle: 'Grain papier, Poussière & Rayures sur toute la page',
+    grainTitle: 'Grain papier, poussière et rayures sur toute la page',
     intensity: 'Intensité',
     off: 'Off',
     subtle: 'Subtil',
@@ -166,17 +292,38 @@ const CHROME_I18N: Record<ChromeLang, Record<string, string>> = {
     opacity: 'Opacité',
     dust: 'Poussière (Dust)',
     scratches: 'Rayures (Scratches)',
-    grainSize: 'Taille du grain',
+    grainSize: 'Échelle du grain',
     fine: 'Fin',
     medium: 'Moyen',
     coarse: 'Épais',
     chunky: 'Grumeleux',
     doubleLayer: 'Double grain (fibre + micro)',
-    typeLabel: 'Type',
-    typeTitle: 'Encre et opacité typographiques',
-    typeHeading: 'Couleur & Opacité du Texte',
-    surfaceInk: 'Encre de surface',
+    typeLabel: 'Type & Encre',
+    typeTitle: 'Hiérarchie de couleur et d’opacité des textes et boutons',
+    typeHeading: 'Voix, boutons et opacité',
+    role_primary: 'Primaire',
+    role_secondary: 'Secondaire',
+    role_tertiary: 'Tertiaire',
+    role_buttonPrimaryFg: 'Bouton 1er · texte',
+    role_buttonPrimaryBg: 'Bouton 1er · fond',
+    role_buttonSecondaryFg: 'Bouton 2nd · texte',
+    role_accent: 'Liens & accents',
+    roleDesc_primary: 'Titres Geist Serif, logotypes et prose principale',
+    roleDesc_secondary: 'Chapeaux, sous-titres, intros et navigation',
+    roleDesc_tertiary: 'Métadonnées, légendes, index et télémétrie',
+    roleDesc_buttonPrimaryFg: 'Texte des boutons primaires et onglets actifs',
+    roleDesc_buttonPrimaryBg: 'Fond des boutons primaires et onglets actifs',
+    roleDesc_buttonSecondaryFg: 'Texte des boutons secondaires, ghost et actions',
+    roleDesc_accent: 'Liens, citations pointillées et indicateurs',
+    surfaceInk: 'Automatique (surface)',
     mutedInk: 'Encre atténuée',
+    customInk: 'Couleur libre',
+    groupDarkInks: 'Encres sombres et minérales',
+    groupEditorialInks: 'Encres éditoriales chromatiques',
+    groupLightInks: 'Encres claires et ivoire (fonds sombres)',
+    ruleAlpha: 'Intensité des filets et bordures',
+    resetAllType: 'Restaurer les couleurs de l’atmosphère',
+    sampleWord: 'Méridien · 123',
     footerMantra: '« Cela aide-t-il les navigateurs à trouver leur chemin ? »',
     footerBackTop: 'Haut de page ↑',
     footerSystem: 'Système',
@@ -201,107 +348,16 @@ function currentChromeLang(): ChromeLang {
   return 'pt';
 }
 
-interface SurfaceMeta {
-  id: string;
-  name: string;
-  hex: string;
-  dark?: boolean;
-}
+let activeSurfaceFilter: SurfaceFilterGroup = 'all';
+let activeTypeRole: TypeRoleId = 'primary';
 
-const SURFACES: SurfaceMeta[] = [
-  { id: 'ivory', name: 'Ivory Editorial', hex: '#FAF9F5' },
-  { id: 'paper', name: 'Paper White', hex: '#FFFFFF' },
-  { id: 'blush', name: 'Soft Blush', hex: '#E8C4C0' },
-  { id: 'apricot', name: 'Soft Apricot', hex: '#E8C8A8' },
-  { id: 'butter', name: 'Soft Butter', hex: '#E8D9A8' },
-  { id: 'sage', name: 'Soft Sage', hex: '#B8C5A8' },
-  { id: 'mist', name: 'Soft Mist', hex: '#C5D4CE' },
-  { id: 'aqua', name: 'Signature Aqua', hex: '#A4CED0' },
-  { id: 'sky', name: 'Soft Sky', hex: '#B0C8D6' },
-  { id: 'slate', name: 'Soft Slate', hex: '#B5BFC9' },
-  { id: 'lilac', name: 'Soft Lilac', hex: '#C9C0D8' },
-  { id: 'terracotta', name: 'Warm Terracotta', hex: '#EDBB99' },
-  { id: 'ash', name: 'Pale Ash', hex: '#E2DFD8' },
-  { id: 'stone', name: 'Stone Gray', hex: '#8E8B84', dark: true },
-  { id: 'clay', name: 'Field Ochre', hex: '#B39A6E' },
-  { id: 'navy', name: 'Navy Ink', hex: '#1C3142', dark: true },
-  { id: 'mocha', name: 'Mocha Ink', hex: '#3A2A22', dark: true },
-  { id: 'pine', name: 'Pine Ink', hex: '#1E3328', dark: true },
-  { id: 'umber', name: 'Deep Ochre', hex: '#4E3E24', dark: true },
-  { id: 'charcoal', name: 'Charcoal', hex: '#3E3C38', dark: true },
-  { id: 'basalt', name: 'Basalt Noir', hex: '#191B1D', dark: true },
-  { id: 'graphite', name: 'Graphite Mute', hex: '#1E1D1B', dark: true },
-  { id: 'moss', name: 'Moss Shadow', hex: '#171C19', dark: true },
-  { id: 'prune', name: 'Muted Eggplant', hex: '#1B171D', dark: true },
-  { id: 'espresso', name: 'Smoked Umber', hex: '#1D1815', dark: true },
-  { id: 'obsidian', name: 'Obsidian Dark', hex: '#141413', dark: true },
-];
-
-const TYPE_TONES = [
-  { id: 'surface', name: 'Tinta da superfície', hex: 'current' },
-  { id: 'obsidian', name: 'Obsidian Dark', hex: '#141413' },
-  { id: 'basalt', name: 'Basalt Noir', hex: '#191B1D' },
-  { id: 'graphite', name: 'Graphite Mute', hex: '#1E1D1B' },
-  { id: 'moss', name: 'Moss Shadow', hex: '#171C19' },
-  { id: 'prune', name: 'Muted Eggplant', hex: '#1B171D' },
-  { id: 'espresso', name: 'Smoked Umber', hex: '#1D1815' },
-  { id: 'navy', name: 'Navy Ink', hex: '#1C3142' },
-  { id: 'mocha', name: 'Mocha Ink', hex: '#3A2A22' },
-  { id: 'pine', name: 'Pine Ink', hex: '#1E3328' },
-  { id: 'umber', name: 'Deep Ochre', hex: '#4E3E24' },
-  { id: 'charcoal', name: 'Charcoal', hex: '#3E3C38' },
-  { id: 'muted', name: 'Tinta suavizada', hex: '#595959' },
-];
-
-interface TypeChoice {
-  tone: string;
-  opacity: number;
-}
-
-interface TypeConfig {
-  primary: TypeChoice;
-  secondary: TypeChoice;
-  tertiary: TypeChoice;
-}
-
-const DEFAULT_TYPE_CONFIG: TypeConfig = {
-  primary: { tone: 'surface', opacity: 100 },
-  secondary: { tone: 'surface', opacity: 100 },
-  tertiary: { tone: 'surface', opacity: 100 },
-};
-
-function readTypeConfig(): TypeConfig {
-  try {
-    const raw = localStorage.getItem('meridian-type-config');
-    if (raw) {
-      const p = JSON.parse(raw) as Partial<TypeConfig>;
-      if (p.primary && p.secondary && p.tertiary) {
-        return { primary: p.primary, secondary: p.secondary, tertiary: p.tertiary };
-      }
-    }
-  } catch { /* ignore */ }
-  return structuredClone(DEFAULT_TYPE_CONFIG);
-}
-
-function applyTypeConfig(cfg: TypeConfig): void {
-  const root = document.documentElement;
-  (['primary', 'secondary', 'tertiary'] as const).forEach((role) => {
-    const ch = cfg[role];
-    const inkProp = `--ds-type-${role}-ink`;
-    const alphaProp = `--ds-type-${role}-alpha`;
-    if (ch.tone === 'surface') {
-      root.style.removeProperty(inkProp);
-    } else {
-      const tone = TYPE_TONES.find((t) => t.id === ch.tone);
-      const hex = tone?.hex && tone.hex !== 'current' ? tone.hex : getComputedStyle(root).getPropertyValue('--ds-fg-muted').trim() || '#595959';
-      root.style.setProperty(inkProp, hex);
-    }
-    if (ch.opacity === 100) root.style.removeProperty(alphaProp);
-    else root.style.setProperty(alphaProp, String(ch.opacity / 100));
-  });
-  try {
-    localStorage.setItem('meridian-type-config', JSON.stringify(cfg));
-  } catch { /* ignore */ }
+function syncRangePct(input: HTMLInputElement | null): void {
+  if (!input) return;
+  const min = Number(input.min || 0);
+  const max = Number(input.max || 100);
+  const val = Number(input.value || 0);
+  const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
+  input.style.setProperty('--range-pct', `${Math.max(0, Math.min(100, pct)).toFixed(1)}%`);
 }
 
 function closeHeaderMenus(except?: Element | null): void {
@@ -332,15 +388,14 @@ function applyStarBadges(slots: NodeListOf<HTMLElement>, count: number): void {
 function hydrateGitHubStars(): void {
   const slots = document.querySelectorAll<HTMLElement>('[data-gh-stars]');
   if (!slots.length) return;
-
   try {
     const raw = sessionStorage.getItem(GH_STARS_CACHE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as { count?: unknown; ts?: unknown };
       if (
-        typeof parsed.count === 'number'
-        && typeof parsed.ts === 'number'
-        && Date.now() - parsed.ts < GH_STARS_TTL_MS
+        typeof parsed.count === 'number' &&
+        typeof parsed.ts === 'number' &&
+        Date.now() - parsed.ts < GH_STARS_TTL_MS
       ) {
         applyStarBadges(slots, parsed.count);
         return;
@@ -365,47 +420,212 @@ function hydrateGitHubStars(): void {
     .catch(() => { /* ignore */ });
 }
 
-function setSurfaceEverywhere(surfaceId: string, typeCfg: TypeConfig): void {
-  if (!SURFACES.some((s) => s.id === surfaceId)) return;
-  document.documentElement.setAttribute('data-surface', surfaceId);
-  const meta = SURFACES.find((s) => s.id === surfaceId);
-  if (meta) {
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', meta.hex);
-  }
-  try {
-    localStorage.setItem('meridian-surface', surfaceId);
-  } catch { /* ignore */ }
-
-  document.querySelectorAll<HTMLElement>('[data-chroma],[data-surface-pick],[data-global-surface]').forEach((b) => {
-    const id = b.dataset.chroma || b.dataset.surfacePick || b.dataset.globalSurface;
-    b.setAttribute('aria-pressed', id === surfaceId ? 'true' : 'false');
-  });
-
-  const label = document.getElementById('global-surface-label');
-  const swatch = document.getElementById('global-surface-swatch');
-  if (label && meta) label.textContent = meta.name.split(' ')[0];
-  if (swatch && meta) swatch.style.background = meta.hex;
-
-  applyTypeConfig(typeCfg);
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('meridian:surface', { detail: { surface: surfaceId } }));
-  }
-}
-
-function syncRangePct(input: HTMLInputElement | null): void {
-  if (!input) return;
-  const min = Number(input.min || 0);
-  const max = Number(input.max || 100);
-  const val = Number(input.value || 0);
-  const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
-  input.style.setProperty('--range-pct', `${Math.max(0, Math.min(100, pct)).toFixed(1)}%`);
-}
-
 function ensureGrainMountedForSubpages(): void {
   if (document.getElementById('btn-surface-menu')) return;
   if (!document.getElementById('ds-paper-grain')) {
     mountPaperGrain();
   }
+}
+
+function buildSurfaceStudioInnerHtml(t: Record<string, string>): string {
+  const curSurfaceRaw = document.documentElement.getAttribute('data-surface');
+  const curSurface: SurfaceId = isValidSurfaceId(curSurfaceRaw) ? curSurfaceRaw : 'ivory';
+  const customBg = getCustomGroundHex();
+  const base = getActiveBaseColors(curSurface, customBg);
+
+  const filters: { id: SurfaceFilterGroup; label: string; count: number }[] = [
+    { id: 'all', label: t.filterAll, count: SURFACE_SPECTRUM.length },
+    { id: 'light', label: t.filterLight, count: SURFACE_SPECTRUM.filter((id) => getSurfaceGroup(id) === 'light').length },
+    { id: 'chromatic', label: t.filterChromatic, count: SURFACE_SPECTRUM.filter((id) => getSurfaceGroup(id) === 'chromatic').length },
+    { id: 'dark', label: t.filterDark, count: SURFACE_SPECTRUM.filter((id) => getSurfaceGroup(id) === 'dark').length },
+  ];
+
+  const visibleIds = SURFACE_SPECTRUM.filter((id) =>
+    activeSurfaceFilter === 'all' ? true : getSurfaceGroup(id) === activeSurfaceFilter,
+  );
+
+  return `
+    <div class="meridian-studio-filter-bar" role="tablist" data-menu-keep>
+      ${filters.map((f) => `
+        <button type="button" class="meridian-filter-pill" data-surface-filter="${f.id}" aria-pressed="${activeSurfaceFilter === f.id ? 'true' : 'false'}" data-menu-keep>
+          <span>${f.label}</span>
+          <span class="meridian-filter-count">${f.count}</span>
+        </button>
+      `).join('')}
+    </div>
+
+    <div class="meridian-custom-ground-row" data-menu-keep>
+      <label class="meridian-color-pick-label" data-menu-keep>
+        <input type="color" class="meridian-native-color" data-custom-ground-input value="${base.bg}" aria-label="${t.customGround}" />
+        <span class="meridian-color-dot" style="background:${base.bg}"></span>
+        <span>${t.customGround}</span>
+      </label>
+      <span class="mono meridian-hex-tag">${base.bg}</span>
+      ${customBg ? `<button type="button" class="meridian-mini-reset" data-reset-custom-ground data-menu-keep>${t.resetGround}</button>` : ''}
+    </div>
+
+    <div class="surface-menu-scroll meridian-surface-list">
+      ${visibleIds.map((id) => {
+        const sf = SURFACES[id];
+        const isPressed = !customBg && id === curSurface;
+        return `
+          <button type="button" class="header-menu-item surface-menu-item" role="menuitemradio" data-global-surface="${id}" data-set-surface="${id}" aria-pressed="${isPressed ? 'true' : 'false'}">
+            <span class="surface-menu-swatch" style="width:13px;height:13px;border-radius:50%;background:${sf.bg};border:1px solid var(--ds-border-strong);flex-shrink:0;"></span>
+            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;">${sf.label}</span>
+            <span class="mono surface-menu-item-meta" style="font-size:10.5px;color:var(--ds-type-tertiary);">${sf.bg}</span>
+          </button>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function buildTypeStudioInnerHtml(t: Record<string, string>, cfg: MeridianTypeConfig): string {
+  const base = getActiveBaseColors();
+  const choice = cfg[activeTypeRole];
+  const resolvedHex = resolveRoleHex(activeTypeRole, cfg, base);
+  const contrastBg = activeTypeRole === 'buttonPrimaryFg'
+    ? resolveRoleHex('buttonPrimaryBg', cfg, base)
+    : base.bg;
+  const ratio = contrastRatioString(contrastBg, resolvedHex);
+
+  const renderGroup = (group: 'dark' | 'editorial' | 'light', title: string) => {
+    const items = TYPE_INKS.filter((i) => i.group === group);
+    return `
+      <div class="meridian-studio-sublabel">${title}</div>
+      <div class="meridian-ink-swatch-grid" role="radiogroup" aria-label="${title}">
+        ${items.map((ink) => {
+          const active = choice.tone === ink.id;
+          return `
+            <button type="button" class="meridian-ink-chip" data-studio-role="${activeTypeRole}" data-studio-tone="${ink.id}" aria-pressed="${active ? 'true' : 'false'}" title="${ink.label} (${ink.hex})" data-menu-keep>
+              <span class="meridian-ink-chip-dot" style="background:${ink.hex}"></span>
+              <span class="meridian-ink-chip-name">${ink.label}</span>
+            </button>
+          `;
+        }).join('')}
+      </div>
+    `;
+  };
+
+  const sampleStyle =
+    activeTypeRole === 'buttonPrimaryFg' || activeTypeRole === 'buttonPrimaryBg'
+      ? `background:${resolveRoleHex('buttonPrimaryBg', cfg, base)};color:${resolveRoleHex('buttonPrimaryFg', cfg, base)};padding:3px 9px;border-radius:999px;`
+      : `color:${resolvedHex};opacity:${(choice.opacity / 100).toFixed(2)};`;
+
+  return `
+    <div class="meridian-studio-header" data-menu-keep>
+      <span class="meridian-studio-title">${t.typeHeading}</span>
+      <button type="button" class="meridian-mini-reset" data-studio-reset-all data-menu-keep>${t.resetAllType}</button>
+    </div>
+
+    <div class="meridian-role-tabs" role="tablist" data-menu-keep>
+      ${ROLE_ORDER.map((r) => {
+        const rHex = resolveRoleHex(r, cfg, base);
+        const isEdited = cfg[r].tone !== 'surface' || cfg[r].opacity !== 100;
+        return `
+          <button type="button" class="meridian-role-tab" role="tab" data-studio-select-role="${r}" aria-selected="${activeTypeRole === r ? 'true' : 'false'}" data-edited="${isEdited ? 'true' : 'false'}" data-menu-keep>
+            <span class="meridian-role-dot" style="background:${rHex}"></span>
+            <span>${t[`role_${r}`] || r}</span>
+          </button>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="meridian-role-preview" data-menu-keep>
+      <div class="meridian-role-preview-top">
+        <span class="meridian-role-desc">${t[`roleDesc_${activeTypeRole}`] || ''}</span>
+      </div>
+      <div class="meridian-role-preview-sample">
+        <span class="meridian-sample-badge" style="${sampleStyle}">${t.sampleWord}</span>
+        <span class="mono meridian-hex-tag">${resolvedHex} · ${choice.opacity}% · ${ratio}</span>
+      </div>
+    </div>
+
+    <div class="meridian-auto-row" data-menu-keep>
+      <button type="button" class="meridian-auto-btn" data-studio-role="${activeTypeRole}" data-studio-tone="surface" aria-pressed="${choice.tone === 'surface' ? 'true' : 'false'}" data-menu-keep>
+        <span class="meridian-role-dot" style="background:${resolveRoleHex(activeTypeRole, DEFAULT_TYPE_CONFIG, base)}"></span>
+        <span>${t.surfaceInk}</span>
+      </button>
+      <button type="button" class="meridian-auto-btn" data-studio-role="${activeTypeRole}" data-studio-tone="muted" aria-pressed="${choice.tone === 'muted' ? 'true' : 'false'}" data-menu-keep>
+        <span class="meridian-role-dot" style="background:${base.fgMuted}"></span>
+        <span>${t.mutedInk}</span>
+      </button>
+      <label class="meridian-auto-btn meridian-custom-ink-btn" data-pressed="${choice.tone === 'custom' ? 'true' : 'false'}" data-menu-keep>
+        <input type="color" class="meridian-native-color" data-studio-custom-ink="${activeTypeRole}" value="${resolvedHex}" aria-label="${t.customInk}" />
+        <span class="meridian-role-dot" style="background:${resolvedHex}"></span>
+        <span>${t.customInk}</span>
+      </label>
+    </div>
+
+    <div class="meridian-type-scroll" data-menu-keep>
+      ${renderGroup('dark', t.groupDarkInks)}
+      ${renderGroup('editorial', t.groupEditorialInks)}
+      ${renderGroup('light', t.groupLightInks)}
+    </div>
+
+    <div class="meridian-opacity-section" data-menu-keep>
+      <div class="meridian-slider-head">
+        <span>${t.opacity} (${t[`role_${activeTypeRole}`]})</span>
+        <span class="mono tabular" data-studio-opacity-readout>${choice.opacity}%</span>
+      </div>
+      <div class="global-grain-slider-row" style="margin-bottom:6px;">
+        <input type="range" min="20" max="100" step="2" value="${choice.opacity}" data-studio-opacity-range="${activeTypeRole}" aria-label="${t.opacity}" />
+      </div>
+      <div class="meridian-opacity-steps">
+        ${[100, 86, 72, 56].map((op) => `
+          <button type="button" class="meridian-step-pill" data-studio-role="${activeTypeRole}" data-studio-opacity="${op}" aria-pressed="${choice.opacity === op ? 'true' : 'false'}" data-menu-keep>${op}%</button>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="meridian-opacity-section meridian-rule-section" data-menu-keep>
+      <div class="meridian-slider-head">
+        <span>${t.ruleAlpha}</span>
+        <span class="mono tabular" data-studio-rule-readout>${cfg.ruleOpacity}%</span>
+      </div>
+      <div class="global-grain-slider-row" style="margin-bottom:0;">
+        <input type="range" min="4" max="28" step="1" value="${cfg.ruleOpacity}" data-studio-rule-range aria-label="${t.ruleAlpha}" />
+      </div>
+    </div>
+  `;
+}
+
+function hydrateStudioRangeTracks(root: ParentNode = document): void {
+  root.querySelectorAll<HTMLInputElement>(
+    '[data-studio-opacity-range], [data-studio-rule-range], #global-grain-opacity-range, #global-dust-range, #global-scratch-range',
+  ).forEach((inp) => syncRangePct(inp));
+}
+
+function refreshAllStudioMenus(): void {
+  const t = CHROME_I18N[currentChromeLang()];
+  const cfg = readTypeConfig();
+  const curSurfaceRaw = document.documentElement.getAttribute('data-surface');
+  const curSurface: SurfaceId = isValidSurfaceId(curSurfaceRaw) ? curSurfaceRaw : 'ivory';
+  const customBg = getCustomGroundHex();
+  const base = getActiveBaseColors(curSurface, customBg);
+  const surfaceMeta = SURFACES[curSurface] || SURFACES.ivory;
+
+  // Update trigger badges on both subpages and index.html
+  const labelText = customBg ? customBg : surfaceMeta.label.replace(/^(Soft |Signature |Warm |Raw |Vellum |Cool |Deep |Muted )/, '').split(' ')[0];
+  ['global-surface-label', 'surface-menu-label'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = labelText;
+  });
+  ['global-surface-swatch', 'surface-menu-swatch'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.style.background = base.bg;
+  });
+
+  // Update surface studio containers
+  document.querySelectorAll<HTMLElement>('[data-meridian-surface-studio], #surface-menu').forEach((host) => {
+    host.innerHTML = buildSurfaceStudioInnerHtml(t);
+  });
+
+  // Update type studio containers (both subpage #global-type-menu and index.html #type-menu-scroll)
+  document.querySelectorAll<HTMLElement>('[data-meridian-type-studio], #type-menu-scroll').forEach((host) => {
+    host.innerHTML = buildTypeStudioInnerHtml(t, cfg);
+    hydrateStudioRangeTracks(host);
+  });
 }
 
 function buildGrainPopoverHtml(t: Record<string, string>): string {
@@ -428,32 +648,32 @@ function buildGrainPopoverHtml(t: Record<string, string>): string {
     { id: 'chunky', label: t.chunky },
   ];
   return `
-    <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.62;margin-bottom:6px;">${t.intensity}</div>
+    <div class="meridian-studio-sublabel">${t.intensity}</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:10px;">
       ${intensities.map((it) => `
         <button type="button" class="header-menu-item" data-global-grain="${it.id}" aria-pressed="${curInt === it.id ? 'true' : 'false'}" style="justify-content:center;padding:5px 4px;font-size:11.5px;">${it.label}</button>
       `).join('')}
     </div>
 
-    <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.62;margin-bottom:4px;">${t.opacity}</div>
+    <div class="meridian-studio-sublabel">${t.opacity}</div>
     <div class="global-grain-slider-row">
       <input id="global-grain-opacity-range" type="range" min="20" max="100" step="5" value="${curOp}" aria-label="${t.opacity}" />
       <span id="global-grain-opacity-val" class="global-grain-slider-val">${curOp}%</span>
     </div>
 
-    <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.62;margin-bottom:4px;">${t.dust}</div>
+    <div class="meridian-studio-sublabel">${t.dust}</div>
     <div class="global-grain-slider-row">
       <input id="global-dust-range" type="range" min="0" max="100" step="5" value="${curDust}" aria-label="${t.dust}" />
       <span id="global-dust-val" class="global-grain-slider-val">${curDust}%</span>
     </div>
 
-    <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.62;margin-bottom:4px;">${t.scratches}</div>
+    <div class="meridian-studio-sublabel">${t.scratches}</div>
     <div class="global-grain-slider-row">
       <input id="global-scratch-range" type="range" min="0" max="100" step="5" value="${curScratch}" aria-label="${t.scratches}" />
       <span id="global-scratch-val" class="global-grain-slider-val">${curScratch}%</span>
     </div>
 
-    <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.62;margin-bottom:6px;">${t.grainSize}</div>
+    <div class="meridian-studio-sublabel">${t.grainSize}</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;">
       ${sizes.map((sz) => `
         <button type="button" class="header-menu-item" data-global-grain-size="${sz.id}" aria-pressed="${curSize === sz.id ? 'true' : 'false'}" style="justify-content:center;padding:5px 4px;font-size:11.5px;">${sz.label}</button>
@@ -466,26 +686,37 @@ function buildGrainPopoverHtml(t: Record<string, string>): string {
   `;
 }
 
-function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
-  // index.html já possui o header nativo completo (.topbar)
-  if (document.getElementById('btn-surface-menu')) return;
+function injectUnifiedSubpageChrome(): void {
+  const t = CHROME_I18N[currentChromeLang()];
+  const cfg = readTypeConfig();
+
+  // On index.html, upgrade existing #surface-menu and #type-menu-scroll in place so it gets all 40 surfaces + 7 roles!
+  if (document.getElementById('btn-surface-menu')) {
+    const indexTypeMenu = document.getElementById('type-menu');
+    indexTypeMenu?.classList.add('meridian-type-studio-popover');
+    const indexSurfMenu = document.getElementById('surface-menu');
+    indexSurfMenu?.classList.add('meridian-surface-studio-popover');
+    refreshAllStudioMenus();
+    return;
+  }
 
   const pageName = window.location.pathname.split('/').pop() || 'index.html';
   const header = document.querySelector<HTMLElement>('.ds-topbar, .gann-chrome-inner');
   if (!header) return;
 
-  const t = CHROME_I18N[currentChromeLang()];
   const isArchive = pageName === 'manifesto.html' || pageName === 'historia.html' || pageName === 'gann.html';
-  const curSurface = document.documentElement.getAttribute('data-surface') || 'ivory';
-  const curMeta = SURFACES.find((s) => s.id === curSurface) || SURFACES[0];
+  const curSurfaceRaw = document.documentElement.getAttribute('data-surface');
+  const curSurface: SurfaceId = isValidSurfaceId(curSurfaceRaw) ? curSurfaceRaw : 'ivory';
+  const customBg = getCustomGroundHex();
+  const base = getActiveBaseColors(curSurface, customBg);
+  const curMeta = SURFACES[curSurface] || SURFACES.ivory;
 
-  // Limpa cópias anteriores ao trocar de idioma
   header.querySelector('.meridian-unified-nav')?.remove();
   header.querySelector('#global-surface-anchor')?.remove();
   header.querySelector('#global-grain-anchor')?.remove();
   header.querySelector('#global-type-anchor')?.remove();
 
-  // 1. Links globais à esquerda no masthead 1fr-auto-1fr (Sistema · Studio · Lab · Arquivo ▾)
+  // 1. Left column in 1fr-auto-1fr masthead
   const nav = document.createElement('nav');
   nav.className = 'meridian-unified-nav';
   nav.setAttribute('aria-label', t.navAria);
@@ -509,17 +740,17 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
   if (brand) header.insertBefore(nav, brand);
   else header.prepend(nav);
 
-  // 2. Controles globais agrupados na coluna direita (1fr justify-self:end)
+  // 2. Right column controls
   let rightContainer = header.querySelector<HTMLElement>('.lab-topbar-actions, .topbar-right, .meridian-chrome-actions');
   if (!rightContainer) {
     rightContainer = document.createElement('div');
     rightContainer.className = 'meridian-chrome-actions';
     Array.from(header.children).forEach((child) => {
       if (
-        child === nav
-        || child.classList.contains('gann-brand')
-        || child.classList.contains('gann-burger')
-        || child.classList.contains('gann-nav-center')
+        child === nav ||
+        child.classList.contains('gann-brand') ||
+        child.classList.contains('gann-burger') ||
+        child.classList.contains('gann-nav-center')
       ) {
         return;
       }
@@ -528,32 +759,39 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
     header.appendChild(rightContainer);
   }
 
-  // Oculta seletores legados redundantes sem quebrar event listeners das páginas
   rightContainer.querySelectorAll<HTMLElement>('.menu-anchor, .popover-wrap').forEach((wrap) => {
     if (wrap.closest('.meridian-unified-nav')) return;
     if (wrap.id === 'global-surface-anchor' || wrap.id === 'global-grain-anchor' || wrap.id === 'global-type-anchor') return;
     wrap.classList.add('meridian-legacy-hidden');
   });
 
+  const labelShort = customBg ? customBg : curMeta.label.replace(/^(Soft |Signature |Warm |Raw |Vellum |Cool |Deep |Muted )/, '').split(' ')[0];
+
   const surfAnchor = document.createElement('div');
   surfAnchor.className = 'menu-anchor align-end';
   surfAnchor.id = 'global-surface-anchor';
   surfAnchor.innerHTML = `
-    <button type="button" class="site-menu-btn surface-menu-trigger" data-menu-toggle aria-expanded="false" aria-haspopup="menu" title="${t.surfaceTitle}">
-      <span class="surface-menu-swatch" id="global-surface-swatch" style="background:${curMeta.hex};width:11px;height:11px;border-radius:50%;border:1px solid var(--ds-border-strong);display:inline-block;"></span>
-      <span class="surface-menu-label" id="global-surface-label">${curMeta.name.split(' ')[0]}</span>
+    <button type="button" class="site-menu-btn surface-menu-trigger" data-menu-toggle aria-expanded="false" aria-haspopup="dialog" title="${t.surfaceTitle}">
+      <span class="surface-menu-swatch" id="global-surface-swatch" style="background:${base.bg};width:11px;height:11px;border-radius:50%;border:1px solid var(--ds-border-strong);display:inline-block;"></span>
+      <span class="surface-menu-label" id="global-surface-label">${labelShort}</span>
       <svg class="menu-chevron surface-menu-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <div class="header-menu" data-open="false" role="menu" style="min-width:230px;">
-      <div class="surface-menu-scroll" style="display:grid;gap:2px;max-height:320px;overflow:auto;">
-        ${SURFACES.map((sf) => `
-          <button type="button" class="header-menu-item" role="menuitemradio" data-global-surface="${sf.id}" aria-pressed="${sf.id === curSurface ? 'true' : 'false'}" style="justify-content:flex-start;gap:8px;">
-            <span style="width:12px;height:12px;border-radius:50%;background:${sf.hex};border:1px solid var(--ds-border-strong);flex-shrink:0;"></span>
-            <span style="flex:1;">${sf.name}</span>
-            <span class="mono" style="font-size:10px;opacity:0.55;">${sf.hex}</span>
-          </button>
-        `).join('')}
-      </div>
+    <div class="header-menu meridian-surface-studio-popover" data-open="false" role="dialog" data-meridian-surface-studio data-menu-keep>
+      ${buildSurfaceStudioInnerHtml(t)}
+    </div>
+  `;
+
+  const typeAnchor = document.createElement('div');
+  typeAnchor.className = 'menu-anchor align-end';
+  typeAnchor.id = 'global-type-anchor';
+  typeAnchor.innerHTML = `
+    <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" aria-haspopup="dialog" title="${t.typeTitle}">
+      <span style="font-family:var(--ds-font-display);font-size:13.5px;">Aa</span>
+      <span class="surface-menu-label">${t.typeLabel}</span>
+      <svg class="menu-chevron surface-menu-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="header-menu meridian-type-studio-popover" data-open="false" role="dialog" data-meridian-type-studio data-menu-keep>
+      ${buildTypeStudioInnerHtml(t, cfg)}
     </div>
   `;
 
@@ -580,55 +818,24 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
     </div>
   `;
 
-  const typeAnchor = document.createElement('div');
-  typeAnchor.className = 'menu-anchor align-end';
-  typeAnchor.id = 'global-type-anchor';
-  typeAnchor.innerHTML = `
-    <button type="button" class="site-menu-btn" data-menu-toggle aria-expanded="false" aria-haspopup="dialog" title="${t.typeTitle}">
-      <span style="font-family:var(--ds-font-display);font-size:13px;">Aa</span>
-      <span class="surface-menu-label">${t.typeLabel}</span>
-      <svg class="menu-chevron surface-menu-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="header-menu" data-open="false" role="dialog" style="min-width:240px;padding:10px;" data-menu-keep>
-      <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;margin-bottom:6px;">${t.typeHeading}</div>
-      <div style="display:grid;gap:2px;margin-bottom:10px;">
-        ${TYPE_TONES.map((tone) => {
-          const toneName = tone.id === 'surface' ? t.surfaceInk : tone.id === 'muted' ? t.mutedInk : tone.name;
-          return `
-            <button type="button" class="header-menu-item" data-global-type-tone="${tone.id}" aria-pressed="${typeCfg.primary.tone === tone.id ? 'true' : 'false'}" style="justify-content:flex-start;gap:8px;">
-              <span style="width:10px;height:10px;border-radius:50%;background:${tone.hex === 'current' ? 'var(--ds-fg)' : tone.hex};border:1px solid var(--ds-border-strong);"></span>
-              <span style="flex:1;">${toneName}</span>
-            </button>
-          `;
-        }).join('')}
-      </div>
-      <div style="font-family:var(--ds-font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;margin-bottom:6px;">${t.opacity}</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
-        ${[100, 78, 56].map((op) => `
-          <button type="button" class="header-menu-item" data-global-type-opacity="${op}" aria-pressed="${typeCfg.primary.opacity === op ? 'true' : 'false'}" style="justify-content:center;">${op}%</button>
-        `).join('')}
-      </div>
-    </div>
-  `;
-
   const existingLang = rightContainer.querySelector('[data-lang-slot]');
   const existingStar = rightContainer.querySelector('.site-gh-star');
   if (existingLang) {
     rightContainer.insertBefore(surfAnchor, existingLang);
-    rightContainer.insertBefore(grainAnchor, existingLang);
     rightContainer.insertBefore(typeAnchor, existingLang);
+    rightContainer.insertBefore(grainAnchor, existingLang);
   } else if (existingStar) {
     rightContainer.insertBefore(surfAnchor, existingStar);
-    rightContainer.insertBefore(grainAnchor, existingStar);
     rightContainer.insertBefore(typeAnchor, existingStar);
+    rightContainer.insertBefore(grainAnchor, existingStar);
   } else {
-    rightContainer.append(surfAnchor, grainAnchor, typeAnchor);
+    rightContainer.append(surfAnchor, typeAnchor, grainAnchor);
   }
 
-  // Bind sliders inside global-grain-anchor
+  hydrateStudioRangeTracks(rightContainer);
+
   const opRange = grainAnchor.querySelector<HTMLInputElement>('#global-grain-opacity-range');
   const opVal = grainAnchor.querySelector<HTMLElement>('#global-grain-opacity-val');
-  syncRangePct(opRange);
   opRange?.addEventListener('input', () => {
     syncRangePct(opRange);
     const pct = Math.max(20, Math.min(100, Number(opRange.value)));
@@ -638,7 +845,6 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
 
   const dustRange = grainAnchor.querySelector<HTMLInputElement>('#global-dust-range');
   const dustVal = grainAnchor.querySelector<HTMLElement>('#global-dust-val');
-  syncRangePct(dustRange);
   dustRange?.addEventListener('input', () => {
     syncRangePct(dustRange);
     ensureGrainMountedForSubpages();
@@ -648,7 +854,6 @@ function injectUnifiedSubpageChrome(typeCfg: TypeConfig): void {
 
   const scratchRange = grainAnchor.querySelector<HTMLInputElement>('#global-scratch-range');
   const scratchVal = grainAnchor.querySelector<HTMLElement>('#global-scratch-val');
-  syncRangePct(scratchRange);
   scratchRange?.addEventListener('input', () => {
     syncRangePct(scratchRange);
     ensureGrainMountedForSubpages();
@@ -666,26 +871,27 @@ function syncEditorialFooterI18n(): void {
 }
 
 export function bindSiteChrome(): void {
+  // Boot theme sync immediately on load (even before DOMContentLoaded) to prevent FOUC
+  bootMeridianThemeSync();
+
   if (document.documentElement.dataset.siteChrome === 'on') return;
   document.documentElement.dataset.siteChrome = 'on';
 
-  const typeCfg = readTypeConfig();
-  try {
-    const savedSurface = localStorage.getItem('meridian-surface');
-    if (savedSurface && SURFACES.some((s) => s.id === savedSurface)) {
-      setSurfaceEverywhere(savedSurface, typeCfg);
-    } else {
-      applyTypeConfig(typeCfg);
-    }
-  } catch { /* ignore */ }
-
-  injectUnifiedSubpageChrome(typeCfg);
+  injectUnifiedSubpageChrome();
   syncEditorialFooterI18n();
   hydrateGitHubStars();
 
   window.addEventListener('meridian:lang', () => {
-    injectUnifiedSubpageChrome(typeCfg);
+    injectUnifiedSubpageChrome();
     syncEditorialFooterI18n();
+  });
+
+  window.addEventListener('meridian:surface', () => {
+    refreshAllStudioMenus();
+  });
+
+  window.addEventListener('meridian:type', () => {
+    refreshAllStudioMenus();
   });
 
   window.addEventListener('meridian:grain', () => {
@@ -707,18 +913,78 @@ export function bindSiteChrome(): void {
     });
     const opRange = document.getElementById('global-grain-opacity-range') as HTMLInputElement | null;
     const opVal = document.getElementById('global-grain-opacity-val');
-    if (opRange) opRange.value = String(opPct);
+    if (opRange) { opRange.value = String(opPct); syncRangePct(opRange); }
     if (opVal) opVal.textContent = `${opPct}%`;
 
     const dRange = document.getElementById('global-dust-range') as HTMLInputElement | null;
     const dVal = document.getElementById('global-dust-val');
-    if (dRange) dRange.value = String(dustPct);
+    if (dRange) { dRange.value = String(dustPct); syncRangePct(dRange); }
     if (dVal) dVal.textContent = `${dustPct}%`;
 
     const sRange = document.getElementById('global-scratch-range') as HTMLInputElement | null;
     const sVal = document.getElementById('global-scratch-val');
-    if (sRange) sRange.value = String(scratchPct);
+    if (sRange) { sRange.value = String(scratchPct); syncRangePct(sRange); }
     if (sVal) sVal.textContent = `${scratchPct}%`;
+  });
+
+  // Delegated input handler for live sliders & native color pickers inside studios
+  document.addEventListener('input', (event) => {
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
+
+    if (target.matches('[data-custom-ground-input]')) {
+      const val = (target as HTMLInputElement).value;
+      setGlobalCustomGround(val);
+      return;
+    }
+
+    if (target.matches('[data-studio-custom-ink]')) {
+      const role = (target as HTMLInputElement).dataset.studioCustomInk as TypeRoleId | undefined;
+      if (!role || !ROLE_ORDER.includes(role)) return;
+      const cfg = readTypeConfig();
+      cfg[role] = { ...cfg[role], tone: 'custom', customHex: (target as HTMLInputElement).value };
+      applyTypeConfigToDom(cfg);
+      return;
+    }
+
+    if (target.matches('[data-studio-opacity-range]')) {
+      const input = target as HTMLInputElement;
+      syncRangePct(input);
+      const role = input.dataset.studioOpacityRange as TypeRoleId | undefined;
+      if (!role || !ROLE_ORDER.includes(role)) return;
+      const op = Math.max(20, Math.min(100, Number(input.value)));
+      const cfg = readTypeConfig();
+      cfg[role] = { ...cfg[role], opacity: op };
+      // Update readout & DOM without rebuilding slider mid-drag
+      const host = input.closest('[data-meridian-type-studio], #type-menu-scroll');
+      const readout = host?.querySelector<HTMLElement>('[data-studio-opacity-readout]');
+      if (readout) readout.textContent = `${op}%`;
+      host?.querySelectorAll<HTMLElement>('[data-studio-opacity]').forEach((b) => {
+        b.setAttribute('aria-pressed', Number(b.dataset.studioOpacity) === op ? 'true' : 'false');
+      });
+      applyTypeConfigToDom(cfg, { persist: true, broadcast: true, notify: false });
+      return;
+    }
+
+    if (target.matches('[data-studio-rule-range]')) {
+      const input = target as HTMLInputElement;
+      syncRangePct(input);
+      const rv = Math.max(4, Math.min(28, Number(input.value)));
+      const cfg = readTypeConfig();
+      cfg.ruleOpacity = rv;
+      const host = input.closest('[data-meridian-type-studio], #type-menu-scroll');
+      const readout = host?.querySelector<HTMLElement>('[data-studio-rule-readout]');
+      if (readout) readout.textContent = `${rv}%`;
+      applyTypeConfigToDom(cfg, { persist: true, broadcast: true, notify: false });
+      return;
+    }
+  });
+
+  document.addEventListener('change', (event) => {
+    const target = event.target as HTMLElement | null;
+    if (target?.matches('[data-studio-opacity-range], [data-studio-rule-range]')) {
+      window.dispatchEvent(new CustomEvent('meridian:type', { detail: { config: readTypeConfig() } }));
+    }
   });
 
   document.addEventListener('click', (event) => {
@@ -733,21 +999,72 @@ export function bindSiteChrome(): void {
       return;
     }
 
+    const filterBtn = target.closest<HTMLElement>('[data-surface-filter]');
+    if (filterBtn?.dataset.surfaceFilter) {
+      activeSurfaceFilter = filterBtn.dataset.surfaceFilter as SurfaceFilterGroup;
+      refreshAllStudioMenus();
+      return;
+    }
+
+    const resetGroundBtn = target.closest<HTMLElement>('[data-reset-custom-ground]');
+    if (resetGroundBtn) {
+      setGlobalCustomGround(null);
+      return;
+    }
+
     const globalSurf = target.closest<HTMLElement>('[data-global-surface]');
     if (globalSurf?.dataset.globalSurface) {
-      setSurfaceEverywhere(globalSurf.dataset.globalSurface, typeCfg);
-      closeHeaderMenus();
+      setGlobalSurface(globalSurf.dataset.globalSurface);
+      if (!document.getElementById('btn-surface-menu')) {
+        closeHeaderMenus();
+      }
       return;
     }
 
     const chromaBtn = target.closest<HTMLElement>('[data-chroma]');
     if (chromaBtn?.dataset.chroma) {
-      setSurfaceEverywhere(chromaBtn.dataset.chroma, typeCfg);
+      setGlobalSurface(chromaBtn.dataset.chroma);
+      return;
     }
+
     const surfaceBtn = target.closest<HTMLElement>('[data-set-surface], [data-surface-pick]');
     const picked = surfaceBtn?.dataset.setSurface || surfaceBtn?.dataset.surfacePick;
     if (picked) {
-      setSurfaceEverywhere(picked, typeCfg);
+      setGlobalSurface(picked);
+    }
+
+    const roleTabBtn = target.closest<HTMLElement>('[data-studio-select-role]');
+    if (roleTabBtn?.dataset.studioSelectRole) {
+      activeTypeRole = roleTabBtn.dataset.studioSelectRole as TypeRoleId;
+      refreshAllStudioMenus();
+      return;
+    }
+
+    const studioToneBtn = target.closest<HTMLElement>('[data-studio-tone]');
+    if (studioToneBtn?.dataset.studioTone && studioToneBtn.dataset.studioRole) {
+      const role = studioToneBtn.dataset.studioRole as TypeRoleId;
+      const tone = studioToneBtn.dataset.studioTone;
+      const cfg = readTypeConfig();
+      cfg[role] = { opacity: cfg[role].opacity, tone };
+      applyTypeConfigToDom(cfg);
+      return;
+    }
+
+    const studioOpBtn = target.closest<HTMLElement>('[data-studio-opacity]');
+    if (studioOpBtn?.dataset.studioOpacity && studioOpBtn.dataset.studioRole) {
+      const role = studioOpBtn.dataset.studioRole as TypeRoleId;
+      const op = Math.max(20, Math.min(100, Number(studioOpBtn.dataset.studioOpacity) || 100));
+      const cfg = readTypeConfig();
+      cfg[role] = { ...cfg[role], opacity: op };
+      applyTypeConfigToDom(cfg);
+      return;
+    }
+
+    const resetAllBtn = target.closest<HTMLElement>('[data-studio-reset-all]');
+    if (resetAllBtn) {
+      setGlobalCustomGround(null, { notify: false });
+      applyTypeConfigToDom(structuredClone(DEFAULT_TYPE_CONFIG));
+      return;
     }
 
     const gIntBtn = target.closest<HTMLElement>('[data-global-grain]');
@@ -769,32 +1086,6 @@ export function bindSiteChrome(): void {
       ensureGrainMountedForSubpages();
       const next = document.documentElement.dataset.grainDouble !== 'on';
       setPaperGrainDouble(next);
-      return;
-    }
-
-    const toneBtn = target.closest<HTMLElement>('[data-global-type-tone]');
-    if (toneBtn?.dataset.globalTypeTone) {
-      const t = toneBtn.dataset.globalTypeTone;
-      typeCfg.primary.tone = t;
-      typeCfg.secondary.tone = t;
-      typeCfg.tertiary.tone = t;
-      applyTypeConfig(typeCfg);
-      document.querySelectorAll<HTMLElement>('[data-global-type-tone]').forEach((b) => {
-        b.setAttribute('aria-pressed', b.dataset.globalTypeTone === t ? 'true' : 'false');
-      });
-      return;
-    }
-
-    const opBtn = target.closest<HTMLElement>('[data-global-type-opacity]');
-    if (opBtn?.dataset.globalTypeOpacity) {
-      const op = Number(opBtn.dataset.globalTypeOpacity) || 100;
-      typeCfg.primary.opacity = op;
-      typeCfg.secondary.opacity = op;
-      typeCfg.tertiary.opacity = op;
-      applyTypeConfig(typeCfg);
-      document.querySelectorAll<HTMLElement>('[data-global-type-opacity]').forEach((b) => {
-        b.setAttribute('aria-pressed', Number(b.dataset.globalTypeOpacity) === op ? 'true' : 'false');
-      });
       return;
     }
 
@@ -823,6 +1114,7 @@ export function bindSiteChrome(): void {
 }
 
 if (typeof document !== 'undefined') {
+  bootMeridianThemeSync();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bindSiteChrome, { once: true });
   } else {

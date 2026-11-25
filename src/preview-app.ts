@@ -7,12 +7,21 @@
 import './site-chrome';
 import {
   SURFACES,
+  SURFACE_SPECTRUM,
   PAPER_SHADER,
   GRAIN_SIZES,
   type SurfaceId,
   type GrainPreset,
   type GrainSizeId,
 } from './tokens.ts';
+import {
+  bootMeridianThemeSync,
+  getActiveBaseColors,
+  getCustomGroundHex,
+  readTypeConfig,
+  resolveRoleHex,
+  setGlobalSurface,
+} from './theme-sync.ts';
 import {
   mountPaperGrain,
   setPaperGrainIntensity,
@@ -50,9 +59,7 @@ type WorkspaceView = 'today' | 'dossier' | 'observatory';
 type ObsPreset = 'econ' | 'celestial' | 'crayon';
 type PigmentKey = 'coral' | 'sky' | 'olive' | 'ochre' | 'ink';
 
-const SURFACE_ORDER: readonly SurfaceId[] = [
-  'ivory', 'paper', 'blush', 'apricot', 'butter', 'sage', 'mist', 'aqua', 'sky', 'slate', 'lilac', 'terracotta', 'obsidian',
-];
+const SURFACE_ORDER: readonly SurfaceId[] = SURFACE_SPECTRUM;
 
 const appState = {
   view: 'today' as WorkspaceView,
@@ -162,16 +169,19 @@ function contrastRatioLabel(bg: string, fg: string): string {
 }
 
 function syncStatusBar(): void {
-  const meta = SURFACES[appState.surface];
+  const meta = SURFACES[appState.surface] || SURFACES.ivory;
+  const customBg = getCustomGroundHex();
+  const base = getActiveBaseColors(appState.surface, customBg);
+  const primaryHex = resolveRoleHex('primary', readTypeConfig(), base);
   const swatchEl = document.getElementById('prev-stat-swatch');
   const surfEl = document.getElementById('prev-stat-surface');
   const contrastEl = document.getElementById('prev-stat-contrast');
   const modeBtn = document.getElementById('prev-mode-toggle');
   const grainEl = document.getElementById('prev-stat-grain');
 
-  if (swatchEl) swatchEl.style.background = meta.bg;
-  if (surfEl) surfEl.textContent = `${meta.label} · ${meta.bg}`;
-  if (contrastEl) contrastEl.textContent = contrastRatioLabel(meta.bg, meta.fg);
+  if (swatchEl) swatchEl.style.background = base.bg;
+  if (surfEl) surfEl.textContent = customBg ? `Custom · ${customBg}` : `${meta.label} · ${base.bg}`;
+  if (contrastEl) contrastEl.textContent = contrastRatioLabel(base.bg, primaryHex);
   if (modeBtn) {
     const technical = document.documentElement.getAttribute('data-mode') === 'technical';
     const key = technical ? 'status.modeTechnical' : 'status.modeInvisible';
@@ -223,10 +233,14 @@ function setView(view: WorkspaceView): void {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function setSurface(surface: SurfaceId, announce = true): void {
+function setSurface(surface: SurfaceId, announce = true, persist = true): void {
+  if (!(surface in SURFACES)) return;
   appState.surface = surface;
-  document.documentElement.setAttribute('data-surface', surface);
-  document.getElementById('meta-theme-color')?.setAttribute('content', SURFACES[surface].bg);
+  if (persist) {
+    setGlobalSurface(surface, { notify: false });
+  } else {
+    document.documentElement.setAttribute('data-surface', surface);
+  }
   document.querySelectorAll<HTMLButtonElement>('[data-surface-pick]').forEach((b) => {
     b.setAttribute('aria-pressed', b.dataset.surfacePick === surface ? 'true' : 'false');
   });
@@ -887,10 +901,15 @@ function bootstrap(): void {
   });
   window.addEventListener('meridian:surface', ((e: CustomEvent<{ surface: SurfaceId }>) => {
     const next = e.detail?.surface;
-    if (next && next !== appState.surface && next in SURFACES) {
-      setSurface(next, false);
+    if (next && next in SURFACES) {
+      setSurface(next, false, false);
+    } else {
+      syncStatusBar();
     }
   }) as EventListener);
+  window.addEventListener('meridian:type', () => {
+    syncStatusBar();
+  });
   syncGrainOpacityUi(getPaperGrainOpacity());
   syncLayerToggle('[data-grain-dust-pick]', document.documentElement.dataset.grainDust === 'on');
   syncLayerToggle('[data-grain-scratch-pick]', document.documentElement.dataset.grainScratch === 'on');
@@ -902,12 +921,8 @@ function bootstrap(): void {
   grainOpacityRange?.addEventListener('change', (e) => {
     applyGrainOpacity((e.target as HTMLInputElement).value, true);
   });
-  let initialSurface: SurfaceId = 'ivory';
-  try {
-    const saved = localStorage.getItem('meridian-surface') as SurfaceId | null;
-    if (saved) initialSurface = saved;
-  } catch { /* ignore */ }
-  setSurface(initialSurface, false);
+  const { surface: initialSurface } = bootMeridianThemeSync();
+  setSurface(initialSurface, false, false);
   setView('today');
   markPageReady();
   window.addEventListener('resize', () => {

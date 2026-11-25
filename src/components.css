@@ -188,7 +188,7 @@ strong, b {
   font-weight: var(--ds-weight-eyebrow, 400);
   line-height: var(--ds-lh-mono);
   letter-spacing: var(--ds-tracking-eyebrow);
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--ds-fg-muted);
 }
 
@@ -1422,9 +1422,9 @@ html[data-page-ready="true"] .ds-page-enter {
 .ds-footer-logo {
   font-family: var(--ds-font-sans);
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-weight: var(--ds-weight-ui, 450);
+  letter-spacing: 0em;
+  text-transform: none;
   color: var(--ds-inverted-fg);
   text-decoration: none;
   line-height: 1.2;
@@ -1433,7 +1433,7 @@ html[data-page-ready="true"] .ds-page-enter {
 .ds-footer-ver {
   font-family: var(--ds-font-mono);
   font-size: 10.5px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0em;
   color: var(--ds-inverted-muted);
 }
 
@@ -1749,7 +1749,7 @@ html[data-page-ready="true"] .ds-page-enter {
 .ds-timeline-node[aria-pressed="true"] .ds-timeline-label,
 .ds-timeline-node[data-active="true"] .ds-timeline-label {
   color: var(--ds-fg);
-  font-weight: 600;
+  font-weight: var(--ds-weight-ui, 450);
 }
 
 @media (hover: hover) and (pointer: fine) {

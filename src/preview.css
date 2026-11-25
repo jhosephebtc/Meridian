@@ -390,8 +390,8 @@
 .audit-table th {
   font-family: var(--ds-font-mono);
   font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  text-transform: none;
+  letter-spacing: 0em;
   color: var(--ds-fg-muted);
   font-weight: 500;
 }
