@@ -3,7 +3,7 @@
  * Veil lifts after first paint; content rises with --ds-enter-scale (never scale(0)).
  */
 export function markPageReady(options: { delayMs?: number } = {}): void {
-  const delay = options.delayMs ?? 40;
+  const delay = options.delayMs ?? 16;
   const reveal = () => {
     window.setTimeout(() => {
       document.documentElement.dataset.pageReady = 'true';
@@ -11,7 +11,7 @@ export function markPageReady(options: { delayMs?: number } = {}): void {
       if (veil) {
         const done = () => veil.setAttribute('aria-hidden', 'true');
         veil.addEventListener('transitionend', done, { once: true });
-        window.setTimeout(done, 800);
+        window.setTimeout(done, 460);
       }
     }, delay);
   };

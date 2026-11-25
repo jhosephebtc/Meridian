@@ -570,25 +570,34 @@
       --ds-spine-1: #191512; --ds-spine-2: #14100E; --ds-spine-3: #29221E;
     }
 
-    /* Page enter / loading veil */
+    /* Page enter / loading veil + crisp vertical editorial entrance */
     .ds-page-veil {
       position: fixed; inset: 0; z-index: 10000;
       background-color: var(--ds-bg); pointer-events: none;
       opacity: 1; visibility: visible;
-      transition: opacity var(--ds-duration-reveal) var(--ds-ease-editorial), visibility 0s linear var(--ds-duration-reveal);
+      transition: opacity 320ms var(--ds-ease-editorial), visibility 0s linear 320ms;
     }
     html[data-page-ready="true"] .ds-page-veil {
       opacity: 0; visibility: hidden;
-      transition: opacity var(--ds-duration-reveal) var(--ds-ease-editorial), visibility 0s linear 0s;
+      transition: opacity 320ms var(--ds-ease-editorial), visibility 0s linear 320ms;
+    }
+    @keyframes meridianPageEnter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes meridianSectionEnter {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
     }
     .ds-page-enter {
       opacity: 0;
-      transform-origin: 50% 0;
-      transform: scale(var(--ds-enter-scale)) translateY(12px);
-      transition: opacity var(--ds-duration-reveal) var(--ds-ease-editorial), transform var(--ds-duration-reveal) var(--ds-ease-editorial);
     }
     html[data-page-ready="true"] .ds-page-enter {
-      opacity: 1; transform: none;
+      opacity: 1;
+      animation: meridianPageEnter 420ms var(--ds-ease-editorial) both;
+    }
+    main#topo > section.is-tab-entering {
+      animation: meridianSectionEnter 380ms var(--ds-ease-editorial) both;
     }
 
     /* Derivados Single-Ink */
@@ -5007,22 +5016,20 @@
       transform: rotate(45deg);
     }
 
-    /* Scroll-reveal — orçamento editorial (raro / 1ª vista) */
+    /* Scroll-reveal — entrada vertical suave sem distorção de escala */
     [data-reveal] {
       opacity: 0;
-      transform: translateY(18px) scale(0.985);
-      filter: blur(0px);
+      transform: translateY(14px);
       transition:
-        opacity var(--ds-duration-reveal) var(--ds-ease-editorial),
-        transform var(--ds-duration-reveal) var(--ds-ease-editorial);
+        opacity 440ms var(--ds-ease-editorial),
+        transform 440ms var(--ds-ease-editorial);
       transition-delay: var(--reveal-delay, 0ms);
-      will-change: opacity, transform;
     }
     [data-reveal="soft"] {
-      transform: translateY(10px);
+      transform: translateY(8px);
     }
     [data-reveal="lift"] {
-      transform: translateY(22px) scale(0.97);
+      transform: translateY(16px);
     }
     [data-reveal].is-inview,
     html[data-page-ready="true"] [data-reveal].is-inview {
@@ -5058,10 +5065,13 @@
       .drawer-panel[data-open="true"] { opacity: 1; pointer-events: auto; }
       .toast-item, .toast-item[data-state="open"], .toast-item[data-state="closing"] { transform: none; }
       .plate-art { transition: none; }
-      [data-reveal] {
+      [data-reveal],
+      .ds-page-enter,
+      main#topo > section.is-tab-entering {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
+        animation: none !important;
         filter: none !important;
       }
       .ds-select-option,
@@ -5360,10 +5370,10 @@
     /* ---------------- 10. ARQUIVO ORBITAL NASA (PAPER HALFTONE + DIAGRAMAÇÃO ASSIMÉTRICA) ---------------- */
     .nasa-controls-bar {
       display: grid;
-      gap: 12px;
-      padding: 14px 16px;
-      margin-bottom: 24px;
-      border-radius: var(--ds-radius-squircle);
+      gap: 14px;
+      padding: 18px 20px;
+      margin-bottom: 32px;
+      border-radius: var(--ds-radius-card);
       border: var(--ds-hairline, 1px) solid var(--ds-border);
       background: var(--ds-bg-tint-subtle);
     }
@@ -5413,10 +5423,16 @@
     }
     .nasa-ht-sliders-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 12px 18px;
-      padding-top: 10px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px 18px;
+      padding-top: 14px;
       border-top: 1px solid var(--ds-rule);
+    }
+    @media (max-width: 1119px) {
+      .nasa-ht-sliders-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .nasa-ht-sliders-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .nasa-ht-slider-item {
       min-width: 0;
@@ -5441,61 +5457,67 @@
     .nasa-grid {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 28px 20px;
-      align-items: start;
+      gap: 36px 28px;
+      align-items: stretch;
     }
     .nasa-card {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       padding: 0;
       border-radius: 0;
       border: 0;
       background: transparent;
+      min-width: 0;
     }
     .nasa-card--split {
-      grid-column: span 7;
+      grid-column: span 12;
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr);
+      gap: clamp(22px, 3vw, 40px);
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--ds-rule);
     }
-    .nasa-card--tall {
-      grid-column: span 5;
-    }
-    .nasa-card--square {
-      grid-column: span 4;
+    .nasa-card--tall,
+    .nasa-card--square,
+    .nasa-card--wide,
+    .nasa-card--split-rev {
+      grid-column: span 6;
+      display: flex;
+      flex-direction: column;
     }
     .nasa-card--panoramic {
-      grid-column: span 8;
-    }
-    .nasa-card--wide {
-      grid-column: span 5;
-    }
-    .nasa-card--split-rev {
-      grid-column: span 7;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+      grid-column: span 12;
+      padding: 28px 0;
+      border-top: 1px solid var(--ds-rule);
+      border-bottom: 1px solid var(--ds-rule);
       gap: 18px;
-      align-items: start;
     }
-    @media (max-width: 1020px) {
+    .nasa-panoramic-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+      gap: 14px clamp(20px, 3vw, 44px);
+      align-items: end;
+    }
+    .nasa-panoramic-acc {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px clamp(20px, 3vw, 36px);
+    }
+    @media (max-width: 960px) {
       .nasa-card--split,
       .nasa-card--tall,
       .nasa-card--square,
-      .nasa-card--panoramic,
       .nasa-card--wide,
-      .nasa-card--split-rev {
+      .nasa-card--split-rev,
+      .nasa-card--panoramic {
         grid-column: span 12;
       }
-    }
-    @media (max-width: 680px) {
       .nasa-card--split,
-      .nasa-card--split-rev {
+      .nasa-panoramic-head,
+      .nasa-panoramic-acc {
         grid-template-columns: 1fr;
-      }
-      .nasa-card--split-rev .nasa-frame {
-        order: -1;
       }
     }
     .nasa-copy-col {
@@ -5503,6 +5525,11 @@
       flex-direction: column;
       gap: 10px;
       min-width: 0;
+      flex: 1;
+    }
+    .nasa-acc-wrap {
+      margin-top: auto;
+      padding-top: 6px;
     }
     .nasa-frame {
       position: relative;
@@ -5513,10 +5540,12 @@
       border: 0;
       background: transparent;
     }
-    .nasa-card--tall .nasa-frame { aspect-ratio: 3 / 4; }
-    .nasa-card--square .nasa-frame { aspect-ratio: 1 / 1; }
-    .nasa-card--panoramic .nasa-frame { aspect-ratio: 16 / 9; }
-    .nasa-card--wide .nasa-frame { aspect-ratio: 16 / 10; }
+    .nasa-card--split .nasa-frame { aspect-ratio: 16 / 10; }
+    .nasa-card--tall .nasa-frame,
+    .nasa-card--square .nasa-frame { aspect-ratio: 4 / 3; }
+    .nasa-card--panoramic .nasa-frame { aspect-ratio: 21 / 9; max-height: 440px; width: 100%; }
+    .nasa-card--wide .nasa-frame,
+    .nasa-card--split-rev .nasa-frame { aspect-ratio: 16 / 10; }
     .nasa-frame img {
       position: relative;
       z-index: 1;
@@ -5550,23 +5579,24 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding-bottom: 6px;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--ds-rule);
       font-family: var(--ds-font-mono);
-      font-size: 10.5px;
+      font-size: 11px;
       color: var(--ds-type-tertiary);
     }
     .nasa-card-title {
       font-family: var(--ds-font-display);
-      font-size: 20px;
-      line-height: 1.24;
+      font-size: clamp(20px, 1.8vw, 24px);
+      line-height: 1.2;
       margin: 0;
       color: var(--ds-type-primary);
     }
     .nasa-card-desc {
       margin: 0;
-      font-size: 13.5px;
-      line-height: 1.54;
+      font-size: 14px;
+      line-height: 1.62;
+      max-width: 56ch;
       color: var(--ds-type-secondary);
     }
     .nasa-acc-wrap .ds-acc-item summary {
@@ -5868,45 +5898,6 @@
               <a href="./gann.html"><span><span class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary); margin-right:8px;">03</span>Dossiê W.D. Gann</span><span aria-hidden="true">↗</span></a>
             </nav>
           </aside>
-        </div>
-
-        <!-- 5 Edition Plates: Click any to transform the entire living page -->
-        <div class="edition-strip" role="group" aria-label="Edições de superfície">
-          <button class="edition-plate" data-set-surface="ivory" aria-pressed="true" style="background:#FAF9F5; color:#141413;">
-            <span class="edition-plate-meta">01 · EDITORIAL</span>
-            <div>
-              <div class="edition-plate-name">Ivory Editorial</div>
-              <div class="edition-plate-meta">#FAF9F5 · Padrão B2C</div>
-            </div>
-          </button>
-          <button class="edition-plate" data-set-surface="paper" aria-pressed="false" style="background:#FFFFFF; color:#0A0A0A;">
-            <span class="edition-plate-meta">02 · PAPER</span>
-            <div>
-              <div class="edition-plate-name">Paper White</div>
-              <div class="edition-plate-meta">#FFFFFF · Dossiês &amp; B2B</div>
-            </div>
-          </button>
-          <button class="edition-plate" data-set-surface="aqua" aria-pressed="false" style="background:#A4CED0; color:#171614;">
-            <span class="edition-plate-meta">03 · AQUA</span>
-            <div>
-              <div class="edition-plate-name">Signature Aqua</div>
-              <div class="edition-plate-meta">#A4CED0 · Clima &amp; Ambiente</div>
-            </div>
-          </button>
-          <button class="edition-plate" data-set-surface="terracotta" aria-pressed="false" style="background:#EDBB99; color:#171614;">
-            <span class="edition-plate-meta">04 · TERRACOTTA</span>
-            <div>
-              <div class="edition-plate-name">Warm Terracotta</div>
-              <div class="edition-plate-meta">#EDBB99 · Cultura &amp; Solar</div>
-            </div>
-          </button>
-          <button class="edition-plate" data-set-surface="obsidian" aria-pressed="false" style="background:#0E0E0D; color:#FAF9F5;">
-            <span class="edition-plate-meta">05 · DARK INVERTED</span>
-            <div>
-              <div class="edition-plate-name">Obsidian Dark</div>
-              <div class="edition-plate-meta">#0E0E0D · Terminal Gann</div>
-            </div>
-          </button>
         </div>
       </div>
     </section>
@@ -8069,14 +8060,14 @@
         </div>
 
         <div class="nasa-grid">
-          <!-- Plate 1: Split horizontal (image left 4:3 | editorial + accordion right) -->
+          <!-- Plate 1: Full-width editorial spread (image left 16:10 | structured copy + accordion right) -->
           <article class="nasa-card nasa-card--split">
             <figure class="nasa-frame">
               <img src="./nasa/as17-148-22727.jpg" alt="The Blue Marble — Terra fotografada pela Apollo 17" loading="lazy" />
               <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
             <div class="nasa-copy-col">
-              <div class="nasa-card-meta"><span>AS17-148-22727 · 1972</span><span>NASA</span></div>
+              <div class="nasa-card-meta"><span>AS17-148-22727 · 1972</span><span>NASA · 16:10</span></div>
               <h3 class="nasa-card-title" data-home="nasa.c1.title">Apollo 17 · The Blue Marble</h3>
               <p class="nasa-card-desc" data-home="nasa.c1.desc">Capturada a ~29.000 km a caminho da Lua, revela a África, a Península Arábica e a calota polar sul sob iluminação solar direta sem cobertura frontal de nuvens.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
@@ -8084,7 +8075,7 @@
                   <summary><span data-home="nasa.c1.acc1.sum">Telemetria de Voo &amp; Lente</span> <span class="ds-acc-meta">70MM</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c1.acc1.body">Hasselblad 500EL com lente Zeiss Planar 80mm f/2.8 · filme Kodak Ektachrome SO-368 70mm · 07 de dezembro de 1972 · tripulação Cernan, Evans e Schmitt.</div></div>
                 </details>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c1.acc2.sum">Leitura Editorial &amp; Superfície</span> <span class="ds-acc-meta">ALBEDO</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c1.acc2.body">Primeiro registro completo iluminado do disco planetário em missão tripulada; a suavização de saturação e opacidade integra a placa ao grão global da página.</div></div>
                 </details>
@@ -8092,45 +8083,45 @@
             </div>
           </article>
 
-          <!-- Plate 2: Tall portrait 3:4 -->
+          <!-- Plate 2: Paired Diptych Left (4:3) -->
           <article class="nasa-card nasa-card--tall">
             <figure class="nasa-frame">
               <img src="./nasa/art002e009280b.jpg" alt="Artemis Era Earthrise — Terra nascendo além do limbo lunar" loading="lazy" />
               <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
             <div class="nasa-copy-col">
-              <div class="nasa-card-meta"><span>ART002E009280B · ARTEMIS</span><span>3:4</span></div>
+              <div class="nasa-card-meta"><span>ART002E009280B · ARTEMIS</span><span>4:3 DIPTYCH</span></div>
               <h3 class="nasa-card-title" data-home="nasa.c2.title">Artemis · Nascer da Terra</h3>
-              <p class="nasa-card-desc" data-home="nasa.c2.desc">O disco azulado emerge acima do horizonte cinzento da Lua, contrastando a camada atmosférica contra o vácuo profundo em recorte vertical 3:4.</p>
+              <p class="nasa-card-desc" data-home="nasa.c2.desc">O disco azulado emerge acima do horizonte cinzento da Lua, contrastando a camada atmosférica contra o vácuo profundo em enquadramento equilibrado.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c2.acc1.sum">Parâmetros Orbitais</span> <span class="ds-acc-meta">CISLUNAR</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc1.body">Distância cislunar ~380.000 km · contraste de limbo elevado ideal para testar retícula Halftone Hex com tamanho de ponto fino (0.10–0.16).</div></div>
                 </details>
-                <details class="ds-acc-item" open data-anim="open">
-                  <summary><span data-home="nasa.c2.acc2.sum">Notas de Diagramação</span> <span class="ds-acc-meta">GRID 5</span></summary>
-                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc2.body">Proporção retrato vertical equilibra o bloco panorâmico da Apollo 17 ao lado, criando ritmo de coluna assimétrica 7 + 5.</div></div>
+                <details class="ds-acc-item">
+                  <summary><span data-home="nasa.c2.acc2.sum">Notas de Diagramação</span> <span class="ds-acc-meta">GRID 6+6</span></summary>
+                  <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c2.acc2.body">Proporção 4:3 em díptico simétrico 6 + 6 colunas, mantendo ritmo de linha uniforme entre fotografia e bloco editorial.</div></div>
                 </details>
               </div>
             </div>
           </article>
 
-          <!-- Plate 3: Compact 1:1 square -->
+          <!-- Plate 3: Paired Diptych Right (4:3) -->
           <article class="nasa-card nasa-card--square">
             <figure class="nasa-frame">
               <img src="./nasa/iss035e017673.jpg" alt="Curvatura terrestre observada pela Estação Espacial Internacional" loading="lazy" />
               <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
             <div class="nasa-copy-col">
-              <div class="nasa-card-meta"><span>ISS035-E-017673 · 400 KM</span><span>1:1</span></div>
+              <div class="nasa-card-meta"><span>ISS035-E-017673 · 400 KM</span><span>4:3 DIPTYCH</span></div>
               <h3 class="nasa-card-title" data-home="nasa.c3.title">Órbita Baixa · Limbo Atmosférico</h3>
               <p class="nasa-card-desc" data-home="nasa.c3.desc">Registro oblíquo pela ISS a 400 km de altitude exibindo a estreita faixa azul de espalhamento Rayleigh ao longo do terminador planetário.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c3.acc1.sum">Dados da Expedição 35</span> <span class="ds-acc-meta">51.6°</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c3.acc1.body">Cúpula de observação orbital · inclinação 51,6° · velocidade orbital 7,66 km/s (um nascer do sol a cada 90 minutos).</div></div>
                 </details>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c3.acc2.sum">Estudo em Halftone Gooey/Soft</span> <span class="ds-acc-meta">SHADER</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c3.acc2.body">O gradiente contínuo do terminador revela transições suaves quando avaliado no modo Textura Soft ou Invertido sobre papel escuro.</div></div>
                 </details>
@@ -8138,30 +8129,32 @@
             </div>
           </article>
 
-          <!-- Plate 4: Copy ABOVE, 16:9 panoramic image middle, accordion BELOW -->
+          <!-- Plate 4: Full-width panoramic spread (structured 2-col copy above, 21:9 plate middle, 2-col specs below) -->
           <article class="nasa-card nasa-card--panoramic">
-            <div class="nasa-copy-col">
-              <div class="nasa-card-meta"><span>STS065-86-095 · 18 JUL 1994</span><span>16:9 PANORAMA</span></div>
-              <h3 class="nasa-card-title" data-home="nasa.c4.title">Columbia · Olho do Furacão Emilia</h3>
-              <p class="nasa-card-desc" data-home="nasa.c4.desc">Parede simétrica do ciclone sobre o Pacífico Leste fotografada a bordo do ônibus espacial Columbia — título e síntese posicionados acima da faixa panorâmica 16:9.</p>
+            <div class="nasa-panoramic-head">
+              <div>
+                <div class="nasa-card-meta"><span>STS065-86-095 · 18 JUL 1994</span><span>21:9 PANORAMA</span></div>
+                <h3 class="nasa-card-title" style="margin-top:8px;" data-home="nasa.c4.title">Columbia · Olho do Furacão Emilia</h3>
+              </div>
+              <p class="nasa-card-desc" data-home="nasa.c4.desc">Parede simétrica do ciclone sobre o Pacífico Leste fotografada a bordo do ônibus espacial Columbia — cabeçalho e síntese distribuídos lado a lado acima da faixa panorâmica.</p>
             </div>
             <figure class="nasa-frame">
               <img src="./nasa/sts065-86-095.jpg" alt="Olho do Furacão Emilia observado pelo ônibus espacial Columbia" loading="lazy" />
               <div class="nasa-shader-host" aria-hidden="true"></div>
             </figure>
-            <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-              <details class="ds-acc-item" open data-anim="open">
+            <div class="ds-accordion nasa-acc-wrap nasa-panoramic-acc" data-ds-accordion>
+              <details class="ds-acc-item">
                 <summary><span data-home="nasa.c4.acc1.sum">Sensores &amp; Meteorologia STS-65</span> <span class="ds-acc-meta">CAT 5</span></summary>
                 <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c4.acc1.body">18 de julho de 1994 · pressão central mínima ~948 hPa · ventos sustentados Categoria 5 fotografados em janela perpendicular à órbita.</div></div>
               </details>
-              <details class="ds-acc-item" open data-anim="open">
+              <details class="ds-acc-item">
                 <summary><span data-home="nasa.c4.acc2.sum">Dinâmica de Retícula Espiral</span> <span class="ds-acc-meta">INK</span></summary>
                 <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c4.acc2.body">As bandas espirais funcionam como teste natural de anisotropia visual e contraste em modo monocromático com cor do ponto customizada.</div></div>
               </details>
             </div>
           </article>
 
-          <!-- Plate 5: Widescreen 16:10 -->
+          <!-- Plate 5: Closing Diptych Left (16:10) -->
           <article class="nasa-card nasa-card--wide">
             <figure class="nasa-frame">
               <img src="./nasa/iss040e091208.jpg" alt="Observação de sistema de nuvens e oceano pela ISS Expedição 40" loading="lazy" />
@@ -8172,11 +8165,11 @@
               <h3 class="nasa-card-title" data-home="nasa.c5.title">Expedição 40 · Correntes &amp; Nuvens</h3>
               <p class="nasa-card-desc" data-home="nasa.c5.desc">Mapeamento de estratocúmulos e fronteira costeira usado no acompanhamento de aerossóis, albedo oceânico e padrões de vento em larga escala.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c5.acc1.sum">Instrumentação Orbital</span> <span class="ds-acc-meta">TELE</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c5.acc1.body">Registro de 10 de agosto de 2014 · lente teleobjetiva de alta resolução através do vidro óptico de quartzo da ISS.</div></div>
                 </details>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c5.acc2.sum">Preservação &amp; Albedo</span> <span class="ds-acc-meta">86% OP</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c5.acc2.body">Altas luzes de nuvens refletem o papel Ivory/Paper sem estourar o branco quando a opacidade da chapa é calibrada em 86%.</div></div>
                 </details>
@@ -8184,27 +8177,27 @@
             </div>
           </article>
 
-          <!-- Plate 6: Reversed horizontal split (text + accordion LEFT | 4:3 image RIGHT) -->
+          <!-- Plate 6: Closing Diptych Right (16:10) -->
           <article class="nasa-card nasa-card--split-rev">
+            <figure class="nasa-frame">
+              <img src="./nasa/art002e016299.jpg" alt="Earthrise capturado pela cápsula Orion" loading="lazy" />
+              <div class="nasa-shader-host" aria-hidden="true"></div>
+            </figure>
             <div class="nasa-copy-col">
-              <div class="nasa-card-meta"><span>ART002E016299 · ORION</span><span>4:3 SPLIT</span></div>
+              <div class="nasa-card-meta"><span>ART002E016299 · ORION</span><span>16:10</span></div>
               <h3 class="nasa-card-title" data-home="nasa.c6.title">Cápsula Orion · Horizonte Lunar</h3>
-              <p class="nasa-card-desc" data-home="nasa.c6.desc">Texto à esquerda e fotografia 4:3 à direita: enquadramento de longa distância da Terra crescente atrás da câmera dos painéis solares.</p>
+              <p class="nasa-card-desc" data-home="nasa.c6.desc">Enquadramento de longa distância da Terra crescente atrás da câmera instalada na extremidade dos painéis solares da espaçonave Orion.</p>
               <div class="ds-accordion nasa-acc-wrap" data-ds-accordion>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c6.acc1.sum">Sistema Óptico de Engenharia</span> <span class="ds-acc-meta">OPNAV</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c6.acc1.body">Câmera acoplada à ponta do painel solar da espaçonave Orion (Optical Navigation Camera) em trajetória além da órbita lunar.</div></div>
                 </details>
-                <details class="ds-acc-item" open data-anim="open">
+                <details class="ds-acc-item">
                   <summary><span data-home="nasa.c6.acc2.sum">Linhagem Arquivística 1968–2026</span> <span class="ds-acc-meta">ARCHIVE</span></summary>
                   <div class="ds-acc-collapse"><div class="ds-acc-body" data-home="nasa.c6.acc2.body">Retoma a gramática visual do primeiro Earthrise, agora reprocessável ao vivo em malha quadrada ou hexagonal pelo shader Paper.</div></div>
                 </details>
               </div>
             </div>
-            <figure class="nasa-frame">
-              <img src="./nasa/art002e016299.jpg" alt="Earthrise capturado pela cápsula Orion" loading="lazy" />
-              <div class="nasa-shader-host" aria-hidden="true"></div>
-            </figure>
           </article>
         </div>
       </div>
@@ -12023,6 +12016,10 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
           '.reader-column',
           '.skill-card',
           '.credit-card',
+          '.nasa-card',
+          '.surfaces-study-card',
+          '.historia-layout > *',
+          '.token-grid > *',
         ].join(','));
 
         const seen = new Set();
@@ -12050,7 +12047,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
             if (!el.hasAttribute('data-reveal')) {
               el.setAttribute('data-reveal', el.classList.contains('section-header') ? 'soft' : 'lift');
             }
-            el.style.setProperty('--reveal-delay', `${Math.min(i * 70, 280)}ms`);
+            el.style.setProperty('--reveal-delay', `${Math.min(i * 55, 240)}ms`);
           });
         });
 
@@ -12060,7 +12057,7 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
             entry.target.classList.add('is-inview');
             io.unobserve(entry.target);
           });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+        }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
 
         items.forEach((el) => io.observe(el));
       }
@@ -12071,20 +12068,43 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
 
       /* Initial Render */
 
-      /* Design System Section Tabs + Hash Auto-Switch */
+      /* Design System Section Tabs + Smooth Staggered Entrance */
       function selectDsTab(tabId, scrollTop = false) {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const sections = document.querySelectorAll('main#topo > section[data-tab-group]');
+        const newlyShown = [];
         sections.forEach((sec) => {
           const groups = (sec.dataset.tabGroup || '').split(/\s+/);
           const match = tabId === 'all' || groups.includes(tabId);
+          const wasHidden = sec.getAttribute('data-ds-hidden') === 'true';
           sec.dataset.tabHidden = match ? 'false' : 'true';
           if (match) {
             sec.removeAttribute('data-ds-hidden');
-            sec.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-inview'));
+            if (!reduced && (wasHidden || scrollTop)) {
+              sec.classList.remove('is-tab-entering');
+              sec.querySelectorAll('[data-reveal]').forEach((el) => el.classList.remove('is-inview'));
+              newlyShown.push(sec);
+            } else {
+              sec.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-inview'));
+            }
           } else {
             sec.setAttribute('data-ds-hidden', 'true');
+            sec.classList.remove('is-tab-entering');
           }
         });
+        if (newlyShown.length > 0) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              newlyShown.forEach((sec) => {
+                sec.classList.add('is-tab-entering');
+                sec.querySelectorAll('[data-reveal]').forEach((el, idx) => {
+                  el.style.setProperty('--reveal-delay', `${Math.min(idx * 40, 220)}ms`);
+                  el.classList.add('is-inview');
+                });
+              });
+            });
+          });
+        }
         document.querySelectorAll('[data-ds-tab]').forEach((b) => {
           b.setAttribute('data-active', b.dataset.dsTab === tabId ? 'true' : 'false');
         });
