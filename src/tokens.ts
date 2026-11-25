@@ -2082,10 +2082,11 @@ export type TypeRoleId =
   | 'primary'
   | 'secondary'
   | 'tertiary'
-  | 'buttonPrimaryFg'
+  | 'accent'
   | 'buttonPrimaryBg'
+  | 'buttonPrimaryFg'
   | 'buttonSecondaryFg'
-  | 'accent';
+  | 'buttonSecondaryBg';
 
 /**
  * 28 Tintas Tipográficas Curadas (Escuras Minerais, Editoriais Cromáticas e Claras/Marfim para fundos escuros).

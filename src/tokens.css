@@ -980,6 +980,7 @@
   --ds-btn-primary-bg: var(--ds-accent);
   --ds-btn-primary-fg: var(--ds-accent-fg);
   --ds-btn-secondary-fg: var(--ds-fg);
+  --ds-btn-secondary-bg: var(--ds-surface-2);
   --ds-type-accent: var(--ds-fg);
   --ds-glass-control: color-mix(in srgb, var(--ds-highlight) 38%, transparent);
   --ds-glass-control-hover: color-mix(in srgb, var(--ds-highlight) 58%, transparent);

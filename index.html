@@ -5527,11 +5527,15 @@
         transform: none !important;
       }
     }
-    .popover.meridian-surface-studio-popover { width: min(320px, calc(100vw - 24px)); padding: 10px; }
-    .popover.meridian-type-studio-popover { width: min(364px, calc(100vw - 24px)); padding: 12px; }
+    .topbar-row-main > .site-places,
+    .topbar-row-main > .topbar-controls { min-width: 0; max-width: 100%; }
+    .popover.meridian-surface-studio-popover { width: min(492px, calc(100vw - 24px)); max-width: min(520px, calc(100vw - 24px)); max-height: min(80vh, 560px); overflow-y: auto; overflow-x: hidden; padding: 12px; }
+    .popover.meridian-type-studio-popover { width: min(820px, calc(100vw - 28px)); max-width: min(840px, calc(100vw - 28px)); max-height: min(84vh, 660px); overflow-y: auto; overflow-x: hidden; padding: 14px 16px; }
     .popover.meridian-type-studio-popover #type-menu-scroll { max-height: none; overflow: visible; padding: 0; }
+    .header-menu.meridian-prefs-popover { min-width: min(490px, calc(100vw - 24px)); max-width: min(520px, calc(100vw - 24px)); padding: 14px; }
   </style>
   <link rel="stylesheet" href="./src/site-chrome.css" />
+  <script>try{var s=localStorage.getItem('meridian-surface'),m=localStorage.getItem('meridian-mode');if(s)document.documentElement.setAttribute('data-surface',s);if(m)document.documentElement.setAttribute('data-mode',m);}catch(e){}</script>
 </head>
 <body>
   <div class="ds-page-veil" aria-hidden="false"></div>
@@ -5617,92 +5621,84 @@
             </div>
           </div>
 
-          <button class="topbar-link surface-menu-trigger" id="btn-grain-direct" type="button" aria-expanded="false" aria-controls="grain-popover" data-tip="Grão, Poeira &amp; Riscos">
-            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <circle cx="5" cy="5" r="1.4" fill="currentColor"/><circle cx="10.5" cy="5.5" r="1.1" fill="currentColor" opacity="0.6"/>
-              <circle cx="15" cy="5" r="1.3" fill="currentColor"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/>
-              <circle cx="13.5" cy="10" r="1.1" fill="currentColor" opacity="0.75"/><circle cx="11" cy="15" r="1.4" fill="currentColor"/>
-              <line x1="15.5" y1="12" x2="17" y2="17" stroke="currentColor" stroke-width="1.1" opacity="0.65"/>
-            </svg>
-            <span class="surface-menu-label" data-home="top.grainBtn">Grão &amp; Dust</span>
-          </button>
-
-          <div data-lang-slot aria-label="Idioma"></div>
-
-          <a class="site-gh-star" href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer" aria-label="Dar estrela ao Meridian no GitHub" data-i18n-attr="aria-label:nav.githubAria,title:nav.githubAria">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-            <svg class="site-gh-star-ico" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.6 9.95 5.55l4.35.63-3.15 3.07.74 4.33L8 11.53 4.11 13.58l.74-4.33L1.7 6.18l4.35-.63L8 1.6Z"/></svg>
-            <span class="site-gh-star-label" data-i18n="nav.star">Estrelar</span>
-            <span class="site-gh-star-count" data-gh-stars hidden></span>
-          </a>
-
           <div class="menu-anchor align-end popover-anchor" id="shortcuts-anchor">
-            <button type="button" class="topbar-link" data-menu-toggle aria-expanded="false" aria-haspopup="menu" id="btn-shortcuts">
-              <span data-i18n="nav.shortcuts">Atalhos</span>
+            <button type="button" class="topbar-link" data-menu-toggle aria-expanded="false" aria-haspopup="dialog" id="btn-shortcuts">
+              <span data-i18n="nav.shortcuts">Preferências</span>
               <svg class="menu-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <div class="header-menu" id="menu-shortcuts" data-open="false" role="menu">
-              <button class="header-menu-item" id="btn-mode-toggle" type="button" aria-pressed="false" data-menu-keep>
-                <span class="blur-morph" id="mode-label" data-i18n="top.mode">B2C Invisível</span>
-              </button>
-              <button class="header-menu-item" id="btn-grain-popover" type="button" aria-expanded="false" aria-controls="grain-popover" data-i18n="top.grain">Grain</button>
-              <button class="header-menu-item" id="btn-open-cmdk" type="button"><span data-home="top.cmdk">Paleta</span> <span class="kbd-hint">⌘K</span></button>
-              <button class="header-menu-item" id="btn-open-drawer" type="button" data-i18n="top.tokens">Tokens</button>
-            </div>
-            <div class="popover" id="grain-popover" data-open="false" aria-hidden="true" role="dialog" aria-label="Controles de textura e sinais">
-              <div class="eyebrow" data-home="grain.intensity" style="margin-bottom:8px;">Intensidade</div>
-              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
-                <button class="btn btn-sm btn-tertiary" data-set-grain="off">Off</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain="subtle" data-home="grain.subtle">Suave</button>
-                <button class="btn btn-sm btn-primary" data-set-grain="editorial">Edit.</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain="tactile" data-home="grain.tactile">Tátil</button>
-              </div>
-              <div class="eyebrow" data-home="grain.opacity" style="margin-bottom:8px;">Opacidade</div>
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-                <input id="grain-opacity-range" class="ds-trans-range" type="range" min="20" max="100" step="5" value="100" aria-label="Opacidade do grão" style="flex:1;" />
-                <span id="grain-opacity-value" class="mono tabular" style="min-width:3.2em; text-align:right; font-size:11px;">100%</span>
-              </div>
-              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
-                <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-opacity="40">40%</button>
-                <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-opacity="70">70%</button>
-                <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-opacity="85">85%</button>
-                <button class="btn btn-sm btn-primary" type="button" data-set-grain-opacity="100">100%</button>
-              </div>
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-                <span class="eyebrow" data-home="grain.dustLevel" style="margin:0;">Poeira (Dust)</span>
-                <span id="grain-dust-value" class="mono tabular" style="font-size:11px;">0%</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                <input id="grain-dust-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de poeira (Dust)" style="flex:1;" />
-              </div>
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-                <span class="eyebrow" data-home="grain.scratchLevel" style="margin:0;">Riscos (Scratches)</span>
-                <span id="grain-scratch-value" class="mono tabular" style="font-size:11px;">0%</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                <input id="grain-scratch-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de riscos (Scratches)" style="flex:1;" />
-              </div>
-              <div class="eyebrow" data-home="grain.size" style="margin-bottom:8px;">Tamanho do grão</div>
-              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:14px;">
-                <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine" data-home="grain.fine">Fino</button>
-                <button class="btn btn-sm btn-primary" data-set-grain-size="medium" data-home="grain.medium">Médio</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse" data-home="grain.coarse">Grosso</button>
-                <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky" data-home="grain.chunky">Grumo</button>
-              </div>
-              <div class="eyebrow" data-home="grain.layers" style="margin-bottom:8px;">Camadas</div>
-              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:14px;">
-                <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-dust aria-pressed="false" data-home="grain.dust">Dust</button>
-                <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-scratch aria-pressed="false" data-home="grain.scratch">Scratch</button>
-                <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-double aria-pressed="false" data-home="grain.double">Duplo</button>
-              </div>
-              <div class="eyebrow" data-home="grain.signals" style="margin-bottom:8px;">Estilo de Sinais</div>
-              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin-bottom:10px;">
-                <button class="btn btn-sm btn-primary" data-set-signals="chromatic" data-home="grain.chromatic">Cromático</button>
-                <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome" data-home="grain.mono">Monocromo</button>
-              </div>
-              <div class="mono" style="font-size:10.5px; color:var(--ds-type-tertiary); line-height:1.45;">
-                <span data-home="grain.help">Intensidade + opacidade · Dust/Scratch opcionais.</span>
-                <span id="grain-blend-readout">edit. · 100% · médio</span>
+            <div class="header-menu meridian-prefs-popover" id="menu-shortcuts" data-open="false" role="dialog" aria-label="Preferências Meridian" data-menu-keep>
+              <div class="meridian-prefs-grid">
+                <div class="meridian-prefs-col">
+                  <div class="meridian-studio-sublabel" style="margin-top:0;" data-i18n="lang.label">Idioma</div>
+                  <div data-lang-slot aria-label="Idioma" data-menu-keep></div>
+
+                  <div class="meridian-studio-sublabel" style="margin-top:10px;">Modo &amp; ações</div>
+                  <button class="header-menu-item" id="btn-mode-toggle" type="button" aria-pressed="false" data-menu-keep>
+                    <span class="blur-morph" id="mode-label" data-i18n="top.mode">B2C Invisível</span>
+                  </button>
+                  <button class="header-menu-item" id="btn-open-cmdk" type="button"><span data-home="top.cmdk">Paleta</span> <span class="kbd-hint">⌘K</span></button>
+                  <button class="header-menu-item" id="btn-open-drawer" type="button" data-i18n="top.tokens">Tokens</button>
+
+                  <div class="meridian-studio-sublabel" data-home="grain.signals" style="margin-top:10px;">Estilo de Sinais</div>
+                  <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:5px; margin-bottom:10px;">
+                    <button class="btn btn-sm btn-primary" data-set-signals="chromatic" data-home="grain.chromatic">Cromático</button>
+                    <button class="btn btn-sm btn-tertiary" data-set-signals="monochrome" data-home="grain.mono">Monocromo</button>
+                  </div>
+
+                  <a class="site-gh-star" href="https://github.com/jhosephebtc/Meridian" target="_blank" rel="noopener noreferrer" aria-label="Dar estrela ao Meridian no GitHub" data-i18n-attr="aria-label:nav.githubAria,title:nav.githubAria">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+                    <svg class="site-gh-star-ico" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.6 9.95 5.55l4.35.63-3.15 3.07.74 4.33L8 11.53 4.11 13.58l.74-4.33L1.7 6.18l4.35-.63L8 1.6Z"/></svg>
+                    <span class="site-gh-star-label" data-i18n="nav.star">Estrelar</span>
+                    <span class="site-gh-star-count" data-gh-stars hidden></span>
+                  </a>
+                </div>
+
+                <div class="meridian-prefs-col meridian-prefs-grain-col" id="grain-popover">
+                  <div class="meridian-studio-sublabel" style="margin-top:0;" data-home="grain.intensity">Grão &amp; textura do papel</div>
+                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:10px;">
+                    <button class="btn btn-sm btn-tertiary" data-set-grain="off">Off</button>
+                    <button class="btn btn-sm btn-tertiary" data-set-grain="subtle" data-home="grain.subtle">Suave</button>
+                    <button class="btn btn-sm btn-primary" data-set-grain="editorial">Edit.</button>
+                    <button class="btn btn-sm btn-tertiary" data-set-grain="tactile" data-home="grain.tactile">Tátil</button>
+                  </div>
+                  <div class="meridian-slider-head">
+                    <span data-home="grain.opacity">Opacidade</span>
+                    <span id="grain-opacity-value" class="mono tabular">100%</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                    <input id="grain-opacity-range" class="ds-trans-range" type="range" min="20" max="100" step="5" value="100" aria-label="Opacidade do grão" style="flex:1;" />
+                  </div>
+                  <div class="meridian-slider-head">
+                    <span data-home="grain.dustLevel">Poeira (Dust)</span>
+                    <span id="grain-dust-value" class="mono tabular">0%</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                    <input id="grain-dust-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de poeira (Dust)" style="flex:1;" />
+                  </div>
+                  <div class="meridian-slider-head">
+                    <span data-home="grain.scratchLevel">Riscos (Scratches)</span>
+                    <span id="grain-scratch-value" class="mono tabular">0%</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+                    <input id="grain-scratch-range" class="ds-trans-range" type="range" min="0" max="100" step="5" value="0" aria-label="Intensidade de riscos (Scratches)" style="flex:1;" />
+                  </div>
+                  <div class="meridian-studio-sublabel" data-home="grain.size">Tamanho do grão</div>
+                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:10px;">
+                    <button class="btn btn-sm btn-tertiary" data-set-grain-size="fine" data-home="grain.fine">Fino</button>
+                    <button class="btn btn-sm btn-primary" data-set-grain-size="medium" data-home="grain.medium">Médio</button>
+                    <button class="btn btn-sm btn-tertiary" data-set-grain-size="coarse" data-home="grain.coarse">Grosso</button>
+                    <button class="btn btn-sm btn-tertiary" data-set-grain-size="chunky" data-home="grain.chunky">Grumo</button>
+                  </div>
+                  <div class="meridian-studio-sublabel" data-home="grain.layers">Camadas extras</div>
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-bottom:8px;">
+                    <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-dust aria-pressed="false" data-home="grain.dust">Dust</button>
+                    <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-scratch aria-pressed="false" data-home="grain.scratch">Scratch</button>
+                    <button class="btn btn-sm btn-tertiary" type="button" data-set-grain-double aria-pressed="false" data-home="grain.double">Duplo</button>
+                  </div>
+                  <div class="mono" style="font-size:10px; color:var(--ds-type-tertiary); line-height:1.4;">
+                    <span id="grain-blend-readout">edit. · 100% · médio</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -9820,7 +9816,9 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         typeMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (open) {
           setSurfaceMenu(false);
-          setGrainPopover(false);
+          const ms = document.getElementById('menu-shortcuts');
+          if (ms) ms.dataset.open = 'false';
+          document.getElementById('btn-shortcuts')?.setAttribute('aria-expanded', 'false');
           hideFloatingTip();
         }
       }
@@ -9831,11 +9829,12 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
         surfaceMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (open) {
           setTypeMenu(false);
-          setGrainPopover(false);
+          const ms = document.getElementById('menu-shortcuts');
+          if (ms) ms.dataset.open = 'false';
+          document.getElementById('btn-shortcuts')?.setAttribute('aria-expanded', 'false');
           hideFloatingTip();
         }
       }
-      grainPop.setAttribute('aria-hidden', 'true');
       surfaceMenu?.setAttribute('aria-hidden', 'true');
       typeMenu?.setAttribute('aria-hidden', 'true');
       surfaceMenuBtn?.addEventListener('click', (e) => {
@@ -9861,7 +9860,6 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       document.addEventListener('click', (e) => {
         // Close popover on outside click
         if (!e.target.closest('.popover-anchor')) {
-          if (grainPop.dataset.open === 'true') setGrainPopover(false);
           if (surfaceMenu?.dataset.open === 'true') setSurfaceMenu(false);
           if (typeMenu?.dataset.open === 'true') setTypeMenu(false);
         }
@@ -10044,9 +10042,14 @@ const ctrl = runMeridianSketch(canvasEl, createEconWatercolorSketch(), {
       document.getElementById('btn-toggle-signals').addEventListener('click', () => {
         applySignals(state.signals === 'chromatic' ? 'monochrome' : 'chromatic');
       });
-      document.getElementById('btn-open-cmdk').addEventListener('click', () => setCmdk(true));
+      function closeShortcutsMenu() {
+        const ms = document.getElementById('menu-shortcuts');
+        if (ms) ms.dataset.open = 'false';
+        document.getElementById('btn-shortcuts')?.setAttribute('aria-expanded', 'false');
+      }
+      document.getElementById('btn-open-cmdk').addEventListener('click', () => { closeShortcutsMenu(); setCmdk(true); });
       document.getElementById('hero-open-cmdk').addEventListener('click', () => setCmdk(true));
-      document.getElementById('btn-open-drawer').addEventListener('click', () => setDrawer(true));
+      document.getElementById('btn-open-drawer').addEventListener('click', () => { closeShortcutsMenu(); setDrawer(true); });
       document.getElementById('hero-open-drawer').addEventListener('click', () => setDrawer(true));
       document.getElementById('btn-strip-drawer').addEventListener('click', () => setDrawer(true));
       document.getElementById('footer-open-tokens')?.addEventListener('click', (e) => {

@@ -328,8 +328,8 @@
   position: relative;
   appearance: none;
   border: var(--ds-hairline) solid var(--ds-border-strong);
-  background: var(--ds-bg);
-  color: var(--ds-fg);
+  background: var(--ds-btn-secondary-bg, var(--ds-bg));
+  color: var(--ds-btn-secondary-fg, var(--ds-fg));
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-ui-md);
   font-weight: var(--ds-weight-ui, 450);
@@ -406,9 +406,9 @@
 }
 
 .ml-btn-primary {
-  background: var(--ds-fg);
-  color: var(--ds-bg);
-  border-color: var(--ds-fg);
+  background: var(--ds-btn-primary-bg, var(--ds-fg));
+  color: var(--ds-btn-primary-fg, var(--ds-bg));
+  border-color: var(--ds-btn-primary-bg, var(--ds-fg));
 }
 
 .ml-btn-primary::before {

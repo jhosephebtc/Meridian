@@ -17,10 +17,11 @@ export interface MeridianTypeConfig {
   primary: RoleColorChoice;
   secondary: RoleColorChoice;
   tertiary: RoleColorChoice;
+  accent: RoleColorChoice;
   buttonPrimaryFg: RoleColorChoice;
   buttonPrimaryBg: RoleColorChoice;
   buttonSecondaryFg: RoleColorChoice;
-  accent: RoleColorChoice;
+  buttonSecondaryBg: RoleColorChoice;
   ruleOpacity: number; // 4..28 (default 9)
 }
 
@@ -34,10 +35,11 @@ export const DEFAULT_TYPE_CONFIG: MeridianTypeConfig = {
   primary: { tone: 'surface', opacity: 100 },
   secondary: { tone: 'surface', opacity: 100 },
   tertiary: { tone: 'surface', opacity: 100 },
+  accent: { tone: 'surface', opacity: 100 },
   buttonPrimaryFg: { tone: 'surface', opacity: 100 },
   buttonPrimaryBg: { tone: 'surface', opacity: 100 },
   buttonSecondaryFg: { tone: 'surface', opacity: 100 },
-  accent: { tone: 'surface', opacity: 100 },
+  buttonSecondaryBg: { tone: 'surface', opacity: 100 },
   ruleOpacity: 9,
 };
 
@@ -45,10 +47,11 @@ export const ROLE_ORDER: readonly TypeRoleId[] = [
   'primary',
   'secondary',
   'tertiary',
-  'buttonPrimaryFg',
-  'buttonPrimaryBg',
-  'buttonSecondaryFg',
   'accent',
+  'buttonPrimaryBg',
+  'buttonPrimaryFg',
+  'buttonSecondaryFg',
+  'buttonSecondaryBg',
 ] as const;
 
 let bc: BroadcastChannel | null = null;
@@ -118,7 +121,7 @@ export function contrastRatioString(bgHex: string, fgHex: string): string {
 
 export function hexWithAlpha(hex: string, opacityPct: number): string {
   const clean = normalizeHex(hex, '#141413');
-  const pct = Math.max(15, Math.min(100, Math.round(opacityPct)));
+  const pct = Math.max(10, Math.min(100, Math.round(opacityPct)));
   if (pct >= 100) return clean;
   const [r, g, b] = hexToRgbTuple(clean);
   return `rgba(${r}, ${g}, ${b}, ${(pct / 100).toFixed(3).replace(/0+$/, '').replace(/\.$/, '')})`;
@@ -141,7 +144,7 @@ function normalizeChoice(raw: unknown): RoleColorChoice {
     const r = raw as Partial<RoleColorChoice>;
     const tone = typeof r.tone === 'string' && r.tone ? r.tone : 'surface';
     const opacity = typeof r.opacity === 'number' && Number.isFinite(r.opacity)
-      ? Math.max(20, Math.min(100, Math.round(r.opacity)))
+      ? Math.max(10, Math.min(100, Math.round(r.opacity)))
       : 100;
     const customHex = typeof r.customHex === 'string' && /^#[0-9a-fA-F]{3,6}$/.test(r.customHex.trim())
       ? normalizeHex(r.customHex)
@@ -151,24 +154,29 @@ function normalizeChoice(raw: unknown): RoleColorChoice {
   return { tone: 'surface', opacity: 100 };
 }
 
+export function normalizeTypeConfig(raw?: Partial<MeridianTypeConfig> | null): MeridianTypeConfig {
+  const p = raw && typeof raw === 'object' ? raw : {};
+  return {
+    primary: normalizeChoice(p.primary),
+    secondary: normalizeChoice(p.secondary),
+    tertiary: normalizeChoice(p.tertiary),
+    accent: normalizeChoice(p.accent),
+    buttonPrimaryFg: normalizeChoice(p.buttonPrimaryFg),
+    buttonPrimaryBg: normalizeChoice(p.buttonPrimaryBg),
+    buttonSecondaryFg: normalizeChoice(p.buttonSecondaryFg),
+    buttonSecondaryBg: normalizeChoice(p.buttonSecondaryBg),
+    ruleOpacity:
+      typeof p.ruleOpacity === 'number' && Number.isFinite(p.ruleOpacity)
+        ? Math.max(4, Math.min(28, Math.round(p.ruleOpacity)))
+        : 9,
+  };
+}
+
 export function readTypeConfig(): MeridianTypeConfig {
   try {
     const raw = localStorage.getItem(TYPE_CONFIG_STORAGE_KEY);
     if (raw) {
-      const p = JSON.parse(raw) as Partial<MeridianTypeConfig>;
-      return {
-        primary: normalizeChoice(p.primary),
-        secondary: normalizeChoice(p.secondary),
-        tertiary: normalizeChoice(p.tertiary),
-        buttonPrimaryFg: normalizeChoice(p.buttonPrimaryFg),
-        buttonPrimaryBg: normalizeChoice(p.buttonPrimaryBg),
-        buttonSecondaryFg: normalizeChoice(p.buttonSecondaryFg),
-        accent: normalizeChoice(p.accent),
-        ruleOpacity:
-          typeof p.ruleOpacity === 'number' && Number.isFinite(p.ruleOpacity)
-            ? Math.max(4, Math.min(28, Math.round(p.ruleOpacity)))
-            : 9,
-      };
+      return normalizeTypeConfig(JSON.parse(raw) as Partial<MeridianTypeConfig>);
     }
   } catch { /* ignore */ }
   return structuredClone(DEFAULT_TYPE_CONFIG);
@@ -234,7 +242,7 @@ export function resolveRoleHex(
   cfg: MeridianTypeConfig,
   base: ActiveBaseColors,
 ): string {
-  const choice = cfg[role];
+  const choice = cfg[role] ?? { tone: 'surface', opacity: 100 };
   if (choice.tone === 'custom' && choice.customHex) {
     return normalizeHex(choice.customHex, base.fg);
   }
@@ -261,6 +269,8 @@ export function resolveRoleHex(
       return base.accentFg;
     case 'buttonSecondaryFg':
       return cfg.primary.tone !== 'surface' ? resolveRoleHex('primary', cfg, base) : base.fg;
+    case 'buttonSecondaryBg':
+      return base.surface2;
     case 'accent':
       return cfg.primary.tone !== 'surface' ? resolveRoleHex('primary', cfg, base) : base.fg;
   }
@@ -319,6 +329,7 @@ const ROLE_CSS_CLEANUP = [
   '--ds-btn-primary-bg',
   '--ds-btn-primary-fg',
   '--ds-btn-secondary-fg',
+  '--ds-btn-secondary-bg',
   '--ds-type-accent',
   '--ds-structural-ink',
   '--ds-rule-alpha',
@@ -333,9 +344,10 @@ export function isDefaultTypeConfig(cfg: MeridianTypeConfig): boolean {
 }
 
 export function applyTypeConfigToDom(
-  cfg: MeridianTypeConfig,
+  rawCfg: Partial<MeridianTypeConfig>,
   opts: { persist?: boolean; broadcast?: boolean; notify?: boolean } = {},
 ): void {
+  const cfg = normalizeTypeConfig(rawCfg);
   const { persist = true, broadcast = true, notify = true } = opts;
   const root = document.documentElement;
   const customBg = getCustomGroundHex();
@@ -350,17 +362,19 @@ export function applyTypeConfigToDom(
     const btnPriFgHex = resolveRoleHex('buttonPrimaryFg', cfg, base);
     const btnPriBgHex = resolveRoleHex('buttonPrimaryBg', cfg, base);
     const btnSecFgHex = resolveRoleHex('buttonSecondaryFg', cfg, base);
+    const btnSecBgHex = resolveRoleHex('buttonSecondaryBg', cfg, base);
     const accentHex = resolveRoleHex('accent', cfg, base);
 
     const primaryCss = hexWithAlpha(primaryHex, cfg.primary.opacity);
     const secondaryCss = hexWithAlpha(secondaryHex, cfg.secondary.opacity);
     const tertiaryCss = hexWithAlpha(tertiaryHex, cfg.tertiary.opacity);
-    const subtleCss = hexWithAlpha(tertiaryHex, Math.max(20, Math.round(cfg.tertiary.opacity * 0.78)));
+    const subtleCss = hexWithAlpha(tertiaryHex, Math.max(12, Math.round(cfg.tertiary.opacity * 0.78)));
     const btnPriFgCss = hexWithAlpha(btnPriFgHex, cfg.buttonPrimaryFg.opacity);
     const btnPriBgCss = hexWithAlpha(btnPriBgHex, cfg.buttonPrimaryBg.opacity);
     const btnPriHoverHex = mixHex(btnPriBgHex, base.bg, 0.14);
     const btnPriHoverCss = hexWithAlpha(btnPriHoverHex, cfg.buttonPrimaryBg.opacity);
     const btnSecFgCss = hexWithAlpha(btnSecFgHex, cfg.buttonSecondaryFg.opacity);
+    const btnSecBgCss = hexWithAlpha(btnSecBgHex, cfg.buttonSecondaryBg.opacity);
     const accentCss = hexWithAlpha(accentHex, cfg.accent.opacity);
 
     root.style.setProperty('--ds-structural-ink', primaryHex);
@@ -384,6 +398,7 @@ export function applyTypeConfigToDom(
     root.style.setProperty('--ds-btn-primary-bg', btnPriBgCss);
     root.style.setProperty('--ds-btn-primary-fg', btnPriFgCss);
     root.style.setProperty('--ds-btn-secondary-fg', btnSecFgCss);
+    root.style.setProperty('--ds-btn-secondary-bg', btnSecBgCss);
     root.style.setProperty('--ds-accent', btnPriBgCss);
     root.style.setProperty('--ds-accent-hover', btnPriHoverCss);
     root.style.setProperty('--ds-accent-fg', btnPriFgCss);
