@@ -11,7 +11,7 @@ Follows **Pasquale Vitiello's** [`pasqualevitiello/plotter`](https://github.com/
 
 ## 1. Core Plotter Drawing Rules (`PLOTTER_STANDARDS` in `src/plotter-svg.ts`)
 
-- **One ink (`currentColor` / `--plotter-ink: var(--ds-fg)`):** Every diagram reads natively across all 13 Meridian surfaces (`ivory` through `obsidian`).
+- **One ink (`currentColor` / `--plotter-ink: var(--ds-fg)`):** Every diagram reads natively across all 40 Meridian surfaces (`ivory` through `obsidian`).
 - **Calibrated stroke & point scale (`vector-effect="non-scaling-stroke"`):**
   - Plotter blueprints (`src/plotter-svg.ts` & `[data-plotter]` in `src/tokens.css`): unit stroke `1` where hierarchy comes exclusively from **opacity** and **dash patterns** (`data-plotter-role`).
   - Components Lab / UI charts (`src/components-lab.css` `.ml-svg`): `--ml-primary: 1.5px`, `--ml-secondary: 1.15px`, `--ml-guide: 0.7px`, dot marks `r: 2px`, labels `10–11px` without stroke (`stroke="none"`).

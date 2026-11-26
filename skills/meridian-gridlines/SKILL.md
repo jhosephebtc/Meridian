@@ -44,6 +44,12 @@ Run [`probe.js`](./probe.js) directly in any browser console or via Playwright (
 4. **Fix Containers, Never One-Off Items:**
    - Move the minority outlier onto the dominant line via shared CSS custom properties or container padding — **never** slap `margin-left: 3px` onto a single row, and never quietly alter approved hit areas (`>= 44px` on touch) or font sizes without flagging it.
 
+5. **Shell Edges Are Named Lines Too:**
+   - On every page the header (`.site-bar` / `.topbar-inner`), hero, section heads and footer share two shell lines: `57.6px` and `1382.4px` at `1440px`; `20px` and `370px` at `390px`. Verify in one pass across all 6 pages (`index`, `preview`, `components`, `gann`, `historia`, `manifesto`).
+   - Masthead (`1fr auto 1fr`): the brand's center must equal `innerWidth / 2` (`720px` at `1440px`); the left group's right edge must stay `≤` brand left, and the brand's right edge `≤` right-controls left. Re-measure at `1440`, `1024` and `960px`, then confirm the top-right hamburger below `1120px`.
+   - Open popovers (`Preferences`, `Type`, `Surface`) must not create horizontal overflow (`document.documentElement.scrollWidth === innerWidth`).
+   - Full layout/header rules: [`../meridian-layout-chrome/SKILL.md`](../meridian-layout-chrome/SKILL.md).
+
 ---
 
 ## 3. Audit Report Format

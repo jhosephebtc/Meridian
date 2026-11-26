@@ -1,6 +1,6 @@
 # Credits, External Skills & Design References (`Meridian v1.5.0`)
 
-Meridian synthesizes original engineering (`atelier-engine.ts`, 13-surface token architecture, 4-language i18n, 90-component SVG-line lab) with publicly shared skills, open-source tooling, and canonical design references from external creators. Every external influence implemented on the site and encoded in [`skills/`](./) is credited below.
+Meridian synthesizes original engineering (`atelier-engine.ts`, 40-surface token architecture, 4-language i18n, 90-component SVG-line lab) with publicly shared skills, open-source tooling, and canonical design references from external creators. Every external influence implemented on the site and encoded in [`skills/`](./) is credited below.
 
 ---
 

@@ -5,7 +5,7 @@ description: Interactive 2:1 isometric rounded-solid SVG figure craft aligned wi
 
 # Meridian Hairline Isometric Figures (`meridian-hairline-figure`)
 
-Pairs **Lucas Marques's** [`lucasmarkes/hairline`](https://github.com/lucasmarkes/hairline) ([`hairline.lucasmarkes.com/skills`](https://hairline.lucasmarkes.com/skills)) interactive 2:1 isometric solid grammar with Meridian's [`meridian-plotter-svg`](../meridian-plotter-svg/SKILL.md) Single-Ink engine (`currentColor`, `data-plotter-role`, 13 surfaces).
+Pairs **Lucas Marques's** [`lucasmarkes/hairline`](https://github.com/lucasmarkes/hairline) ([`hairline.lucasmarkes.com/skills`](https://hairline.lucasmarkes.com/skills)) interactive 2:1 isometric solid grammar with Meridian's [`meridian-plotter-svg`](../meridian-plotter-svg/SKILL.md) Single-Ink engine (`currentColor`, `data-plotter-role`, 40 surfaces).
 
 Whereas **Plotter** draws orthographic 2D plans, cross-sections, dimensions, and the 81k spherical projection, **Hairline Figures** build pointer-responsive **2:1 isometric objects** from rounded solids: opaque surface fills, one ink on every stroke.
 
@@ -25,7 +25,7 @@ Whereas **Plotter** draws orthographic 2D plans, cross-sections, dimensions, and
    - Clamp every lift, gap, tilt, and spring target so extremes remain framed at `intensity = 1` inside `viewBox="0 0 400 320"` (or `.ds-svg-frame`). Apply sublinear distance falloff (`1 → 0.31 → 0.09`).
 
 4. **04 · `accent` — Stroke Is the Only Highlight (Razor-Thin Hairline Scale):**
-   - Use **one** foreground stroke (`var(--ds-fg)` / `currentColor`) across all 13 Meridian surfaces with **`vector-effect="non-scaling-stroke"`** so lines stay razor-thin at every card width: active contour `0.65px` (`stroke-opacity: 0.92`), resting contour `0.45px` (`stroke-opacity: 0.32`), inner crease `0.4px` (`stroke-opacity: 0.24`), base guide `0.4px` (`stroke-opacity: 0.18`). Those numbers are strokes only. No glow, gradient, blur, or second accent stripe. A fill is never the highlight — solid faces are rule 06.
+   - Use **one** foreground stroke (`var(--ds-fg)` / `currentColor`) across all 40 Meridian surfaces with **`vector-effect="non-scaling-stroke"`** so lines stay razor-thin at every card width: active contour `0.65px` (`stroke-opacity: 0.92`), resting contour `0.45px` (`stroke-opacity: 0.32`), inner crease `0.4px` (`stroke-opacity: 0.24`), base guide `0.4px` (`stroke-opacity: 0.18`). Those numbers are strokes only. No glow, gradient, blur, or second accent stripe. A fill is never the highlight — solid faces are rule 06.
    - Highlight **one** subject at a time: at rest, one lead mark (`r=1.15`, opaque `fill="currentColor"`) guides the eye; on pointer hover/lock, the rest mark yields brightness to the hovered piece. Rest vs hover changes z, stroke width, and stroke-opacity. It does not change fill-opacity.
 
 5. **05 · `rest` — Rest Is Designed, Never Flat:**

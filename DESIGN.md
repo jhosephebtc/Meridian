@@ -13,8 +13,8 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
   - Rules & borders: `--ds-rule` / `--ds-border` (`9%`), `--ds-rule-strong` / `--ds-border-strong` (`12%`).
   - Tints: `--ds-bg-tint-subtle` (`4.5%`), `--ds-bg-tint-muted` (`8.5%`), `--ds-bg-tint-active` (`12%`).
   - Translucent chrome: `--ds-chrome-bg` (`82%` `--ds-bg`).
-  - Why: derived values stay harmonically locked across all 13 light/tinted/dark papers without duplicating component color themes.
-- **Official surfaces (`SURFACES` / `SURFACE_SPECTRUM` in `src/tokens.ts`, `[data-surface]` in `src/tokens.css`):**
+  - Why: derived values stay harmonically locked across all 40 light/tinted/dark papers without duplicating component color themes.
+- **Official surfaces: 40 papers (`SURFACES` / `SURFACE_SPECTRUM` in `src/tokens.ts`, `[data-surface]` in `src/tokens.css`)** — the full ground/ink/contrast table lives in [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md#1-visual-architecture--the-40-single-ink-surfaces). Highlights:
   - Core & Archival: `ivory` (`#FAF9F5` / `#141413`, 17.6:1), `paper` (`#FFFFFF` / `#0A0A0A`, 19.8:1), `aqua` (`#A4CED0` / `#171614`, 10.4:1), `terracotta` (`#EDBB99` / `#171614`, 10.4:1), `obsidian` (`#0E0E0D` / `#FAF9F5`, 18.4:1).
   - Soft Chromatic: `blush` (`#E8C4C0`), `apricot` (`#E8C8A8`), `butter` (`#E8D9A8`), `sage` (`#B8C5A8`), `mist` (`#C5D4CE`), `sky` (`#B0C8D6`), `slate` (`#B5BFC9`), `lilac` (`#C9C0D8`).
   - Extended papers: `ash` Pale Ash (`#E2DFD8`), `stone` Stone Gray (`#8E8B84`), `clay` Field Ochre (`#B39A6E`).
@@ -38,7 +38,8 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
 - **Anti-Slop Typography Rule (Zero Spaced All-Caps):** Never combine `text-transform: uppercase` with wide positive tracking (`0.05em–0.12em`) on eyebrows, kickers, table headers, colophons, badges, or buttons. Use calm sentence case with tight/neutral tracking (`0em` to `-0.005em`).
 - **Optical discipline:** `font-kerning: normal` + `font-feature-settings: "kern" 1, "liga" 1, "calt" 1` on body/headings; constrain long-form prose to `max-width: 65ch` (`--ds-max-prose`).
 - **Build hierarchy via scale contrast and voice switch, never heavy weights or boxed noise.**
-- **Synchronized 7-Role Type & Button Engine (`src/theme-sync.ts`):** `primary`, `secondary`, `tertiary`, `buttonPrimaryFg`, `buttonPrimaryBg`, `buttonSecondaryFg`, and `accent` (+ `ruleOpacity`) cascade across all 40 Single-Ink surfaces (+ custom ground) and persist/sync across every page on entry and in real time across open tabs.
+- **Synchronized 8-Role Type & Button Engine (`src/theme-sync.ts`):** `primary`, `secondary`, `tertiary`, `accent`, `buttonPrimaryBg`, `buttonPrimaryFg`, `buttonSecondaryFg`, and `buttonSecondaryBg` (+ `ruleOpacity`) cascade across all 40 Single-Ink surfaces (+ custom ground) and persist/sync across every page on entry and in real time across open tabs. Every role picks from the 28 inks (`dark` 12 · `editorial` 7 · `light` 9) or a custom hex, with a `10–100%` transparency slider per selected role.
+- **Legibility Rule (never ship an unreadable ink):** text roles must keep **≥ 4.5:1** against the active `--ds-bg` after transparency is applied (prefer **≥ 7:1** for `primary`). When customizing ink colors, filter swatches by contrast against the current ground *before* applying, and re-run the filter after every surface change. See [`skills/meridian-layout-chrome/SKILL.md`](./skills/meridian-layout-chrome/SKILL.md).
 
 ## 4. Dual-Radius & Materiality
 
@@ -106,7 +107,16 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
 - `data-mode="technical"` (Pro audit): `density: 0.82` (CSS) / `0.88` (TS `MODE_PROFILES`), `--ds-card-pad: 14px`, 4-layer deterministic ledger, Tier A/B/C badges, tabular degrees.
 - **3-Column Archival Reader:** `152px` TOC | `65ch` prose with clickable dotted `.ds-claim` + superscripts | `264px` aside plate (`mix-blend-mode: multiply` on light papers) + *At a glance*.
 
-## 8. Never-Ship Checklist
+## 8. Layout, Header & Color Studio (`skills/meridian-layout-chrome`)
+
+- **One shell on all 6 pages:** header, hero, sections and footer share the same edges (`57.6 → 1382.4px` at `1440px`; `20 → 370px` at `390px`). Never give a single page its own max-width/padding.
+- **Masthead `1fr auto 1fr`:** places (left) · brand (optically centered) · controls (right). Low-frequency controls live in one `Preferences` popover (`640px`, 2 columns, no horizontal overflow); GitHub star stays in the header; below `1120px` everything collapses into a top-right `.ds-burger` drawer.
+- **Information architecture:** `Overview` unifies Overview + Foundations (palette once, not twice); `History` is its own section; an `Examples` strip links `W.D. Gann`, `The Lighthouse`, `Manifesto`. Never repeat a block that already appears below it.
+- **Grid:** 12 columns, fixed-ratio spreads (`7:5` → `6+6` → panorama → `6+6`), equal card heights, no ragged holes.
+- **Color studio:** 40 surfaces × 28 inks × 8 roles, per-role transparency `10–100%`, synced across pages/tabs (`meridian-theme-v2`). **Text must stay `≥ 4.5:1`** against the active ground after transparency; filter swatches by contrast and re-check after every surface change.
+- **Entrances:** `opacity` + `translateY(10px)` in `≤ 420ms` (`--ds-ease-editorial`) with `40ms` staggers; never a viewport-wide `scale()`.
+
+## 9. Never-Ship Checklist
 
 | Never Ship | Required Standard |
 | --- | --- |
@@ -121,6 +131,10 @@ Before building, styling, or reviewing UI in Meridian, read this file and load t
 | `backdrop-filter: blur` on modal/drawer backdrop | Dim only (`rgba(20, 16, 12, 0.34)`) |
 | `p5.js` bundle | `src/atelier-engine.ts` (`< 0.7ms/frame`, 0 deps) |
 | `preserveAspectRatio="none"` on radial SVGs | `1:1` locked `viewBox="0 0 400 400"` |
+| Custom text color under `4.5:1` on the active ground | Filter inks by contrast; re-check after each surface change (`≥ 7:1` for `primary`) |
+| Per-page header/footer widths or a header that overlaps the brand | Shared shell edges + `1fr auto 1fr` masthead; hamburger top-right `< 1120px` |
+| Whole-page `scale()` entrance | `translateY(10px)` + `opacity`, `≤ 420ms` |
+| Raw `nav.*` / `data-i18n` keys on screen | Keys defined for `pt`, `en`, `es`, `fr` |
 
 ---
 

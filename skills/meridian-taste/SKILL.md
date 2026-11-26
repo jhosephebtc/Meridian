@@ -12,7 +12,7 @@ This skill translates Meridian's implemented craft together with **Emil Kowalski
 
 ---
 
-## 1. The 10 Core Taste Pillars
+## 1. The 13 Core Taste Pillars
 
 1. **One Ink Per Paper (`--ds-fg` over `--ds-bg`):**
    - Never hardcode secondary border grays (`#e5e5e5`, `#333`) or random box-shadows.
@@ -63,6 +63,20 @@ This skill translates Meridian's implemented craft together with **Emil Kowalski
     - `data-mode="technical"` exposes 4 deterministic layers and `Tier A / B / C` clickable provenance (`.ds-claim`).
     - All numeric readouts use `font-variant-numeric: tabular-nums`.
 
+11. **One Shell, One Grid, One Masthead (Layout Taste):**
+    - Header, hero, sections and footer share the same two vertical edges on every page (`57.6 → 1382.4px` at `1440`, `20 → 370px` at `390`). Desktop masthead is `1fr auto 1fr` (places · brand · controls); the brand stays optically centered and nothing overlaps it.
+    - Lay content on 12 columns with fixed-ratio spreads (`7:5`, `6+6`, full panorama) and equal card heights — no ragged holes, no repeated information (if the 40 surfaces appear below, do not preview 5 of them above).
+    - Consolidate low-frequency controls into one `Preferences` popover and collapse everything below `1120px` into a top-right hamburger before shrinking type or letting items collide.
+    - See [`../meridian-layout-chrome/SKILL.md`](../meridian-layout-chrome/SKILL.md).
+
+12. **Customizable Color, Never Unreadable Color:**
+    - Users may restyle any of the 8 roles from 28 inks (or a custom hex) on any of the 40 surfaces, with a `10–100%` transparency slider per role — but every text role must stay **`≥ 4.5:1`** (aim `≥ 7:1` for `primary`) against the active ground *after* transparency, and button fg/bg pairs must pass between themselves.
+    - Filter swatches by contrast before applying and re-check after every surface change. Chrome (header, menus, popovers) derives from the ground, not from decorative body inks.
+
+13. **Entrances Settle, They Don't Zoom:**
+    - Page load and tab/section switches use `opacity` + `translateY(10px)` (`≤ 420ms`, `--ds-ease-editorial`) with `40ms` staggers — never a viewport-wide `scale()` (it breaks `position: sticky`).
+    - Raw i18n keys (`nav.*`) on screen are shipped bugs; all four languages must resolve.
+
 ---
 
 ## 2. Required Review Output Format
@@ -72,7 +86,7 @@ When reviewing or critiquing UI code for taste violations, **always output a sin
 | Before | After | Why |
 | :--- | :--- | :--- |
 | `transition: all 200ms ease-in;` | `transition: transform 160ms var(--ds-ease-out), opacity 160ms var(--ds-ease-out);` | Avoid `all` (unintended layout transitions) and `ease-in` (sluggish UI starts) |
-| `border: 1px solid #d4d4d4;` | `border: 1px solid var(--ds-border);` | Single-Ink `color-mix()` keeps hairlines coherent across all 13 surfaces |
+| `border: 1px solid #d4d4d4;` | `border: 1px solid var(--ds-border);` | Single-Ink `color-mix()` keeps hairlines coherent across all 40 surfaces |
 | `.card:hover { transform: translateY(-2px); }` | `@media (hover: hover) and (pointer: fine) { .card:hover { ... } }` | Prevent sticky hover states on touch screens |
 | `transform: scale(0);` | `transform: scale(var(--ds-enter-scale, 0.96)); opacity: 0;` | Elements scale smoothly from near-resting size, never from nothing |
 | `font-weight: 700;` on `Geist Serif` `h1` | `font-weight: 400; font-synthesis-weight: none;` | Display serif builds authority through scale and optical tracking, not bold weight |
@@ -94,6 +108,11 @@ Scan changed CSS/TS/HTML files for these Meridian taste violations:
 - [ ] Zero `⌘K` / keyboard shortcut open animations (`transition: none`).
 - [ ] Zero moving hit targets inside interactive SVG figures (`01 · hit` on rest pose only; opaque back-to-front occlusion).
 - [ ] Zero alignment misses `>= 2px` in `window.__gridlines()` across topbars, menus, sidebars, and toolbars (`1440px` & `390px`).
+- [ ] Zero horizontal overflow (`scrollWidth === innerWidth`) with Preferences/Type popovers open at `1440px`, `1024px`, `960px`, and `390px`.
+- [ ] Zero header overlaps (`leftNav.right ≤ brand.left`, `brand.right ≤ controls.left`); hamburger top-right below `1120px`.
+- [ ] Zero text roles under `4.5:1` against the active ground on at least `ivory`, `aqua`, `terracotta`, `paper`, `obsidian` (with custom inks + transparency).
+- [ ] Zero raw `nav.*` / `data-i18n` keys visible in `pt`, `en`, `es`, `fr`.
+- [ ] Zero viewport-wide `scale()` entrances (`.ds-page-enter` uses `translateY` only).
 
 ---
 

@@ -6,13 +6,14 @@
 
 | Task | Load Skill | Key Files |
 | --- | --- | --- |
-| Design system overview, 13 surfaces, tokens, Geist typography, i18n | [`skills/meridian-design-system/SKILL.md`](./skills/meridian-design-system/SKILL.md) | `src/tokens.css`, `src/tokens.ts`, `src/fonts.css`, `src/i18n.ts` |
+| Design system overview, 40 surfaces, tokens, Geist typography, i18n | [`skills/meridian-design-system/SKILL.md`](./skills/meridian-design-system/SKILL.md) | `src/tokens.css`, `src/tokens.ts`, `src/fonts.css`, `src/i18n.ts` |
 | Taste rules, UI critique (`Before/After/Why`), anti-slop review, `learn-taste` | [`skills/meridian-taste/SKILL.md`](./skills/meridian-taste/SKILL.md) | `DESIGN.md`, `DESIGN_SYSTEM.md` |
 | PaperGrain canvas, HalfTone shaders, hairline scrollbars, burger→X, veil | [`skills/meridian-paper-shaders/SKILL.md`](./skills/meridian-paper-shaders/SKILL.md) | `src/paper-grain.ts`, `src/halftone-mount.ts`, `src/page-enter.ts` |
 | Frequency Gate, curves, clip-path tabs, hold-to-confirm, drag/momentum, RN/Expo | [`skills/meridian-motion/SKILL.md`](./skills/meridian-motion/SKILL.md) | `src/tokens.ts`, `src/components.css`, `src/timeline.ts` |
 | Plotter 13-role SVG grammar, 81k orthographic globe, Gann 1:1 instruments | [`skills/meridian-plotter-svg/SKILL.md`](./skills/meridian-plotter-svg/SKILL.md) | `src/plotter-svg.ts`, `src/historia-ambient-svg.ts`, `src/gann-app.ts` |
 | Interactive 2:1 isometric rounded-solid SVG figures (10 Hairline rules, paired with Plotter) | [`skills/meridian-hairline-figure/SKILL.md`](./skills/meridian-hairline-figure/SKILL.md) | `index.html` (`#svg-viz`), `src/plotter-svg.ts` |
 | Ink-edge alignment audit (`probe.js`, `1440px` / `390px`, container edges & centers) | [`skills/meridian-gridlines/SKILL.md`](./skills/meridian-gridlines/SKILL.md) | `skills/meridian-gridlines/probe.js`, `src/tokens.css`, `src/site-chrome.css` |
+| Page grid & shell, masthead/header, Preferences + Type studio, 40 surfaces × 28 inks × 8 roles, legible custom colors, page/tab entrance motion | [`skills/meridian-layout-chrome/SKILL.md`](./skills/meridian-layout-chrome/SKILL.md) | `src/site-chrome.css`, `src/site-chrome.ts`, `src/theme-sync.ts`, `src/page-enter.ts` |
 | 100% TypeScript generative watercolor, pencil, wax crayon & sumi-e engine | [`skills/meridian-atelier/SKILL.md`](./skills/meridian-atelier/SKILL.md) | `src/atelier-engine.ts` |
 | 3-column archival reader, claims, Lifeline, 3D dossier shelf, dual chrome | [`skills/meridian-editorial-archival/SKILL.md`](./skills/meridian-editorial-archival/SKILL.md) | `src/components.css`, `src/gann.css`, `gann.html`, `historia.html`, `manifesto.html` |
 | 90 tactile line components, shadcn registry, per-component install prompts | [`skills/meridian-components/SKILL.md`](./skills/meridian-components/SKILL.md) | `src/component-catalog.ts`, `src/components-lab.ts`, `registry/meridian/`, `scripts/build-registry.mjs` |
